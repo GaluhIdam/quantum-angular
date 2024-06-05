@@ -1,0 +1,97 @@
+<div class="input-activity">
+  <div class="form combo-box">
+    <span class="title">What did you do?</span>
+    <div class="input">
+      <fui-combo-box
+        [singleSelection]="true"
+        [size]="'m'"
+        [placeholder]="'Activity'"
+        [optionValue]="optionActivity"
+        [selectedValue]="selectedActivity"
+      />
+    </div>
+  </div>
+  <div class="form">
+    <span class="title">Description</span>
+    <div class="input">
+      <fui-form-control-layout class="description">
+        <fui-input-field
+          [placeholder]="'Description'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+        />
+      </fui-form-control-layout>
+    </div>
+  </div>
+  <div class="form matter">
+    <span class="title">Which matter?</span>
+    <div class="input">
+      <fui-form-control-layout>
+        <fui-input-field
+          [placeholder]="'Number, Project, Client'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+        >
+          <fui-icons
+            left-icon
+            [label]="'left'"
+            [icon]="'search'"
+            [size]="'sizem'"
+            [color]="'text'"
+          />
+        </fui-input-field>
+      </fui-form-control-layout>
+    </div>
+  </div>
+  <div class="form">
+    <div class="lock-wrap">
+      <span class="title">Date</span>
+      <div class="checkbox">
+        <input type="checkbox" />
+        <span class="title">Lock</span>
+      </div>
+    </div>
+    <div class="input">
+      <fui-form-control-layout>
+        <fui-input-field [type]="'date'" [size]="'m'" [invalid]="false">
+        </fui-input-field>
+      </fui-form-control-layout>
+    </div>
+  </div>
+  <div class="form">
+    <div class="lock-wrap">
+      <span class="title">Duration</span>
+      <div class="checkbox">
+        <input type="checkbox" />
+        <span class="title">Lock</span>
+      </div>
+    </div>
+    <div class="input">
+      <fui-form-control-layout>
+        <fui-input-field [type]="'time'" [size]="'m'" [invalid]="false">
+        </fui-input-field>
+      </fui-form-control-layout>
+    </div>
+  </div>
+  <fui-button-icon
+    class="create-btn"
+    [size]="'l'"
+    [type]="'button'"
+    [option]="'icon'"
+    [style]="'filled'"
+    [color]="'primary'"
+    [icon]="'plusInCircleFilled'"
+  />
+  <fui-button-icon
+    class="create-btn-min"
+    [size]="'m'"
+    [type]="'button'"
+    [option]="'iconText'"
+    [text]="'Create'"
+    [style]="'filled'"
+    [color]="'primary'"
+    [icon]="'plusInCircleFilled'"
+  />
+</div>

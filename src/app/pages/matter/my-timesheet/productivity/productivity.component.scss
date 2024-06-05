@@ -1,0 +1,78 @@
+@import "../my-timesheet.component.scss";
+
+.head-title {
+  font-weight: bold;
+}
+.header.productivity {
+  justify-content: space-between;
+  margin-bottom: 30px;
+  font-weight: normal;
+  display: flex;
+}
+
+.select {
+  display: flex;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
+  .icon-title {
+    margin-left: 5px;
+  }
+}
+
+.title-select {
+  user-select: none;
+  display: flex;
+  color: var(--fuiColorPrimary, $fuiColorPrimary);
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.container-option {
+  display: flex;
+  .wrap-option {
+    display: grid;
+  }
+  .wrap-icon {
+    display: grid;
+    margin-right: 5px;
+  }
+}
+.option-pop {
+  user-select: none;
+  margin-bottom: 5px;
+  color: var(--fuiColorPrimary, $fuiColorPrimary);
+  text-wrap: nowrap;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.progress {
+  margin: 0px 0px 20px 0px;
+}
+.legend {
+  display: flex;
+  margin-top: 20px;
+  .legend-title {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+  }
+}
+.color-square {
+  margin-right: 5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+}
+.color-square.primary {
+  background-color: var(--fuiColorPrimary, $fuiColorPrimary);
+}
+.color-square.text {
+  background-color: var(--fuiColorDarkShade, $fuiColorDarkShade);
+}

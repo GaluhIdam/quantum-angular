@@ -1,0 +1,346 @@
+<!-- Utility -->
+<div class="utility block">
+  <div class="sub-utility block">
+    <div class="date-duration">
+      <span class="date">1 May 2024 - 31 May 2024</span>
+      <fui-badge
+        class="duration"
+        [color]="'ghost'"
+        [size]="'sizem'"
+        [isBadgeIcon]="true"
+        [icon]="'clock'"
+        [iconPosition]="'start'"
+      >
+        <div>35h 16m</div>
+      </fui-badge>
+    </div>
+    <div class="vertical-line" *ngIf="filterStatus"></div>
+    <div class="flex">
+      <div class="bagde-filter" *ngIf="filterStatus">
+        <fui-badge
+          [color]="'text'"
+          [size]="'sizel'"
+          [isBadgeIcon]="true"
+          [icon]="'cross'"
+          [iconPosition]="'end'"
+          [sizeIcon]="'sizes'"
+        >
+          3 filters is being applied
+        </fui-badge>
+      </div>
+      <div class="mobile">
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'iconText'"
+          [style]="'secondary'"
+          [text]="'Filter'"
+          [size]="'m'"
+          [color]="'text'"
+          [icon]="'filter'"
+          [iconSide]="'left'"
+          (onClick)="handleOpenFlyout()"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="desktop">
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'iconText'"
+      [style]="'secondary'"
+      [text]="'Filter'"
+      [size]="'m'"
+      [color]="'text'"
+      [icon]="'filter'"
+      [iconSide]="'left'"
+      (onClick)="handleOpenFlyout()"
+    />
+  </div>
+</div>
+<div class="utility last" *ngIf="filterStatus">
+  <div class="sub-utility">
+    <fui-badge
+      class="badge-selected"
+      [color]="'text'"
+      [size]="'sizel'"
+      [isBadgeIcon]="true"
+      [icon]="'cross'"
+      [sizeIcon]="'sizes'"
+      [iconPosition]="'end'"
+    >
+      3 item on page selected
+    </fui-badge>
+    <div class="vertical-line" *ngIf="filterStatus"></div>
+    <span class="move-matter">
+      <fui-icons [icon]="'push'" [size]="'sizem'" [color]="'primary'" />
+      Move
+    </span>
+  </div>
+</div>
+<!-- Utility -->
+
+<!-- Table with filter -->
+<fui-table
+  *ngIf="filterStatus"
+  [limit]="limit"
+  [totalItems]="totalItems"
+  (onPageChanges)="onPageChanges($event)"
+>
+  <fui-table-head>
+    <input type="checkbox" />
+  </fui-table-head>
+  <fui-table-head *ngFor="let header of title">
+    <span class="header">{{ header }}</span>
+  </fui-table-head>
+  <fui-table-body *ngFor="let data of timesheetsData">
+    <fui-table-body-row>
+      <fui-table-body-data>
+        <input type="checkbox" />
+      </fui-table-body-data>
+      <fui-table-body-data class="row-date">{{
+        data.date ? (data.date | date : "d MMMM yy") : ""
+      }}</fui-table-body-data>
+      <fui-table-body-data class="row-matter">
+        <fui-badge [color]="'ghost'" [size]="'sizem'" [isBadgeIcon]="false">
+          <div>{{ data.matter }}</div>
+        </fui-badge>
+      </fui-table-body-data>
+      <fui-table-body-data class="row-description">{{
+        data.description
+      }}</fui-table-body-data>
+      <fui-table-body-data class="row-duration">{{
+        data.duration
+      }}</fui-table-body-data>
+      <fui-table-body-data>
+        <div class="wrap-action">
+          <fui-button-icon
+            [type]="'button'"
+            [option]="'icon'"
+            [style]="'secondary'"
+            [size]="'m'"
+            [color]="'primary'"
+            [icon]="'pencil'"
+            [iconSide]="'left'"
+          />
+          <fui-button-icon
+            [type]="'button'"
+            [option]="'icon'"
+            [style]="'secondary'"
+            [size]="'m'"
+            [color]="'danger'"
+            [icon]="'trash'"
+            [iconSide]="'left'"
+          />
+        </div>
+      </fui-table-body-data>
+    </fui-table-body-row>
+  </fui-table-body>
+</fui-table>
+<!-- Table with filter -->
+
+<!-- Table without filter -->
+<fui-table
+  *ngIf="!filterStatus"
+  [limit]="limit"
+  [totalItems]="totalItems"
+  [showInfo]="false"
+  [pagination]="false"
+  (onPageChanges)="onPageChanges($event)"
+>
+  <fui-table-body *ngFor="let data of timesheetsData; let i = index">
+    <fui-table-body-row>
+      <fui-collapsible-nav-group [isCollapsed]="showHideData[i]">
+        <div header>
+          <fui-table-body-data class="row-date">
+            {{ data.date ? (data.date | date : "d MMMM yy") : "" }}
+          </fui-table-body-data>
+          <fui-table-body-data>
+            <div class="row-progress">
+              <div class="progress-bar">
+                <fui-progress-base
+                  [value]="50"
+                  [max]="100"
+                  [color]="'primary'"
+                  [size]="'sizedefault'"
+                ></fui-progress-base>
+              </div>
+              <fui-badge
+                class="duration"
+                [color]="'ghost'"
+                [size]="'sizem'"
+                [isBadgeIcon]="true"
+                [icon]="'clock'"
+                [iconPosition]="'start'"
+              >
+                <div>35h 16m</div>
+              </fui-badge>
+              <fui-badge
+                class="duration"
+                [color]="'warning'"
+                [size]="'sizem'"
+                [isBadgeIcon]="true"
+                [icon]="'clock'"
+                [iconPosition]="'start'"
+              >
+                <div>35h 16m</div>
+              </fui-badge>
+            </div>
+          </fui-table-body-data>
+          <fui-table-body-data>
+            <fui-button-icon
+              [type]="'button'"
+              [option]="'icon'"
+              [style]="'secondary'"
+              [size]="'m'"
+              [color]="'text'"
+              [icon]="showHideData[i] ? 'arrowDown' : 'arrowRight'"
+              [iconSide]="'left'"
+              (onClick)="toggleRow(i)"
+            />
+          </fui-table-body-data>
+        </div>
+        <div body>
+          <fui-table
+            [limit]="limit"
+            [totalItems]="totalItems"
+            (onPageChanges)="onPageChanges($event)"
+            [showInfo]="false"
+            [pagination]="false"
+          >
+            <fui-table-head *ngFor="let header of titleSub">
+              <span class="header">{{ header }}</span>
+            </fui-table-head>
+            <fui-table-body *ngFor="let data of timesheetsData">
+              <fui-table-body-row>
+                <fui-table-body-data class="sub-row-matter">
+                  <fui-badge
+                    [color]="'ghost'"
+                    [size]="'sizem'"
+                    [isBadgeIcon]="false"
+                  >
+                    <div style="margin-top: 2px">{{ data.matter }}</div>
+                  </fui-badge>
+                </fui-table-body-data>
+                <fui-table-body-data class="sub-row-description">{{
+                  data.description
+                }}</fui-table-body-data>
+                <fui-table-body-data class="sub-row-duration">{{
+                  data.duration
+                }}</fui-table-body-data>
+                <fui-table-body-data>
+                  <div class="wrap-action">
+                    <fui-button-icon
+                      [type]="'button'"
+                      [option]="'icon'"
+                      [style]="'secondary'"
+                      [size]="'m'"
+                      [color]="'primary'"
+                      [icon]="'pencil'"
+                      [iconSide]="'left'"
+                    />
+                    <fui-button-icon
+                      [type]="'button'"
+                      [option]="'icon'"
+                      [style]="'secondary'"
+                      [size]="'m'"
+                      [color]="'danger'"
+                      [icon]="'trash'"
+                      [iconSide]="'left'"
+                    />
+                  </div>
+                </fui-table-body-data>
+              </fui-table-body-row>
+            </fui-table-body>
+          </fui-table>
+        </div>
+      </fui-collapsible-nav-group>
+    </fui-table-body-row>
+  </fui-table-body>
+</fui-table>
+<!-- Table without filter -->
+
+<!-- Flyout -->
+<fui-flyout [open]="isOpenFlyout" [flyoutSize]="'s'" [flyoutPadding]="'s'">
+  <fui-flyout-header (onCloseFlyout)="handleCloseFlyout()">
+    <div class="header-flyout">
+      <h2>Filter</h2>
+    </div>
+  </fui-flyout-header>
+  <fui-flyout-body>
+    <div class="flyout-body">
+      <div class="form">
+        <label for="desc" class="label">Date</label>
+        <div class="time-description">
+          <fui-form-control-layout>
+            <fui-input-field
+              [placeholder]="'Description'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="false"
+            />
+          </fui-form-control-layout>
+        </div>
+      </div>
+      <div class="form">
+        <label for="desc" class="label">Matter</label>
+        <div class="time-description">
+          <fui-combo-box
+            [size]="'m'"
+            [placeholder]="'Matter'"
+            [optionValue]="optionMatter"
+            [selectedValue]="selectedMatter"
+          />
+        </div>
+      </div>
+      <hr class="line-hr" />
+      <div class="form">
+        <label for="desc" class="label">Time Description</label>
+        <div class="time-description">
+          <fui-form-control-layout>
+            <fui-input-field
+              [placeholder]="'Description'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="false"
+            />
+          </fui-form-control-layout>
+        </div>
+      </div>
+    </div>
+  </fui-flyout-body>
+  <fui-flyout-footer [isFlyoutFooterCustom]="true">
+    <div class="footer-flyout">
+      <fui-button-icon
+        (onClick)="handleCloseFlyout()"
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'secondary'"
+        [text]="'Cancel'"
+        [size]="'m'"
+        [color]="'text'"
+      />
+      <div class="footer-flyout-btn">
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'text'"
+          [style]="'secondary'"
+          [text]="'Clear Filters'"
+          [size]="'m'"
+          [color]="'primary'"
+        />
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'iconText'"
+          [style]="'filled'"
+          [text]="'Apply Filter'"
+          [size]="'m'"
+          [color]="'primary'"
+          [icon]="'filter'"
+          [iconSide]="'left'"
+          (onClick)="toggleFilter()"
+        />
+      </div>
+    </div>
+  </fui-flyout-footer>
+</fui-flyout>
+<!-- Flyout -->

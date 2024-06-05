@@ -1,0 +1,11 @@
+@import "../my-timesheet.component.scss";
+
+.head-title {
+  font-weight: bold;
+}
+
+.header.ytd {
+  justify-content: space-between;
+  font-weight: normal;
+  display: flex;
+}

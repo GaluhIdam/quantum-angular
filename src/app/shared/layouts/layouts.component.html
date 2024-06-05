@@ -1,0 +1,108 @@
+<!-- <fui-page [isGrow]="true" [isRestrictWidth]="false" [direction]="'horizontal'"> -->
+<div class="container">
+  <fui-page-sidebar
+    [show]="showSidebar"
+    [zIndex]="2"
+    (showEvent)="showEvent($event)"
+  >
+    <div class="sidebar-container">
+      <div class="logo">
+        <div class="title">
+          <img src="../../../../assets/Logo.svg" class="img-logo" alt="logo" />
+          <h3 class="title">Quantum</h3>
+        </div>
+        <fui-button-icon
+          class="close-btn"
+          [type]="'button'"
+          [size]="'m'"
+          [option]="'icon'"
+          [style]="'secondary'"
+          [color]="'text'"
+          [icon]="'cross'"
+          [iconSide]="'left'"
+          (onClick)="toggleSidebar()"
+        />
+      </div>
+      <div class="side-nav">
+        <fui-sidenav [dataSide]="dataSide"></fui-sidenav>
+      </div>
+    </div>
+  </fui-page-sidebar>
+  <div class="wrap-body">
+    <fui-header [display]="'flex'" [shadow]="true" [zIndex]="1">
+      <fui-header-panel class="header">
+        <fui-button-icon
+          [type]="'button'"
+          [size]="'m'"
+          [option]="'icon'"
+          [style]="'secondary'"
+          [color]="'text'"
+          [icon]="showSidebar ? 'menuLeft' : 'menuRight'"
+          [iconSide]="'left'"
+          (onClick)="toggleSidebar()"
+        />
+      </fui-header-panel>
+      <fui-header-panel class="header">
+        <fui-button-icon
+          [type]="'button'"
+          [size]="'m'"
+          [option]="'icon'"
+          [style]="'secondary'"
+          [color]="'text'"
+          [icon]="'bell'"
+          [iconSide]="'left'"
+        />
+        <span class="count-notif">{{ notifyCount }}</span>
+        <fui-button-icon
+          [type]="'button'"
+          [size]="'m'"
+          [option]="'icon'"
+          [style]="'secondary'"
+          [color]="'text'"
+          [icon]="'email'"
+          [iconSide]="'left'"
+        />
+        <span class="count-notif">{{ emailCount }}</span>
+        <fui-button-icon
+          class="create-new"
+          [type]="'button'"
+          [size]="'m'"
+          [option]="'iconText'"
+          [text]="'Create New'"
+          [style]="'filled'"
+          [color]="'primary'"
+          [icon]="'arrowDown'"
+          [iconSide]="'right'"
+        />
+        <fui-button-icon
+          *ngIf="themeService.getTheme() === 'light'"
+          [type]="'button'"
+          [size]="'m'"
+          [option]="'icon'"
+          [style]="'secondary'"
+          [color]="'text'"
+          [icon]="'moon'"
+          [iconSide]="'left'"
+          (onClick)="toggleMode('dark')"
+        />
+        <fui-button-icon
+          *ngIf="themeService.getTheme() === 'dark'"
+          [type]="'button'"
+          [size]="'m'"
+          [option]="'icon'"
+          [style]="'secondary'"
+          [color]="'text'"
+          [icon]="'sun'"
+          [iconSide]="'left'"
+          (onClick)="toggleMode('light')"
+        />
+      </fui-header-panel>
+    </fui-header>
+    <div class="page-body">
+      <div class="wrap-page-body">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </fui-page> -->
