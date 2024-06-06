@@ -31,10 +31,15 @@ input {
   margin-right: 15px;
 }
 .form.combo-box {
-  width: 225px;
+  min-width: 225px;
+  width: 450px;
+}
+.form.description {
+  width: -webkit-fill-available;
 }
 .form.matter {
-  width: 200px;
+  min-width: 225px;
+  width: 450px;
 }
 
 .create-btn {

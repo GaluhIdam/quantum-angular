@@ -32,17 +32,21 @@
 .row-date,
 .row-matter,
 .row-duration {
-  min-width: 150px;
+  min-width: -webkit-fill-available;
+  width: 150px;
 }
 .row-description {
-  min-width: 400px;
+  min-width: -webkit-fill-available;
+  width: 400px;
 }
 .row-progress {
+  min-width: -webkit-fill-available;
   display: flex;
   align-items: center;
 }
 
 .progress-bar {
+  min-width: -webkit-fill-available;
   width: 600px;
 }
 
