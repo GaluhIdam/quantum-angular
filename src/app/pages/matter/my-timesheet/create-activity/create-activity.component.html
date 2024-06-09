@@ -25,7 +25,13 @@
     </div>
   </div>
   <div class="form matter">
-    <span class="title">Which matter?</span>
+    <div class="lock-wrap">
+      <span class="title">Which matter?</span>
+      <div class="checkbox">
+        <input type="checkbox" />
+        <span class="title">Lock</span>
+      </div>
+    </div>
     <div class="input">
       <fui-form-control-layout>
         <fui-input-field
@@ -61,13 +67,7 @@
     </div>
   </div>
   <div class="form">
-    <div class="lock-wrap">
-      <span class="title">Duration</span>
-      <div class="checkbox">
-        <input type="checkbox" />
-        <span class="title">Lock</span>
-      </div>
-    </div>
+    <span class="title">Duration</span>
     <div class="input">
       <fui-form-control-layout>
         <fui-input-field [type]="'time'" [size]="'m'" [invalid]="false">

@@ -18,7 +18,7 @@
     "@angular/platform-browser": "^17.1.0",
     "@angular/platform-browser-dynamic": "^17.1.0",
     "@angular/router": "^17.1.0",
-    "@quantum/fui": "file:quantum-fui-1.0.0.tgz",
+    "@quantum/fui": "file:quantum-fui-0.1.1.tgz",
     "echarts": "^5.5.0",
     "highlight.js": "^11.9.0",
     "ngx-highlightjs": "^12.0.0",

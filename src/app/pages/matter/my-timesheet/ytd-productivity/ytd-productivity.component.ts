@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { EchartsComponent } from '@quantum/fui';
+import * as echarts from 'echarts/core';
+import { ThemesChartCustom } from './theme-chart';
 
 @Component({
   selector: 'app-ytd-productivity',
@@ -11,7 +13,6 @@ import { EchartsComponent } from '@quantum/fui';
 })
 export class YtdProductivityComponent {
   triggered: boolean = false;
-  themeChart: 'light' | 'dark' = 'light';
   optionBar: any = {
     legend: {
       data: ['Billable', 'Non-Billable'],
@@ -75,4 +76,8 @@ export class YtdProductivityComponent {
     ],
   };
 
+  constructor() {
+    echarts.registerTheme('light', ThemesChartCustom.light);
+    echarts.registerTheme('dark', ThemesChartCustom.dark);
+  }
 }

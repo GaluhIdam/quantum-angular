@@ -32,12 +32,13 @@
 .row-date,
 .row-matter,
 .row-duration {
+  text-wrap: nowrap;
   min-width: -webkit-fill-available;
   width: 150px;
 }
 .row-description {
   min-width: -webkit-fill-available;
-  width: 400px;
+  width: 100%;
 }
 .row-progress {
   min-width: -webkit-fill-available;
@@ -50,6 +51,13 @@
   width: 600px;
 }
 
+.container-tb-filter {
+  overflow-x: auto;
+  fui-collapsible-nav-group {
+    width: -webkit-fill-available;
+    display: inline-grid;
+  }
+}
 /** Wrap For Matter */
 .matter {
   padding: 2px 4px;
@@ -125,7 +133,7 @@
   width: 100px;
 }
 .sub-row-description {
-  width: 800px;
+  width: 100%;
 }
 .sub-row-duration {
   width: 100px;
@@ -147,6 +155,9 @@
   align-items: center;
   justify-content: space-between;
   margin: 20px 0px 20px 0px;
+}
+.mention {
+  background-color: var(--fuiWarningSecondary, $fuiWarningSecondary);
 }
 
 @media (max-width: 1000px) {

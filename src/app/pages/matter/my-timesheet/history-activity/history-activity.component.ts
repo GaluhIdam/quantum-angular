@@ -1,15 +1,18 @@
+import { SampleDataMyTimeSheet } from './../services/sample-data';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   BadgeComponent,
   ButtonIconComponent,
   CollapsibleNavGroupComponent,
+  Color,
   ComboBoxComponent,
   FlyoutBodyComponent,
   FlyoutComponent,
   FlyoutFooterComponent,
   FlyoutHeaderComponent,
   FormControlLayoutComponent,
+  HorizontalStackComponent,
   IconsComponent,
   InputFieldComponent,
   ProgressBaseComponent,
@@ -20,7 +23,9 @@ import {
   TableComponent,
   TableHeadComponent,
 } from '@quantum/fui';
-import { TimesheetDTO } from '../dtos/timesheet.dto';
+import { DailyActivityDTO } from '../dtos/my-timesheet.dto';
+import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.component';
+import { BaseController } from '../../../../core/controller/basecontroller';
 
 @Component({
   selector: 'app-history-activity',
@@ -44,18 +49,24 @@ import { TimesheetDTO } from '../dtos/timesheet.dto';
     InputFieldComponent,
     CollapsibleNavGroupComponent,
     ProgressBaseComponent,
+    EmptyDataComponent,
+    HorizontalStackComponent,
   ],
   templateUrl: './history-activity.component.html',
   styleUrl: './history-activity.component.scss',
 })
-export class HistoryActivityComponent {
+export class HistoryActivityComponent extends BaseController {
   filterStatus: boolean = false;
   page: number = 0;
   limit: number = 10;
   totalItems: number = 0;
   title: string[] = ['Date', 'Matter#', 'Description', 'Duration', ''];
   titleSub: string[] = ['Matter#', 'Description', 'Duration', ''];
-  timesheetsData: TimesheetDTO[] = [];
+  timesheetsData: DailyActivityDTO[] = [];
+  progress: {
+    percentage: number;
+    color: Color;
+  }[] = [];
   showHideData: boolean[] = [];
 
   isOpenFlyout: boolean = false;
@@ -77,38 +88,8 @@ export class HistoryActivityComponent {
   ];
 
   ngOnInit(): void {
-    this.timesheetsData = [
-      {
-        date: new Date('2024-06-01'),
-        matter: 12345,
-        description: 'Meeting with client',
-        duration: '1h 30m',
-      },
-      {
-        date: new Date('2024-06-02'),
-        matter: 54321,
-        description: 'Research and documentation',
-        duration: '2h',
-      },
-      {
-        date: new Date('2024-06-03'),
-        matter: 98765,
-        description: 'Code review',
-        duration: '45m',
-      },
-      {
-        date: new Date('2024-06-04'),
-        matter: 24680,
-        description: 'Testing and debugging',
-        duration: '1h 15m',
-      },
-      {
-        date: new Date('2024-06-05'),
-        matter: 13579,
-        description: 'Team meeting',
-        duration: '1h',
-      },
-    ];
+    this.progress = SampleDataMyTimeSheet.progress;
+    this.timesheetsData = SampleDataMyTimeSheet.history_activity;
     this.insertShowHideRow();
   }
 
