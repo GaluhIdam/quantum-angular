@@ -2,7 +2,7 @@
 
 /** Not Found Style */
 .not-found-wrap {
-  padding: 50px;
+  padding: 50px 0px;
   background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
   border-radius: 5px;
   .title {
@@ -13,5 +13,6 @@
   .sub-title {
     font-size: small;
     text-align: center;
+    text-wrap: nowrap;
   }
 }

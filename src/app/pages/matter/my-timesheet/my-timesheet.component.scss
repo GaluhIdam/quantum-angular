@@ -1,5 +1,21 @@
 @import "../../../../styles.scss";
-
+.title {
+  display: flex;
+  h1 {
+    margin-right: 10px;
+  }
+  p {
+    text-wrap: nowrap;
+    margin: 5px 5px;
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  p.active {
+    color: var(--fuiBtnPrimary, $fuiBtnPrimary);
+  }
+}
 .section-two-card {
   display: flex;
   width: -webkit-fill-available;

@@ -58,12 +58,25 @@
 .legend {
   display: flex;
   margin-top: 20px;
-  .legend-title {
+  justify-content: space-between;
+  app-skeleton {
     margin-right: 15px;
-    display: flex;
-    align-items: center;
+    .legend-title {
+      display: flex;
+      align-items: center;
+      text-wrap: nowrap;
+    }
+  }
+  app-skeleton:last-child {
+    margin-right: 0px;
+    .legend-title {
+      display: flex;
+      align-items: center;
+      text-wrap: nowrap;
+    }
   }
 }
+
 .color-square {
   margin-right: 5px;
   width: 18px;
@@ -75,4 +88,7 @@
 }
 .color-square.text {
   background-color: var(--fuiColorDarkShade, $fuiColorDarkShade);
+}
+.color-square.disabled {
+  background-color: var(--fuiColorLightShade, $fuiColorLightShade);
 }

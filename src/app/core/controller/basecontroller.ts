@@ -33,4 +33,13 @@ export class BaseController {
     });
     return totalMinutes;
   }
+
+  /** Get Date With Range
+   * @param range
+   */
+  getDateWithRange(startDate: Date, range: number): { endDate: Date } {
+    const newEndDate = new Date(startDate);
+    newEndDate.setDate(startDate.getDate() + range);
+    return { endDate: newEndDate };
+  }
 }

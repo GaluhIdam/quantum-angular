@@ -3,7 +3,7 @@ export class ThemesChartCustom {
     color: [
       '#006bb4',
       '#69707d',
-      '#d36086',
+      '#d3dae6',
       '#9170b8',
       '#ca8eae',
       '#d6bf57',

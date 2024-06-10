@@ -12,6 +12,10 @@ import {
   PageSidebarComponent,
   SidenavComponent,
   ThemeService,
+  ToastComponent,
+  ToastService,
+  ToastProps,
+  Color,
 } from '@quantum/fui';
 import { filter, Subject, takeUntil } from 'rxjs';
 
@@ -29,6 +33,7 @@ import { filter, Subject, takeUntil } from 'rxjs';
     PageSidebarComponent,
     IconsComponent,
     SidenavComponent,
+    ToastComponent,
   ],
   templateUrl: './layouts.component.html',
   styleUrl: './layouts.component.scss',
@@ -77,9 +82,11 @@ export class LayoutsComponent {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef) {
-    this.themeService.setTheme('light');
-    this.themeService.applyTheme();
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private toastService: ToastService
+  ) {
   }
 
   ngOnInit(): void {
@@ -93,7 +100,12 @@ export class LayoutsComponent {
         this.updateActiveStatus(currentRoute);
       });
     this.cdr.detectChanges();
+    setTimeout(() => {
+      this.handleNormalToast('warning');
+    }, 5000);
   }
+
+  ngAfterViewInit(): void {}
 
   /** Hide Sidebar if Mobile Device */
   showEvent(event: any): void {
@@ -121,5 +133,26 @@ export class LayoutsComponent {
         item.active = item.children.some((child) => child.active);
       }
     });
+  }
+
+  /** Call Toaster */
+  handleNormalToast(type?: Color) {
+    let toastObject: ToastProps = {
+      position: 'bottom-right',
+      header: {
+        title: 'Information',
+        icon: 'iInCircle',
+        colorIcon: 'warning',
+        sizeIcon: 'sizel',
+      },
+      body: {
+        message: 'This website is under construction!',
+      },
+      duration: 5000,
+    };
+    if (type) {
+      toastObject.type = type;
+    }
+    this.toastService.toast(toastObject);
   }
 }

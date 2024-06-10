@@ -1,21 +1,32 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { EchartsComponent } from '@quantum/fui';
+import { Component, Inject } from '@angular/core';
+import { EchartsComponent, OptionChart } from '@quantum/fui';
 import * as echarts from 'echarts/core';
 import { ThemesChartCustom } from './theme-chart';
+import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.component';
+import { SampleDataMyTimeSheet } from '../services/sample-data';
+import { MyTimesheetService } from '../services/my-timesheet.service';
+import { Subscription } from 'rxjs';
+import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
 
 @Component({
   selector: 'app-ytd-productivity',
   standalone: true,
-  imports: [CommonModule, EchartsComponent],
+  imports: [
+    CommonModule,
+    EchartsComponent,
+    EmptyDataComponent,
+    SkeletonComponent,
+  ],
   templateUrl: './ytd-productivity.component.html',
   styleUrl: './ytd-productivity.component.scss',
 })
 export class YtdProductivityComponent {
+  loading: boolean = true;
   triggered: boolean = false;
   optionBar: any = {
     legend: {
-      data: ['Billable', 'Non-Billable'],
+      data: ['Billable', 'Non-Billable', 'Untracked'],
       bottom: '0%',
       left: '0%',
     },
@@ -52,32 +63,45 @@ export class YtdProductivityComponent {
     yAxis: {
       type: 'value',
     },
-    series: [
-      {
-        name: 'Billable',
-        type: 'bar',
-        stack: 'total',
-        emphasis: {
-          focus: 'series',
-        },
-        data: [320, 302, 301, 334, 390, 330, 320, 120, 132, 101, 134, 90],
-        showBackground: true,
-      },
-      {
-        name: 'Non-Billable',
-        type: 'bar',
-        stack: 'total',
-        emphasis: {
-          focus: 'series',
-        },
-        data: [120, 132, 101, 134, 90, 230, 210, 320, 302, 301, 334, 390],
-        showBackground: true,
-      },
-    ],
+    series: [],
   };
 
-  constructor() {
+  constructor(private readonly myTimesheetService: MyTimesheetService) {
     echarts.registerTheme('light', ThemesChartCustom.light);
     echarts.registerTheme('dark', ThemesChartCustom.dark);
+  }
+
+  private subscription!: Subscription;
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.subscription = this.myTimesheetService.data$.subscribe(
+        (value: boolean | null) => {
+          if (value === true) {
+            this.loading = false;
+            this.optionBar.series = SampleDataMyTimeSheet.ytdProductivity;
+            this.triggeredAction();
+          }
+          if (value === false) {
+            this.loading = false;
+            this.optionBar.series = [];
+            this.triggeredAction();
+          }
+          if (value === null) {
+            this.loading = true;
+          }
+        }
+      );
+    }, 2000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  triggeredAction(): void {
+    this.triggered = !this.triggered;
   }
 }

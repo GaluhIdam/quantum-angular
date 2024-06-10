@@ -1,3 +1,5 @@
+@import "../../../../../styles.scss";
+
 .input-activity {
   margin-top: 5px;
   display: flex;
@@ -32,14 +34,21 @@ input {
 }
 .form.combo-box {
   min-width: 225px;
-  width: 450px;
+  width: fit-content;
 }
 .form.description {
   width: -webkit-fill-available;
 }
 .form.matter {
-  min-width: 225px;
+  min-width: 200px;
   width: 450px;
+}
+.form.date {
+  min-width: 150px;
+  fui-date-picker {
+    height: fit-content;
+    display: block;
+  }
 }
 
 .create-btn {

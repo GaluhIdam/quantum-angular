@@ -10,4 +10,7 @@ import { Component, Input } from '@angular/core';
 })
 export class EmptyDataComponent {
   @Input({ required: true }) dataLength: number = 0;
+  @Input() title: string = 'No results found';
+  @Input() subTitle: string =
+    'You don’t have any time recorded on this period.';
 }

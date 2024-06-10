@@ -2,17 +2,45 @@
 <div class="utility block">
   <div class="sub-utility block">
     <div class="date-duration">
-      <span class="date">1 May 2024 - 31 May 2024</span>
-      <fui-badge
-        class="duration"
-        [color]="'ghost'"
-        [size]="'sizem'"
-        [isBadgeIcon]="true"
-        [icon]="'clock'"
-        [iconPosition]="'start'"
-      >
-        <div>35h 16m</div>
-      </fui-badge>
+      <app-skeleton [active]="loading">
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'icon'"
+          [icon]="'arrowLeft'"
+          [style]="'secondary'"
+          [color]="'text'"
+          (onClick)="moveDate('previous', 6)"
+        />
+      </app-skeleton>
+      <app-skeleton [active]="loading">
+        <p class="date">
+          {{ startDate | date : "d MMMM yy" }} -
+          {{ endDate | date : "d MMMM yy" }}
+        </p>
+      </app-skeleton>
+      <app-skeleton [active]="loading">
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'icon'"
+          [icon]="'arrowRight'"
+          [style]="'secondary'"
+          [color]="'text'"
+          (onClick)="moveDate('next', 6)"
+        />
+      </app-skeleton>
+      <div class="duration">
+        <app-skeleton [active]="loading">
+          <fui-badge
+            [color]="'ghost'"
+            [size]="'sizem'"
+            [isBadgeIcon]="true"
+            [icon]="'clock'"
+            [iconPosition]="'start'"
+          >
+            <div>35h 16m</div>
+          </fui-badge>
+        </app-skeleton>
+      </div>
     </div>
     <div class="vertical-line" *ngIf="filterStatus"></div>
     <div class="flex">
@@ -30,32 +58,36 @@
         </fui-badge>
       </div>
       <div class="mobile">
-        <fui-button-icon
-          [type]="'button'"
-          [option]="'iconText'"
-          [style]="'secondary'"
-          [text]="'Filter'"
-          [size]="'m'"
-          [color]="'text'"
-          [icon]="'filter'"
-          [iconSide]="'left'"
-          (onClick)="handleOpenFlyout()"
-        />
+        <app-skeleton [active]="loading">
+          <fui-button-icon
+            [type]="'button'"
+            [option]="'iconText'"
+            [style]="'secondary'"
+            [text]="'Filter'"
+            [size]="'m'"
+            [color]="'text'"
+            [icon]="'filter'"
+            [iconSide]="'left'"
+            (onClick)="handleOpenFlyout()"
+          />
+        </app-skeleton>
       </div>
     </div>
   </div>
   <div class="desktop">
-    <fui-button-icon
-      [type]="'button'"
-      [option]="'iconText'"
-      [style]="'secondary'"
-      [text]="'Filter'"
-      [size]="'m'"
-      [color]="'text'"
-      [icon]="'filter'"
-      [iconSide]="'left'"
-      (onClick)="handleOpenFlyout()"
-    />
+    <app-skeleton [active]="loading">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'iconText'"
+        [style]="'secondary'"
+        [text]="'Filter'"
+        [size]="'m'"
+        [color]="'text'"
+        [icon]="'filter'"
+        [iconSide]="'left'"
+        (onClick)="handleOpenFlyout()"
+      />
+    </app-skeleton>
   </div>
 </div>
 <div class="utility last" *ngIf="filterStatus">
@@ -85,6 +117,7 @@
   *ngIf="filterStatus"
   [limit]="limit"
   [totalItems]="totalItems"
+  [showInfo]="false"
   (onPageChanges)="onPageChanges($event)"
 >
   <fui-table-head>
@@ -140,59 +173,77 @@
 <!-- Table with filter -->
 
 <!-- Table without filter -->
-<div class="container-tb-filter" *ngIf="!filterStatus">
+<div class="container-tb-no-filter" *ngIf="!filterStatus">
   <fui-collapsible-nav-group
     *ngFor="let data of timesheetsData; let i = index"
     [isCollapsed]="showHideData[i]"
   >
-    <div header style="display: flex; align-items: center; padding: 15px 0px">
-      <span style="text-wrap: nowrap">
-        {{ data.date ? (data.date | date : "d MMMM yy") : "" }}
-      </span>
-      <fui-horizontal-stack
-        style="margin: 0px 10px; min-width: 500px;"
-        [showPercentage]="false"
-        [progress]="progress"
-      />
-      <fui-badge
-        class="duration"
-        [color]="'ghost'"
-        [size]="'sizem'"
-        [isBadgeIcon]="true"
-        [icon]="'clock'"
-        [iconPosition]="'start'"
-      >
-        <div>
-          {{ getTotalDurationByType(data.activityList, "self") }}
+    <div header class="header-tb">
+      <div class="left-tb">
+        <span>
+          <app-skeleton [active]="loading">
+            {{ data.date ? (data.date | date : "d MMMM yy") : "" }}
+          </app-skeleton>
+        </span>
+        <app-skeleton [active]="loading" style="width: 100%">
+          <fui-horizontal-stack
+            class="{{ data.activityList.length === 0 ? 'invisible' : '' }}"
+            [showPercentage]="false"
+            [progress]="progress[i]"
+          />
+        </app-skeleton>
+      </div>
+      <div class="right-tb">
+        <div class="duration">
+          <app-skeleton [active]="loading">
+            <fui-badge
+              [color]="'ghost'"
+              [size]="'sizem'"
+              [isBadgeIcon]="true"
+              [icon]="'clock'"
+              [iconPosition]="'start'"
+            >
+              <div>
+                {{ getTotalDurationByType(data.activityList, "self") }}
+              </div>
+            </fui-badge>
+          </app-skeleton>
         </div>
-      </fui-badge>
-      <fui-badge
-        class="duration"
-        [color]="'warning'"
-        [size]="'sizem'"
-        [isBadgeIcon]="true"
-        [icon]="'clock'"
-        [iconPosition]="'start'"
-      >
-        <div>
-          {{ getTotalDurationByType(data.activityList, "mention") }}
+        <div class="duration">
+          <app-skeleton [active]="loading">
+            <fui-badge
+              *ngIf="hasMentionType(data.activityList)"
+              [color]="'warning'"
+              [size]="'sizem'"
+              [isBadgeIcon]="true"
+              [icon]="'clock'"
+              [iconPosition]="'start'"
+            >
+              <div>
+                {{ getTotalDurationByType(data.activityList, "mention") }}
+              </div>
+            </fui-badge>
+          </app-skeleton>
         </div>
-      </fui-badge>
-      <div style="margin-left: 10px">
-        <fui-button-icon
-          [type]="'button'"
-          [option]="'icon'"
-          [style]="'secondary'"
-          [size]="'m'"
-          [color]="'text'"
-          [icon]="showHideData[i] ? 'arrowDown' : 'arrowRight'"
-          [iconSide]="'left'"
-          (onClick)="toggleRow(i)"
-        />
+        <div style="margin-left: 10px">
+          <app-skeleton [active]="loading">
+            <fui-button-icon
+              [type]="'button'"
+              [option]="'icon'"
+              [style]="'secondary'"
+              [size]="'m'"
+              [color]="'text'"
+              [icon]="showHideData[i] ? 'arrowDown' : 'arrowRight'"
+              [iconSide]="'left'"
+              (onClick)="toggleRow(i)"
+            />
+          </app-skeleton>
+        </div>
       </div>
     </div>
     <div body>
       <fui-table
+        *ngIf="data.activityList.length > 0"
         [limit]="limit"
         [totalItems]="totalItems"
         (onPageChanges)="onPageChanges($event)"
@@ -244,14 +295,24 @@
           </fui-table-body-row>
         </fui-table-body>
       </fui-table>
+      <p class="no-activity" *ngIf="data.activityList.length === 0">
+        You don’t have any time recorded on this period.
+      </p>
     </div>
   </fui-collapsible-nav-group>
-  <app-empty-data [dataLength]="timesheetsData.length" />
+  <app-skeleton [active]="loading">
+    <app-empty-data [dataLength]="timesheetsData.length" />
+  </app-skeleton>
 </div>
 <!-- Table without filter -->
 
 <!-- Flyout -->
-<fui-flyout [open]="isOpenFlyout" [flyoutSize]="'s'" [flyoutPadding]="'s'">
+<fui-flyout
+  [zIndex]="2"
+  [open]="isOpenFlyout"
+  [flyoutSize]="'s'"
+  [flyoutPadding]="'s'"
+>
   <fui-flyout-header (onCloseFlyout)="handleCloseFlyout()">
     <div class="header-flyout">
       <h2>Filter</h2>
