@@ -6,7 +6,7 @@
 
   .active {
     background-color: var(--fuiColorLightShade, $fuiColorLightShade);
-    animation: pulse 1s infinite alternate;
+    animation: pulse 0.8s infinite alternate;
     border-radius: 3px;
   }
 
