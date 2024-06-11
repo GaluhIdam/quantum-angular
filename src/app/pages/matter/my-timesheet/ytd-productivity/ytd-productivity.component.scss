@@ -8,6 +8,7 @@
   justify-content: space-between;
   font-weight: normal;
   display: flex;
+  margin-bottom: 10px;
 }
 
 .empty {
@@ -18,8 +19,7 @@
   overflow-x: auto;
 }
 .chart {
-  margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   min-width: 1000px;
 }
 /** Add On*/

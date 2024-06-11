@@ -50,6 +50,13 @@ input {
     display: block;
   }
 }
+.form.duration {
+  min-width: 120px;
+  fui-date-picker {
+    height: fit-content;
+    display: block;
+  }
+}
 
 .create-btn {
   margin-bottom: 2px;

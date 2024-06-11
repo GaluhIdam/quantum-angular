@@ -8,7 +8,18 @@
     <div class="sidebar-container">
       <div class="logo">
         <div class="title">
-          <img src="../../../../assets/Logo.svg" class="img-logo" alt="logo" />
+          <img
+            *ngIf="theme === 'light'"
+            src="../../../../assets/Logo.svg"
+            class="img-logo"
+            alt="logo"
+          />
+          <img
+            *ngIf="theme === 'dark'"
+            src="../../../../assets/logo-white.svg"
+            class="img-logo"
+            alt="logo"
+          />
           <h3 class="title">Quantum</h3>
         </div>
         <fui-button-icon

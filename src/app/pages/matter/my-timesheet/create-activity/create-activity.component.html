@@ -84,16 +84,13 @@
       </app-skeleton>
     </div>
   </div>
-  <div class="form">
+  <div class="form duration">
     <app-skeleton [active]="loading">
       <span class="title">Duration</span>
     </app-skeleton>
     <div class="input">
       <app-skeleton [active]="loading">
-        <fui-form-control-layout>
-          <fui-input-field [type]="'time'" [size]="'m'" [invalid]="false">
-          </fui-input-field>
-        </fui-form-control-layout>
+        <fui-time-selection />
       </app-skeleton>
     </div>
   </div>

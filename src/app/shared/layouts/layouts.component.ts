@@ -62,6 +62,7 @@ export class LayoutsComponent {
   emailCount: number = 12;
   showSidebar: boolean = true;
   dataSide: DataSideDTO[] = [];
+  theme!: string;
 
   private destroy$ = new Subject<void>();
   private obs!: Subscription;
@@ -75,6 +76,9 @@ export class LayoutsComponent {
   }
 
   ngOnInit(): void {
+    this.themeService.currentTheme$.subscribe((data) => {
+      this.theme = data;
+    });
     this.obs = this.searchForm.valueChanges
       .pipe(
         tap(() => (this.loading = true)),
