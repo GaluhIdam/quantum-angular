@@ -209,10 +209,9 @@
             </fui-badge>
           </app-skeleton>
         </div>
-        <div class="duration">
+        <div class="duration" *ngIf="hasMentionType(data.activityList)">
           <app-skeleton [active]="loading">
             <fui-badge
-              *ngIf="hasMentionType(data.activityList)"
               [color]="'warning'"
               [size]="'sizem'"
               [isBadgeIcon]="true"
