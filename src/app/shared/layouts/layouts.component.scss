@@ -59,10 +59,16 @@
   width: 100%;
 }
 .page-body {
-  padding: 35px;
+  padding: 25px;
   width: -webkit-fill-available;
   height: -webkit-fill-available;
   position: fixed;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+@media (max-width: 400px) {
+  .page-body {
+    padding: 20px;
+  }
 }

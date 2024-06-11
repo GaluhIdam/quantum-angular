@@ -29,6 +29,7 @@
   }
   .card-ytd {
     width: 70%;
+    overflow-x: auto;
     padding: 25px 20px 25px 20px;
     background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
     border-radius: 5px;
