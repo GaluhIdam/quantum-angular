@@ -17,6 +17,9 @@ package-lock.json
 # Ignore package.json file
 package.json
 
+# Quantum Pack
+quantum-fui-0.1.1.tgz
+
 # IDEs and editors
 .idea/
 .project
