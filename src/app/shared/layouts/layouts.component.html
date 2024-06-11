@@ -24,7 +24,50 @@
         />
       </div>
       <div class="side-nav">
-        <fui-sidenav [dataSide]="dataSide"></fui-sidenav>
+        <div class="search-form">
+          <fui-form-control-layout>
+            <fui-input-field
+              [formControlField]="searchForm"
+              [placeholder]="'Search menu name'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="false"
+            >
+              <fui-icons
+                left-icon
+                [label]="'left'"
+                [icon]="'search'"
+                [size]="'sizem'"
+                [color]="'text'"
+              />
+              <fui-icons
+                *ngIf="
+                  searchForm.value !== '' &&
+                  searchForm.value !== null &&
+                  loading === false
+                "
+                right-icon
+                (click)="this.searchForm.setValue('')"
+                [label]="'right'"
+                [icon]="'cross'"
+                [size]="'sizem'"
+                [color]="'text'"
+              />
+              <fui-loading
+                *ngIf="loading"
+                class="mx-5"
+                right-icon
+                [type]="'spinner'"
+                [isLoading]="true"
+                [size]="'sizel'"
+              ></fui-loading>
+            </fui-input-field>
+          </fui-form-control-layout>
+        </div>
+        <fui-sidenav
+          [highlightText]="searchForm.value"
+          [dataSide]="dataSide"
+        ></fui-sidenav>
       </div>
     </div>
   </fui-page-sidebar>

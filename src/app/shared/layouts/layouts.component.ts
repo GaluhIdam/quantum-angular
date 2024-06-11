@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import {
   ButtonIconComponent,
@@ -16,8 +17,20 @@ import {
   ToastService,
   ToastProps,
   Color,
+  FormControlLayoutComponent,
+  InputFieldComponent,
+  LoadingComponent,
 } from '@quantum/fui';
-import { filter, Subject, takeUntil } from 'rxjs';
+import {
+  debounceTime,
+  filter,
+  map,
+  Subject,
+  Subscription,
+  takeUntil,
+  tap,
+} from 'rxjs';
+import { DataSideBar } from './data-sidebar';
 
 @Component({
   selector: 'app-layouts',
@@ -34,78 +47,67 @@ import { filter, Subject, takeUntil } from 'rxjs';
     IconsComponent,
     SidenavComponent,
     ToastComponent,
+    FormControlLayoutComponent,
+    InputFieldComponent,
+    LoadingComponent,
   ],
   templateUrl: './layouts.component.html',
   styleUrl: './layouts.component.scss',
 })
 export class LayoutsComponent {
+  searchForm: FormControl = new FormControl();
+  loading: boolean = false;
   themeService = inject(ThemeService);
   notifyCount: number = 6;
   emailCount: number = 12;
   showSidebar: boolean = true;
-  dataSide: DataSideDTO[] = [
-    {
-      icon: {
-        type: 'home',
-        size: 'sizem',
-      },
-      link: '/home',
-      title: 'Home',
-      active: false,
-    },
-    {
-      icon: {
-        type: 'folderClosed',
-        size: 'sizem',
-      },
-      title: 'Matter',
-      active: false,
-      children: [
-        {
-          title: 'My Timesheet',
-          active: false,
-          link: '/matter/my-timesheet',
-        },
-        {
-          title: 'My Matter',
-          active: false,
-          link: '/matter/my-matter',
-        },
-        {
-          title: 'All Matter',
-          active: false,
-          link: '/matter/all-matter',
-        },
-      ],
-    },
-  ];
+  dataSide: DataSideDTO[] = [];
 
   private destroy$ = new Subject<void>();
+  private obs!: Subscription;
 
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
     private toastService: ToastService
   ) {
+    this.dataSide = DataSideBar.dataSideBar;
   }
 
   ngOnInit(): void {
+    this.obs = this.searchForm.valueChanges
+      .pipe(
+        tap(() => (this.loading = true)),
+        debounceTime(500),
+        map((value) => {
+          this.filterDataSide(value);
+          this.loading = false;
+        })
+      )
+      .subscribe();
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
+        map(() => {
+          let currentRoute = this.router.url;
+          this.updateActiveStatus(currentRoute);
+        }),
         takeUntil(this.destroy$)
       )
-      .subscribe(() => {
-        let currentRoute = this.router.url;
-        this.updateActiveStatus(currentRoute);
-      });
+      .subscribe();
     this.cdr.detectChanges();
     setTimeout(() => {
       this.handleNormalToast('warning');
     }, 5000);
   }
 
-  ngAfterViewInit(): void {}
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    if (this.obs) {
+      this.obs.unsubscribe();
+    }
+  }
 
   /** Hide Sidebar if Mobile Device */
   showEvent(event: any): void {
@@ -154,5 +156,39 @@ export class LayoutsComponent {
       toastObject.type = type;
     }
     this.toastService.toast(toastObject);
+  }
+
+  /** Filter for sidebar by title */
+  filterDataSide(searchTerm: string) {
+    if (!searchTerm) {
+      this.dataSide = DataSideBar.dataSideBar;
+    } else {
+      this.dataSide = this.filterItems(
+        DataSideBar.dataSideBar,
+        searchTerm.toLowerCase()
+      );
+    }
+    this.cdr.markForCheck();
+  }
+
+  /** Helper Filter for sidebar by title */
+  filterItems(items: DataSideDTO[], searchTerm: string): DataSideDTO[] {
+    return items
+      .map((item) => {
+        const matchingChildren = item.children
+          ? this.filterItems(item.children, searchTerm)
+          : [];
+        const isMatch = item.title.toLowerCase().includes(searchTerm);
+
+        // Set the item as active if it matches or has matching children
+        const active = isMatch || matchingChildren.length > 0;
+
+        return {
+          ...item,
+          active,
+          children: matchingChildren,
+        };
+      })
+      .filter((item) => item.active || item.children.length > 0);
   }
 }

@@ -85,7 +85,6 @@ export class CreateActivityComponent {
     setTimeout(() => {
       this.subscription = this.myTimesheetService.data$.subscribe(
         (value: boolean | null) => {
-          console.log(value);
           if (value === true) {
             this.loading = false;
           }
