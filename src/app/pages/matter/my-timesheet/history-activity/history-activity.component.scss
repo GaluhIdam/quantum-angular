@@ -1,0 +1,234 @@
+@import "../my-timesheet.component.scss";
+
+/** Utility Style */
+.utility {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.utility.last {
+  margin-bottom: 30px;
+}
+.sub-utility {
+  display: flex;
+  align-items: center;
+  .date-duration {
+    display: flex;
+    align-items: center;
+    fui-icons {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .date {
+      font-weight: bold;
+      margin: 3px 10px 0px 10px;
+      text-wrap: balance;
+    }
+  }
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+/** Wrap For Duration */
+.duration {
+  margin: 0px 0px 0px 10px;
+  div {
+    margin-top: 2px;
+  }
+}
+
+/** Row Config */
+.header {
+  font-weight: bold;
+}
+.row-date,
+.row-matter,
+.row-duration {
+  text-wrap: nowrap;
+  min-width: -webkit-fill-available;
+  width: 150px;
+}
+.row-description {
+  min-width: -webkit-fill-available;
+  width: 100%;
+}
+.row-progress {
+  min-width: -webkit-fill-available;
+  display: flex;
+  align-items: center;
+}
+
+.progress-bar {
+  min-width: -webkit-fill-available;
+  width: 600px;
+}
+
+.container-tb-no-filter {
+  overflow-x: auto;
+  fui-collapsible-nav-group {
+    min-width: 600px;
+    width: -webkit-fill-available;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--fuiColorLightShade, $fuiColorLightShade);
+    display: inline-grid;
+    .header-tb {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 8px 0px;
+      .left-tb {
+        width: 100%;
+        display: flex;
+        span {
+          text-wrap: nowrap;
+          min-width: 100px;
+        }
+      }
+      .right-tb {
+        display: flex;
+        width: fit-content;
+      }
+    }
+  }
+}
+
+/** Wrap For Matter */
+.matter {
+  padding: 2px 4px;
+  border-width: 1px;
+  border-color: var(--fuiColorLightShade, $fuiColorLightShade);
+  border-style: solid;
+  border-radius: 5px;
+}
+
+.move-matter {
+  display: flex;
+  color: var(--fuiColorPrimary, $fuiColorPrimary);
+  &:hover {
+    cursor: pointer;
+  }
+  fui-icons {
+    margin-right: 5px;
+  }
+}
+
+/** Wrap For Action Button */
+.wrap-action {
+  display: flex;
+  justify-content: end;
+  fui-button-icon {
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+}
+
+/** Flyout Config */
+.header-flyout {
+  padding: 15px;
+}
+.flyout-body {
+  padding: 15px;
+}
+.form {
+  margin-bottom: 15px;
+}
+.line-hr {
+  border-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+  margin: 20px 0px 20px 0px;
+}
+.time-description {
+  margin-top: 5px;
+}
+.footer-flyout {
+  padding: 10px;
+  display: flex;
+  width: -webkit-fill-available;
+  align-items: center;
+  .footer-flyout-btn {
+    width: -webkit-fill-available;
+    justify-content: end;
+    display: flex;
+    fui-button-icon {
+      margin: 0px 0px 0px 10px;
+    }
+  }
+}
+
+.vertical-line::before {
+  content: "";
+  display: block;
+  width: 2px;
+  height: 30px;
+  background-color: var(--fuiColorLightShade, $fuiColorLightShade);
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.sub-row-matter {
+  width: 100px;
+}
+.sub-row-description {
+  width: 100%;
+}
+.sub-row-duration {
+  width: 100px;
+}
+
+.desktop {
+  display: block;
+}
+.mobile {
+  display: none;
+}
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0px 20px 0px;
+}
+.mention {
+  background-color: var(--fuiWarningSecondary, $fuiWarningSecondary);
+}
+.no-activity {
+  font-size: small;
+  margin-bottom: 10px;
+}
+
+fui-horizontal-stack {
+  margin: 0px 10px;
+  align-items: center;
+  display: grid;
+}
+
+@media (max-width: 1000px) {
+  .utility.block {
+    display: block;
+  }
+  .sub-utility.block {
+    display: block;
+  }
+  .sub-utility {
+    width: -webkit-fill-available;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .vertical-line::before {
+    display: none;
+  }
+  .date-duration {
+    justify-content: space-between;
+  }
+  .bagde-filter {
+    margin: 10px 0px 10px 0px;
+  }
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: block;
+  }
+}

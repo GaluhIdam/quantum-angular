@@ -1,0 +1,26 @@
+<div class="header ytd">
+  <app-skeleton [active]="loading">
+    <p class="head-title">YTD Productivity</p>
+  </app-skeleton>
+</div>
+<div class="body" *ngIf="optionBar.series.length > 0">
+  <div class="chart">
+    <app-skeleton [active]="loading">
+      <fui-echarts
+        [triggered]="triggered"
+        [height]="'20vh'"
+        [chartOption]="optionBar"
+        [themeCustom]="true"
+      ></fui-echarts>
+    </app-skeleton>
+  </div>
+</div>
+<div class="empty" *ngIf="optionBar.series.length === 0">
+  <app-skeleton [active]="loading">
+    <app-empty-data
+      [title]="'N/A'"
+      [subTitle]="'You don’t have any target data for productivity'"
+      [dataLength]="optionBar.series.length"
+    />
+  </app-skeleton>
+</div>

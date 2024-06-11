@@ -1,0 +1,81 @@
+@import "../../../../../styles.scss";
+
+.input-activity {
+  margin-top: 5px;
+  display: flex;
+  align-items: end;
+}
+
+.checkbox {
+  align-items: center;
+  display: flex;
+}
+input {
+  margin-right: 5px;
+}
+.title {
+  font-size: small;
+}
+.input {
+  margin-top: 5px;
+}
+
+.lock-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.description {
+  width: 350px;
+}
+
+.form {
+  margin-right: 15px;
+}
+.form.combo-box {
+  min-width: 225px;
+  width: fit-content;
+}
+.form.description {
+  width: -webkit-fill-available;
+}
+.form.matter {
+  min-width: 200px;
+  width: 450px;
+}
+.form.date {
+  min-width: 150px;
+  fui-date-picker {
+    height: fit-content;
+    display: block;
+  }
+}
+
+.create-btn {
+  margin-bottom: 2px;
+}
+
+.create-btn-min {
+  display: none;
+}
+
+@media (max-width: 1000px) {
+  .input-activity {
+    display: block;
+  }
+  .form {
+    margin: 20px 0px 20px 0px;
+  }
+  .form.combo-box {
+    width: auto;
+  }
+  .form.matter {
+    width: auto;
+  }
+  .create-btn {
+    display: none;
+  }
+  .create-btn-min {
+    display: block;
+  }
+}

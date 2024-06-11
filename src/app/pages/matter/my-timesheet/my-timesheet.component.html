@@ -1,0 +1,41 @@
+<div class="title">
+  <app-skeleton [active]="loading">
+    <h1>My Timesheet</h1>
+  </app-skeleton>
+  <fui-popover [position]="'bottom'">
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'icon'"
+      [icon]="'apps'"
+      [style]="'secondary'"
+    />
+    <div popover-body>
+      <p (click)="changeScenarion(false)">Empty</p>
+      <p (click)="changeScenarion(null)">Loading</p>
+      <p (click)="changeScenarion(true)">Fill</p>
+    </div>
+  </fui-popover>
+</div>
+<div class="section-two-card">
+  <!-- Productivity -->
+  <div class="card-productivity">
+    <app-productivity />
+  </div>
+  <!-- Productivity -->
+
+  <!-- YTD -->
+  <div class="card-ytd">
+    <app-ytd-productivity />
+  </div>
+  <!-- YTD -->
+</div>
+<!-- Create Activity -->
+<div class="card-create-activity">
+  <app-create-activity />
+</div>
+<!-- Create Activity -->
+<!-- History Activity -->
+<div class="card-create-activity">
+  <app-history-activity />
+</div>
+<!-- History Activity -->

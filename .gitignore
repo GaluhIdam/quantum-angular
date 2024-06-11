@@ -11,6 +11,18 @@
 npm-debug.log
 yarn-error.log
 
+# Ignore node_modules directory
+node_modules/
+
+# Ignore package-lock.json file
+package-lock.json
+
+# Ignore package.json file
+package.json
+
+# Ignore quantum-fui-0.1.1.tgz file
+quantum-fui-0.1.1.tgz
+
 # IDEs and editors
 .idea/
 .project

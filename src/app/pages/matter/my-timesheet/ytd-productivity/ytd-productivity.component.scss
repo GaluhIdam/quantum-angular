@@ -1,0 +1,39 @@
+@import "../my-timesheet.component.scss";
+
+.head-title {
+  font-weight: bold;
+}
+
+.header.ytd {
+  justify-content: space-between;
+  font-weight: normal;
+  display: flex;
+}
+
+.empty {
+  margin-top: 30px;
+}
+.body {
+  z-index: 3;
+  overflow-x: auto;
+}
+.chart {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  min-width: 1000px;
+}
+/** Add On*/
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--fuiColorMediumShade, $fuiColorMediumShade);
+  border-radius: 25px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fuiColorDarkShade, $fuiColorDarkShade);
+}
