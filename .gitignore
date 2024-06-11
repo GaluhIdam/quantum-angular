@@ -11,6 +11,12 @@
 npm-debug.log
 yarn-error.log
 
+# Ignore package-lock.json file
+package-lock.json
+
+# Ignore package.json file
+package.json
+
 # IDEs and editors
 .idea/
 .project
