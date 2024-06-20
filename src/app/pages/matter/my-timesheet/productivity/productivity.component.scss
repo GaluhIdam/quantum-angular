@@ -59,21 +59,18 @@
   display: flex;
   margin-top: 20px;
   justify-content: space-between;
-  app-skeleton {
+  .legend-title {
     margin-right: 15px;
-    .legend-title {
-      display: flex;
-      align-items: center;
-      text-wrap: nowrap;
-    }
+    display: flex;
+    align-items: center;
+    text-wrap: nowrap;
   }
-  app-skeleton:last-child {
-    margin-right: 0px;
-    .legend-title {
-      display: flex;
-      align-items: center;
-      text-wrap: nowrap;
-    }
+
+  margin-right: 0px;
+  .legend-title:last-child {
+    display: flex;
+    align-items: center;
+    text-wrap: nowrap;
   }
 }
 @media (max-width: 400px) {

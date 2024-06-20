@@ -22,42 +22,9 @@ import { Subscription } from 'rxjs';
     CreateActivityComponent,
     HistoryActivityComponent,
     ButtonIconComponent,
-    PopoverComponent,
-    SkeletonComponent,
+    PopoverComponent
   ],
   templateUrl: './my-timesheet.component.html',
   styleUrl: './my-timesheet.component.scss',
 })
-export class MyTimesheetComponent {
-  loading: boolean = true;
-
-  constructor(private readonly myTimesheetService: MyTimesheetService) {}
-
-  private subscription!: Subscription;
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.subscription = this.myTimesheetService.data$.subscribe((value) => {
-        if (value === true) {
-          this.loading = false;
-        }
-        if (value === false) {
-          this.loading = false;
-        }
-        if (value === null) {
-          this.loading = true;
-        }
-      });
-    }, 2000);
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  changeScenarion(value: boolean | null): void {
-    this.myTimesheetService.updateData(value);
-  }
-}
+export class MyTimesheetComponent {}

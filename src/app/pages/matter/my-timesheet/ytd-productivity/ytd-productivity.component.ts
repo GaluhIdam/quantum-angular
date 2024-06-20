@@ -26,7 +26,7 @@ export class YtdProductivityComponent {
   triggered: boolean = false;
   optionBar: any = {
     legend: {
-      data: ['Billable', 'Non-Billable', 'Untracked'],
+      data: ['Billable', 'Non-Billable'],
       bottom: '0%',
       left: '0%',
     },
@@ -92,7 +92,7 @@ export class YtdProductivityComponent {
           }
         }
       );
-    }, 2000);
+    }, 1000);
   }
 
   ngOnDestroy(): void {

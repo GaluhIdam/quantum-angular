@@ -98,6 +98,30 @@
       </fui-header-panel>
       <fui-header-panel class="header">
         <fui-button-icon
+          class="icon-mode"
+          *ngIf="themeService.getTheme() === 'light'"
+          [type]="'button'"
+          [size]="'m'"
+          [option]="'icon'"
+          [style]="'secondary'"
+          [color]="'text'"
+          [icon]="'moon'"
+          [iconSide]="'left'"
+          (onClick)="toggleMode('dark')"
+        />
+        <fui-button-icon
+          class="icon-mode"
+          *ngIf="themeService.getTheme() === 'dark'"
+          [type]="'button'"
+          [size]="'m'"
+          [option]="'icon'"
+          [style]="'secondary'"
+          [color]="'text'"
+          [icon]="'sun'"
+          [iconSide]="'left'"
+          (onClick)="toggleMode('light')"
+        />
+        <fui-button-icon
           [type]="'button'"
           [size]="'m'"
           [option]="'icon'"
@@ -128,28 +152,6 @@
           [icon]="'arrowDown'"
           [iconSide]="'right'"
         />
-        <fui-button-icon
-          *ngIf="themeService.getTheme() === 'light'"
-          [type]="'button'"
-          [size]="'m'"
-          [option]="'icon'"
-          [style]="'secondary'"
-          [color]="'text'"
-          [icon]="'moon'"
-          [iconSide]="'left'"
-          (onClick)="toggleMode('dark')"
-        />
-        <fui-button-icon
-          *ngIf="themeService.getTheme() === 'dark'"
-          [type]="'button'"
-          [size]="'m'"
-          [option]="'icon'"
-          [style]="'secondary'"
-          [color]="'text'"
-          [icon]="'sun'"
-          [iconSide]="'left'"
-          (onClick)="toggleMode('light')"
-        />
       </fui-header-panel>
     </fui-header>
     <div class="page-body">
@@ -160,5 +162,3 @@
   </div>
 </div>
 <!-- </fui-page> -->
-
-<fui-toast />

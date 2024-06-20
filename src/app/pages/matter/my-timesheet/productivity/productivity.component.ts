@@ -52,7 +52,7 @@ export class ProductivityComponent {
           }
         }
       );
-    }, 2000);
+    }, 1000);
   }
 
   ngOnDestroy(): void {

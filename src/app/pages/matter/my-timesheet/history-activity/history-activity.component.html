@@ -2,44 +2,37 @@
 <div class="utility block">
   <div class="sub-utility block">
     <div class="date-duration">
-      <app-skeleton [active]="loading">
-        <fui-button-icon
-          [type]="'button'"
-          [option]="'icon'"
-          [icon]="'arrowLeft'"
-          [style]="'secondary'"
-          [color]="'text'"
-          (onClick)="moveDate('previous', 6)"
-        />
-      </app-skeleton>
-      <app-skeleton [active]="loading">
-        <p class="date">
-          {{ startDate | date : "d MMMM yy" }} -
-          {{ endDate | date : "d MMMM yy" }}
-        </p>
-      </app-skeleton>
-      <app-skeleton [active]="loading">
-        <fui-button-icon
-          [type]="'button'"
-          [option]="'icon'"
-          [icon]="'arrowRight'"
-          [style]="'secondary'"
-          [color]="'text'"
-          (onClick)="moveDate('next', 6)"
-        />
-      </app-skeleton>
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'icon'"
+        [icon]="'arrowLeft'"
+        [style]="'secondary'"
+        [color]="'text'"
+        (onClick)="moveDate(-5)"
+      />
+      <p class="date">
+        {{ lastDate | date : "d MMMM yy" }} -
+        {{ currentDate | date : "d MMMM yy" }}
+      </p>
+      <fui-button-icon
+        *ngIf="currentDate.toDateString() !== nowDate.toDateString()"
+        [type]="'button'"
+        [option]="'icon'"
+        [icon]="'arrowRight'"
+        [style]="'secondary'"
+        [color]="'text'"
+        (onClick)="moveDate(5)"
+      />
       <div class="duration">
-        <app-skeleton [active]="loading">
-          <fui-badge
-            [color]="'ghost'"
-            [size]="'sizem'"
-            [isBadgeIcon]="true"
-            [icon]="'clock'"
-            [iconPosition]="'start'"
-          >
-            <div>35h 16m</div>
-          </fui-badge>
-        </app-skeleton>
+        <fui-badge
+          [color]="'ghost'"
+          [size]="'sizem'"
+          [isBadgeIcon]="true"
+          [icon]="'clock'"
+          [iconPosition]="'start'"
+        >
+          <div>35h 16m</div>
+        </fui-badge>
       </div>
     </div>
     <div class="vertical-line" *ngIf="filterStatus"></div>
@@ -101,7 +94,7 @@
       [sizeIcon]="'sizes'"
       [iconPosition]="'end'"
     >
-      3 item on page selected
+      {{ selectItem.length }} item on page selected
     </fui-badge>
     <div class="vertical-line" *ngIf="filterStatus"></div>
     <span class="move-matter">
@@ -113,7 +106,7 @@
 <!-- Utility -->
 
 <!-- Table with filter -->
-<fui-table
+<!-- <fui-table
   *ngIf="filterStatus"
   [limit]="limit"
   [totalItems]="totalItems"
@@ -121,15 +114,25 @@
   (onPageChanges)="onPageChanges($event)"
 >
   <fui-table-head>
-    <input type="checkbox" />
+    <input
+      type="checkbox"
+      (change)="selectItemCheckAll()"
+      [checked]="selectItem.length === 5"
+    />
   </fui-table-head>
   <fui-table-head *ngFor="let header of title">
     <span class="header">{{ header }}</span>
   </fui-table-head>
-  <fui-table-body *ngFor="let data of timesheetsData[0].activityList">
+  <fui-table-body
+    *ngFor="let data of timesheetsData[0].activityList; let i = index"
+  >
     <fui-table-body-row>
       <fui-table-body-data>
-        <input type="checkbox" />
+        <input
+          type="checkbox"
+          (change)="selectItemCheck(i)"
+          [checked]="selectItem[i] === i"
+        />
       </fui-table-body-data>
       <fui-table-body-data class="row-date">{{
         data.date ? (data.date | date : "d MMMM yy") : ""
@@ -139,21 +142,42 @@
           <div>{{ data.matter }}</div>
         </fui-badge>
       </fui-table-body-data>
-      <fui-table-body-data class="row-description">{{
-        data.description
-      }}</fui-table-body-data>
+      <fui-table-body-data
+        style="align-items: center; display: flex"
+        class="row-description"
+      >
+        <div
+          *ngIf="!editDoneData2[i]"
+          style="min-width: 300px; margin-right: 5px"
+        >
+          {{ data.description }}
+        </div>
+        <fui-form-control-layout
+          *ngIf="editDoneData2[i]"
+          style="min-width: 300px; margin-right: 5px"
+        >
+          <fui-input-field
+            [formControlField]="descForm"
+            [placeholder]="'Description'"
+            [type]="'text'"
+            [size]="'m'"
+            [invalid]="false"
+          />
+        </fui-form-control-layout>
+      </fui-table-body-data>
       <fui-table-body-data class="row-duration">{{
         data.duration
       }}</fui-table-body-data>
       <fui-table-body-data>
         <div class="wrap-action">
           <fui-button-icon
+            (onClick)="editActivity2(i)"
             [type]="'button'"
             [option]="'icon'"
             [style]="'secondary'"
             [size]="'m'"
-            [color]="'primary'"
-            [icon]="'pencil'"
+            [color]="!editDoneData2[i] ? 'primary' : 'success'"
+            [icon]="!editDoneData2[i] ? 'pencil' : 'check'"
             [iconSide]="'left'"
           />
           <fui-button-icon
@@ -169,25 +193,25 @@
       </fui-table-body-data>
     </fui-table-body-row>
   </fui-table-body>
-</fui-table>
+</fui-table> -->
 <!-- Table with filter -->
 
 <!-- Table without filter -->
-<div class="container-tb-no-filter" *ngIf="!filterStatus">
+<div class="container-tb-no-filter">
   <fui-collapsible-nav-group
-    *ngFor="let data of timesheetsData; let i = index"
+    *ngFor="let date of dateTimesheet; let i = index"
     [isCollapsed]="showHideData[i]"
   >
     <div header class="header-tb">
       <div class="left-tb">
         <span>
           <app-skeleton [active]="loading">
-            {{ data.date ? (data.date | date : "d MMMM yy") : "" }}
+            {{ date.date | date : "d MMMM yy" }}
           </app-skeleton>
         </span>
         <app-skeleton [active]="loading" style="width: 100%">
           <fui-horizontal-stack
-            class="{{ data.activityList.length === 0 ? 'invisible' : '' }}"
+            class="{{ 0 === 0 ? 'invisible' : '' }}"
             [showPercentage]="false"
             [progress]="progress[i]"
           />
@@ -204,12 +228,12 @@
               [iconPosition]="'start'"
             >
               <div>
-                {{ getTotalDurationByType(data.activityList, "self") }}
+                {{ calculateTotalDuration(date.data) }}
               </div>
             </fui-badge>
           </app-skeleton>
         </div>
-        <div class="duration" *ngIf="hasMentionType(data.activityList)">
+        <!-- <div class="duration" *ngIf="hasMentionType(date.data)">
           <app-skeleton [active]="loading">
             <fui-badge
               [color]="'warning'"
@@ -219,11 +243,11 @@
               [iconPosition]="'start'"
             >
               <div>
-                {{ getTotalDurationByType(data.activityList, "mention") }}
+                {{ calculateTotalDuration(date.data) }}
               </div>
             </fui-badge>
           </app-skeleton>
-        </div>
+        </div> -->
         <div style="margin-left: 10px">
           <app-skeleton [active]="loading">
             <fui-button-icon
@@ -242,33 +266,42 @@
     </div>
     <div body>
       <fui-table
-        *ngIf="data.activityList.length > 0"
+        *ngIf="date.data.length > 0"
         [limit]="limit"
         [totalItems]="totalItems"
         (onPageChanges)="onPageChanges($event)"
         [showInfo]="false"
         [pagination]="false"
       >
-        <fui-table-head *ngFor="let header of titleSub">
+        @for (header of titleSub; track $index) {
+        <fui-table-head
+          [ngStyle]="{ width: header === 'Description' ? '100%' : 'auto' }"
+        >
           <span class="header">{{ header }}</span>
         </fui-table-head>
-        <fui-table-body *ngFor="let data of data.activityList">
-          <fui-table-body-row class="{{ data.type }}">
+        }
+        <fui-table-body *ngFor="let data of date.data; let z = index">
+          <!-- class="{{ data.tag }}" -->
+          <fui-table-body-row>
             <fui-table-body-data class="sub-row-matter">
               <fui-badge
                 [color]="'ghost'"
                 [size]="'sizem'"
                 [isBadgeIcon]="false"
               >
-                <div style="margin-top: 2px">{{ data.matter }}</div>
+                <div style="margin-top: 2px">{{ data.matter.matter }}</div>
               </fui-badge>
             </fui-table-body-data>
-            <fui-table-body-data class="sub-row-description">{{
-              data.description
-            }}</fui-table-body-data>
-            <fui-table-body-data class="sub-row-duration">{{
-              data.duration
-            }}</fui-table-body-data>
+            <fui-table-body-data class="sub-row-description"
+              ><div style="min-width: 200px; margin-right: 5px">
+                {{ data.addDescription }}
+                <br />
+                <!-- <b *ngIf="data.tag">Tagged entry by {{ data.tag }}</b> -->
+              </div>
+            </fui-table-body-data>
+            <fui-table-body-data class="sub-row-duration">
+              <div>{{ convertTimeToAngularFormat(data.duration) }}</div>
+            </fui-table-body-data>
             <fui-table-body-data>
               <div class="wrap-action">
                 <fui-button-icon
@@ -277,7 +310,7 @@
                   [style]="'secondary'"
                   [size]="'m'"
                   [color]="'primary'"
-                  [icon]="data.type === 'mention' ? 'check' : 'pencil'"
+                  [icon]="'pencil'"
                   [iconSide]="'left'"
                 />
                 <fui-button-icon
@@ -294,13 +327,13 @@
           </fui-table-body-row>
         </fui-table-body>
       </fui-table>
-      <p class="no-activity" *ngIf="data.activityList.length === 0">
+      <p class="no-activity" *ngIf="date.data.length === 0">
         You don’t have any time recorded on this period.
       </p>
     </div>
   </fui-collapsible-nav-group>
   <app-skeleton [active]="loading">
-    <app-empty-data [dataLength]="timesheetsData.length" />
+    <app-empty-data [dataLength]="dateTimesheet.length" />
   </app-skeleton>
 </div>
 <!-- Table without filter -->
@@ -322,13 +355,17 @@
       <div class="form">
         <label for="desc" class="label">Date</label>
         <div class="time-description">
-          <fui-date-range />
+          <fui-date-range
+            (onChangeStartDate)="onChangeStartDate($event)"
+            (onChangeEndDate)="onChangeEndDate($event)"
+          />
         </div>
       </div>
       <div class="form">
         <label for="desc" class="label">Matter</label>
         <div class="time-description">
           <fui-combo-box
+            [comboxForm]="searchMatter"
             [size]="'m'"
             [placeholder]="'Matter'"
             [optionValue]="optionMatter"

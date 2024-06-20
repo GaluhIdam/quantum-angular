@@ -11,6 +11,18 @@ export class SampleDataMyTimeSheet {
       name: 'Billable',
       type: 'bar',
       stack: 'total',
+      barWidth: '60%',
+      label: {
+        fontSize: 9,
+        show: true,
+        formatter: (params: any) => {
+          const total =
+            SampleDataMyTimeSheet.ytdProductivity[0].data[params.dataIndex] +
+            SampleDataMyTimeSheet.ytdProductivity[1].data[params.dataIndex];
+          const percentage = ((params.value / total) * 100).toFixed(2);
+          return `${percentage}%`;
+        },
+      },
       emphasis: {
         focus: 'series',
       },
@@ -21,21 +33,23 @@ export class SampleDataMyTimeSheet {
       name: 'Non-Billable',
       type: 'bar',
       stack: 'total',
+      barWidth: '60%',
+      label: {
+        fontSize: 9,
+        show: true,
+        formatter: (params: any) => {
+          const total =
+            SampleDataMyTimeSheet.ytdProductivity[0].data[params.dataIndex] +
+            SampleDataMyTimeSheet.ytdProductivity[1].data[params.dataIndex];
+          const percentage = ((params.value / total) * 100).toFixed(2);
+          return `${percentage}%`;
+        },
+      },
       emphasis: {
         focus: 'series',
       },
       data: [120, 132, 101, 134, 90, 230, 210, 320, 302, 301, 334, 390],
       showBackground: true,
-    },
-    {
-      name: 'Untracked',
-      type: 'bar',
-      stack: 'total',
-      emphasis: {
-        focus: 'series',
-      },
-      data: [],
-      showBackground: false,
     },
   ];
 
@@ -108,35 +122,40 @@ export class SampleDataMyTimeSheet {
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5889,
-          description: 'Lecture',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '1h 30m',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5888,
-          description: 'Lecture',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '30m',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5885,
-          description: 'Experiment',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '1h 30m',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5889,
-          description: 'Experiment',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '1h',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5890,
-          description: 'Experiment',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '30m',
           type: 'self',
         },
@@ -148,35 +167,40 @@ export class SampleDataMyTimeSheet {
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5889,
-          description: 'Lecture',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '1h 30m',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5888,
-          description: 'Lecture',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '30m',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5885,
-          description: 'Experiment',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '1h 30m',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5889,
-          description: 'Experiment',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '1h',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5890,
-          description: 'Experiment',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '30m',
           type: 'self',
         },
@@ -188,35 +212,40 @@ export class SampleDataMyTimeSheet {
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5889,
-          description: 'Lecture',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '1h 30m',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5888,
-          description: 'Lecture',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '30m',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5885,
-          description: 'Experiment',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '1h 30m',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5889,
-          description: 'Experiment',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '1h',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5890,
-          description: 'Experiment',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '30m',
           type: 'self',
         },
@@ -228,35 +257,40 @@ export class SampleDataMyTimeSheet {
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5889,
-          description: 'Lecture',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '1h 30m',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5888,
-          description: 'Lecture',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '30m',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5885,
-          description: 'Experiment',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '1h 30m',
           type: 'self',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5889,
-          description: 'Experiment',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '1h',
           type: 'mention',
         },
         {
           date: new Date('2024-05-20T07:05:59'),
           matter: 5890,
-          description: 'Experiment',
+          description:
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et',
           duration: '30m',
           type: 'mention',
         },

@@ -1,9 +1,20 @@
 @import "../../../../../styles.scss";
 
 .input-activity {
-  margin-top: 5px;
+  height: fit-content;
   display: flex;
-  align-items: end;
+}
+
+.container {
+  width: 100%;
+  .sub-container {
+    display: flex;
+    align-items: end;
+    &:last-child {
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+  }
 }
 
 .checkbox {
@@ -31,31 +42,7 @@ input {
 
 .form {
   margin-right: 15px;
-}
-.form.combo-box {
-  min-width: 225px;
-  width: fit-content;
-}
-.form.description {
   width: -webkit-fill-available;
-}
-.form.matter {
-  min-width: 200px;
-  width: 450px;
-}
-.form.date {
-  min-width: 150px;
-  fui-date-picker {
-    height: fit-content;
-    display: block;
-  }
-}
-.form.duration {
-  min-width: 120px;
-  fui-date-picker {
-    height: fit-content;
-    display: block;
-  }
 }
 
 .create-btn {
@@ -85,4 +72,30 @@ input {
   .create-btn-min {
     display: block;
   }
+}
+
+/* app.component.css */
+.hidden-overflow {
+  overflow-y: hidden;
+  height: 200px; /* Set a specific height */
+}
+
+.show-overflow {
+  overflow-y: visible; /* Change to visible when needed */
+}
+
+/** Add On*/
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--fuiColorMediumShade, $fuiColorMediumShade);
+  border-radius: 25px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fuiColorDarkShade, $fuiColorDarkShade);
 }

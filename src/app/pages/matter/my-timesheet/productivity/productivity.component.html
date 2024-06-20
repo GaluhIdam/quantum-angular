@@ -1,38 +1,34 @@
 <div class="header productivity">
-  <app-skeleton [active]="loading">
-    <p class="head-title">Productivity</p>
-  </app-skeleton>
-  <app-skeleton [active]="loading">
-    <fui-popover [position]="'bottom'">
-      <div class="select">
-        <span class="title-select">This Month </span>
-        <fui-icons
-          class="icon-title"
-          [icon]="'arrowDown'"
-          [size]="'sizes'"
-          [color]="'primary'"
-        />
-      </div>
-      <div popover-body>
-        <div class="container-option">
-          <div class="wrap-icon">
-            <fui-icons
-              class="icon-prod"
-              [icon]="'check'"
-              [size]="'sizes'"
-              [color]="'primary'"
-            />
-          </div>
-          <div class="wrap-option">
-            <span class="option-pop">Today</span>
-            <span class="option-pop">This Week</span>
-            <span class="option-pop">This Month</span>
-            <span class="option-pop">This Year</span>
-          </div>
+  <p class="head-title">Productivity</p>
+  <fui-popover [position]="'bottom'">
+    <div class="select">
+      <span class="title-select">This Month </span>
+      <fui-icons
+        class="icon-title"
+        [icon]="'arrowDown'"
+        [size]="'sizes'"
+        [color]="'primary'"
+      />
+    </div>
+    <div popover-body>
+      <div class="container-option">
+        <div class="wrap-icon">
+          <fui-icons
+            class="icon-prod"
+            [icon]="'check'"
+            [size]="'sizes'"
+            [color]="'primary'"
+          />
+        </div>
+        <div class="wrap-option">
+          <span class="option-pop">Today</span>
+          <span class="option-pop">This Week</span>
+          <span class="option-pop">This Month</span>
+          <span class="option-pop">This Year</span>
         </div>
       </div>
-    </fui-popover>
-  </app-skeleton>
+    </div>
+  </fui-popover>
 </div>
 <div class="body" *ngIf="data.length > 0">
   <div class="progress">
@@ -59,24 +55,18 @@
     </app-skeleton>
   </div>
   <div class="legend">
-    <app-skeleton [active]="loading">
-      <span class="legend-title">
-        <div class="color-square primary"></div>
-        Billable
-      </span>
-    </app-skeleton>
-    <app-skeleton [active]="loading">
-      <span class="legend-title"
-        ><div class="color-square text"></div>
-        Non-Billable</span
-      >
-    </app-skeleton>
-    <app-skeleton [active]="loading">
-      <span class="legend-title"
-        ><div class="color-square disabled"></div>
-        Untracked</span
-      >
-    </app-skeleton>
+    <span class="legend-title">
+      <div class="color-square primary"></div>
+      Billable
+    </span>
+    <span class="legend-title"
+      ><div class="color-square text"></div>
+      Non-Billable</span
+    >
+    <span class="legend-title"
+      ><div class="color-square disabled"></div>
+      Untracked</span
+    >
   </div>
 </div>
 <app-skeleton [active]="loading">

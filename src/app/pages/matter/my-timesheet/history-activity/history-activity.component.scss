@@ -172,10 +172,12 @@
   width: 100px;
 }
 .sub-row-description {
+  display: flex;
+  padding: 15px 8px;
   width: 100%;
 }
 .sub-row-duration {
-  width: 100px;
+  min-width: 150px;
 }
 
 .desktop {
