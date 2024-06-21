@@ -148,6 +148,7 @@ export class HistoryActivityComponent extends BaseController {
   selectedMatter: { name: string; value: any }[] = [];
 
   dateTimesheet: TimesheetByDateDTO[] = [];
+  totalDuration: string = '';
   nowDate: Date = new Date();
   currentDate: Date = new Date();
   lastDate!: Date;
@@ -208,18 +209,26 @@ export class HistoryActivityComponent extends BaseController {
     startDate: string,
     endDate: string
   ): void {
-    const adjustedEndDate = this.addDays(endDate, 2);
-    const adjustedStartDate = this.addDays(startDate, 1);
-    const adjustedEndDateProc = this.addDays(endDate, 1);
+    const adjustedEndDate = this.addDays(endDate, 1);
+    const adjustedStartDate = this.addDays(startDate, 0);
+    const adjustedEndDateProc = this.addDays(endDate, 0);
     this.myTimesheetService
       .getTimesheetWithRange(page, size, adjustedStartDate, adjustedEndDate)
       .pipe(
         map((res) =>
-          this.processTimesheets(res.result, adjustedStartDate, adjustedEndDateProc)
+          this.processTimesheets(
+            res.result,
+            adjustedStartDate,
+            adjustedEndDateProc
+          )
         )
       )
       .subscribe((groupedTimesheets: TimesheetByDateDTO[]) => {
         this.dateTimesheet = groupedTimesheets;
+        this.totalDuration = this.calculateTotalDurationByDate(
+          startDate,
+          endDate
+        );
       });
   }
 
@@ -269,6 +278,30 @@ export class HistoryActivityComponent extends BaseController {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
     return `${hours}h ${minutes}m`;
+  }
+
+  calculateTotalDurationByDate(startDate: string, endDate: string): string {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    let totalMinutes = 0;
+
+    this.dateTimesheet.forEach((entry) => {
+      const entryDate = new Date(entry.date);
+      if (entryDate >= start && entryDate <= end) {
+        entry.data.forEach((timesheet) => {
+          totalMinutes += this.calculateDurationInMinutes(timesheet.duration);
+        });
+      }
+    });
+
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours}h ${minutes}m`;
+  }
+
+  calculateDurationInMinutes(duration: string): number {
+    const [hours, minutes] = duration.split(':').map(Number);
+    return hours * 60 + minutes;
   }
 
   /** Helper Date */
