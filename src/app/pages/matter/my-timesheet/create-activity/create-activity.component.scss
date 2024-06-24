@@ -2,16 +2,17 @@
 
 .input-activity {
   height: fit-content;
-  display: flex;
+  display: grid;
 }
 
 .container {
   width: 100%;
   .sub-container {
     display: flex;
+    margin-top: 5px;
     align-items: end;
     &:last-child {
-      margin-top: 40px;
+      margin-top: 20px;
       margin-bottom: 20px;
     }
   }
@@ -43,6 +44,7 @@ input {
 .form {
   margin-right: 15px;
   width: -webkit-fill-available;
+  align-self: baseline;
 }
 
 .create-btn {
@@ -51,6 +53,10 @@ input {
 
 .create-btn-min {
   display: none;
+}
+
+fui-date-picker {
+  border: none;
 }
 
 @media (max-width: 1000px) {

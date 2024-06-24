@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, pipe, retry, tap } from 'rxjs';
 import {
   ActivityDTO,
   MatterDTO,
@@ -9,7 +9,7 @@ import {
 } from '../dtos/my-timesheet.dto';
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { environment } from '../../../../environment/env';
-import { ResponseDTO } from '../../../../core/dtos/response.dto';
+import { ResponseDTO, Result } from '../../../../core/dtos/response.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -52,8 +52,6 @@ export class MyTimesheetService extends BaseController {
    * @param endDate
    */
   getTimesheetWithRange(
-    page: number,
-    size: number,
     startDate: string,
     endDate: string
   ): Observable<ResponseDTO<MyTimesheetDTO[]>> {
@@ -61,11 +59,48 @@ export class MyTimesheetService extends BaseController {
       `${environment.httpUrl}/my-timesheet`,
       {
         params: new HttpParams()
-          .set('page', page)
-          .set('size', size)
           .set('startDate', startDate)
           .set('endDate', endDate),
       }
+    );
+  }
+
+  /** Filter Timesheet
+   * @param startDate
+   * @param endDate
+   * @param matters
+   * @param addDescription
+   * @param page
+   * @param size
+   */
+  getFilterTimesheet(
+    startDate: string | null,
+    endDate: string | null,
+    matters: string | null,
+    addDescription: string | null,
+    page: number,
+    size: number
+  ): Observable<ResponseDTO<Result<MyTimesheetDTO[]>>> {
+    let params = new HttpParams();
+
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+    if (endDate) {
+      params = params.set('endDate', endDate);
+    }
+    if (matters) {
+      params = params.set('matters', matters);
+    }
+    if (addDescription) {
+      params = params.set('addDescription', addDescription);
+    }
+    params = params.set('page', page.toString());
+    params = params.set('size', size.toString());
+
+    return this._http.get<ResponseDTO<Result<MyTimesheetDTO[]>>>(
+      `${environment.httpUrl}/my-timesheet/filter`,
+      { params: params }
     );
   }
 
@@ -75,9 +110,14 @@ export class MyTimesheetService extends BaseController {
   postTimesheet(
     request: MyTimesheetPostDTO
   ): Observable<ResponseDTO<MyTimesheetDTO>> {
-    return this._http.post<ResponseDTO<MyTimesheetDTO>>(
-      `${environment.httpUrl}/my-timesheet`,
-      request
-    );
+    return this._http
+      .post<ResponseDTO<MyTimesheetDTO>>(
+        `${environment.httpUrl}/my-timesheet`,
+        request
+      )
+      .pipe(tap(() => this.updateData(true)));
   }
+
+  /** Put Timesheet */
+  putTimesheet(): void {}
 }

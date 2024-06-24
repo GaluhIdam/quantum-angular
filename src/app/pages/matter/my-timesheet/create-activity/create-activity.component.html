@@ -1,8 +1,8 @@
 <div class="input-activity">
   <div class="container">
+    <span class="title">What did you do?</span>
     <div class="sub-container">
       <div class="form combo-box">
-        <span class="title">What did you do?</span>
         <div class="input">
           <fui-combo-box
             [invalid]="
@@ -132,7 +132,7 @@
             [message]="'Matter is required!'"
             [singleSelection]="true"
             [size]="'m'"
-            [placeholder]="'Number, Project, Client'"
+            [placeholder]="'by Number, Project, Client'"
             [optionValue]="optionMatter"
             [selectedValue]="selectedOptionMatter"
           />
@@ -169,7 +169,6 @@
           <fui-date-picker
             format="YYYY/DD/MM"
             [dateFormControl]="dateFormControl"
-            (onChange)="onChangeHandler($event)"
             [message]="'Date is required!'"
             [isInvalid]="
               dateFormControl.invalid &&
@@ -188,7 +187,6 @@
               (durationForm.dirty || durationForm.touched)
             "
             [message]="'Duration is required!'"
-            (onChange)="duration($event)"
           />
         </div>
       </div>
@@ -197,9 +195,10 @@
   <fui-button-icon
     (onClick)="createTimesheet()"
     class="create-btn"
-    [size]="'l'"
+    [size]="'m'"
     [type]="'button'"
-    [option]="'icon'"
+    [option]="'iconText'"
+    [text]="'Create'"
     [style]="'filled'"
     [color]="'primary'"
     [icon]="'plusInCircleFilled'"
@@ -207,7 +206,7 @@
   <fui-button-icon
     (onClick)="createTimesheet()"
     class="create-btn-min"
-    [size]="'l'"
+    [size]="'m'"
     [type]="'button'"
     [option]="'iconText'"
     [text]="'Create'"

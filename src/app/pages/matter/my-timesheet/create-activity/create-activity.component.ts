@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   ButtonIconComponent,
-  CheckboxComponent,
   Color,
   ComboBoxComponent,
   DatePickerComponent,
@@ -15,12 +14,9 @@ import {
   ToastService,
   ValidatorFieldComponent,
 } from '@quantum/fui';
-import dayjs from 'dayjs';
-import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
 import { MyTimesheetService } from '../services/my-timesheet.service';
 import { debounceTime, map, Subscription } from 'rxjs';
-import { SampleDataMyTimeSheet } from '../services/sample-data';
-import { MyTimesheetDTO, MyTimesheetPostDTO } from '../dtos/my-timesheet.dto';
+import { MyTimesheetPostDTO } from '../dtos/my-timesheet.dto';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -69,7 +65,7 @@ export class CreateActivityComponent {
   durationForm: FormControl = new FormControl('', Validators.required);
 
   selectedDate: string = '';
-  dateFormControl: FormControl = new FormControl(dayjs().format('YYYY/MM/DD'));
+  dateFormControl: FormControl = new FormControl('', Validators.required);
   isInvalid: boolean = false;
   errorMessage: string = 'Input is not valid.';
 
@@ -85,7 +81,6 @@ export class CreateActivityComponent {
       topicForm: this.topicForm,
       addDescForm: this.addDescForm,
       durationForm: this.durationForm,
-      timeFormControl: this.durationForm,
     });
   }
 
@@ -188,6 +183,9 @@ export class CreateActivityComponent {
           this.officialCategoryForm.reset();
           this.dateFormControl.reset();
           this.durationForm.reset();
+          this.selectedActivity = [];
+          this.selectedOptionMatter = [];
+          this.selectedOptionCategory = [];
         }
       });
     } else {
@@ -264,7 +262,6 @@ export class CreateActivityComponent {
   /** Selector for Matter */
   selectionMatter(event: any): void {
     this.selectedOptionMatter = event;
-    console.log(event[0].value);
     this.matterForm.setValue(event[0].value);
   }
 

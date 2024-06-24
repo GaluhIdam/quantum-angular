@@ -17,6 +17,10 @@ import {
   HorizontalStackComponent,
   IconsComponent,
   InputFieldComponent,
+  ModalBodyComponent,
+  ModalComponent,
+  ModalFooterComponent,
+  ModalHeaderComponent,
   ProgressBaseComponent,
   TableBodyComponent,
   TableBodyDataComponent,
@@ -24,6 +28,7 @@ import {
   TableComponent,
   TableHeadComponent,
   TimeSelectionComponent,
+  ValidatorFieldComponent,
 } from '@quantum/fui';
 import { MyTimesheetDTO, TimesheetByDateDTO } from '../dtos/my-timesheet.dto';
 import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.component';
@@ -31,7 +36,7 @@ import { BaseController } from '../../../../core/controller/basecontroller';
 import { MyTimesheetService } from '../services/my-timesheet.service';
 import { debounceTime, map, Subscription } from 'rxjs';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-history-activity',
@@ -61,17 +66,25 @@ import { FormControl } from '@angular/forms';
     DateRangeComponent,
     DatePickerComponent,
     TimeSelectionComponent,
+    ModalComponent,
+    ModalHeaderComponent,
+    ModalBodyComponent,
+    ModalFooterComponent,
+    ReactiveFormsModule,
+    ValidatorFieldComponent,
   ],
   templateUrl: './history-activity.component.html',
   styleUrl: './history-activity.component.scss',
 })
 export class HistoryActivityComponent extends BaseController {
   loading: boolean = true;
+  isModalOpen: boolean = false;
 
-  filterStatus: boolean = false;
   page: number = 0;
   limit: number = 10;
   totalItems: number = 0;
+  filterStatus: boolean = false;
+
   title: string[] = ['Date', 'Matter#', 'Description', 'Duration', ''];
   titleSub: string[] = ['Matter#', 'Description', 'Duration', ''];
   progress: {
@@ -137,22 +150,42 @@ export class HistoryActivityComponent extends BaseController {
   ];
   selectItem: number[] = [];
 
-  searchMatter: FormControl = new FormControl('');
-
-  optionActivity: { name: string; value: any }[] = [];
-
   showHideData: boolean[] = [];
+  showHideEdit: boolean[] = [];
+  showHideEditFilter: boolean[] = [];
 
   isOpenFlyout: boolean = false;
   optionMatter: { name: string; value: any }[] = [];
   selectedMatter: { name: string; value: any }[] = [];
 
+  /** Nomal Data */
   dateTimesheet: TimesheetByDateDTO[] = [];
   totalDuration: string = '';
   nowDate: Date = new Date();
   currentDate: Date = new Date();
   lastDate!: Date;
   private subscription!: Subscription;
+
+  /** Filter Data */
+  dateTimesheetFilter: MyTimesheetDTO[] = [];
+  startDateForm: FormControl = new FormControl();
+  endDateForm: FormControl = new FormControl();
+  searchMatter: FormControl = new FormControl('');
+  descForm: FormControl = new FormControl();
+  filterDate: boolean = false;
+  filterMatter: boolean = false;
+  filterDesc: boolean = false;
+
+  /** Edit */
+  activitySearch: FormControl = new FormControl('', Validators.required);
+  optionActivity: { name: string; value: any }[] = [];
+  selectedActivity: { name: string; value: any }[] = [];
+
+  objectEventForm: FormControl = new FormControl('', Validators.required);
+
+  dateFormControl: FormControl = new FormControl('', Validators.required);
+
+  durationForm: FormControl = new FormControl('', Validators.required);
 
   constructor(private readonly myTimesheetService: MyTimesheetService) {
     super();
@@ -161,9 +194,14 @@ export class HistoryActivityComponent extends BaseController {
   }
 
   ngOnInit(): void {
-    this.loading = false;
-    this.getMatters('');
-    this.moveDate(0);
+    this.getActivity('');
+    this.subscription = this.myTimesheetService.data$.subscribe((update) => {
+      if (update === true || update === false) {
+        this.loading = false;
+        this.getMatters('');
+        this.moveDate(0);
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -181,7 +219,7 @@ export class HistoryActivityComponent extends BaseController {
     this.lastDate.setDate(this.currentDate.getDate() - 5);
     const startDate = this.formatDate(this.lastDate);
     const endDate = this.formatDate(this.currentDate);
-    this.getTimesheet(0, 100, startDate, endDate);
+    this.getTimesheet(startDate, endDate);
   }
 
   /** Get Matter from service */
@@ -203,34 +241,90 @@ export class HistoryActivityComponent extends BaseController {
   }
 
   /** Get Timesheet */
-  getTimesheet(
-    page: number,
-    size: number,
-    startDate: string,
-    endDate: string
-  ): void {
+  getTimesheet(startDate: string, endDate: string): void {
     const adjustedEndDate = this.addDays(endDate, 1);
     const adjustedStartDate = this.addDays(startDate, 0);
     const adjustedEndDateProc = this.addDays(endDate, 0);
+    this.startDateForm.setValue(adjustedStartDate);
+    this.endDateForm.setValue(adjustedEndDateProc);
     this.myTimesheetService
-      .getTimesheetWithRange(page, size, adjustedStartDate, adjustedEndDate)
+      .getTimesheetWithRange(adjustedStartDate, adjustedEndDate)
       .pipe(
-        map((res) =>
-          this.processTimesheets(
+        map((res) => {
+          res.result.forEach((itm) => {
+            this.showHideEdit.push(true);
+          });
+          return this.processTimesheets(
             res.result,
             adjustedStartDate,
             adjustedEndDateProc
-          )
-        )
+          );
+        }),
+        map((groupedTimesheets: TimesheetByDateDTO[]) => {
+          this.dateTimesheet = groupedTimesheets;
+          this.totalDuration = this.calculateTotalDurationByDate(
+            startDate,
+            endDate
+          );
+        })
       )
-      .subscribe((groupedTimesheets: TimesheetByDateDTO[]) => {
-        this.dateTimesheet = groupedTimesheets;
-        this.totalDuration = this.calculateTotalDurationByDate(
-          startDate,
-          endDate
-        );
-      });
+      .subscribe();
   }
+
+  filterFind(page: number, size: number): void {
+    this.filterStatus = true;
+    this.filterTimesheet(
+      this.startDateForm.value,
+      this.endDateForm.value,
+      this.selectedMatter.map((item) => item.value).join(', '),
+      this.descForm.value,
+      page + 1,
+      size
+    );
+    this.filterDate = true;
+    if (this.selectedMatter.length > 0) {
+      this.filterMatter = true;
+    } else {
+      this.filterMatter = false;
+    }
+    if (this.descForm.value === null || this.descForm.value === '') {
+      this.filterDesc = false;
+    } else {
+      this.filterDate = true;
+    }
+  }
+
+  /** Filter Timesheet */
+  filterTimesheet(
+    startDate: string | null,
+    endDate: string | null,
+    matter: string | null,
+    addDescription: string | null,
+    page: number,
+    size: number
+  ): void {
+    this.myTimesheetService
+      .getFilterTimesheet(
+        startDate,
+        endDate,
+        matter,
+        addDescription,
+        page,
+        size
+      )
+      .pipe(
+        map((res) => {
+          res.result.content.forEach((itm) => {
+            this.showHideEditFilter.push(true);
+          });
+          this.dateTimesheetFilter = res.result.content;
+          this.totalItems = res.result.totalElements;
+        })
+      )
+      .subscribe();
+  }
+
+  //--- UTILITY METHOD
 
   /** Generate Date and Grouping Data by Date */
   private processTimesheets(
@@ -304,6 +398,28 @@ export class HistoryActivityComponent extends BaseController {
     return hours * 60 + minutes;
   }
 
+  /** Couter Duration for filter */
+  calculateTotalDurationFilter(): string {
+    let totalHours = 0;
+    let totalMinutes = 0;
+
+    this.dateTimesheetFilter.forEach((entry) => {
+      const durationParts = entry.duration.split(':');
+      const hours = parseInt(durationParts[0], 10);
+      const minutes = parseInt(durationParts[1], 10);
+
+      totalHours += hours;
+      totalMinutes += minutes;
+    });
+    if (totalMinutes >= 60) {
+      const additionalHours = Math.floor(totalMinutes / 60);
+      totalHours += additionalHours;
+      totalMinutes = totalMinutes % 60;
+    }
+
+    return `${totalHours}h ${totalMinutes}m`;
+  }
+
   /** Helper Date */
   addDays(dateString: string, days: number): string {
     const date = new Date(dateString);
@@ -311,10 +427,9 @@ export class HistoryActivityComponent extends BaseController {
     return this.formatDate(date);
   }
 
-  //--- UTILITY METHOD
-
   /** Handling For Pagination */
   onPageChanges(event: any): void {
+    this.filterFind(event.page, event.itemsPerPage);
     console.log(event);
   }
 
@@ -332,16 +447,79 @@ export class HistoryActivityComponent extends BaseController {
   toggleRow(index: number): void {
     this.showHideData[index] = !this.showHideData[index];
   }
-
-  /** Filter Toggle */
-  toggleFilter(): void {
-    this.filterStatus = !this.filterStatus;
+  toggleRowEdit(index: number): void {
+    this.showHideEdit[index] = !this.showHideEdit[index];
+  }
+  toggleRowEditFilter(index: number): void {
+    this.showHideEditFilter[index] = !this.showHideEditFilter[index];
   }
 
-  onChangeStartDate(event: any): void {
-    // this.startDate = event;
+  changeStartDate(event: any): void {
+    this.startDateForm.setValue(event);
   }
-  onChangeEndDate(event: any): void {
-    // this.endDate = event;
+  changeEndDate(event: any): void {
+    this.endDateForm.setValue(event);
+  }
+  selectionFilterMatter(event: any): void {
+    this.selectedMatter = event;
+    this.searchMatter.setValue('');
+  }
+
+  moveTimesheet(): void {
+    this.isModalOpen = true;
+  }
+
+  handleCloseModal() {
+    this.isModalOpen = false;
+  }
+  clearFilters(): void {
+    this.defaultDate();
+    this.selectedMatter = [];
+    this.searchMatter.setValue('');
+    this.descForm.setValue('');
+  }
+
+  clearFiltersAll(): void {
+    this.clearFilters();
+    this.filterStatus = false;
+    this.filterDate = false;
+    this.filterDesc = false;
+    this.filterMatter = false;
+  }
+
+  defaultDate(): void {
+    const currentDate: Date = new Date();
+    const year: number = currentDate.getFullYear();
+    const month: string = (currentDate.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const day: string = currentDate.getDate().toString().padStart(2, '0');
+
+    const currentDateC: Date = this.lastDate;
+    const yearC: number = currentDateC.getFullYear();
+    const monthC: string = (currentDateC.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const dayC: string = currentDateC.getDate().toString().padStart(2, '0');
+
+    this.endDateForm.setValue(`${year}-${month}-${day}`);
+    this.startDateForm.setValue(`${yearC}-${monthC}-${dayC}`);
+  }
+
+  getActivity(search: string): void {
+    this.myTimesheetService
+      .getActivity(search)
+      .pipe(
+        map((res) => {
+          this.optionActivity = [];
+          res.result.forEach((item) => {
+            this.optionActivity.push({
+              name: item.activity,
+              value: item.idActivity,
+            });
+          });
+        })
+      )
+      .subscribe();
   }
 }
