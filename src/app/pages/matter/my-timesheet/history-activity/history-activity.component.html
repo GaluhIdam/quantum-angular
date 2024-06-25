@@ -154,31 +154,50 @@
     </fui-table-head>
     <fui-table-body *ngFor="let data of dateTimesheetFilter; let z = index">
       <fui-table-body-row>
-        <fui-table-body-data>
+        <fui-table-body-data class="{{
+          data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+        }}">
           <input type="checkbox" />
         </fui-table-body-data>
-        <fui-table-body-data class="row-date">{{
+        <fui-table-body-data class="row-date {{
+          data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+        }}">{{
           data.date ? (data.date | date : "d MMMM yy") : ""
         }}</fui-table-body-data>
-        <fui-table-body-data class="row-matter">
-          <fui-badge [color]="'ghost'" [size]="'sizem'" [isBadgeIcon]="false">
-            <div>{{ data.matter.matter }}</div>
-          </fui-badge>
+        <fui-table-body-data class="row-matter {{
+          data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+        }}">
+          <div class="matter-tag">
+            <fui-badge [color]="'ghost'" [size]="'sizem'" [isBadgeIcon]="false">
+              <div>{{ data.matter.matter }}</div>
+            </fui-badge>
+          </div>
         </fui-table-body-data>
         <!-- Conditional false -->
-        <fui-table-body-data *ngIf="showHideEditFilter[z]" class="row-duration">
-          {{ data.description }}</fui-table-body-data
+        <fui-table-body-data *ngIf="showHideEditFilter[z]" class="row-duration {{
+          data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+        }}">
+          {{ data.description }}
+          <br />
+          <span class="tag-badge" *ngIf="data.tagEntityList.length > 0"
+            ><fui-icons style="margin-right: 5px;" [icon]="'user'" [size]="'sizes'" [color]="'text'" />
+            Tagged entry by {{ data.tagEntityList[0].tagBy }}</span
+          ></fui-table-body-data
         >
         <fui-table-body-data
           *ngIf="showHideEditFilter[z]"
-          class="row-duration"
+          class="row-duration {{
+            data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+          }}"
           >{{ convertTimeToAngularFormat(data.duration) }}</fui-table-body-data
         >
         <!-- Conditional false -->
         <!-- Conditional true -->
         <fui-table-body-data
           *ngIf="!showHideEditFilter[z]"
-          class="sub-row-description"
+          class="sub-row-description {{
+            data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+          }}"
           ><div style="display: flex">
             <fui-combo-box
               style="margin-right: 5px; width: -webkit-fill-available"
@@ -238,7 +257,9 @@
         </fui-table-body-data>
         <fui-table-body-data
           *ngIf="!showHideEditFilter[z]"
-          class="sub-row-duration"
+          class="sub-row-duration {{
+            data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+          }}"
         >
           <fui-time-selection
             [timeFormControl]="durationForm"
@@ -250,8 +271,12 @@
           />
         </fui-table-body-data>
         <!-- Conditional true -->
-        <fui-table-body-data>
-          <div class="wrap-action">
+        <fui-table-body-data class="{{
+          data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+        }}">
+          <div class="wrap-action {{
+            data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+          }}">
             <fui-button-icon
               *ngIf="showHideEditFilter[z]"
               (onClick)="toggleRowEditFilter(z, data)"
@@ -379,13 +404,18 @@
                   data.tagEntityList.length > 0 ? 'tagged-cell' : ''
                 }}"
               >
-                <fui-badge
-                  [color]="'ghost'"
-                  [size]="'sizem'"
-                  [isBadgeIcon]="false"
-                >
-                  <div style="margin-top: 2px">{{ data.matter.matter }}</div>
-                </fui-badge>
+                <div class="matter-tag">
+                  <fui-badge
+                    class="matter-tag"
+                    [color]="'ghost'"
+                    [size]="'sizem'"
+                    [isBadgeIcon]="false"
+                  >
+                    <div style="margin-top: 2px">
+                      {{ data.matter.matter }}
+                    </div>
+                  </fui-badge>
+                </div>
               </fui-table-body-data>
               <fui-table-body-data
                 *ngIf="showHideEdit[i][z]"
@@ -396,7 +426,7 @@
                   {{ data.description }}
                   <br />
                   <span class="tag-badge" *ngIf="data.tagEntityList.length > 0"
-                    ><fui-icons
+                    ><fui-icons style="margin-right: 5px;"
                       [icon]="'user'"
                       [size]="'sizes'"
                       [color]="'text'"
@@ -490,9 +520,9 @@
                   [message]="'Duration is required!'"
                 />
               </fui-table-body-data>
-              <fui-table-body-data class="{{
-                data.tagEntityList.length > 0 ? 'tagged-cell' : ''
-              }}">
+              <fui-table-body-data
+                class="{{ data.tagEntityList.length > 0 ? 'tagged-cell' : '' }}"
+              >
                 <div
                   class="wrap-action {{
                     data.tagEntityList.length > 0 ? 'tagged-cell' : ''

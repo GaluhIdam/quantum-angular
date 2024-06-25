@@ -259,12 +259,17 @@ fui-horizontal-stack {
   border-color: var(--fuiColorLightShade, $fuiColorLightShade);
   border-style: solid;
   padding: 5px;
-  border-radius: 4px;
+  border-radius: 6px;
   background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
 }
 
 .tagged-cell {
   background-color: var(--fuiWarningSecondary, $fuiWarningSecondary);
+}
+
+.matter-tag {
+  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+  border-radius: 6px;
 }
 
 @media (max-width: 1000px) {
