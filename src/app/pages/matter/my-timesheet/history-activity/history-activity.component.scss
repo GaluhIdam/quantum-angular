@@ -81,7 +81,6 @@
 }
 
 .container-tb-no-filter {
-  overflow-x: auto;
   fui-collapsible-nav-group {
     min-width: 600px;
     width: -webkit-fill-available;
@@ -156,6 +155,7 @@
 }
 .time-description {
   margin-top: 5px;
+  margin-bottom: 5px;
 }
 .footer-flyout {
   padding: 10px;
@@ -245,6 +245,26 @@ fui-horizontal-stack {
     }
     margin-top: 20px;
   }
+}
+.filter-valid {
+  font-size: small;
+  color: var(--fuiColorDanger, $fuiColorDanger);
+}
+.tag-badge {
+  font-size: small;
+  width: fit-content;
+  display: flex;
+  margin-top: 5px;
+  border-width: 1px;
+  border-color: var(--fuiColorLightShade, $fuiColorLightShade);
+  border-style: solid;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+}
+
+.tagged-cell {
+  background-color: var(--fuiWarningSecondary, $fuiWarningSecondary);
 }
 
 @media (max-width: 1000px) {

@@ -17,9 +17,7 @@ export interface HourActivityDTO {
 export interface MyTimesheetDTO {
   idTimesheet: number;
   uuid: string;
-  objectEvent: string;
-  topic: string;
-  addDescription: string;
+  description: string;
   date: Date;
   duration: string;
   createdAt: Date;
@@ -27,12 +25,11 @@ export interface MyTimesheetDTO {
   matter: MatterDTO;
   activity: ActivityDTO;
   officialCategory: OfficialCategoryDTO;
+  tagEntityList: TagEntityList[];
 }
 
 export interface MyTimesheetPostDTO {
-  objectEvent: string;
-  topic: string;
-  addDescription: string;
+  description: string;
   date: string;
   duration: string;
   matterId: number;
@@ -66,6 +63,15 @@ export interface OfficialCategoryDTO {
   idOfficialCategory: number;
   uuid: string;
   officialCategory: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface TagEntityList {
+  idTag: number;
+  uuid: string;
+  tagBy: string;
+  tagged: string;
   createdAt: Date;
   updatedAt: Date;
 }

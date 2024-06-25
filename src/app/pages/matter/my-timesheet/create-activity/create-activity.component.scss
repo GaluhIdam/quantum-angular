@@ -58,6 +58,13 @@ input {
 fui-date-picker {
   border: none;
 }
+.mention-selector {
+  margin: 5px 0px;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
 
 @media (max-width: 1000px) {
   .input-activity {

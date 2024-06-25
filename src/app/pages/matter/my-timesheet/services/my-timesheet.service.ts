@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, pipe, retry, tap } from 'rxjs';
 import {
@@ -9,7 +9,12 @@ import {
 } from '../dtos/my-timesheet.dto';
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { environment } from '../../../../environment/env';
-import { ResponseDTO, Result } from '../../../../core/dtos/response.dto';
+import {
+  ResponseDTO,
+  Result,
+  TokenDTO,
+  UserKeycloakDTO,
+} from '../../../../core/dtos/response.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -119,5 +124,49 @@ export class MyTimesheetService extends BaseController {
   }
 
   /** Put Timesheet */
-  putTimesheet(): void {}
+  putTimesheet(
+    uuid: string,
+    request: MyTimesheetPostDTO
+  ): Observable<ResponseDTO<MyTimesheetDTO>> {
+    return this._http
+      .put<ResponseDTO<MyTimesheetDTO>>(
+        `${environment.httpUrl}/my-timesheet/${uuid}`,
+        request
+      )
+      .pipe(tap(() => this.updateData(false)));
+  }
+
+  /** Delete Timesheet */
+  deleteTimesheet(uuid: string): Observable<ResponseDTO<MyTimesheetDTO>> {
+    return this._http.delete<ResponseDTO<MyTimesheetDTO>>(
+      `${environment.httpUrl}/my-timesheet/${uuid}`
+    );
+  }
+
+  /** Post for get Token */
+  postToken(): Observable<TokenDTO> {
+    const body = new HttpParams()
+      .set('client_id', 'quantum-client')
+      .set('client_secret', 'wkKbXRbuzUTWHvrQw8y3pNgDFXiCe2Rq')
+      .set('grant_type', 'client_credentials');
+    const headers = new HttpHeaders().set(
+      'Content-Type',
+      'application/x-www-form-urlencoded'
+    );
+
+    return this._http.post<TokenDTO>(
+      'http://localhost:8080/realms/quantum-demo/protocol/openid-connect/token',
+      body.toString(),
+      { headers }
+    );
+  }
+
+  /** Getting Users from keycloak */
+  getEmployee(token: string): Observable<UserKeycloakDTO[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this._http.get<UserKeycloakDTO[]>(
+      `http://localhost:8080/admin/realms/quantum-demo/users`,
+      { headers }
+    );
+  }
 }

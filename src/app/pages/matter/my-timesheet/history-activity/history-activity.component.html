@@ -3,7 +3,7 @@
   <div class="sub-utility block">
     <div class="date-duration">
       <fui-button-icon
-        *ngIf="!filterStatus"
+        *ngIf="!filterDate"
         [type]="'button'"
         [option]="'icon'"
         [icon]="'arrowLeft'"
@@ -11,17 +11,18 @@
         [color]="'text'"
         (onClick)="moveDate(-5)"
       />
-      <p class="date" *ngIf="!filterStatus">
+      <p class="date" *ngIf="!filterDate">
         {{ lastDate | date : "d MMMM yy" }} -
         {{ currentDate | date : "d MMMM yy" }}
       </p>
-      <p class="date" *ngIf="filterStatus">
+      <p class="date" *ngIf="filterDate">
         {{ startDateForm.value | date : "d MMMM yy" }} -
         {{ endDateForm.value | date : "d MMMM yy" }}
       </p>
       <fui-button-icon
         *ngIf="
-          currentDate.toDateString() !== nowDate.toDateString() && !filterStatus
+          currentDate.toDateString() !== nowDate.toDateString() &&
+          (!filterDate || !filterMatter || !filterDesc)
         "
         [type]="'button'"
         [option]="'icon'"
@@ -30,43 +31,48 @@
         [color]="'text'"
         (onClick)="moveDate(5)"
       />
-      <div class="duration">
-        <fui-badge
-          [color]="'ghost'"
-          [size]="'sizem'"
-          [isBadgeIcon]="true"
-          [icon]="'clock'"
-          [iconPosition]="'start'"
-        >
-          <div *ngIf="!filterStatus">{{ totalDuration }}</div>
-          <div *ngIf="filterStatus">{{ calculateTotalDurationFilter() }}</div>
-        </fui-badge>
-      </div>
+      <app-skeleton [active]="loading">
+        <div class="duration">
+          <fui-badge
+            [color]="'ghost'"
+            [size]="'sizem'"
+            [isBadgeIcon]="true"
+            [icon]="'clock'"
+            [iconPosition]="'start'"
+          >
+            <div *ngIf="!filterDate">
+              {{ totalDuration }}
+            </div>
+            <div *ngIf="filterDate">
+              {{ calculateTotalDurationFilter() }}
+            </div>
+          </fui-badge>
+        </div>
+      </app-skeleton>
     </div>
   </div>
   <div class="desktop">
-    <app-skeleton [active]="loading">
-      <fui-button-icon
-        [type]="'button'"
-        [option]="'iconText'"
-        [style]="'secondary'"
-        [text]="'Filter'"
-        [size]="'m'"
-        [color]="'text'"
-        [icon]="'filter'"
-        [iconSide]="'left'"
-        (onClick)="handleOpenFlyout()"
-      />
-    </app-skeleton>
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'iconText'"
+      [style]="'secondary'"
+      [text]="'Filter'"
+      [size]="'m'"
+      [color]="'text'"
+      [icon]="'filter'"
+      [iconSide]="'left'"
+      (onClick)="handleOpenFlyout()"
+    />
   </div>
 </div>
 <!-- Filter -->
-<div class="utility" *ngIf="filterStatus">
+<div class="utility" *ngIf="filterDate">
   <div class="sub-utility">
     <p class="text">Applied Filters</p>
     <span class="clear-all" (click)="clearFiltersAll()">Clear All</span>
     <fui-badge
       *ngIf="filterMatter"
+      (onClickBadge)="filterMatter = false"
       class="badge-filter"
       [color]="'text'"
       [size]="'sizel'"
@@ -79,6 +85,7 @@
     </fui-badge>
     <fui-badge
       *ngIf="filterDate"
+      (onClickBadge)="filterDate = false"
       class="badge-filter"
       [color]="'text'"
       [size]="'sizel'"
@@ -91,6 +98,7 @@
     </fui-badge>
     <fui-badge
       *ngIf="filterDesc"
+      (onClickBadge)="filterDesc = false"
       class="badge-filter"
       [color]="'text'"
       [size]="'sizel'"
@@ -104,7 +112,7 @@
   </div>
 </div>
 <!-- Selected -->
-<div class="utility last" *ngIf="filterStatus">
+<div class="utility last" *ngIf="filterDate">
   <div class="sub-utility">
     <fui-badge
       class="badge-selected"
@@ -117,7 +125,7 @@
     >
       {{ selectItem.length }} item on page selected
     </fui-badge>
-    <div class="vertical-line" *ngIf="filterStatus"></div>
+    <div class="vertical-line" *ngIf="filterDate"></div>
     <span class="move-matter" (click)="moveTimesheet()">
       <fui-icons [icon]="'push'" [size]="'sizem'" [color]="'primary'" />
       Move
@@ -126,347 +134,430 @@
 </div>
 <!-- Utility -->
 
-<!-- Table with filter -->
-<fui-table
-  *ngIf="filterStatus"
-  [limit]="limit"
-  [totalItems]="totalItems"
-  [showInfo]="false"
-  (onPageChanges)="onPageChanges($event)"
->
-  <fui-table-head>
-    <input type="checkbox" [checked]="selectItem.length === 5" />
-  </fui-table-head>
-  <fui-table-head *ngFor="let header of title">
-    <span class="header">{{ header }}</span>
-  </fui-table-head>
-  <fui-table-body *ngFor="let data of dateTimesheetFilter; let z = index">
-    <fui-table-body-row>
-      <fui-table-body-data>
-        <input type="checkbox" />
-      </fui-table-body-data>
-      <fui-table-body-data class="row-date">{{
-        data.date ? (data.date | date : "d MMMM yy") : ""
-      }}</fui-table-body-data>
-      <fui-table-body-data class="row-matter">
-        <fui-badge [color]="'ghost'" [size]="'sizem'" [isBadgeIcon]="false">
-          <div>{{ data.matter.matter }}</div>
-        </fui-badge>
-      </fui-table-body-data>
-      <!-- Conditional false -->
-      <fui-table-body-data *ngIf="showHideEditFilter[z]" class="row-duration">
-        {{ data.addDescription }}</fui-table-body-data
-      >
-      <fui-table-body-data *ngIf="showHideEditFilter[z]" class="row-duration">{{
-        convertTimeToAngularFormat(data.duration)
-      }}</fui-table-body-data>
-      <!-- Conditional false -->
-      <!-- Conditional true -->
-      <fui-table-body-data
-        *ngIf="!showHideEditFilter[z]"
-        class="sub-row-description"
-        ><div style="display: flex">
-          <fui-combo-box
-            style="margin-right: 5px"
-            [invalid]="
-              activitySearch.invalid &&
-              (activitySearch.dirty || activitySearch.touched)
-            "
-            [message]="'Activity is required!'"
-            [comboxForm]="activitySearch"
-            [singleSelection]="true"
-            [size]="'m'"
-            [placeholder]="'Activity/verb'"
-            [optionValue]="optionActivity"
-            [selectedValue]="selectedActivity"
-          />
-          <fui-form-control-layout
-            style="margin-right: 5px"
-            class="description"
-          >
-            <fui-input-field
-              [formControlField]="objectEventForm"
-              [placeholder]="'object/event'"
-              [type]="'text'"
-              [size]="'m'"
+<app-skeleton [active]="loading">
+  <!-- Table with filter -->
+  <fui-table
+    *ngIf="filterDate"
+    [limit]="limit"
+    [totalItems]="totalItems"
+    [showInfo]="false"
+    (onPageChanges)="onPageChanges($event)"
+  >
+    <fui-table-head>
+      <input type="checkbox" [checked]="selectItem.length === 5" />
+    </fui-table-head>
+    <fui-table-head
+      [ngStyle]="{ width: header === 'Description' ? '100%' : 'auto' }"
+      *ngFor="let header of title"
+    >
+      <span class="header">{{ header }}</span>
+    </fui-table-head>
+    <fui-table-body *ngFor="let data of dateTimesheetFilter; let z = index">
+      <fui-table-body-row>
+        <fui-table-body-data>
+          <input type="checkbox" />
+        </fui-table-body-data>
+        <fui-table-body-data class="row-date">{{
+          data.date ? (data.date | date : "d MMMM yy") : ""
+        }}</fui-table-body-data>
+        <fui-table-body-data class="row-matter">
+          <fui-badge [color]="'ghost'" [size]="'sizem'" [isBadgeIcon]="false">
+            <div>{{ data.matter.matter }}</div>
+          </fui-badge>
+        </fui-table-body-data>
+        <!-- Conditional false -->
+        <fui-table-body-data *ngIf="showHideEditFilter[z]" class="row-duration">
+          {{ data.description }}</fui-table-body-data
+        >
+        <fui-table-body-data
+          *ngIf="showHideEditFilter[z]"
+          class="row-duration"
+          >{{ convertTimeToAngularFormat(data.duration) }}</fui-table-body-data
+        >
+        <!-- Conditional false -->
+        <!-- Conditional true -->
+        <fui-table-body-data
+          *ngIf="!showHideEditFilter[z]"
+          class="sub-row-description"
+          ><div style="display: flex">
+            <fui-combo-box
+              style="margin-right: 5px; width: -webkit-fill-available"
               [invalid]="
-                objectEventForm.invalid &&
-                (objectEventForm.dirty || objectEventForm.touched)
+                activitySearch.invalid &&
+                (activitySearch.dirty || activitySearch.touched)
               "
+              [message]="'Activity is required!'"
+              [comboxForm]="activitySearch"
+              [singleSelection]="true"
+              [size]="'m'"
+              [placeholder]="'Activity/verb'"
+              [optionValue]="optionActivity"
+              [selectedValue]="selectedActivity"
+            />
+            <fui-form-control-layout
+              style="margin-right: 5px; width: -webkit-fill-available"
+              class="description"
             >
-              <fui-icons
-                *ngIf="
+              <fui-input-field
+                [formControlField]="objectEventForm"
+                [placeholder]="'object/event'"
+                [type]="'text'"
+                [size]="'m'"
+                [invalid]="
                   objectEventForm.invalid &&
                   (objectEventForm.dirty || objectEventForm.touched)
                 "
-                right-icon
-                [label]="'right'"
-                [icon]="'alert'"
-                [size]="'sizem'"
-                [color]="'danger'"
-            /></fui-input-field>
-            <fui-validator-field
-              validator
-              [message]="'Object/Event is required!'"
+              >
+                <fui-icons
+                  *ngIf="
+                    objectEventForm.invalid &&
+                    (objectEventForm.dirty || objectEventForm.touched)
+                  "
+                  right-icon
+                  [label]="'right'"
+                  [icon]="'alert'"
+                  [size]="'sizem'"
+                  [color]="'danger'"
+              /></fui-input-field>
+              <fui-validator-field
+                validator
+                [message]="'Object/Event is required!'"
+              />
+            </fui-form-control-layout>
+            <fui-date-picker
+              style="margin-right: 5px"
+              format="YYYY/DD/MM"
+              [dateFormControl]="dateFormControl"
+              [message]="'Date is required!'"
+              [isInvalid]="
+                dateFormControl.invalid &&
+                (dateFormControl.dirty || dateFormControl.touched)
+              "
             />
-          </fui-form-control-layout>
-          <fui-date-picker
-            style="margin-right: 5px"
-            format="YYYY/DD/MM"
-            [dateFormControl]="dateFormControl"
-            [message]="'Date is required!'"
+          </div>
+        </fui-table-body-data>
+        <fui-table-body-data
+          *ngIf="!showHideEditFilter[z]"
+          class="sub-row-duration"
+        >
+          <fui-time-selection
+            [timeFormControl]="durationForm"
             [isInvalid]="
-              dateFormControl.invalid &&
-              (dateFormControl.dirty || dateFormControl.touched)
+              durationForm.invalid &&
+              (durationForm.dirty || durationForm.touched)
             "
+            [message]="'Duration is required!'"
           />
-        </div>
-      </fui-table-body-data>
-      <fui-table-body-data
-        *ngIf="!showHideEditFilter[z]"
-        class="sub-row-duration"
-      >
-        <fui-time-selection
-          [timeFormControl]="durationForm"
-          [isInvalid]="
-            durationForm.invalid && (durationForm.dirty || durationForm.touched)
-          "
-          [message]="'Duration is required!'"
-        />
-      </fui-table-body-data>
-      <!-- Conditional true -->
-      <fui-table-body-data>
-        <div class="wrap-action">
-          <fui-button-icon
-            (onClick)="toggleRowEditFilter(z)"
-            [type]="'button'"
-            [option]="'icon'"
-            [style]="'secondary'"
-            [size]="'m'"
-            [color]="showHideEditFilter[z] == true ? 'primary' : 'success'"
-            [icon]="showHideEditFilter[z] == true ? 'pencil' : 'save'"
-            [iconSide]="'left'"
-          />
-          <fui-button-icon
-            [type]="'button'"
-            [option]="'icon'"
-            [style]="'secondary'"
-            [size]="'m'"
-            [color]="'danger'"
-            [icon]="'trash'"
-            [iconSide]="'left'"
-          />
-        </div>
-      </fui-table-body-data>
-    </fui-table-body-row>
-  </fui-table-body>
-</fui-table>
-<!-- Table with filter -->
-
-<!-- Table without filter -->
-<div class="container-tb-no-filter" *ngIf="!filterStatus">
-  <fui-collapsible-nav-group
-    *ngFor="let date of dateTimesheet; let i = index"
-    [isCollapsed]="showHideData[i]"
-  >
-    <div header class="header-tb">
-      <div class="left-tb">
-        <span>
-          <app-skeleton [active]="loading">
-            {{ date.date | date : "d MMMM yy" }}
-          </app-skeleton>
-        </span>
-        <app-skeleton [active]="loading" style="width: 100%">
-          <fui-horizontal-stack
-            class="{{ 0 === 0 ? 'invisible' : '' }}"
-            [showPercentage]="false"
-            [progress]="progress[i]"
-          />
-        </app-skeleton>
-      </div>
-      <div class="right-tb">
-        <div class="duration">
-          <app-skeleton [active]="loading">
-            <fui-badge
-              [color]="'ghost'"
-              [size]="'sizem'"
-              [isBadgeIcon]="true"
-              [icon]="'clock'"
-              [iconPosition]="'start'"
-            >
-              <div>
-                {{ calculateTotalDuration(date.data) }}
-              </div>
-            </fui-badge>
-          </app-skeleton>
-        </div>
-        <div style="margin-left: 10px">
-          <app-skeleton [active]="loading">
+        </fui-table-body-data>
+        <!-- Conditional true -->
+        <fui-table-body-data>
+          <div class="wrap-action">
             <fui-button-icon
+              *ngIf="showHideEditFilter[z]"
+              (onClick)="toggleRowEditFilter(z, data)"
+              [type]="'button'"
+              [option]="'icon'"
+              [style]="'secondary'"
+              [size]="'m'"
+              [color]="'primary'"
+              [icon]="'pencil'"
+              [iconSide]="'left'"
+            />
+            <fui-button-icon
+              *ngIf="showHideEditFilter[z]"
+              (onClick)="deleteConfirm(data.uuid)"
+              [type]="'button'"
+              [option]="'icon'"
+              [style]="'secondary'"
+              [size]="'m'"
+              [color]="'danger'"
+              [icon]="'trash'"
+              [iconSide]="'left'"
+            />
+            <fui-button-icon
+              (onClick)="updateTimesheet(z, z, data.uuid)"
+              *ngIf="!showHideEditFilter[z]"
+              [type]="'button'"
+              [option]="'icon'"
+              [style]="'secondary'"
+              [size]="'m'"
+              [color]="'success'"
+              [icon]="'save'"
+              [iconSide]="'left'"
+            />
+            <fui-button-icon
+              *ngIf="!showHideEditFilter[z]"
+              (onClick)="cancelRowEditFilter(z)"
               [type]="'button'"
               [option]="'icon'"
               [style]="'secondary'"
               [size]="'m'"
               [color]="'text'"
-              [icon]="showHideData[i] ? 'arrowDown' : 'arrowRight'"
+              [icon]="'cross'"
               [iconSide]="'left'"
-              (onClick)="toggleRow(i)"
+            />
+          </div>
+        </fui-table-body-data>
+      </fui-table-body-row>
+    </fui-table-body>
+  </fui-table>
+  <!-- Table with filter -->
+
+  <!-- Table without filter -->
+  <div class="container-tb-no-filter" *ngIf="!filterDate">
+    <fui-collapsible-nav-group
+      *ngFor="let date of dateTimesheet; let i = index"
+      [isCollapsed]="showHideData[i]"
+    >
+      <div header class="header-tb">
+        <div class="left-tb">
+          <span>
+            <app-skeleton [active]="loading">
+              {{ date.date | date : "d MMMM yy" }}
+            </app-skeleton>
+          </span>
+          <app-skeleton [active]="loading" style="width: 100%">
+            <fui-horizontal-stack
+              class="{{ 0 === 0 ? 'invisible' : '' }}"
+              [showPercentage]="false"
+              [progress]="progress[i]"
             />
           </app-skeleton>
         </div>
-      </div>
-    </div>
-    <div body>
-      <fui-table
-        *ngIf="date.data.length > 0"
-        [limit]="limit"
-        [totalItems]="totalItems"
-        (onPageChanges)="onPageChanges($event)"
-        [showInfo]="false"
-        [pagination]="false"
-      >
-        @for (header of titleSub; track $index) {
-        <fui-table-head
-          [ngStyle]="{ width: header === 'Description' ? '100%' : 'auto' }"
-        >
-          <span class="header">{{ header }}</span>
-        </fui-table-head>
-        }
-        <fui-table-body *ngFor="let data of date.data; let z = index">
-          <fui-table-body-row>
-            <fui-table-body-data class="sub-row-matter">
+        <div class="right-tb">
+          <div class="duration">
+            <app-skeleton [active]="loading">
               <fui-badge
                 [color]="'ghost'"
                 [size]="'sizem'"
-                [isBadgeIcon]="false"
+                [isBadgeIcon]="true"
+                [icon]="'clock'"
+                [iconPosition]="'start'"
               >
-                <div style="margin-top: 2px">{{ data.matter.matter }}</div>
+                <div>
+                  {{ calculateTotalDuration(date.data) }}
+                </div>
               </fui-badge>
-            </fui-table-body-data>
-            <fui-table-body-data
-              *ngIf="showHideEdit[z]"
-              class="sub-row-description"
-              ><div style="min-width: 200px; margin-right: 5px">
-                {{ data.addDescription }}
-                <br />
-                <!-- <b *ngIf="data.tag">Tagged entry by {{ data.tag }}</b> -->
-              </div>
-            </fui-table-body-data>
-            <fui-table-body-data
-              *ngIf="showHideEdit[z]"
-              class="sub-row-duration"
-            >
-              <div>{{ convertTimeToAngularFormat(data.duration) }}</div>
-            </fui-table-body-data>
-            <fui-table-body-data
-              *ngIf="!showHideEdit[z]"
-              class="sub-row-description"
-              ><div style="display: flex">
-                <fui-combo-box
-                  style="margin-right: 5px"
-                  [invalid]="
-                    activitySearch.invalid &&
-                    (activitySearch.dirty || activitySearch.touched)
-                  "
-                  [message]="'Activity is required!'"
-                  [comboxForm]="activitySearch"
-                  [singleSelection]="true"
-                  [size]="'m'"
-                  [placeholder]="'Activity/verb'"
-                  [optionValue]="optionActivity"
-                  [selectedValue]="selectedActivity"
-                />
-                <fui-form-control-layout
-                  style="margin-right: 5px"
-                  class="description"
+            </app-skeleton>
+          </div>
+          <div style="margin-left: 10px">
+            <app-skeleton [active]="loading">
+              <fui-button-icon
+                [type]="'button'"
+                [option]="'icon'"
+                [style]="'secondary'"
+                [size]="'m'"
+                [color]="'text'"
+                [icon]="showHideData[i] ? 'arrowDown' : 'arrowRight'"
+                [iconSide]="'left'"
+                (onClick)="toggleRow(i)"
+              />
+            </app-skeleton>
+          </div>
+        </div>
+      </div>
+      <div body>
+        <fui-table
+          *ngIf="date.data.length > 0"
+          [limit]="limit"
+          [totalItems]="totalItems"
+          (onPageChanges)="onPageChanges($event)"
+          [showInfo]="false"
+          [pagination]="false"
+        >
+          @for (header of titleSub; track $index) {
+          <fui-table-head
+            [ngStyle]="{ width: header === 'Description' ? '100%' : 'auto' }"
+          >
+            <span class="header">{{ header }}</span>
+          </fui-table-head>
+          }
+          <fui-table-body *ngFor="let data of date.data; let z = index">
+            <fui-table-body-row>
+              <fui-table-body-data
+                class="sub-row-matter {{
+                  data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+                }}"
+              >
+                <fui-badge
+                  [color]="'ghost'"
+                  [size]="'sizem'"
+                  [isBadgeIcon]="false"
                 >
-                  <fui-input-field
-                    [formControlField]="objectEventForm"
-                    [placeholder]="'object/event'"
-                    [type]="'text'"
-                    [size]="'m'"
-                    [invalid]="
-                      objectEventForm.invalid &&
-                      (objectEventForm.dirty || objectEventForm.touched)
-                    "
+                  <div style="margin-top: 2px">{{ data.matter.matter }}</div>
+                </fui-badge>
+              </fui-table-body-data>
+              <fui-table-body-data
+                *ngIf="showHideEdit[i][z]"
+                class="sub-row-description {{
+                  data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+                }}"
+                ><div style="min-width: 200px; margin-right: 5px">
+                  {{ data.description }}
+                  <br />
+                  <span class="tag-badge" *ngIf="data.tagEntityList.length > 0"
+                    ><fui-icons
+                      [icon]="'user'"
+                      [size]="'sizes'"
+                      [color]="'text'"
+                    />
+                    Tagged entry by {{ data.tagEntityList[0].tagBy }}</span
                   >
-                    <fui-icons
-                      *ngIf="
+                </div>
+              </fui-table-body-data>
+              <fui-table-body-data
+                *ngIf="showHideEdit[i][z]"
+                class="sub-row-duration {{
+                  data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+                }}"
+              >
+                <div>{{ convertTimeToAngularFormat(data.duration) }}</div>
+              </fui-table-body-data>
+              <fui-table-body-data
+                *ngIf="!showHideEdit[i][z]"
+                class="sub-row-description {{
+                  data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+                }}"
+                ><div style="display: flex; width: -webkit-fill-available">
+                  <fui-combo-box
+                    style="margin-right: 5px; width: -webkit-fill-available"
+                    [invalid]="
+                      activitySearch.invalid &&
+                      (activitySearch.dirty || activitySearch.touched)
+                    "
+                    [message]="'Activity is required!'"
+                    [comboxForm]="activitySearch"
+                    [singleSelection]="true"
+                    [size]="'m'"
+                    [placeholder]="'Activity/verb'"
+                    [optionValue]="optionActivity"
+                    [selectedValue]="selectedActivity"
+                  />
+                  <fui-form-control-layout
+                    style="margin-right: 5px; width: -webkit-fill-available"
+                    class="description"
+                  >
+                    <fui-input-field
+                      [formControlField]="objectEventForm"
+                      [placeholder]="'object/event'"
+                      [type]="'text'"
+                      [size]="'m'"
+                      [invalid]="
                         objectEventForm.invalid &&
                         (objectEventForm.dirty || objectEventForm.touched)
                       "
-                      right-icon
-                      [label]="'right'"
-                      [icon]="'alert'"
-                      [size]="'sizem'"
-                      [color]="'danger'"
-                  /></fui-input-field>
-                  <fui-validator-field
-                    validator
-                    [message]="'Object/Event is required!'"
+                    >
+                      <fui-icons
+                        *ngIf="
+                          objectEventForm.invalid &&
+                          (objectEventForm.dirty || objectEventForm.touched)
+                        "
+                        right-icon
+                        [label]="'right'"
+                        [icon]="'alert'"
+                        [size]="'sizem'"
+                        [color]="'danger'"
+                    /></fui-input-field>
+                    <fui-validator-field
+                      validator
+                      [message]="'Object/Event is required!'"
+                    />
+                  </fui-form-control-layout>
+                  <fui-date-picker
+                    style="margin-right: 5px; width: 100%"
+                    format="YYYY/DD/MM"
+                    [dateFormControl]="dateFormControl"
+                    [message]="'Date is required!'"
+                    [isInvalid]="
+                      dateFormControl.invalid &&
+                      (dateFormControl.dirty || dateFormControl.touched)
+                    "
                   />
-                </fui-form-control-layout>
-                <fui-date-picker
-                  style="margin-right: 5px"
-                  format="YYYY/DD/MM"
-                  [dateFormControl]="dateFormControl"
-                  [message]="'Date is required!'"
+                </div>
+              </fui-table-body-data>
+              <fui-table-body-data
+                *ngIf="!showHideEdit[i][z]"
+                class="sub-row-duration {{
+                  data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+                }}"
+              >
+                <fui-time-selection
+                  [timeFormControl]="durationForm"
                   [isInvalid]="
-                    dateFormControl.invalid &&
-                    (dateFormControl.dirty || dateFormControl.touched)
+                    durationForm.invalid &&
+                    (durationForm.dirty || durationForm.touched)
                   "
+                  [message]="'Duration is required!'"
                 />
-              </div>
-            </fui-table-body-data>
-            <fui-table-body-data
-              *ngIf="!showHideEdit[z]"
-              class="sub-row-duration"
-            >
-              <fui-time-selection
-                [timeFormControl]="durationForm"
-                [isInvalid]="
-                  durationForm.invalid &&
-                  (durationForm.dirty || durationForm.touched)
-                "
-                [message]="'Duration is required!'"
-              />
-            </fui-table-body-data>
-            <fui-table-body-data>
-              <div class="wrap-action">
-                <fui-button-icon
-                  (onClick)="toggleRowEdit(z)"
-                  [type]="'button'"
-                  [option]="'icon'"
-                  [style]="'secondary'"
-                  [size]="'m'"
-                  [color]="showHideEdit[z] == true ? 'primary' : 'success'"
-                  [icon]="showHideEdit[z] == true ? 'pencil' : 'save'"
-                  [iconSide]="'left'"
-                />
-                <fui-button-icon
-                  [type]="'button'"
-                  [option]="'icon'"
-                  [style]="'secondary'"
-                  [size]="'m'"
-                  [color]="'danger'"
-                  [icon]="'trash'"
-                  [iconSide]="'left'"
-                />
-              </div>
-            </fui-table-body-data>
-          </fui-table-body-row>
-        </fui-table-body>
-      </fui-table>
-      <p class="no-activity" *ngIf="date.data.length === 0">
-        You don’t have any time recorded on this period.
-      </p>
-    </div>
-  </fui-collapsible-nav-group>
-  <app-skeleton [active]="loading">
-    <app-empty-data [dataLength]="dateTimesheet.length" />
-  </app-skeleton>
-</div>
-<!-- Table without filter -->
+              </fui-table-body-data>
+              <fui-table-body-data class="{{
+                data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+              }}">
+                <div
+                  class="wrap-action {{
+                    data.tagEntityList.length > 0 ? 'tagged-cell' : ''
+                  }}"
+                >
+                  <fui-button-icon
+                    *ngIf="showHideEdit[i][z]"
+                    (onClick)="toggleRowEdit(i, z, data)"
+                    [type]="'button'"
+                    [option]="'icon'"
+                    [style]="'secondary'"
+                    [size]="'m'"
+                    [color]="'primary'"
+                    [icon]="'pencil'"
+                    [iconSide]="'left'"
+                  />
+                  <fui-button-icon
+                    *ngIf="showHideEdit[i][z]"
+                    (onClick)="deleteConfirm(data.uuid)"
+                    [type]="'button'"
+                    [option]="'icon'"
+                    [style]="'secondary'"
+                    [size]="'m'"
+                    [color]="'danger'"
+                    [icon]="'trash'"
+                    [iconSide]="'left'"
+                  />
+                  <fui-button-icon
+                    (onClick)="updateTimesheet(i, z, data.uuid)"
+                    *ngIf="!showHideEdit[i][z]"
+                    [type]="'button'"
+                    [option]="'icon'"
+                    [style]="'secondary'"
+                    [size]="'m'"
+                    [color]="'success'"
+                    [icon]="'save'"
+                    [iconSide]="'left'"
+                  />
+                  <fui-button-icon
+                    *ngIf="!showHideEdit[i][z]"
+                    (onClick)="cancelRowEdit(i, z)"
+                    [type]="'button'"
+                    [option]="'icon'"
+                    [style]="'secondary'"
+                    [size]="'m'"
+                    [color]="'text'"
+                    [icon]="'cross'"
+                    [iconSide]="'left'"
+                  />
+                </div>
+              </fui-table-body-data>
+            </fui-table-body-row>
+          </fui-table-body>
+        </fui-table>
+        <p class="no-activity" *ngIf="date.data.length === 0">
+          You don’t have any time recorded on this period.
+        </p>
+      </div>
+    </fui-collapsible-nav-group>
+    <app-skeleton [active]="loading">
+      <app-empty-data [dataLength]="dateTimesheet.length" />
+    </app-skeleton>
+  </div>
+  <!-- Table without filter -->
+</app-skeleton>
 
 <!-- Flyout -->
 <fui-flyout
@@ -492,6 +583,15 @@
             (onChangeEndDate)="changeEndDate($event)"
           />
         </div>
+        <span
+          class="filter-valid"
+          *ngIf="startDateForm.value === '' || endDateForm.value === ''"
+        >
+          Date range is required!
+        </span>
+        <span class="filter-valid" *ngIf="invalidStartEndDate()">
+          the start date cannot exceed the end date!
+        </span>
       </div>
       <div class="form">
         <label for="desc" class="label">Matter</label>
@@ -546,11 +646,22 @@
         />
         <fui-button-icon
           [type]="'button'"
+          [disabled]="
+            startDateForm.value === '' ||
+            endDateForm.value === '' ||
+            invalidStartEndDate()
+          "
           [option]="'iconText'"
           [style]="'filled'"
           [text]="'Apply Filter'"
           [size]="'m'"
-          [color]="'primary'"
+          [color]="
+            startDateForm.value === '' ||
+            endDateForm.value === '' ||
+            invalidStartEndDate()
+              ? 'disabled'
+              : 'primary'
+          "
           [icon]="'filter'"
           [iconSide]="'left'"
           (onClick)="filterFind(page, limit)"
@@ -616,4 +727,43 @@
     </div>
   </fui-modal-footer>
 </fui-modal>
+
+<!-- Modal Delete -->
+<fui-modal [open]="isModalDelete">
+  <fui-modal-header (onCloseModal)="handleCloseModal()">
+    <div class="title-modal">
+      <h3>Delete Confirmation?</h3>
+    </div>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="modal">
+      <p>This data will be permanently deleted. Do you want to continue?</p>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer [isCustomModalFooter]="true">
+    <div class="title-modal foot">
+      <fui-button-icon
+        (onClick)="cancelDelete()"
+        class="create-btn"
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [style]="'secondary'"
+        [color]="'text'"
+      />
+      <fui-button-icon
+        (onClick)="deleteTimesheet(uuidDelete)"
+        class="create-btn"
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Delete'"
+        [style]="'filled'"
+        [color]="'danger'"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>
 <!-- modal -->
+<fui-toast></fui-toast>

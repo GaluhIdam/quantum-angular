@@ -1,4 +1,3 @@
-import { SampleDataMyTimeSheet } from './../services/sample-data';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
@@ -28,13 +27,20 @@ import {
   TableComponent,
   TableHeadComponent,
   TimeSelectionComponent,
+  ToastComponent,
+  ToastProps,
+  ToastService,
   ValidatorFieldComponent,
 } from '@quantum/fui';
-import { MyTimesheetDTO, TimesheetByDateDTO } from '../dtos/my-timesheet.dto';
+import {
+  MyTimesheetDTO,
+  MyTimesheetPostDTO,
+  TimesheetByDateDTO,
+} from '../dtos/my-timesheet.dto';
 import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.component';
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { MyTimesheetService } from '../services/my-timesheet.service';
-import { debounceTime, map, Subscription } from 'rxjs';
+import { map, Subscription, tap } from 'rxjs';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -72,6 +78,8 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
     ModalFooterComponent,
     ReactiveFormsModule,
     ValidatorFieldComponent,
+    ToastComponent,
+    SkeletonComponent,
   ],
   templateUrl: './history-activity.component.html',
   styleUrl: './history-activity.component.scss',
@@ -83,7 +91,6 @@ export class HistoryActivityComponent extends BaseController {
   page: number = 0;
   limit: number = 10;
   totalItems: number = 0;
-  filterStatus: boolean = false;
 
   title: string[] = ['Date', 'Matter#', 'Description', 'Duration', ''];
   titleSub: string[] = ['Matter#', 'Description', 'Duration', ''];
@@ -151,7 +158,6 @@ export class HistoryActivityComponent extends BaseController {
   selectItem: number[] = [];
 
   showHideData: boolean[] = [];
-  showHideEdit: boolean[] = [];
   showHideEditFilter: boolean[] = [];
 
   isOpenFlyout: boolean = false;
@@ -172,22 +178,31 @@ export class HistoryActivityComponent extends BaseController {
   endDateForm: FormControl = new FormControl();
   searchMatter: FormControl = new FormControl('');
   descForm: FormControl = new FormControl();
+  /** Status Filter */
   filterDate: boolean = false;
   filterMatter: boolean = false;
   filterDesc: boolean = false;
 
   /** Edit */
+  showHideEdit: boolean[][] = [];
+
   activitySearch: FormControl = new FormControl('', Validators.required);
   optionActivity: { name: string; value: any }[] = [];
   selectedActivity: { name: string; value: any }[] = [];
-
   objectEventForm: FormControl = new FormControl('', Validators.required);
-
   dateFormControl: FormControl = new FormControl('', Validators.required);
-
   durationForm: FormControl = new FormControl('', Validators.required);
+  matterId: number = 0;
+  officialCategoryId: number = 0;
 
-  constructor(private readonly myTimesheetService: MyTimesheetService) {
+  /** Delete */
+  isModalDelete: boolean = false;
+  uuidDelete: string = '';
+
+  constructor(
+    private readonly myTimesheetService: MyTimesheetService,
+    private readonly toastService: ToastService
+  ) {
     super();
     this.lastDate = new Date(this.currentDate);
     this.lastDate.setDate(this.currentDate.getDate() - 5);
@@ -195,13 +210,15 @@ export class HistoryActivityComponent extends BaseController {
 
   ngOnInit(): void {
     this.getActivity('');
+    this.getMatters('');
     this.subscription = this.myTimesheetService.data$.subscribe((update) => {
       if (update === true || update === false) {
-        this.loading = false;
-        this.getMatters('');
         this.moveDate(0);
       }
     });
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
   }
 
   ngOnDestroy(): void {
@@ -250,16 +267,13 @@ export class HistoryActivityComponent extends BaseController {
     this.myTimesheetService
       .getTimesheetWithRange(adjustedStartDate, adjustedEndDate)
       .pipe(
-        map((res) => {
-          res.result.forEach((itm) => {
-            this.showHideEdit.push(true);
-          });
-          return this.processTimesheets(
+        map((res) =>
+          this.processTimesheets(
             res.result,
             adjustedStartDate,
             adjustedEndDateProc
-          );
-        }),
+          )
+        ),
         map((groupedTimesheets: TimesheetByDateDTO[]) => {
           this.dateTimesheet = groupedTimesheets;
           this.totalDuration = this.calculateTotalDurationByDate(
@@ -272,7 +286,6 @@ export class HistoryActivityComponent extends BaseController {
   }
 
   filterFind(page: number, size: number): void {
-    this.filterStatus = true;
     this.filterTimesheet(
       this.startDateForm.value,
       this.endDateForm.value,
@@ -291,6 +304,16 @@ export class HistoryActivityComponent extends BaseController {
       this.filterDesc = false;
     } else {
       this.filterDate = true;
+    }
+  }
+
+  invalidStartEndDate(): boolean {
+    const startDate = new Date(this.startDateForm.value);
+    const endDate = new Date(this.endDateForm.value);
+    if (startDate < endDate) {
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -314,11 +337,62 @@ export class HistoryActivityComponent extends BaseController {
       )
       .pipe(
         map((res) => {
-          res.result.content.forEach((itm) => {
+          this.showHideEditFilter = [];
+          res.result.content.forEach(() => {
             this.showHideEditFilter.push(true);
           });
           this.dateTimesheetFilter = res.result.content;
           this.totalItems = res.result.totalElements;
+        })
+      )
+      .subscribe();
+  }
+
+  /** Update Timesheet */
+  updateTimesheet(index: number, subIndex: number, uuid: string): void {
+    let request: MyTimesheetPostDTO = {
+      description: this.objectEventForm.value,
+      date: this.dateFormControl.value,
+      duration: this.durationForm.value,
+      matterId: this.matterId,
+      activityId: this.selectedActivity[0].value,
+      officialCategoryId: this.officialCategoryId,
+    };
+    this.myTimesheetService.putTimesheet(uuid, request).subscribe(() => {
+      this.handleUpdateToast('success');
+      if (this.filterDate) {
+        this.filterFind(this.page, this.limit);
+      }
+    });
+  }
+
+  /** Delete Timesheet */
+  deleteTimesheet(uuid: string): void {
+    this.myTimesheetService
+      .deleteTimesheet(uuid)
+      .pipe(tap(() => this.moveDate(0)))
+      .subscribe(() => {
+        this.handleDeleteToast('success');
+        if (this.filterDate) {
+          this.filterFind(this.page, this.limit);
+        }
+        this.cancelDelete();
+      });
+  }
+
+  /** Get Activity */
+  getActivity(search: string): void {
+    this.myTimesheetService
+      .getActivity(search)
+      .pipe(
+        map((res) => {
+          this.optionActivity = [];
+          res.result.forEach((item) => {
+            this.optionActivity.push({
+              name: item.activity,
+              value: item.idActivity,
+            });
+          });
         })
       )
       .subscribe();
@@ -356,6 +430,14 @@ export class HistoryActivityComponent extends BaseController {
     const filteredGroupedTimesheets = groupedByDate.filter((entry) => {
       const entryDate = new Date(entry.date);
       return entryDate >= start;
+    });
+    this.showHideEdit = [];
+    filteredGroupedTimesheets.forEach((day) => {
+      const dayArray = [];
+      for (let i = 0; i < day.data.length; i++) {
+        dayArray.push(true);
+      }
+      this.showHideEdit.push(dayArray);
     });
     return filteredGroupedTimesheets;
   }
@@ -447,11 +529,64 @@ export class HistoryActivityComponent extends BaseController {
   toggleRow(index: number): void {
     this.showHideData[index] = !this.showHideData[index];
   }
-  toggleRowEdit(index: number): void {
-    this.showHideEdit[index] = !this.showHideEdit[index];
+
+  /** Show Edit without filter */
+  toggleRowEdit(index: number, subIndex: number, data: MyTimesheetDTO): void {
+    this.resetRowEdit();
+    this.showHideEdit[index][subIndex] = !this.showHideEdit[index][subIndex];
+
+    this.matterId = data.matter.idMatter;
+    this.officialCategoryId = data.officialCategory.idOfficialCategory;
+    this.objectEventForm.setValue(data.description);
+    this.dateFormControl.setValue(data.date);
+    this.durationForm.setValue(data.duration);
+    const selected: { name: string; value: any }[] = [
+      {
+        name: data.activity.activity,
+        value: data.activity.idActivity,
+      },
+    ];
+    this.selectedActivity = selected;
   }
-  toggleRowEditFilter(index: number): void {
-    this.showHideEditFilter[index] = !this.showHideEditFilter[index];
+  resetRowEdit(): void {
+    this.showHideEdit = [];
+    this.dateTimesheet.forEach((day) => {
+      const dayArray = [];
+      for (let i = 0; i < day.data.length; i++) {
+        dayArray.push(true);
+      }
+      this.showHideEdit.push(dayArray);
+    });
+  }
+
+  /** Cancel Edit without filter */
+  cancelRowEdit(index: number, subIndex: number): void {
+    this.showHideEdit[index][subIndex] = true;
+  }
+
+  toggleRowEditFilter(index: number, data: MyTimesheetDTO): void {
+    this.resetRowEditFilter();
+    this.showHideEditFilter[index] = false;
+    this.matterId = data.matter.idMatter;
+    this.officialCategoryId = data.officialCategory.idOfficialCategory;
+    this.objectEventForm.setValue(data.description);
+    this.dateFormControl.setValue(data.date);
+    this.durationForm.setValue(data.duration);
+    const selected: { name: string; value: any }[] = [
+      {
+        name: data.activity.activity,
+        value: data.activity.idActivity,
+      },
+    ];
+    this.selectedActivity = selected;
+  }
+  resetRowEditFilter(): void {
+    this.showHideEditFilter = [];
+    this.dateTimesheetFilter.forEach(() => this.showHideEditFilter.push(true));
+  }
+
+  cancelRowEditFilter(index: number): void {
+    this.showHideEditFilter[index] = true;
   }
 
   changeStartDate(event: any): void {
@@ -472,6 +607,7 @@ export class HistoryActivityComponent extends BaseController {
   handleCloseModal() {
     this.isModalOpen = false;
   }
+
   clearFilters(): void {
     this.defaultDate();
     this.selectedMatter = [];
@@ -481,7 +617,6 @@ export class HistoryActivityComponent extends BaseController {
 
   clearFiltersAll(): void {
     this.clearFilters();
-    this.filterStatus = false;
     this.filterDate = false;
     this.filterDesc = false;
     this.filterMatter = false;
@@ -506,20 +641,58 @@ export class HistoryActivityComponent extends BaseController {
     this.startDateForm.setValue(`${yearC}-${monthC}-${dayC}`);
   }
 
-  getActivity(search: string): void {
-    this.myTimesheetService
-      .getActivity(search)
-      .pipe(
-        map((res) => {
-          this.optionActivity = [];
-          res.result.forEach((item) => {
-            this.optionActivity.push({
-              name: item.activity,
-              value: item.idActivity,
-            });
-          });
-        })
-      )
-      .subscribe();
+  /** Delete Confirm */
+  deleteConfirm(uuid: string): void {
+    this.uuidDelete = uuid;
+    this.isModalDelete = true;
+  }
+
+  cancelDelete(): void {
+    this.uuidDelete = '';
+    this.isModalDelete = false;
+  }
+
+  /** Handle Update Toast */
+  handleUpdateToast(type?: Color) {
+    let toastObject: ToastProps = {
+      position: 'bottom-right',
+      header: {
+        title: 'Update Successful!',
+        icon: 'iInCircle',
+        colorIcon: 'success',
+        sizeIcon: 'sizel',
+      },
+      body: {
+        message: 'The item has been successfully updated.',
+      },
+
+      duration: 3000,
+    };
+    if (type) {
+      toastObject.type = type;
+    }
+    this.toastService.toast(toastObject);
+  }
+
+  /** Handle Delete Toast */
+  handleDeleteToast(type?: Color) {
+    let toastObject: ToastProps = {
+      position: 'bottom-right',
+      header: {
+        title: 'Delete Successful!',
+        icon: 'iInCircle',
+        colorIcon: 'success',
+        sizeIcon: 'sizel',
+      },
+      body: {
+        message: 'The item has been successfully deleted.',
+      },
+
+      duration: 3000,
+    };
+    if (type) {
+      toastObject.type = type;
+    }
+    this.toastService.toast(toastObject);
   }
 }

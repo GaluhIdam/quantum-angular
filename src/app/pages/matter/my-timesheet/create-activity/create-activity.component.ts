@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import {
   ButtonIconComponent,
   Color,
@@ -15,9 +21,10 @@ import {
   ValidatorFieldComponent,
 } from '@quantum/fui';
 import { MyTimesheetService } from '../services/my-timesheet.service';
-import { debounceTime, map, Subscription } from 'rxjs';
+import { debounceTime, map, Subscription, tap } from 'rxjs';
 import { MyTimesheetPostDTO } from '../dtos/my-timesheet.dto';
 import { CommonModule } from '@angular/common';
+import { UserKeycloakDTO } from '../../../../core/dtos/response.dto';
 
 @Component({
   selector: 'app-create-activity',
@@ -33,12 +40,17 @@ import { CommonModule } from '@angular/common';
     TimeSelectionComponent,
     ValidatorFieldComponent,
     ToastComponent,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   templateUrl: './create-activity.component.html',
   styleUrl: './create-activity.component.scss',
 })
 export class CreateActivityComponent {
   loading: boolean = true;
+  lockMatter: boolean = false;
+  lockDate: boolean = false;
+
   optionActivity: { name: string; value: any }[] = [];
   selectedActivity: { name: string; value: any }[] = [];
 
@@ -68,6 +80,8 @@ export class CreateActivityComponent {
   dateFormControl: FormControl = new FormControl('', Validators.required);
   isInvalid: boolean = false;
   errorMessage: string = 'Input is not valid.';
+
+  userDataKeycloak: UserKeycloakDTO[] = [];
 
   constructor(
     private readonly myTimesheetService: MyTimesheetService,
@@ -154,6 +168,19 @@ export class CreateActivityComponent {
       .subscribe();
   }
 
+  gettingUser(): void {
+    this.myTimesheetService.postToken().subscribe((res) => {
+      this.myTimesheetService
+        .getEmployee(res.access_token)
+        .pipe(
+          map((res) => {
+            this.userDataKeycloak = res;
+          })
+        )
+        .subscribe();
+    });
+  }
+
   /** Create Timesheet */
   createTimesheet(): void {
     if (this.formPostTimesheet.valid) {
@@ -161,9 +188,7 @@ export class CreateActivityComponent {
       const formattedDate = date.toISOString().split('T')[0];
       const dto: MyTimesheetPostDTO = {
         activityId: this.activityForm.value,
-        objectEvent: this.objectEventForm.value,
-        topic: this.topicForm.value,
-        addDescription: this.addDescForm.value,
+        description: `${this.objectEventForm.value} ${this.topicForm.value} ${this.addDescForm.value}`,
         matterId: this.matterForm.value,
         officialCategoryId: this.officialCategoryForm.value,
         date: formattedDate,
@@ -173,19 +198,24 @@ export class CreateActivityComponent {
         if (res.status === 'CREATED') {
           this.handleSuccessToast('success');
           this.activitySearch.reset();
-          this.matterSearch.reset();
           this.officialCategorySearch.reset();
           this.activityForm.reset();
           this.objectEventForm.reset();
           this.topicForm.reset();
           this.addDescForm.reset();
-          this.matterForm.reset();
           this.officialCategoryForm.reset();
-          this.dateFormControl.reset();
           this.durationForm.reset();
           this.selectedActivity = [];
-          this.selectedOptionMatter = [];
           this.selectedOptionCategory = [];
+          if (!this.lockMatter) {
+            this.selectedOptionMatter = [];
+            this.matterSearch.reset();
+            this.matterForm.reset();
+          }
+          if (!this.lockDate) {
+            this.dateFormControl.reset();
+            console.log('dead');
+          }
         }
       });
     } else {
@@ -275,5 +305,15 @@ export class CreateActivityComponent {
 
   duration(event: any): void {
     this.durationForm.setValue(event);
+  }
+
+  /** Lock Matter */
+  onCheckboxChangeMatter(event: any) {
+    this.lockMatter = event.target.checked;
+  }
+  /** Lock Date */
+  onCheckboxChangeDate(event: any) {
+    this.lockDate = event.target.checked;
+    console.log(this.lockDate);
   }
 }
