@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { UtilityComponent } from './components/utility/utility.component';
 import { ToastComponent } from '@quantum/fui';
 import {

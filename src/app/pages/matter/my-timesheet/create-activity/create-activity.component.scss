@@ -45,6 +45,9 @@ input {
   margin-right: 15px;
   width: -webkit-fill-available;
   align-self: baseline;
+  &:last-child {
+    margin-right: 0px;
+  }
 }
 
 .create-btn {
