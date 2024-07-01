@@ -108,6 +108,7 @@ export class CreateActivityComponent {
     if (changes) {
       this.mappingMatter(this.mattersData);
       this.mappingActivity(this.activitesData);
+      console.log(changes);
     }
   }
 
@@ -237,10 +238,12 @@ export class CreateActivityComponent {
 
   /** Selector for activity */
   selectionActivity(event: any): void {
-    this.selectedActivity = event;
-    this.activityForm.setValue(event[0].value);
-    this.officialCategorySearch.setValue('');
-    this.selectedOptionCategory = [];
+    if (event && event.length > 0) {
+      this.selectedActivity = event;
+      this.activityForm.setValue(event[0].value);
+      this.officialCategorySearch.setValue('');
+      this.selectedOptionCategory = [];
+    }
   }
 
   /** Selector for official category */
