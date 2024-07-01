@@ -28,6 +28,7 @@ import {
 } from '../dtos/my-timesheet.dto';
 import { CommonModule } from '@angular/common';
 import { UserKeycloakDTO } from '../../../../core/dtos/response.dto';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-create-activity',
@@ -108,8 +109,29 @@ export class CreateActivityComponent {
     if (changes) {
       this.mappingMatter(this.mattersData);
       this.mappingActivity(this.activitesData);
-      console.log(changes);
     }
+  }
+
+  /** Getting official category from service */
+  getOffcialCategory(): void {
+    this.myTimesheetService
+      .getActivity('')
+      .pipe(
+        map((res) => {
+          this.optionOfficeCategory = [];
+          res.result.forEach((item) => {
+            if (item.idActivity === this.selectedActivity[0].value) {
+              item.officialCategoryEntityList.forEach((itm) => {
+                this.optionOfficeCategory.push({
+                  name: itm.officialCategory,
+                  value: itm.idOfficialCategory,
+                });
+              });
+            }
+          });
+        })
+      )
+      .subscribe();
   }
 
   /** Mapping matters data for option*/
@@ -243,6 +265,7 @@ export class CreateActivityComponent {
       this.activityForm.setValue(event[0].value);
       this.officialCategorySearch.setValue('');
       this.selectedOptionCategory = [];
+      this.getOffcialCategory();
     }
   }
 
