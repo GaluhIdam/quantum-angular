@@ -197,7 +197,6 @@ export class CreateActivityComponent {
           }
           if (!this.lockDate) {
             this.dateFormControl.reset();
-            console.log('dead');
           }
         }
       });
