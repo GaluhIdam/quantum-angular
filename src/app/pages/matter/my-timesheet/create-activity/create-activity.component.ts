@@ -105,8 +105,10 @@ export class CreateActivityComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.mappingMatter(this.mattersData);
-    this.mappingActivity(this.activitesData);
+    if (changes) {
+      this.mappingMatter(this.mattersData);
+      this.mappingActivity(this.activitesData);
+    }
   }
 
   /** Mapping matters data for option*/

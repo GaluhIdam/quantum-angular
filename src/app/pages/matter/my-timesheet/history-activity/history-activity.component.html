@@ -1,52 +1,54 @@
 <!-- Utility -->
-<app-utility
-  [currentDate]="currentDate"
-  [endDate]="endDate"
-  [startDate]="startDate"
-  [startDateForm]="startDateForm"
-  [endDateForm]="endDateForm"
-  [filterDate]="filterDate"
-  [filterMatter]="filterMatter"
-  [filterTimeDescription]="filterTimeDescription"
-  [listMatter]="listMatters"
-  [dataTimesheet]="dataTimesheet"
-  (filterAction)="applyFilterAction($event)"
-  (clearFilterAll)="clearFilterAll($event)"
-  (dateTimesheetByDateOut)="getDataTimesheetByDate($event)"
-  (dateMoveChanger)="dateMoveWatcher($event)"
-/>
-<app-apply-filter
-  [filterDate]="filterDate"
-  [filterMatter]="filterMatter"
-  [filterTimeDescription]="filterTimeDescription"
-  (clearFilterDate)="clearFilterDate($event)"
-  (clearFilterMatter)="clearFilterMatter($event)"
-  (clearFilterTimeDescription)="clearFilterTimeDescription($event)"
-  (clearFilterAll)="clearFilterAll($event)"
-/>
-<!-- Utility -->
-
-<!-- Table without filter -->
-<app-table-without-filter
-  *ngIf="!filterDate"
-  [listActivity]="listActivities"
-  [dateTimesheetByDate]="dateTimesheetByDate"
-/>
-<!-- Table without filter -->
-
-<!-- Table with filter -->
-<div class="container-table">
-  <app-table-filter
-    class="container-table"
-    *ngIf="filterDate"
-    [page]="page"
-    [limit]="limit"
-    [listActivity]="listActivities"
-    [totalItems]="totalItems"
+<app-skeleton [active]="loading">
+  <app-utility
+    [currentDate]="currentDate"
+    [endDate]="endDate"
+    [startDate]="startDate"
+    [startDateForm]="startDateForm"
+    [endDateForm]="endDateForm"
+    [filterDate]="filterDate"
+    [filterMatter]="filterMatter"
+    [filterTimeDescription]="filterTimeDescription"
+    [listMatter]="listMatters"
     [dataTimesheet]="dataTimesheet"
-    (onPageChangeOut)="onPageChangeOut($event)"
+    (filterAction)="applyFilterAction($event)"
+    (clearFilterAll)="clearFilterAll($event)"
+    (dateTimesheetByDateOut)="getDataTimesheetByDate($event)"
+    (dateMoveChanger)="dateMoveWatcher($event)"
   />
-</div>
-<!-- Table with filter -->
+  <app-apply-filter
+    [filterDate]="filterDate"
+    [filterMatter]="filterMatter"
+    [filterTimeDescription]="filterTimeDescription"
+    (clearFilterDate)="clearFilterDate($event)"
+    (clearFilterMatter)="clearFilterMatter($event)"
+    (clearFilterTimeDescription)="clearFilterTimeDescription($event)"
+    (clearFilterAll)="clearFilterAll($event)"
+  />
+  <!-- Utility -->
+
+  <!-- Table without filter -->
+  <app-table-without-filter
+    *ngIf="!filterDate"
+    [listActivity]="listActivities"
+    [dateTimesheetByDate]="dateTimesheetByDate"
+  />
+  <!-- Table without filter -->
+
+  <!-- Table with filter -->
+  <div class="container-table">
+    <app-table-filter
+      class="container-table"
+      *ngIf="filterDate"
+      [page]="page"
+      [limit]="limit"
+      [listActivity]="listActivities"
+      [totalItems]="totalItems"
+      [dataTimesheet]="dataTimesheet"
+      (onPageChangeOut)="onPageChangeOut($event)"
+    />
+  </div>
+  <!-- Table with filter -->
+</app-skeleton>
 
 <fui-toast></fui-toast>

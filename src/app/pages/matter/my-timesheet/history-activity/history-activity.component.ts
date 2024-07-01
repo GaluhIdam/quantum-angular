@@ -15,10 +15,13 @@ import { ApplyFilterComponent } from './components/apply-filter/apply-filter.com
 import { TableWithoutFilterComponent } from './components/table-without-filter/table-without-filter.component';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableFilterComponent } from './components/table-filter/table-filter.component';
+import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
 
 @Component({
   selector: 'app-history-activity',
   standalone: true,
+  templateUrl: './history-activity.component.html',
+  styleUrl: './history-activity.component.scss',
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -28,11 +31,12 @@ import { TableFilterComponent } from './components/table-filter/table-filter.com
     TableWithoutFilterComponent,
     TableFilterComponent,
     ToastComponent,
+    SkeletonComponent,
   ],
-  templateUrl: './history-activity.component.html',
-  styleUrl: './history-activity.component.scss',
 })
 export class HistoryActivityComponent extends BaseController {
+  loading: boolean = false;
+
   /** Data will input from MyTimesheetComponent */
   @Input() listActivities: ActivityDTO[] = [];
   @Input() listMatters: MatterDTO[] = [];
@@ -76,6 +80,10 @@ export class HistoryActivityComponent extends BaseController {
 
   ngOnInit(): void {
     this.getTimesheet(this.startDateForm.value, this.endDateForm.value);
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
   }
 
   /** Geting timesheet from MyTimesheetService */
