@@ -9,8 +9,8 @@ import { YtdProductivityComponent } from './ytd-productivity/ytd-productivity.co
 import { CreateActivityComponent } from './create-activity/create-activity.component';
 import { HistoryActivityComponent } from './history-activity/history-activity.component';
 import { MyTimesheetService } from './services/my-timesheet.service';
-import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
-import { Subscription } from 'rxjs';
+import { map, Subscription } from 'rxjs';
+import { ActivityDTO, MatterDTO } from './dtos/my-timesheet.dto';
 
 @Component({
   selector: 'app-my-timesheet',
@@ -22,9 +22,43 @@ import { Subscription } from 'rxjs';
     CreateActivityComponent,
     HistoryActivityComponent,
     ButtonIconComponent,
-    PopoverComponent
+    PopoverComponent,
   ],
   templateUrl: './my-timesheet.component.html',
   styleUrl: './my-timesheet.component.scss',
 })
-export class MyTimesheetComponent {}
+export class MyTimesheetComponent {
+  mattersData: MatterDTO[] = [];
+  activitesData: ActivityDTO[] = [];
+
+  constructor(private readonly myTimesheetService: MyTimesheetService) {}
+
+  private subscription!: Subscription;
+
+  ngOnInit(): void {
+    this.getMatter('');
+    this.getActivity('');
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  /** Getting Matter from MyTimesheetService */
+  getMatter(search: string): void {
+    this.subscription = this.myTimesheetService
+      .getMatters(search)
+      .pipe(map((res) => (this.mattersData = res.result)))
+      .subscribe();
+  }
+
+  /** Getting acvities from MyTimesheetService */
+  getActivity(search: string): void {
+    this.subscription = this.myTimesheetService
+      .getActivity(search)
+      .pipe(map((res) => (this.activitesData = res.result)))
+      .subscribe();
+  }
+}

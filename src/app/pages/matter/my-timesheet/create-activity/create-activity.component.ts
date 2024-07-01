@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -22,7 +22,11 @@ import {
 } from '@quantum/fui';
 import { MyTimesheetService } from '../services/my-timesheet.service';
 import { debounceTime, map, Subscription, tap } from 'rxjs';
-import { MyTimesheetPostDTO } from '../dtos/my-timesheet.dto';
+import {
+  ActivityDTO,
+  MatterDTO,
+  MyTimesheetPostDTO,
+} from '../dtos/my-timesheet.dto';
 import { CommonModule } from '@angular/common';
 import { UserKeycloakDTO } from '../../../../core/dtos/response.dto';
 
@@ -47,6 +51,9 @@ import { UserKeycloakDTO } from '../../../../core/dtos/response.dto';
   styleUrl: './create-activity.component.scss',
 })
 export class CreateActivityComponent {
+  @Input() mattersData: MatterDTO[] = [];
+  @Input() activitesData: ActivityDTO[] = [];
+
   loading: boolean = true;
   lockMatter: boolean = false;
   lockDate: boolean = false;
@@ -98,90 +105,42 @@ export class CreateActivityComponent {
     });
   }
 
-  private subscription!: Subscription;
-
-  ngOnInit(): void {
-    this.getMatter(this.matterSearch.value);
-    this.getActivity(this.activitySearch.value);
-    this.subscription = this.activitySearch.valueChanges
-      .pipe(
-        debounceTime(500),
-        map((res) => this.getActivity(res))
-      )
-      .subscribe();
-    this.subscription = this.matterSearch.valueChanges
-      .pipe(
-        debounceTime(500),
-        map((res) => this.getMatter(res))
-      )
-      .subscribe();
+  ngOnChanges(changes: SimpleChanges): void {
+    this.mappingMatter(this.mattersData);
+    this.mappingActivity(this.activitesData);
   }
 
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  /** Getting Activity Data */
-  getActivity(search: string): void {
-    this.myTimesheetService
-      .getActivity(search)
-      .pipe(
-        map((res) => {
-          this.optionActivity = [];
-          this.optionOfficeCategory = [];
-          res.result.forEach((item) => {
-            this.optionActivity.push({
-              name: item.activity,
-              value: item.idActivity,
-            });
-            if (this.selectedActivity.length > 0) {
-              item.officialCategoryEntityList.forEach((itm) =>
-                this.optionOfficeCategory.push({
-                  name: itm.officialCategory,
-                  value: itm.idOfficialCategory,
-                })
-              );
-            }
-          });
-        })
-      )
-      .subscribe();
-  }
-
-  /** Getting Matter */
-  getMatter(search: string): void {
-    this.myTimesheetService
-      .getMatters(search)
-      .pipe(
-        map((res) => {
-          this.optionMatter = [];
-          res.result.forEach((item) => {
-            this.optionMatter.push({
-              name: item.matter,
-              value: item.idMatter,
-            });
-          });
-        })
-      )
-      .subscribe();
-  }
-
-  gettingUser(): void {
-    this.myTimesheetService.postToken().subscribe((res) => {
-      this.myTimesheetService
-        .getEmployee(res.access_token)
-        .pipe(
-          map((res) => {
-            this.userDataKeycloak = res;
-          })
-        )
-        .subscribe();
+  /** Mapping matters data for option*/
+  mappingMatter(matterData: MatterDTO[]): void {
+    this.optionMatter = [];
+    matterData.forEach((item) => {
+      this.optionMatter.push({
+        name: item.matter,
+        value: item.idMatter,
+      });
     });
   }
 
-  /** Create Timesheet */
+  /** Mapping activities data for option */
+  mappingActivity(activitesData: ActivityDTO[]): void {
+    this.activitesData = [];
+    activitesData.forEach((item) => {
+      this.optionActivity.push({
+        name: item.activity,
+        value: item.idActivity,
+      });
+      if (this.selectedActivity.length > 0) {
+        item.officialCategoryEntityList.forEach((itm) =>
+          this.optionOfficeCategory.push({
+            name: itm.officialCategory,
+            value: itm.idOfficialCategory,
+          })
+        );
+      }
+    });
+  }
+
+  /** Create Timesheet from MyTimesheetService */
   createTimesheet(): void {
     if (this.formPostTimesheet.valid) {
       const date = new Date(this.dateFormControl.value);
@@ -295,22 +254,11 @@ export class CreateActivityComponent {
     this.matterForm.setValue(event[0].value);
   }
 
-  onChangeHandler(value: string) {
-    this.selectedDate = value;
-  }
-
-  onValidateHandler(value: boolean) {
-    this.isInvalid = value;
-  }
-
-  duration(event: any): void {
-    this.durationForm.setValue(event);
-  }
-
   /** Lock Matter */
   onCheckboxChangeMatter(event: any) {
     this.lockMatter = event.target.checked;
   }
+
   /** Lock Date */
   onCheckboxChangeDate(event: any) {
     this.lockDate = event.target.checked;

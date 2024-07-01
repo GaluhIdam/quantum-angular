@@ -25,14 +25,10 @@
               [placeholder]="'object/event'"
               [type]="'text'"
               [size]="'m'"
-              [invalid]="
-                objectEventForm.invalid && objectEventForm.dirty
-              "
+              [invalid]="objectEventForm.invalid && objectEventForm.dirty"
             >
               <fui-icons
-                *ngIf="
-                  objectEventForm.invalid && objectEventForm.dirty
-                "
+                *ngIf="objectEventForm.invalid && objectEventForm.dirty"
                 right-icon
                 [label]="'right'"
                 [icon]="'alert'"
@@ -54,14 +50,10 @@
               [placeholder]="'topics'"
               [type]="'text'"
               [size]="'m'"
-              [invalid]="
-                topicForm.invalid && topicForm.dirty
-              "
+              [invalid]="topicForm.invalid && topicForm.dirty"
             >
               <fui-icons
-                *ngIf="
-                  topicForm.invalid && topicForm.dirty
-                "
+                *ngIf="topicForm.invalid && topicForm.dirty"
                 right-icon
                 [label]="'right'"
                 [icon]="'alert'"
@@ -81,14 +73,10 @@
               [formControlField]="addDescForm"
               [type]="'text'"
               [size]="'m'"
-              [invalid]="
-                addDescForm.invalid && addDescForm.dirty
-              "
+              [invalid]="addDescForm.invalid && addDescForm.dirty"
             >
               <fui-icons
-                *ngIf="
-                  addDescForm.invalid && addDescForm.dirty
-                "
+                *ngIf="addDescForm.invalid && addDescForm.dirty"
                 right-icon
                 [label]="'right'"
                 [icon]="'alert'"
@@ -141,9 +129,7 @@
             [leftIcon]="'search'"
             (selection)="selectionMatter($event)"
             [comboxForm]="matterSearch"
-            [invalid]="
-              matterSearch.invalid && matterSearch.dirty
-            "
+            [invalid]="matterSearch.invalid && matterSearch.dirty"
             [message]="'Matter is required!'"
             [singleSelection]="true"
             [size]="'m'"
@@ -189,9 +175,7 @@
             format="YYYY/DD/MM"
             [dateFormControl]="dateFormControl"
             [message]="'Date is required!'"
-            [isInvalid]="
-              dateFormControl.invalid && dateFormControl.dirty
-            "
+            [isInvalid]="dateFormControl.invalid && dateFormControl.dirty"
           />
         </div>
       </div>
@@ -200,9 +184,7 @@
         <div class="input">
           <fui-time-selection
             [timeFormControl]="durationForm"
-            [isInvalid]="
-              durationForm.invalid && durationForm.dirty
-            "
+            [isInvalid]="durationForm.invalid && durationForm.dirty"
             [message]="'Duration is required!'"
           />
         </div>

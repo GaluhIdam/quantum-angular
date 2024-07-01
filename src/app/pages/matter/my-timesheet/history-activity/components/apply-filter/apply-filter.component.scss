@@ -1,0 +1,18 @@
+@import "../../history-activity.component.scss";
+
+.container {
+  display: flex;
+  align-items: center;
+}
+.toggle-clear {
+  color: var(--fuiColorPrimary, $fuiColorPrimary);
+  margin: 0px 15px;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+fui-badge {
+  margin: 0px 5px;
+}
