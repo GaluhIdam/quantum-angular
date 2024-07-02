@@ -371,7 +371,7 @@ export class ThemesChartCustom {
     color: [
       '#006bb4',
       '#69707d',
-      '#e69d87',
+      '#d3dae6',
       '#8dc1a9',
       '#ea7e53',
       '#eedd78',

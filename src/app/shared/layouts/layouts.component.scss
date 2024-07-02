@@ -25,6 +25,9 @@
 .create-new {
   margin-right: 10px;
 }
+.icon-mode {
+  margin-right: 18px;
+}
 
 /** Sidebar Style */
 .sidebar-container {
@@ -76,4 +79,19 @@
   .page-body {
     padding: 20px;
   }
+}
+
+::-webkit-scrollbar {
+  height: 5px;
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--fuiColorMediumShade, $fuiColorMediumShade);
+  border-radius: 25px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fuiColorDarkShade, $fuiColorDarkShade);
 }

@@ -9,8 +9,8 @@ import { YtdProductivityComponent } from './ytd-productivity/ytd-productivity.co
 import { CreateActivityComponent } from './create-activity/create-activity.component';
 import { HistoryActivityComponent } from './history-activity/history-activity.component';
 import { MyTimesheetService } from './services/my-timesheet.service';
-import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
-import { Subscription } from 'rxjs';
+import { map, Subscription } from 'rxjs';
+import { ActivityDTO, MatterDTO } from './dtos/my-timesheet.dto';
 
 @Component({
   selector: 'app-my-timesheet',
@@ -23,32 +23,21 @@ import { Subscription } from 'rxjs';
     HistoryActivityComponent,
     ButtonIconComponent,
     PopoverComponent,
-    SkeletonComponent,
   ],
   templateUrl: './my-timesheet.component.html',
   styleUrl: './my-timesheet.component.scss',
 })
 export class MyTimesheetComponent {
-  loading: boolean = true;
+  mattersData: MatterDTO[] = [];
+  activitesData: ActivityDTO[] = [];
 
   constructor(private readonly myTimesheetService: MyTimesheetService) {}
 
   private subscription!: Subscription;
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.subscription = this.myTimesheetService.data$.subscribe((value) => {
-        if (value === true) {
-          this.loading = false;
-        }
-        if (value === false) {
-          this.loading = false;
-        }
-        if (value === null) {
-          this.loading = true;
-        }
-      });
-    }, 2000);
+    this.getMatter('');
+    this.getActivity('');
   }
 
   ngOnDestroy(): void {
@@ -57,7 +46,19 @@ export class MyTimesheetComponent {
     }
   }
 
-  changeScenarion(value: boolean | null): void {
-    this.myTimesheetService.updateData(value);
+  /** Getting Matter from MyTimesheetService */
+  getMatter(search: string): void {
+    this.subscription = this.myTimesheetService
+      .getMatters(search)
+      .pipe(map((res) => (this.mattersData = res.result)))
+      .subscribe();
+  }
+
+  /** Getting acvities from MyTimesheetService */
+  getActivity(search: string): void {
+    this.subscription = this.myTimesheetService
+      .getActivity(search)
+      .pipe(map((res) => (this.activitesData = res.result)))
+      .subscribe();
   }
 }

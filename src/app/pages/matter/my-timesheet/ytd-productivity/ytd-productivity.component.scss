@@ -18,13 +18,12 @@
   overflow-x: auto;
 }
 .chart {
-  margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   min-width: 1000px;
 }
 /** Add On*/
 ::-webkit-scrollbar {
-  height: 5px;
+  height: 4px;
   width: 5px;
 }
 ::-webkit-scrollbar-track {

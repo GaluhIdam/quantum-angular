@@ -13,10 +13,6 @@ import {
   PageSidebarComponent,
   SidenavComponent,
   ThemeService,
-  ToastComponent,
-  ToastService,
-  ToastProps,
-  Color,
   FormControlLayoutComponent,
   InputFieldComponent,
   LoadingComponent,
@@ -46,7 +42,6 @@ import { DataSideBar } from './data-sidebar';
     PageSidebarComponent,
     IconsComponent,
     SidenavComponent,
-    ToastComponent,
     FormControlLayoutComponent,
     InputFieldComponent,
     LoadingComponent,
@@ -62,19 +57,19 @@ export class LayoutsComponent {
   emailCount: number = 12;
   showSidebar: boolean = true;
   dataSide: DataSideDTO[] = [];
+  theme!: string;
 
   private destroy$ = new Subject<void>();
   private obs!: Subscription;
 
-  constructor(
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-    private toastService: ToastService
-  ) {
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {
     this.dataSide = DataSideBar.dataSideBar;
   }
 
   ngOnInit(): void {
+    this.themeService.currentTheme$.subscribe((data) => {
+      this.theme = data;
+    });
     this.obs = this.searchForm.valueChanges
       .pipe(
         tap(() => (this.loading = true)),
@@ -96,9 +91,6 @@ export class LayoutsComponent {
       )
       .subscribe();
     this.cdr.detectChanges();
-    setTimeout(() => {
-      this.handleNormalToast('warning');
-    }, 5000);
   }
 
   ngOnDestroy(): void {
@@ -135,27 +127,6 @@ export class LayoutsComponent {
         item.active = item.children.some((child) => child.active);
       }
     });
-  }
-
-  /** Call Toaster */
-  handleNormalToast(type?: Color) {
-    let toastObject: ToastProps = {
-      position: 'bottom-right',
-      header: {
-        title: 'Information',
-        icon: 'iInCircle',
-        colorIcon: 'warning',
-        sizeIcon: 'sizel',
-      },
-      body: {
-        message: 'This website is under construction!',
-      },
-      duration: 5000,
-    };
-    if (type) {
-      toastObject.type = type;
-    }
-    this.toastService.toast(toastObject);
   }
 
   /** Filter for sidebar by title */

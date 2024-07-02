@@ -1,320 +1,200 @@
-import { SampleDataMyTimeSheet } from './../services/sample-data';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
+import { UtilityComponent } from './components/utility/utility.component';
+import { ToastComponent } from '@quantum/fui';
 import {
-  BadgeComponent,
-  ButtonIconComponent,
-  CollapsibleNavGroupComponent,
-  Color,
-  ComboBoxComponent,
-  FlyoutBodyComponent,
-  FlyoutComponent,
-  FlyoutFooterComponent,
-  FlyoutHeaderComponent,
-  FormControlLayoutComponent,
-  HorizontalStackComponent,
-  IconsComponent,
-  InputFieldComponent,
-  ProgressBaseComponent,
-  TableBodyComponent,
-  TableBodyDataComponent,
-  TableBodyRowComponent,
-  TableComponent,
-  TableHeadComponent,
-} from '@quantum/fui';
-import { DailyActivityDTO, HourActivityDTO } from '../dtos/my-timesheet.dto';
-import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.component';
+  ActivityDTO,
+  MatterDTO,
+  MyTimesheetDTO,
+  TimesheetByDateDTO,
+} from '../dtos/my-timesheet.dto';
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { MyTimesheetService } from '../services/my-timesheet.service';
-import { Subscription } from 'rxjs';
+import { map } from 'rxjs';
+import { ApplyFilterComponent } from './components/apply-filter/apply-filter.component';
+import { TableWithoutFilterComponent } from './components/table-without-filter/table-without-filter.component';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableFilterComponent } from './components/table-filter/table-filter.component';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
 
 @Component({
   selector: 'app-history-activity',
   standalone: true,
-  imports: [
-    CommonModule,
-    TableBodyComponent,
-    TableBodyDataComponent,
-    TableBodyRowComponent,
-    TableComponent,
-    TableHeadComponent,
-    ButtonIconComponent,
-    IconsComponent,
-    BadgeComponent,
-    FlyoutBodyComponent,
-    FlyoutComponent,
-    FlyoutFooterComponent,
-    FlyoutHeaderComponent,
-    ComboBoxComponent,
-    FormControlLayoutComponent,
-    InputFieldComponent,
-    CollapsibleNavGroupComponent,
-    ProgressBaseComponent,
-    EmptyDataComponent,
-    HorizontalStackComponent,
-    SkeletonComponent,
-  ],
   templateUrl: './history-activity.component.html',
   styleUrl: './history-activity.component.scss',
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    UtilityComponent,
+    ApplyFilterComponent,
+    TableWithoutFilterComponent,
+    TableFilterComponent,
+    ToastComponent,
+    SkeletonComponent,
+  ],
 })
 export class HistoryActivityComponent extends BaseController {
-  loading: boolean = true;
+  loading: boolean = false;
+
+  /** Data will input from MyTimesheetComponent */
+  @Input() listActivities: ActivityDTO[] = [];
+  @Input() listMatters: MatterDTO[] = [];
+
+  dataTimesheet: MyTimesheetDTO[] = [];
+  dateTimesheetByDate: TimesheetByDateDTO[] = [];
+
+  /** Date Config */
+  currentDate: Date = new Date();
+  endDate: Date = new Date();
   startDate: Date = new Date();
-  endDate!: Date;
-  filterStatus: boolean = false;
-  page: number = 0;
+  startDateForm: FormControl = new FormControl();
+  endDateForm: FormControl = new FormControl();
+
+  /** Status for filter */
+  filterDate: boolean = false;
+  filterMatter: boolean = false;
+  filterTimeDescription: boolean = false;
+
+  /** Data from apply filter */
+  startDateFilter: string = '';
+  endDateFilter: string = '';
+  selectedMatterFilter: string = '';
+  descriptionFilter: string = '';
+
+  /** Pagination */
+  page: number = 1;
   limit: number = 10;
   totalItems: number = 0;
-  title: string[] = ['Date', 'Matter#', 'Description', 'Duration', ''];
-  titleSub: string[] = ['Matter#', 'Description', 'Duration', ''];
-  timesheetsData: DailyActivityDTO[] = [
-    {
-      date: new Date('2024-05-20T07:05:59'),
-      activityList: [],
-    },
-    {
-      date: new Date('2024-05-20T07:05:59'),
-      activityList: [],
-    },
-    {
-      date: new Date('2024-05-20T07:05:59'),
-      activityList: [],
-    },
-  ];
-  progress: {
-    percentage: number;
-    color: Color;
-  }[][] = [
-    [
-      {
-        percentage: 50,
-        color: 'primary',
-      },
-      {
-        percentage: 50,
-        color: 'text',
-      },
-      {
-        percentage: 0,
-        color: 'warning',
-      },
-    ],
-    [
-      {
-        percentage: 80,
-        color: 'primary',
-      },
-      {
-        percentage: 20,
-        color: 'text',
-      },
-      {
-        percentage: 0,
-        color: 'warning',
-      },
-    ],
-    [
-      {
-        percentage: 10,
-        color: 'primary',
-      },
-      {
-        percentage: 90,
-        color: 'text',
-      },
-      {
-        percentage: 0,
-        color: 'warning',
-      },
-    ],
-    [
-      {
-        percentage: 70,
-        color: 'primary',
-      },
-      {
-        percentage: 20,
-        color: 'text',
-      },
-      {
-        percentage: 10,
-        color: 'warning',
-      },
-    ],
-  ];
-  showHideData: boolean[] = [];
 
-  isOpenFlyout: boolean = false;
-  optionMatter: { name: string; value: any }[] = [
-    {
-      name: '5030',
-      value: 5030,
-    },
-    {
-      name: 'Profdev',
-      value: 'Profdev',
-    },
-  ];
-  selectedMatter: { name: string; value: any }[] = [
-    {
-      name: '5030',
-      value: 5030,
-    },
-  ];
-
-  constructor(private readonly myTimesheetService: MyTimesheetService) {
+  constructor(private readonly mytimesheetService: MyTimesheetService) {
     super();
+    this.startDate.setDate(this.startDate.getDate() - 5);
+    this.defaultDate(
+      this.startDate,
+      this.endDate,
+      this.startDateForm,
+      this.endDateForm
+    );
   }
-
-  private subscription!: Subscription;
 
   ngOnInit(): void {
+    this.getTimesheet(this.startDateForm.value, this.endDateForm.value);
+    this.loading = true;
     setTimeout(() => {
-      this.subscription = this.myTimesheetService.data$.subscribe(
-        (value: boolean | null) => {
-          if (value === true) {
-            this.progress = SampleDataMyTimeSheet.progress;
-            this.timesheetsData = SampleDataMyTimeSheet.history_activity;
-            this.loading = false;
-          }
-          if (value === false) {
-            this.progress = [];
-            this.timesheetsData = [];
-            this.loading = false;
-          }
-          if (value === null) {
-            this.progress = [
-              [
-                {
-                  percentage: 50,
-                  color: 'primary',
-                },
-                {
-                  percentage: 50,
-                  color: 'text',
-                },
-                {
-                  percentage: 0,
-                  color: 'warning',
-                },
-              ],
-              [
-                {
-                  percentage: 80,
-                  color: 'primary',
-                },
-                {
-                  percentage: 20,
-                  color: 'text',
-                },
-                {
-                  percentage: 0,
-                  color: 'warning',
-                },
-              ],
-              [
-                {
-                  percentage: 10,
-                  color: 'primary',
-                },
-                {
-                  percentage: 90,
-                  color: 'text',
-                },
-                {
-                  percentage: 0,
-                  color: 'warning',
-                },
-              ],
-              [
-                {
-                  percentage: 70,
-                  color: 'primary',
-                },
-                {
-                  percentage: 20,
-                  color: 'text',
-                },
-                {
-                  percentage: 10,
-                  color: 'warning',
-                },
-              ],
-            ];
-            this.timesheetsData = [
-              {
-                date: new Date('2024-05-20T07:05:59'),
-                activityList: [],
-              },
-              {
-                date: new Date('2024-05-20T07:05:59'),
-                activityList: [],
-              },
-              {
-                date: new Date('2024-05-20T07:05:59'),
-                activityList: [],
-              },
-            ];
-            this.loading = true;
-          }
-        }
-      );
+      this.loading = false;
     }, 2000);
-    this.endDate = this.getDateWithRange(this.startDate, 6).endDate;
-    this.insertShowHideRow();
   }
 
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  /** Geting timesheet from MyTimesheetService */
+  getTimesheet(startDate: string, endDate: string): void {
+    this.mytimesheetService
+      .getTimesheetWithRange(startDate, endDate)
+      .pipe(map((res) => (this.dataTimesheet = res.result)))
+      .subscribe();
   }
 
-  /** Next or Previous Date */
-  moveDate(move: 'next' | 'previous', range: number): void {
-    const newDate = new Date(this.startDate); // Clone startDate to avoid mutation
-    if (move === 'next') {
-      newDate.setDate(newDate.getDate() + range);
-    } else {
-      newDate.setDate(newDate.getDate() - range);
-    }
-    this.startDate = newDate;
-    this.endDate = this.getDateWithRange(newDate, range).endDate;
+  /** Filter Timesheet */
+  filterTimesheet(
+    startDate: string,
+    endDate: string,
+    matters: string,
+    description: string,
+    page: number,
+    size: number
+  ): void {
+    this.mytimesheetService
+      .getFilterTimesheet(startDate, endDate, matters, description, page, size)
+      .pipe(
+        map((res) => {
+          this.totalItems = res.result.totalElements;
+          this.dataTimesheet = res.result.content;
+        })
+      )
+      .subscribe();
   }
 
-  /** Activity Checker */
-  hasMentionType(activityList: HourActivityDTO[]): boolean {
-    return activityList.some((activity) => activity.type === 'mention');
+  /** Apply Filter */
+  applyFilterAction(event: {
+    startDate: string;
+    endDate: string;
+    selectedMatter: string;
+    description: string;
+    statusFilter: {
+      filterDate: boolean;
+      filterMatter: boolean;
+      filterTimeDescription: boolean;
+    };
+  }): void {
+    this.filterDate = event.statusFilter.filterDate;
+    this.filterMatter = event.statusFilter.filterMatter;
+    this.filterTimeDescription = event.statusFilter.filterTimeDescription;
+    this.startDateFilter = event.startDate;
+    this.endDateFilter = event.endDate;
+    this.selectedMatterFilter = event.selectedMatter;
+    this.descriptionFilter = event.description;
+
+    this.filterTimesheet(
+      this.startDateFilter,
+      this.endDateFilter,
+      this.selectedMatterFilter,
+      this.descriptionFilter,
+      this.page,
+      this.limit
+    );
   }
 
-  /** Handling For Pagination */
-  onPageChanges(event: any): void {
-    console.log(event);
+  /** Pagination changes */
+  onPageChangeOut(event: { page: number; itemsPerPage: number }): void {
+    this.page = event.page;
+    this.limit = event.itemsPerPage;
+    this.filterTimesheet(
+      this.startDateFilter,
+      this.endDateFilter,
+      this.selectedMatterFilter,
+      this.descriptionFilter,
+      event.page,
+      event.itemsPerPage
+    );
   }
 
-  /** Handling Open Layout */
-  handleOpenFlyout(): void {
-    this.isOpenFlyout = true;
+  /** Clear filter date */
+  clearFilterDate(event: boolean) {
+    this.filterDate = event;
   }
 
-  /** Handling Close Layout */
-  handleCloseFlyout(): void {
-    this.isOpenFlyout = false;
+  /** Clear filter matter */
+  clearFilterMatter(event: boolean) {
+    this.filterMatter = event;
   }
 
-  /** Insert data for status button collapsible row */
-  insertShowHideRow(): void {
-    this.showHideData = new Array(this.timesheetsData.length).fill(false);
+  /** Clear filter description */
+  clearFilterTimeDescription(event: boolean) {
+    this.filterTimeDescription = event;
   }
 
-  /** Toggle for show or hide row */
-  toggleRow(index: number): void {
-    this.showHideData[index] = !this.showHideData[index];
+  /** Clear filter and reset with cancel button */
+  clearFilterAll(event: {
+    filterDate: boolean;
+    filterMatter: boolean;
+    filterTimeDescription: boolean;
+  }): void {
+    this.filterDate = event.filterDate;
+    this.filterMatter = event.filterMatter;
+    this.filterTimeDescription = event.filterTimeDescription;
   }
 
-  /** Filter Toggle */
-  toggleFilter(): void {
-    this.filterStatus = !this.filterStatus;
+  /** Getting data timesheet by date from generate ini utlity component */
+  getDataTimesheetByDate(event: TimesheetByDateDTO[]): void {
+    this.dateTimesheetByDate = event;
+  }
+
+  /** Observe dange when move next or previous */
+  dateMoveWatcher(event: { startDate: string; endDate: string }): void {
+    this.startDate = new Date(event.startDate);
+    this.endDate = new Date(event.endDate);
+    this.startDateForm.setValue(event.startDate);
+    this.endDateForm.setValue(event.endDate);
+    this.getTimesheet(event.startDate, event.endDate);
   }
 }

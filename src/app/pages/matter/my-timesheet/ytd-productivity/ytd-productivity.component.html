@@ -1,14 +1,12 @@
 <div class="header ytd">
-  <app-skeleton [active]="loading">
-    <p class="head-title">YTD Productivity</p>
-  </app-skeleton>
+  <p class="head-title">YTD Productivity</p>
 </div>
 <div class="body" *ngIf="optionBar.series.length > 0">
   <div class="chart">
     <app-skeleton [active]="loading">
       <fui-echarts
         [triggered]="triggered"
-        [height]="'20vh'"
+        [height]="'160px'"
         [chartOption]="optionBar"
         [themeCustom]="true"
       ></fui-echarts>

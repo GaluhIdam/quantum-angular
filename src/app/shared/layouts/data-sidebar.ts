@@ -5,18 +5,14 @@ export class DataSideBar {
   static readonly dataSideBar: DataSideDTO[] = [
     {
       size: this.size,
-      icon: {
-        type: 'home',
-      },
+      icon: 'home',
       link: '/home',
       title: 'Home',
       active: false,
     },
     {
       size: this.size,
-      icon: {
-        type: 'folderClosed',
-      },
+      icon: 'folderClosed',
       title: 'Matter',
       active: false,
       children: [
@@ -42,9 +38,7 @@ export class DataSideBar {
     },
     {
       size: this.size,
-      icon: {
-        type: 'folderClosed',
-      },
+      icon: 'folderClosed',
       title: 'Billing',
       active: false,
       children: [
@@ -53,99 +47,77 @@ export class DataSideBar {
           active: false,
           link: '/matter/my-matter',
           size: this.size,
-          icon: {
-            type: 'submodule',
-          },
+          icon: 'submodule',
         },
         {
           title: 'OPE',
           active: false,
           link: '/matter/my-matter',
           size: this.size,
-          icon: {
-            type: 'submodule',
-          },
+          icon: 'submodule',
         },
         {
           title: 'OPE Rates',
           active: false,
           link: '/matter/all-matter',
           size: this.size,
-          icon: {
-            type: 'submodule',
-          },
+          icon: 'submodule',
         },
         {
           title: 'Matters OPE',
           active: false,
           link: '/matter/all-matter',
           size: this.size,
-          icon: {
-            type: 'submodule',
-          },
+          icon: 'submodule',
         },
         {
           title: 'Lawyers Rate',
           active: false,
           link: '/matter/all-matter',
           size: this.size,
-          icon: {
-            type: 'submodule',
-          },
+          icon: 'submodule',
         },
         {
           title: 'Currency',
           active: false,
           link: '/matter/all-matter',
           size: this.size,
-          icon: {
-            type: 'submodule',
-          },
+          icon: 'submodule',
         },
         {
           title: 'Units',
           active: false,
           link: '/matter/all-matter',
           size: this.size,
-          icon: {
-            type: 'submodule',
-          },
+          icon: 'submodule',
         },
         {
           title: 'Template Description Hours',
           active: false,
           link: '/matter/all-matter',
           size: this.size,
-          icon: {
-            type: 'submodule',
-          },
+          icon: 'submodule',
         },
         {
           title: 'Travel Rates',
           active: false,
           link: '/matter/all-matter',
           size: this.size,
-          icon: {
-            type: 'submodule',
-          },
+          icon: 'submodule',
         },
         {
           title: 'Billing Bank Account',
           active: false,
           link: '/matter/all-matter',
           size: this.size,
-          icon: {
-            type: 'submodule',
-          },
+          icon: 'submodule',
         },
         {
           title: 'Billing',
           active: false,
           link: '/matter/all-matter',
           size: this.size,
-          icon: {
-            type: 'submodule',
-          },
+          icon: 'submodule',
         },
       ],
     },

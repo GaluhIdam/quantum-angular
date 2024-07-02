@@ -5,7 +5,7 @@
 }
 .header.productivity {
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-weight: normal;
   display: flex;
 }
@@ -53,27 +53,24 @@
 }
 
 .progress {
-  margin: 0px 0px 40px 0px;
+  margin: 0px 0px 25px 0px;
 }
 .legend {
   display: flex;
   margin-top: 20px;
   justify-content: space-between;
-  app-skeleton {
+  .legend-title {
     margin-right: 15px;
-    .legend-title {
-      display: flex;
-      align-items: center;
-      text-wrap: nowrap;
-    }
+    display: flex;
+    align-items: center;
+    text-wrap: nowrap;
   }
-  app-skeleton:last-child {
-    margin-right: 0px;
-    .legend-title {
-      display: flex;
-      align-items: center;
-      text-wrap: nowrap;
-    }
+
+  margin-right: 0px;
+  .legend-title:last-child {
+    display: flex;
+    align-items: center;
+    text-wrap: nowrap;
   }
 }
 @media (max-width: 400px) {
