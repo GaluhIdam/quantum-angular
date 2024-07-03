@@ -79,7 +79,7 @@ export class HistoryActivityComponent extends BaseController {
     this.loading = true;
     setTimeout(() => {
       this.loading = false;
-    }, 2000);
+    }, 1000);
   }
 
   /** Geting timesheet from MyTimesheetService */

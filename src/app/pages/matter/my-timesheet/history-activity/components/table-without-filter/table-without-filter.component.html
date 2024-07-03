@@ -60,62 +60,68 @@
           class="table-row {{ item.tagEntityList.length > 0 ? 'tag-bg' : '' }}"
           *ngFor="let item of date.data; let z = index"
         >
-          <div class="table-cell"><input type="checkbox" /></div>
           <div class="table-cell">
-            <fui-popover [position]="'bottom'" [align]="'start'">
-              <div class="custom-badge">
-                <div class="item">
-                  {{ item.matter.matter }}
-                </div>
-              </div>
-              <div popover-body>
-                <div class="change-matter">
-                  <!-- CHECKBOX SEARCH MATTER  -->
-                  <div class="checkbox">
-                    <input type="checkbox" [(ngModel)]="hideSubMatter" />
-                    <span class="title">Do not show sub-matter</span>
+            <div>
+              <input type="checkbox" />
+            </div>
+          </div>
+          <div class="table-cell">
+            <div>
+              <fui-popover [position]="'bottom'" [align]="'start'">
+                <div class="custom-badge">
+                  <div class="item">
+                    {{ item.matter.matter }}
                   </div>
-                  <!-- CHECKBOX SEARCH MATTER  -->
-
-                  <!-- FORM SEARCH MATTER  -->
-                  <fui-form-control-layout class="description">
-                    <fui-input-field
-                      [placeholder]="'Search by number, project or client'"
-                      [formControlField]="searchMatter"
-                      [type]="'text'"
-                      [size]="'m'"
-                      [invalid]="false"
-                    >
-                      <fui-icons
-                        left-icon
-                        [icon]="'search'"
-                        [size]="'sizes'"
-                        [color]="'text'"
-                      />
-                    </fui-input-field>
-                    <fui-validator-field
-                      validator
-                      [message]="'Additional description is required!'"
-                    />
-                  </fui-form-control-layout>
-                  <!-- FORM SEARCH MATTER  -->
-
-                  <!-- OPTION MATTER  -->
-                  <div class="body-option">
-                    <div
-                      class="option-selector"
-                      *ngFor="let item of listMatters"
-                    >
-                      <p class="no-matter">{{ item.matter }}</p>
-                      <p class="desc-matter" *ngIf="!hideSubMatter">
-                        Desc matter Desc matter Desc matter Desc matter
-                      </p>
+                </div>
+                <div popover-body>
+                  <div class="change-matter">
+                    <!-- CHECKBOX SEARCH MATTER  -->
+                    <div class="checkbox">
+                      <input type="checkbox" [(ngModel)]="hideSubMatter" />
+                      <span class="title">Do not show sub-matter</span>
                     </div>
+                    <!-- CHECKBOX SEARCH MATTER  -->
+
+                    <!-- FORM SEARCH MATTER  -->
+                    <fui-form-control-layout class="description">
+                      <fui-input-field
+                        [placeholder]="'Search by number, project or client'"
+                        [formControlField]="searchMatter"
+                        [type]="'text'"
+                        [size]="'m'"
+                        [invalid]="false"
+                      >
+                        <fui-icons
+                          left-icon
+                          [icon]="'search'"
+                          [size]="'sizes'"
+                          [color]="'text'"
+                        />
+                      </fui-input-field>
+                      <fui-validator-field
+                        validator
+                        [message]="'Additional description is required!'"
+                      />
+                    </fui-form-control-layout>
+                    <!-- FORM SEARCH MATTER  -->
+
+                    <!-- OPTION MATTER  -->
+                    <div class="body-option">
+                      <div
+                        class="option-selector"
+                        *ngFor="let item of listMatters"
+                      >
+                        <p class="no-matter">{{ item.matter }}</p>
+                        <p class="desc-matter" *ngIf="!hideSubMatter">
+                          Desc matter Desc matter Desc matter Desc matter
+                        </p>
+                      </div>
+                    </div>
+                    <!-- OPTION MATTER  -->
                   </div>
-                  <!-- OPTION MATTER  -->
                 </div>
-              </div>
-            </fui-popover>
+              </fui-popover>
+            </div>
           </div>
           <div class="table-cell" *ngIf="!showHideEdit[i][z]">
             {{ item.description }}
@@ -174,13 +180,14 @@
             </div>
           </div>
           <div class="table-cell" *ngIf="showHideEdit[i][z]">
-            <div class="edit-form">
-              <fui-time-selection
-                style="margin-top: 2px"
-                [timeFormControl]="durationForm"
-                [isInvalid]="durationForm.invalid && durationForm.dirty"
-                [message]="'Duration is required!'"
-              />
+            <div>
+              <div class="edit-form">
+                <fui-time-selection
+                  [timeFormControl]="durationForm"
+                  [isInvalid]="durationForm.invalid && durationForm.dirty"
+                  [message]="'Duration is required!'"
+                />
+              </div>
             </div>
           </div>
           <!-- Show if edit mode -->
