@@ -98,8 +98,10 @@ fui-horizontal-stack {
   .item {
     margin-top: 2px;
   }
-  &:hover {
-    cursor: pointer;
+  &.edited {
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
@@ -310,6 +312,8 @@ fui-time-selection {
     height: 250px;
     overflow-x: hidden;
     overflow-y: auto;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
     .option-selector {
       border-width: 1px;
       border-style: solid;

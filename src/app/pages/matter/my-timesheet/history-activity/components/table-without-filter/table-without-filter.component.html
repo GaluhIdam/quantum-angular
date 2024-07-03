@@ -67,8 +67,23 @@
           </div>
           <div class="table-cell">
             <div>
-              <fui-popover [position]="'bottom'" [align]="'start'">
-                <div class="custom-badge">
+              <!-- IF NON EDITED  -->
+              <div class="custom-badge" *ngIf="!showHideEdit[i][z]">
+                <div class="item">
+                  {{ item.matter.matter }}
+                </div>
+              </div>
+              <!-- IF NON EDITED  -->
+
+              <!-- IF EDITED  -->
+              <fui-popover
+                [position]="'bottom'"
+                [align]="'start'"
+                *ngIf="showHideEdit[i][z]"
+              >
+                <div
+                  class="custom-badge {{ showHideEdit[i][z] ? 'edited' : '' }}"
+                >
                   <div class="item">
                     {{ item.matter.matter }}
                   </div>
@@ -121,6 +136,7 @@
                   </div>
                 </div>
               </fui-popover>
+              <!-- IF EDITED  -->
             </div>
           </div>
           <div class="table-cell" *ngIf="!showHideEdit[i][z]">
