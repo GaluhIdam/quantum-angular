@@ -1,1 +1,54 @@
-<h1>My Matter</h1>
+<h1 class="title-page">My Matter</h1>
+
+<!-- FORM SEARCH SECTION -->
+<app-form-search />
+<!-- FORM SEARCH SECTION  -->
+
+<!-- FILTER SECTION  -->
+<div class="filter-applied">
+  <!-- FILTER TAB SECTION  -->
+  <fui-filter-group [fullWidth]="true">
+    <fui-filter-group-button
+      ><div class="filter-title">
+        <span>Active</span>
+        <div class="icon">11</div>
+      </div>
+    </fui-filter-group-button>
+    <fui-filter-group-button
+      ><div class="filter-title">
+        <span>Pending</span>
+        <div class="icon">11</div>
+      </div></fui-filter-group-button
+    >
+    <fui-filter-group-button
+      ><div class="filter-title">
+        <span>On Hold</span>
+        <div class="icon">11</div>
+      </div></fui-filter-group-button
+    >
+    <fui-filter-group-button
+      ><div class="filter-title">
+        <span>Completed</span>
+        <div class="icon">11</div>
+      </div></fui-filter-group-button
+    >
+    <fui-filter-group-button
+      ><div class="filter-title">
+        <span>Closed</span>
+        <div class="icon">11</div>
+      </div></fui-filter-group-button
+    >
+  </fui-filter-group>
+  <!-- FILTER TAB SECTION  -->
+
+  <!-- FILTER APPLIED SECTION  -->
+  <app-filter-applied
+    [filterApllied]="filterApllied"
+    (clearAllFilterOut)="clearAllFilterOut($event)"
+    (clearFilterPerItemOut)="clearFilterPerItemOut($event)"
+  />
+  <!-- FILTER APPLIED SECTION  -->
+</div>
+<!-- CONTENT CARD SECTION  -->
+<app-content-card />
+<!-- CONTENT CARD SECTION  -->

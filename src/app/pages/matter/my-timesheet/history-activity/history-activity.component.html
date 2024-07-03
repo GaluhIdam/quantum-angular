@@ -6,31 +6,25 @@
     [startDate]="startDate"
     [startDateForm]="startDateForm"
     [endDateForm]="endDateForm"
-    [filterDate]="filterDate"
-    [filterMatter]="filterMatter"
-    [filterTimeDescription]="filterTimeDescription"
+    [filterApplied]="filterApplied"
     [listMatter]="listMatters"
     [dataTimesheet]="dataTimesheet"
     (filterAction)="applyFilterAction($event)"
-    (clearFilterAll)="clearFilterAll($event)"
+    (clearFilterAll)="clearAllFilterOut($event)"
     (dateTimesheetByDateOut)="getDataTimesheetByDate($event)"
     (dateMoveChanger)="dateMoveWatcher($event)"
   />
-  <app-apply-filter
-    [filterDate]="filterDate"
-    [filterMatter]="filterMatter"
-    [filterTimeDescription]="filterTimeDescription"
-    (clearFilterDate)="clearFilterDate($event)"
-    (clearFilterMatter)="clearFilterMatter($event)"
-    (clearFilterTimeDescription)="clearFilterTimeDescription($event)"
-    (clearFilterAll)="clearFilterAll($event)"
+  <app-filter-applied
+    [filterApllied]="filterApplied"
+    (clearAllFilterOut)="clearAllFilterOut($event)"
   />
   <!-- Utility -->
 
   <!-- Table without filter -->
   <app-table-without-filter
-    *ngIf="!filterDate"
+    *ngIf="!checkFilter()"
     [listActivity]="listActivities"
+    [listMatters]="listMatters"
     [dateTimesheetByDate]="dateTimesheetByDate"
   />
   <!-- Table without filter -->
@@ -39,7 +33,7 @@
   <div class="container-table">
     <app-table-filter
       class="container-table"
-      *ngIf="filterDate"
+      *ngIf="checkFilter()"
       [page]="page"
       [limit]="limit"
       [listActivity]="listActivities"

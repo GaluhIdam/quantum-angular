@@ -1,4 +1,4 @@
-@import "../../../my-timesheet.component.scss";
+@import "../../history-activity.component.scss";
 
 .container {
   fui-collapsible-nav-group {
@@ -79,7 +79,7 @@ fui-horizontal-stack {
 .wrap-action {
   display: flex;
   align-items: baseline;
-  justify-content: end;
+  justify-content: start;
   fui-button-icon {
     margin-left: 3px;
     margin-right: 3px;
@@ -283,19 +283,66 @@ fui-time-selection {
 .edit-form {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
+  .form-control {
+    margin: 0px 5px;
+  }
 }
 
-::-webkit-scrollbar {
-  height: 5px;
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--fuiColorMediumShade, $fuiColorMediumShade);
-  border-radius: 25px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--fuiColorDarkShade, $fuiColorDarkShade);
+/** Matter Change in table config */
+.change-matter {
+  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+  width: 280px;
+  padding: 8px;
+  .checkbox {
+    align-items: center;
+    display: flex;
+    margin-bottom: 8px;
+    .title {
+      font-size: small;
+      margin-left: 5px;
+    }
+  }
+  /** Body for option matter when is changing */
+  .body-option {
+    margin-top: 15px;
+    height: 250px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    .option-selector {
+      border-width: 1px;
+      border-style: solid;
+      border-color: var(--fuiColorLightShade, $fuiColorLightShade);
+      padding: 9px 15px;
+      &:first-child {
+        border-bottom-width: 0px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+      }
+      &:last-child {
+        border-top-width: 0px;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+      &:hover {
+        cursor: pointer;
+        background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+        .no-matter {
+          text-decoration: underline;
+        }
+      }
+      .no-matter {
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+        font-weight: bold;
+      }
+      .desc-matter {
+        margin-top: 5px;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+    }
+  }
 }

@@ -1,5 +1,5 @@
 <!-- table if data is existing -->
-<div class="table">
+<div class="table" *ngIf="dataTimesheet.length > 0">
   <div class="table-row header">
     <div class="table-cell"><input type="checkbox" /></div>
     <div class="table-cell" *ngFor="let item of headerTable">
@@ -140,167 +140,166 @@
 <!-- table if data is existing -->
 
 <!-- message if data is empy -->
-<div *ngIf="dataTimesheet.length == 0">
-  <p class="empty-message">You don't have any time recorded on this perioed.</p>
-</div>
-<!-- message if data is empy -->
+<app-empty-data [dataLength]="dataTimesheet.length">
+  <!-- message if data is empy -->
 
-<!-- Modal Confirm Delete Timesheet -->
-<fui-modal [open]="openModalDelete">
-  <fui-modal-header (onCloseModal)="closelModalDelete()">
-    <div class="title-modal">
-      <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizexl'" />
-      <h3>Delete Confirmation</h3>
-    </div>
-  </fui-modal-header>
-  <fui-modal-body>
-    <div class="modal">
-      <p>This data will be permanently deleted. Do you want to continue?</p>
-    </div>
-  </fui-modal-body>
-  <fui-modal-footer [isCustomModalFooter]="true">
-    <div class="title-modal foot">
-      <fui-button-icon
-        (onClick)="closelModalDelete()"
-        class="create-btn"
-        [size]="'m'"
-        [type]="'button'"
-        [option]="'text'"
-        [text]="'Cancel'"
-        [style]="'secondary'"
-        [color]="'text'"
-      />
-      <fui-button-icon
-        (onClick)="deleteTimesheet(uuid)"
-        class="create-btn"
-        [size]="'m'"
-        [type]="'button'"
-        [option]="'iconText'"
-        [icon]="'trash'"
-        [text]="'Delete'"
-        [style]="'filled'"
-        [color]="'danger'"
-      />
-    </div>
-  </fui-modal-footer>
-</fui-modal>
-<!-- Modal Confirm Delete Timesheet -->
-
-<!-- Modal Edit Tag Timesheet -->
-<fui-modal [open]="openModalEditTag">
-  <fui-modal-header (onCloseModal)="closeModalEditTag()">
-    <div class="title-modal-edit">
-      <h2>Edit Tagged Entry</h2>
-    </div>
-  </fui-modal-header>
-  <fui-modal-body>
-    <div class="container-modal-edit">
-      <div class="modal-edit">
-        <div class="title-info">
-          <fui-icons
-            [icon]="'iInCircle'"
-            [color]="'primary'"
-            [size]="'sizel'"
-          />
-          <h4>Feel free to modify!</h4>
-        </div>
-        <div class="desc">
-          Editing or reject & remove tagged entry won’t affect the other member
-          time entry, they have their own version!
-        </div>
+  <!-- Modal Confirm Delete Timesheet -->
+  <fui-modal [open]="openModalDelete">
+    <fui-modal-header (onCloseModal)="closelModalDelete()">
+      <div class="title-modal">
+        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizexl'" />
+        <h3>Delete Confirmation</h3>
       </div>
-      <div class="form">
-        <div class="form-control">
-          <div class="title-form">Matter Number</div>
-          <fui-combo-box
-            [invalid]="activitySearch.invalid && activitySearch.dirty"
-            [message]="'Activity is required!'"
-            [comboxForm]="activitySearch"
-            [singleSelection]="true"
-            [size]="'m'"
-            [placeholder]="'Activity/verb'"
-            [optionValue]="optionActivity"
-            [selectedValue]="selectedActivity"
-          />
-        </div>
-        <div class="form-control">
-          <div class="title-form">Date</div>
-          <fui-date-picker
-            format="YYYY/DD/MM"
-            [dateFormControl]="dateFormControl"
-            [message]="'Date is required!'"
-            [isInvalid]="dateFormControl.invalid && dateFormControl.dirty"
-          />
-        </div>
-        <div class="form-control">
-          <div class="title-form">Duration</div>
-          <fui-time-selection
-            [timeFormControl]="durationForm"
-            [isInvalid]="durationForm.invalid && durationForm.dirty"
-            [message]="'Duration is required!'"
-          />
-        </div>
+    </fui-modal-header>
+    <fui-modal-body>
+      <div class="modal">
+        <p>This data will be permanently deleted. Do you want to continue?</p>
       </div>
+    </fui-modal-body>
+    <fui-modal-footer [isCustomModalFooter]="true">
+      <div class="title-modal foot">
+        <fui-button-icon
+          (onClick)="closelModalDelete()"
+          class="create-btn"
+          [size]="'m'"
+          [type]="'button'"
+          [option]="'text'"
+          [text]="'Cancel'"
+          [style]="'secondary'"
+          [color]="'text'"
+        />
+        <fui-button-icon
+          (onClick)="deleteTimesheet(uuid)"
+          class="create-btn"
+          [size]="'m'"
+          [type]="'button'"
+          [option]="'iconText'"
+          [icon]="'trash'"
+          [text]="'Delete'"
+          [style]="'filled'"
+          [color]="'danger'"
+        />
+      </div>
+    </fui-modal-footer>
+  </fui-modal>
+  <!-- Modal Confirm Delete Timesheet -->
 
-      <div class="form">
-        <div class="form-control half">
-          <div class="title-form">Time Description</div>
-          <fui-form-control-layout class="description">
-            <fui-input-field
-              [placeholder]="'time description'"
-              [formControlField]="timeDescForm"
-              [type]="'text'"
-              [size]="'m'"
-              [invalid]="timeDescForm.invalid && timeDescForm.dirty"
-            >
-            </fui-input-field>
-            <fui-validator-field
-              validator
-              [message]="'Time description is required!'"
+  <!-- Modal Edit Tag Timesheet -->
+  <fui-modal [open]="openModalEditTag">
+    <fui-modal-header (onCloseModal)="closeModalEditTag()">
+      <div class="title-modal-edit">
+        <h2>Edit Tagged Entry</h2>
+      </div>
+    </fui-modal-header>
+    <fui-modal-body>
+      <div class="container-modal-edit">
+        <div class="modal-edit">
+          <div class="title-info">
+            <fui-icons
+              [icon]="'iInCircle'"
+              [color]="'primary'"
+              [size]="'sizel'"
             />
-          </fui-form-control-layout>
+            <h4>Feel free to modify!</h4>
+          </div>
+          <div class="desc">
+            Editing or reject & remove tagged entry won’t affect the other
+            member time entry, they have their own version!
+          </div>
         </div>
-        <div class="form-control full">
-          <div class="title-form" style="visibility: hidden">Date</div>
-          <fui-form-control-layout class="description">
-            <fui-input-field
-              [placeholder]="'additional description'"
-              [type]="'text'"
+        <div class="form">
+          <div class="form-control">
+            <div class="title-form">Matter Number</div>
+            <fui-combo-box
+              [invalid]="activitySearch.invalid && activitySearch.dirty"
+              [message]="'Activity is required!'"
+              [comboxForm]="activitySearch"
+              [singleSelection]="true"
               [size]="'m'"
-              [invalid]="false"
-            >
-            </fui-input-field>
-            <fui-validator-field
-              validator
-              [message]="'Additional description is required!'"
+              [placeholder]="'Activity/verb'"
+              [optionValue]="optionActivity"
+              [selectedValue]="selectedActivity"
             />
-          </fui-form-control-layout>
+          </div>
+          <div class="form-control">
+            <div class="title-form">Date</div>
+            <fui-date-picker
+              format="YYYY/DD/MM"
+              [dateFormControl]="dateFormControl"
+              [message]="'Date is required!'"
+              [isInvalid]="dateFormControl.invalid && dateFormControl.dirty"
+            />
+          </div>
+          <div class="form-control">
+            <div class="title-form">Duration</div>
+            <fui-time-selection
+              [timeFormControl]="durationForm"
+              [isInvalid]="durationForm.invalid && durationForm.dirty"
+              [message]="'Duration is required!'"
+            />
+          </div>
+        </div>
+
+        <div class="form">
+          <div class="form-control half">
+            <div class="title-form">Time Description</div>
+            <fui-form-control-layout class="description">
+              <fui-input-field
+                [placeholder]="'time description'"
+                [formControlField]="timeDescForm"
+                [type]="'text'"
+                [size]="'m'"
+                [invalid]="timeDescForm.invalid && timeDescForm.dirty"
+              >
+              </fui-input-field>
+              <fui-validator-field
+                validator
+                [message]="'Time description is required!'"
+              />
+            </fui-form-control-layout>
+          </div>
+          <div class="form-control full">
+            <div class="title-form" style="visibility: hidden">Date</div>
+            <fui-form-control-layout class="description">
+              <fui-input-field
+                [placeholder]="'additional description'"
+                [type]="'text'"
+                [size]="'m'"
+                [invalid]="false"
+              >
+              </fui-input-field>
+              <fui-validator-field
+                validator
+                [message]="'Additional description is required!'"
+              />
+            </fui-form-control-layout>
+          </div>
         </div>
       </div>
-    </div>
-  </fui-modal-body>
-  <fui-modal-footer [isCustomModalFooter]="true">
-    <div class="title-modal-edit foot">
-      <fui-button-icon
-        (onClick)="deleteTimesheet(uuid)"
-        class="create-btn"
-        [size]="'m'"
-        [type]="'button'"
-        [option]="'text'"
-        [text]="'Reject & Remove'"
-        [style]="'secondary'"
-        [color]="'danger'"
-      />
-      <fui-button-icon
-        class="create-btn"
-        [size]="'m'"
-        [type]="'button'"
-        [option]="'text'"
-        [text]="'Accept Tagged Entry'"
-        [style]="'filled'"
-        [color]="'primary'"
-      />
-    </div>
-  </fui-modal-footer>
-</fui-modal>
-<!-- Modal Edit Tag Timesheet -->
+    </fui-modal-body>
+    <fui-modal-footer [isCustomModalFooter]="true">
+      <div class="title-modal-edit foot">
+        <fui-button-icon
+          (onClick)="deleteTimesheet(uuid)"
+          class="create-btn"
+          [size]="'m'"
+          [type]="'button'"
+          [option]="'text'"
+          [text]="'Reject & Remove'"
+          [style]="'secondary'"
+          [color]="'danger'"
+        />
+        <fui-button-icon
+          class="create-btn"
+          [size]="'m'"
+          [type]="'button'"
+          [option]="'text'"
+          [text]="'Accept Tagged Entry'"
+          [style]="'filled'"
+          [color]="'primary'"
+        />
+      </div>
+    </fui-modal-footer>
+  </fui-modal>
+  <!-- Modal Edit Tag Timesheet -->
+</app-empty-data>

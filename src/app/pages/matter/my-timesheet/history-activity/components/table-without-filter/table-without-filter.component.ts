@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import {
   ActivityDTO,
+  MatterDTO,
   MyTimesheetDTO,
   MyTimesheetPostDTO,
   TimesheetByDateDTO,
@@ -27,6 +28,7 @@ import {
   ModalComponent,
   ModalFooterComponent,
   ModalHeaderComponent,
+  PopoverComponent,
   TimeSelectionComponent,
   ValidatorFieldComponent,
 } from '@quantum/fui';
@@ -39,6 +41,7 @@ import {
 import { MyTimesheetService } from '../../../services/my-timesheet.service';
 import { BaseController } from '../../../../../../core/controller/basecontroller';
 import { EmptyDataComponent } from '../../../../../../shared/empty-data/empty-data.component';
+import { debounceTime, map, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-table-without-filter',
@@ -63,6 +66,7 @@ import { EmptyDataComponent } from '../../../../../../shared/empty-data/empty-da
     ModalComponent,
     ModalFooterComponent,
     ModalHeaderComponent,
+    PopoverComponent,
   ],
   templateUrl: './table-without-filter.component.html',
   styleUrl: './table-without-filter.component.scss',
@@ -75,6 +79,7 @@ export class TableWithoutFilterComponent extends BaseController {
   }[][] = [];
   @Input() filterDate: boolean = false;
   @Input() listActivity: ActivityDTO[] = [];
+  @Input() listMatters: MatterDTO[] = [];
   @Output() trigger: EventEmitter<any> = new EventEmitter<any>();
 
   optionActivity: { name: string; value: any }[] = [];
@@ -106,8 +111,24 @@ export class TableWithoutFilterComponent extends BaseController {
   openModalDelete: boolean = false;
   openModalEditTag: boolean = false;
 
+  /** Search Matter */
+  searchMatter: FormControl = new FormControl('');
+  /** For hide sub matter if checked */
+  hideSubMatter: boolean = false;
+
+  subscription!: Subscription;
+
   constructor(private readonly myTimesheetService: MyTimesheetService) {
     super();
+  }
+
+  ngOnInit(): void {
+    this.subscription = this.searchMatter.valueChanges
+      .pipe(
+        debounceTime(500),
+        tap((value) => this.getMatter(value))
+      )
+      .subscribe();
   }
 
   ngOnChanges(changes: SimpleChange): void {
@@ -278,7 +299,7 @@ export class TableWithoutFilterComponent extends BaseController {
         {
           percentage: this.calculateTotalDurationTagPercent(item.data)
             .remainingPercentage,
-          color: 'disabled',
+          color: 'text',
         },
         {
           percentage: this.calculateTotalDurationTagPercent(item.data)
@@ -287,5 +308,13 @@ export class TableWithoutFilterComponent extends BaseController {
         },
       ]);
     });
+  }
+
+  /** Getting Matter from MyTimesheetService */
+  getMatter(search: string): void {
+    this.myTimesheetService
+      .getMatters(search)
+      .pipe(map((res) => (this.listMatters = res.result)))
+      .subscribe();
   }
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UtilityComponent } from './components/utility/utility.component';
 import { ToastComponent } from '@quantum/fui';
 import {
@@ -11,11 +11,12 @@ import {
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { MyTimesheetService } from '../services/my-timesheet.service';
 import { map } from 'rxjs';
-import { ApplyFilterComponent } from './components/apply-filter/apply-filter.component';
 import { TableWithoutFilterComponent } from './components/table-without-filter/table-without-filter.component';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableFilterComponent } from './components/table-filter/table-filter.component';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
+import { FilterAplliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
+import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
 
 @Component({
   selector: 'app-history-activity',
@@ -27,11 +28,11 @@ import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.componen
     ReactiveFormsModule,
     FormsModule,
     UtilityComponent,
-    ApplyFilterComponent,
     TableWithoutFilterComponent,
     TableFilterComponent,
     ToastComponent,
     SkeletonComponent,
+    FilterAppliedComponent,
   ],
 })
 export class HistoryActivityComponent extends BaseController {
@@ -51,11 +52,6 @@ export class HistoryActivityComponent extends BaseController {
   startDateForm: FormControl = new FormControl();
   endDateForm: FormControl = new FormControl();
 
-  /** Status for filter */
-  filterDate: boolean = false;
-  filterMatter: boolean = false;
-  filterTimeDescription: boolean = false;
-
   /** Data from apply filter */
   startDateFilter: string = '';
   endDateFilter: string = '';
@@ -67,18 +63,18 @@ export class HistoryActivityComponent extends BaseController {
   limit: number = 10;
   totalItems: number = 0;
 
+  /** Filter Applied */
+  filterApplied: FilterAplliedDTO[] = [];
+
   constructor(private readonly mytimesheetService: MyTimesheetService) {
     super();
     this.startDate.setDate(this.startDate.getDate() - 5);
-    this.defaultDate(
-      this.startDate,
-      this.endDate,
-      this.startDateForm,
-      this.endDateForm
-    );
+    this.startDateForm.setValue(this.defaultDate().startDateForm);
+    this.endDateForm.setValue(this.defaultDate().endDateForm);
   }
 
   ngOnInit(): void {
+    this.filterApplied = this.mytimesheetService.dataFilterMyTimesheet();
     this.getTimesheet(this.startDateForm.value, this.endDateForm.value);
     this.loading = true;
     setTimeout(() => {
@@ -120,15 +116,9 @@ export class HistoryActivityComponent extends BaseController {
     endDate: string;
     selectedMatter: string;
     description: string;
-    statusFilter: {
-      filterDate: boolean;
-      filterMatter: boolean;
-      filterTimeDescription: boolean;
-    };
+    filterApplied: FilterAplliedDTO[];
   }): void {
-    this.filterDate = event.statusFilter.filterDate;
-    this.filterMatter = event.statusFilter.filterMatter;
-    this.filterTimeDescription = event.statusFilter.filterTimeDescription;
+    this.filterApplied = event.filterApplied;
     this.startDateFilter = event.startDate;
     this.endDateFilter = event.endDate;
     this.selectedMatterFilter = event.selectedMatter;
@@ -158,32 +148,6 @@ export class HistoryActivityComponent extends BaseController {
     );
   }
 
-  /** Clear filter date */
-  clearFilterDate(event: boolean) {
-    this.filterDate = event;
-  }
-
-  /** Clear filter matter */
-  clearFilterMatter(event: boolean) {
-    this.filterMatter = event;
-  }
-
-  /** Clear filter description */
-  clearFilterTimeDescription(event: boolean) {
-    this.filterTimeDescription = event;
-  }
-
-  /** Clear filter and reset with cancel button */
-  clearFilterAll(event: {
-    filterDate: boolean;
-    filterMatter: boolean;
-    filterTimeDescription: boolean;
-  }): void {
-    this.filterDate = event.filterDate;
-    this.filterMatter = event.filterMatter;
-    this.filterTimeDescription = event.filterTimeDescription;
-  }
-
   /** Getting data timesheet by date from generate ini utlity component */
   getDataTimesheetByDate(event: TimesheetByDateDTO[]): void {
     this.dateTimesheetByDate = event;
@@ -196,5 +160,15 @@ export class HistoryActivityComponent extends BaseController {
     this.startDateForm.setValue(event.startDate);
     this.endDateForm.setValue(event.endDate);
     this.getTimesheet(event.startDate, event.endDate);
+  }
+
+  /** Clear all filter */
+  clearAllFilterOut(event: FilterAplliedDTO[]): void {
+    this.filterApplied = event;
+  }
+
+  /** Checking filter is on or not */
+  checkFilter(): boolean {
+    return this.filterApplied.some((item) => item.status == true);
   }
 }

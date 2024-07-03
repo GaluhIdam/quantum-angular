@@ -15,6 +15,7 @@ import {
   TokenDTO,
   UserKeycloakDTO,
 } from '../../../../core/dtos/response.dto';
+import { FilterAplliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,24 @@ export class MyTimesheetService extends BaseController {
 
   updateData(newValue: boolean | null): void {
     this.remoteControl.next(newValue);
+  }
+
+  /** Data filter for my timesheet */
+  dataFilterMyTimesheet(): FilterAplliedDTO[] {
+    return [
+      {
+        name: 'Date',
+        status: false,
+      },
+      {
+        name: 'Matter',
+        status: false,
+      },
+      {
+        name: 'Time Description',
+        status: false,
+      },
+    ];
   }
 
   /** Getting Activity and search */

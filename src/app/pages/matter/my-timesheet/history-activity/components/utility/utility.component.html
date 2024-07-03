@@ -2,7 +2,7 @@
   <div class="sub-utility block">
     <div class="date-duration">
       <fui-button-icon
-        *ngIf="!filterDate"
+        *ngIf="!checkFilter()"
         [type]="'button'"
         [option]="'icon'"
         [icon]="'arrowLeft'"
@@ -10,16 +10,16 @@
         [color]="'text'"
         (onClick)="moveDate(-5)"
       />
-      <p class="date" *ngIf="!filterDate">
+      <p class="date" *ngIf="!checkFilter()">
         {{ startDate | date : "d MMMM yyyy" }} -
         {{ endDate | date : "d MMMM yyyy" }}
       </p>
-      <p class="date" *ngIf="filterDate">
+      <p class="date" *ngIf="checkFilter()">
         {{ startDateForm.value | date : "d MMMM yyyy" }} -
         {{ endDateForm.value | date : "d MMMM yyyy" }}
       </p>
       <fui-button-icon
-        *ngIf="endDate < currentDate && !filterDate"
+        *ngIf="endDate < currentDate && !checkFilter()"
         [type]="'button'"
         [option]="'icon'"
         [icon]="'arrowRight'"
@@ -28,17 +28,33 @@
         (onClick)="moveDate(5)"
       />
       <div class="duration">
-        <fui-badge
-          [color]="'ghost'"
-          [size]="'sizem'"
-          [isBadgeIcon]="true"
-          [icon]="'clock'"
-          [iconPosition]="'start'"
-        >
-          <div class="content">
-            {{ calculateTotalDuration(dataTimesheet) }}
+        <fui-tooltip [position]="'top'" [custom]="true">
+          <fui-badge
+            [color]="'ghost'"
+            [size]="'sizem'"
+            [isBadgeIcon]="true"
+            [icon]="'clock'"
+            [iconPosition]="'start'"
+          >
+            <div class="content">
+              {{ calculateTotalDuration(dataTimesheet) }}
+            </div>
+          </fui-badge>
+          <div title>
+            <p class="date" *ngIf="!checkFilter()">
+              {{ startDate | date : "d MMMM yyyy" }} -
+              {{ endDate | date : "d MMMM yyyy" }}
+            </p>
+            <p class="date" *ngIf="checkFilter()">
+              {{ startDateForm.value | date : "d MMMM yyyy" }} -
+              {{ endDateForm.value | date : "d MMMM yyyy" }}
+            </p>
           </div>
-        </fui-badge>
+          <div content>
+            <div class="tootips">Billable: 130h 32m</div>
+            <div class="tootips">Nonbillable: 130h 32m</div>
+          </div>
+        </fui-tooltip>
       </div>
     </div>
   </div>

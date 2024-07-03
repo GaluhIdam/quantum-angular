@@ -1,0 +1,38 @@
+@import "../../../app.component.scss";
+
+.title-page {
+  margin-bottom: 45px;
+}
+.filter-applied {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+.filter-group {
+  width: 100%;
+  text-wrap: nowrap;
+}
+fui-filter-group {
+  width: 45%;
+}
+app-filter-applied {
+  width: 50%;
+}
+.filter-title {
+  padding: 4px 6px;
+  text-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .icon {
+    background-color: var(--fuiColorLightShade, $fuiColorLightShade);
+    font-size: 11px;
+    padding: 2px 3px;
+    border-radius: 3px;
+    margin-left: 5px;
+    text-decoration: none;
+  }
+}
+

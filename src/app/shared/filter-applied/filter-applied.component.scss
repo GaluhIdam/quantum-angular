@@ -1,18 +1,28 @@
-@import "../../history-activity.component.scss";
+@import "../../app.component.scss";
 
 .container {
   display: flex;
   align-items: center;
 }
+.title {
+  text-wrap: nowrap;
+}
 .toggle-clear {
   color: var(--fuiColorPrimary, $fuiColorPrimary);
   margin: 0px 15px;
+  text-wrap: nowrap;
   &:hover {
     text-decoration: underline;
     cursor: pointer;
   }
 }
-
+.scroller {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  padding: 3px 0px;
+}
 fui-badge {
   margin: 0px 5px;
 }

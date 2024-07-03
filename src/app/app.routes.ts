@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MyTimesheetComponent } from './pages/matter/my-timesheet/my-timesheet.component';
 import { MyMatterComponent } from './pages/matter/my-matter/my-matter.component';
 import { AllMatterComponent } from './pages/matter/all-matter/all-matter.component';
+import { DetailMatterComponent } from './pages/matter/my-matter/detail-matter/detail-matter.component';
 
 export const routes: Routes = [
   /** Matter Modules */
@@ -21,7 +22,17 @@ export const routes: Routes = [
       {
         title: 'My Matter',
         path: 'my-matter',
-        component: MyMatterComponent,
+        children: [
+          {
+            path: '',
+            component: MyMatterComponent,
+          },
+          {
+            title: 'Detail Matter',
+            path: 'detail-matter',
+            component: DetailMatterComponent,
+          },
+        ],
       },
       {
         title: 'All Matter',

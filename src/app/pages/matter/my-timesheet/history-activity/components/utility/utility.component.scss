@@ -1,4 +1,4 @@
-@import "../../../my-timesheet.component.scss";
+@import "../../history-activity.component.scss";
 
 /** Utility Style */
 .utility {
@@ -93,5 +93,12 @@
     .content {
       margin-top: 3px;
     }
+  }
+}
+
+.tootips {
+  margin: 5px 0px;
+  &:last-child {
+    margin: 0px;
   }
 }

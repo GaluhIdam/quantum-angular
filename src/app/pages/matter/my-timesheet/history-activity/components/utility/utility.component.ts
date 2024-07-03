@@ -19,6 +19,7 @@ import {
   FormControlLayoutComponent,
   IconsComponent,
   InputFieldComponent,
+  TooltipComponent,
 } from '@quantum/fui';
 import { BaseController } from '../../../../../../core/controller/basecontroller';
 import {
@@ -26,6 +27,7 @@ import {
   MyTimesheetDTO,
   TimesheetByDateDTO,
 } from '../../../dtos/my-timesheet.dto';
+import { FilterAplliedDTO } from '../../../../../../shared/filter-applied/filter-apllied.dto';
 
 @Component({
   selector: 'app-utility',
@@ -45,15 +47,15 @@ import {
     FormControlLayoutComponent,
     InputFieldComponent,
     IconsComponent,
+    TooltipComponent,
   ],
   templateUrl: './utility.component.html',
   styleUrl: './utility.component.scss',
 })
 export class UtilityComponent extends BaseController {
   /** Data will input from HistoryActivityComponent */
-  @Input() filterDate: boolean = false;
-  @Input() filterMatter: boolean = false;
-  @Input() filterTimeDescription: boolean = false;
+  /** Filter Applied */
+  @Input() filterApplied: FilterAplliedDTO[] = [];
   @Input() listMatter: MatterDTO[] = [];
   @Input() dataTimesheet: MyTimesheetDTO[] = [];
   @Input() currentDate: Date = new Date();
@@ -68,31 +70,17 @@ export class UtilityComponent extends BaseController {
     endDate: string;
     selectedMatter: string;
     description: string;
-    statusFilter: {
-      filterDate: boolean;
-      filterMatter: boolean;
-      filterTimeDescription: boolean;
-    };
+    filterApplied: FilterAplliedDTO[];
   }> = new EventEmitter<{
     startDate: string;
     endDate: string;
     selectedMatter: string;
     description: string;
-    statusFilter: {
-      filterDate: boolean;
-      filterMatter: boolean;
-      filterTimeDescription: boolean;
-    };
+    filterApplied: FilterAplliedDTO[];
   }>();
-  @Output() clearFilterAll: EventEmitter<{
-    filterDate: boolean;
-    filterMatter: boolean;
-    filterTimeDescription: boolean;
-  }> = new EventEmitter<{
-    filterDate: boolean;
-    filterMatter: boolean;
-    filterTimeDescription: boolean;
-  }>();
+  @Output() clearFilterAll: EventEmitter<FilterAplliedDTO[]> = new EventEmitter<
+    FilterAplliedDTO[]
+  >();
   @Output() dateTimesheetByDateOut: EventEmitter<TimesheetByDateDTO[]> =
     new EventEmitter<TimesheetByDateDTO[]>();
   @Output() dateMoveChanger: EventEmitter<{
@@ -123,24 +111,40 @@ export class UtilityComponent extends BaseController {
           value: item.idMatter,
         });
       });
-      if (!this.filterMatter) {
+      if (
+        !this.filterApplied.some(
+          (item) => item.name === 'Matter' && item.status === false
+        )
+      ) {
         this.searchMatterForm.setValue('');
         this.selectedMatter = [];
       }
-      if (!this.filterTimeDescription) {
-        this.descriptionForm.setValue('');
-      }
-      if (!this.filterDate) {
-        this.defaultDate(
-          this.startDate,
-          this.endDate,
-          this.startDateForm,
-          this.endDateForm
-        );
-        this.selectedMatter = [];
-        this.searchMatterForm.setValue('');
-        this.descriptionForm.setValue('');
-      }
+      this.filterApplied.forEach((item) => {
+        switch (item.name) {
+          case 'Date':
+            if (!item.status) {
+              this.startDateForm.setValue(this.defaultDate().startDateForm);
+              this.endDateForm.setValue(this.defaultDate().endDateForm);
+              this.selectedMatter = [];
+              this.searchMatterForm.setValue('');
+              this.descriptionForm.setValue('');
+            }
+            break;
+          case 'Matter':
+            if (!item.status) {
+              this.searchMatterForm.setValue('');
+              this.selectedMatter = [];
+            }
+            break;
+          case 'Time Description':
+            if (!item.status) {
+              this.descriptionForm.setValue('');
+            }
+            break;
+          default:
+            break;
+        }
+      });
     }
     this.dateTimesheetByDateOut.emit(this.dateTimesheetByDate);
   }
@@ -168,18 +172,14 @@ export class UtilityComponent extends BaseController {
 
   /** Filter timesheet action */
   applyFilterAction(): void {
-    this.filterDate = true;
+    this.enableFilter('Date', true);
     this.isOpenFlyout = false;
     this.filterAction.emit({
       startDate: this.startDateForm.value,
       endDate: this.endDateForm.value,
       selectedMatter: this.selectedMatter.map((item) => item.name).join(', '),
       description: this.descriptionForm.value,
-      statusFilter: {
-        filterDate: this.filterDate,
-        filterMatter: this.filterMatter,
-        filterTimeDescription: this.descriptionForm.value !== '' ? true : false,
-      },
+      filterApplied: this.filterApplied,
     });
   }
 
@@ -195,22 +195,20 @@ export class UtilityComponent extends BaseController {
   /** Observe for startDate changes */
   changeStartDate(event: string): void {
     this.startDateForm.setValue(event);
-    this.filterDate = true;
   }
 
   /** Observe for endDate changes */
   changeEndDate(event: string): void {
     this.endDateForm.setValue(event);
-    this.filterDate = true;
   }
 
   /** Matter Selection */
   selectionMatter(event: { name: string; value: any }[]): void {
     this.selectedMatter = event;
     if (event.length > 0) {
-      this.filterMatter = true;
+      this.enableFilter('Matter', true);
     } else {
-      this.filterMatter = false;
+      this.enableFilter('Matter', false);
     }
   }
 
@@ -227,12 +225,9 @@ export class UtilityComponent extends BaseController {
 
   /** Clear filter but not reset ui */
   clearFilters(): void {
-    this.defaultDate(
-      this.startDate,
-      this.endDate,
-      this.startDateForm,
-      this.endDateForm
-    );
+    console.log(this.defaultDate().startDateForm);
+    this.startDateForm = new FormControl(this.defaultDate().startDateForm);
+    this.endDateForm = new FormControl(this.defaultDate().endDateForm);
     this.selectedMatter = [];
     this.searchMatterForm.setValue('');
     this.descriptionForm.setValue('');
@@ -241,14 +236,20 @@ export class UtilityComponent extends BaseController {
   /** Clear filter but reset ui */
   clearFiltersAll(): void {
     this.clearFilters();
+    this.filterApplied.forEach((item) => (item.status = false));
     this.isOpenFlyout = false;
-    this.filterDate = false;
-    this.filterTimeDescription = false;
-    this.filterMatter = false;
-    this.clearFilterAll.emit({
-      filterDate: this.filterDate,
-      filterMatter: this.filterMatter,
-      filterTimeDescription: this.filterTimeDescription,
+    this.clearFilterAll.emit(this.filterApplied);
+  }
+
+  /** Checking filter is on or not */
+  checkFilter(): boolean {
+    return this.filterApplied.some((item) => item.status == true);
+  }
+
+  /** Trigger for enable filter */
+  enableFilter(param: string, status: boolean): void {
+    this.filterApplied.forEach((item) => {
+      item.name === param ? (item.status = status) : item.status;
     });
   }
 }
