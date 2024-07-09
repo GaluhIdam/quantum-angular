@@ -1,4 +1,4 @@
-@import "../../history-activity.component.scss";
+@import "../history-activity.component.scss";
 
 /** Utility Style */
 .utility {
@@ -101,4 +101,9 @@
   &:last-child {
     margin: 0px;
   }
+}
+
+
+.label {
+  font-size: smaller;
 }

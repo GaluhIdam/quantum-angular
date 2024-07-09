@@ -1,0 +1,63 @@
+<div class="flex">
+  <fui-badge
+    [color]="'text'"
+    [size]="'sizedefault'"
+    [isBadgeIcon]="true"
+    [icon]="'cross'"
+    [iconPosition]="'end'"
+  >
+    <p class="text">{{ timesheetSelected.length }} item on page selected</p>
+  </fui-badge>
+  <div class="vertical-line"></div>
+  <div class="toggle" (click)="handleOpenModal()">
+    <fui-icons [icon]="'push'" [size]="'sizem'" [color]="'primary'" />
+    <p class="toggle-clear">Move</p>
+  </div>
+</div>
+
+<!-- MODAL MOVE  -->
+<fui-modal [open]="isModalOpen">
+  <fui-modal-header (onCloseModal)="handleCloseModal()">
+    <div class="header-modal"><h1>Move Time</h1></div>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="body-modal">
+      <p>
+        This will move time of selected member to a new matter for the same
+        dates. The original matter will no longer have this time.
+      </p>
+      <div class="selector">
+        <div class="checkbox">
+          <input type="checkbox" />
+          <span class="title">Do not show sub-matter</span>
+        </div>
+        <fui-combo-box
+          [optionValue]="optionMatters"
+          [singleSelection]="true"
+          [selectedValue]="selectedMatters"
+          [comboxForm]="searchForm"
+        />
+      </div>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer [isCustomModalFooter]="true">
+    <div class="footer-modal">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [color]="'primary'"
+        [style]="'secondary'"
+        (onClick)="handleCloseModal()"
+      />
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Move Timesheet'"
+        [color]="'primary'"
+        [style]="'filled'"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>
+<!-- MODAL MOVE  -->

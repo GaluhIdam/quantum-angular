@@ -1,4 +1,4 @@
-@import "../../history-activity.component.scss";
+@import "../history-activity.component.scss";
 
 .container {
   fui-collapsible-nav-group {
@@ -298,14 +298,26 @@ fui-time-selection {
   width: 280px;
   padding: 8px;
   .checkbox {
+    width: fit-content;
     align-items: center;
     display: flex;
     margin-bottom: 8px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    &:hover {
+      cursor: pointer;
+    }
     .title {
       font-size: small;
       margin-left: 5px;
     }
   }
+  .empty-data {
+    margin-top: 8px;
+  }
+
   /** Body for option matter when is changing */
   .body-option {
     margin-top: 15px;

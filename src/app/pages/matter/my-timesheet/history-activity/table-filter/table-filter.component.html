@@ -1,0 +1,316 @@
+<!-- table if data is existing -->
+<div class="table" *ngIf="dataTimesheet.length > 0">
+  <div class="table-row header">
+    <div class="table-cell">
+      <input
+        type="checkbox"
+        [checked]="timesheetChecked.length === dataTimesheet.length"
+        (click)="checkAllItems(dataTimesheet)"
+      />
+    </div>
+    <div class="table-cell" *ngFor="let item of headerTable">
+      <div class="head-title">{{ item }}</div>
+    </div>
+  </div>
+  <div
+    class="table-row {{ item.tagEntityList.length > 0 ? 'tag-bg' : '' }}"
+    *ngFor="let item of dataTimesheet; let i = index"
+  >
+    <div class="table-cell">
+      <input
+        type="checkbox"
+        [checked]="isItemChecked(item)"
+        (click)="checkItem(item)"
+      />
+    </div>
+    <div class="table-cell">
+      {{ item.date | date : "d MMMM yy" }}
+    </div>
+    <div class="table-cell">
+      <div class="custom-badge">
+        <div class="item">
+          {{ item.matter.matter }}
+        </div>
+      </div>
+    </div>
+    <div class="table-cell" *ngIf="!showHideEdit[i]">
+      {{ item.description }}
+      <br />
+      <div class="tag-badge" *ngIf="item.tagEntityList.length > 0">
+        <fui-icons [icon]="'user'" [color]="'text'" />
+        Tagged entry by {{ item.tagEntityList[0].tagBy }}
+      </div>
+    </div>
+    <div class="table-cell" *ngIf="!showHideEdit[i]">
+      {{ convertTimeToAngularFormat(item.duration) }}
+    </div>
+    <!-- Show if edit mode -->
+    <div class="table-cell" *ngIf="showHideEdit[i]">
+      <div class="edit-form">
+        <fui-combo-box
+          [invalid]="activitySearch.invalid && activitySearch.dirty"
+          [message]="'Activity is required!'"
+          [comboxForm]="activitySearch"
+          [singleSelection]="true"
+          (selection)="selection($event)"
+          [size]="'m'"
+          [placeholder]="'Activity/verb'"
+          [optionValue]="optionActivity"
+          [selectedValue]="selectedActivity"
+        />
+        <fui-form-control-layout class="description">
+          <fui-input-field
+            [formControlField]="objectEventForm"
+            [placeholder]="'object/event'"
+            [type]="'text'"
+            [size]="'m'"
+            [invalid]="objectEventForm.invalid && objectEventForm.dirty"
+          >
+            <fui-icons
+              *ngIf="objectEventForm.invalid && objectEventForm.dirty"
+              right-icon
+              [label]="'right'"
+              [icon]="'alert'"
+              [size]="'sizem'"
+              [color]="'danger'"
+          /></fui-input-field>
+          <fui-validator-field
+            validator
+            [message]="'Object/Event is required!'"
+          />
+        </fui-form-control-layout>
+        <fui-date-picker
+          format="YYYY/DD/MM"
+          [dateFormControl]="dateFormControl"
+          [message]="'Date is required!'"
+          [isInvalid]="dateFormControl.invalid && dateFormControl.dirty"
+        />
+      </div>
+    </div>
+    <div class="table-cell" *ngIf="showHideEdit[i]">
+      <fui-time-selection
+        [timeFormControl]="durationForm"
+        [isInvalid]="durationForm.invalid && durationForm.dirty"
+        [message]="'Duration is required!'"
+      />
+    </div>
+    <!-- Show if edit mode -->
+    <div class="table-cell">
+      <div class="wrap-action title-cell">
+        <fui-button-icon
+          *ngIf="!showHideEdit[i]"
+          (onClick)="
+            item.tagEntityList.length > 0
+              ? openEditTagModal(item.uuid, item)
+              : toggleFormEdit(i, item)
+          "
+          [type]="'button'"
+          [option]="'icon'"
+          [style]="'secondary'"
+          [size]="'m'"
+          [color]="'primary'"
+          [icon]="'pencil'"
+          [iconSide]="'left'"
+        />
+        <fui-button-icon
+          *ngIf="!showHideEdit[i] && item.tagEntityList.length === 0"
+          (onClick)="openDeleteModal(item.uuid)"
+          [type]="'button'"
+          [option]="'icon'"
+          [style]="'secondary'"
+          [size]="'m'"
+          [color]="'danger'"
+          [icon]="'trash'"
+          [iconSide]="'left'"
+        />
+        <fui-button-icon
+          (onClick)="updateTimesheet(item.uuid)"
+          *ngIf="showHideEdit[i]"
+          [type]="'button'"
+          [option]="'icon'"
+          [style]="'secondary'"
+          [size]="'m'"
+          [color]="'success'"
+          [icon]="'save'"
+          [iconSide]="'left'"
+        />
+        <fui-button-icon
+          (onClick)="closeAllFormEdit()"
+          *ngIf="showHideEdit[i]"
+          [type]="'button'"
+          [option]="'icon'"
+          [style]="'secondary'"
+          [size]="'m'"
+          [color]="'text'"
+          [icon]="'cross'"
+          [iconSide]="'left'"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<!-- table if data is existing -->
+
+<!-- message if data is empy -->
+<app-empty-data [dataLength]="dataTimesheet.length" />
+<!-- message if data is empy -->
+
+<!-- Modal Confirm Delete Timesheet -->
+<fui-modal [open]="openModalDelete">
+  <fui-modal-header (onCloseModal)="closelModalDelete()">
+    <div class="title-modal">
+      <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizexl'" />
+      <h3>Delete Confirmation</h3>
+    </div>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="modal">
+      <p>This data will be permanently deleted. Do you want to continue?</p>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer [isCustomModalFooter]="true">
+    <div class="title-modal foot">
+      <fui-button-icon
+        (onClick)="closelModalDelete()"
+        class="create-btn"
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [style]="'secondary'"
+        [color]="'text'"
+      />
+      <fui-button-icon
+        (onClick)="deleteTimesheet(uuid)"
+        class="create-btn"
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'trash'"
+        [text]="'Delete'"
+        [style]="'filled'"
+        [color]="'danger'"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>
+<!-- Modal Confirm Delete Timesheet -->
+
+<!-- Modal Edit Tag Timesheet -->
+<fui-modal [open]="openModalEditTag">
+  <fui-modal-header (onCloseModal)="closeModalEditTag()">
+    <div class="title-modal-edit">
+      <h2>Edit Tagged Entry</h2>
+    </div>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="container-modal-edit">
+      <div class="modal-edit">
+        <div class="title-info">
+          <fui-icons
+            [icon]="'iInCircle'"
+            [color]="'primary'"
+            [size]="'sizel'"
+          />
+          <h4>Feel free to modify!</h4>
+        </div>
+        <div class="desc">
+          Editing or reject & remove tagged entry won’t affect the other member
+          time entry, they have their own version!
+        </div>
+      </div>
+      <div class="form">
+        <div class="form-control">
+          <div class="title-form">Matter Number</div>
+          <fui-combo-box
+            [invalid]="activitySearch.invalid && activitySearch.dirty"
+            [message]="'Activity is required!'"
+            [comboxForm]="activitySearch"
+            [singleSelection]="true"
+            [size]="'m'"
+            [placeholder]="'Activity/verb'"
+            [optionValue]="optionActivity"
+            [selectedValue]="selectedActivity"
+          />
+        </div>
+        <div class="form-control">
+          <div class="title-form">Date</div>
+          <fui-date-picker
+            format="YYYY/DD/MM"
+            [dateFormControl]="dateFormControl"
+            [message]="'Date is required!'"
+            [isInvalid]="dateFormControl.invalid && dateFormControl.dirty"
+          />
+        </div>
+        <div class="form-control">
+          <div class="title-form">Duration</div>
+          <fui-time-selection
+            [timeFormControl]="durationForm"
+            [isInvalid]="durationForm.invalid && durationForm.dirty"
+            [message]="'Duration is required!'"
+          />
+        </div>
+      </div>
+
+      <div class="form">
+        <div class="form-control half">
+          <div class="title-form">Time Description</div>
+          <fui-form-control-layout class="description">
+            <fui-input-field
+              [placeholder]="'time description'"
+              [formControlField]="timeDescForm"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="timeDescForm.invalid && timeDescForm.dirty"
+            >
+            </fui-input-field>
+            <fui-validator-field
+              validator
+              [message]="'Time description is required!'"
+            />
+          </fui-form-control-layout>
+        </div>
+        <div class="form-control full">
+          <div class="title-form" style="visibility: hidden">Date</div>
+          <fui-form-control-layout class="description">
+            <fui-input-field
+              [placeholder]="'additional description'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="false"
+            >
+            </fui-input-field>
+            <fui-validator-field
+              validator
+              [message]="'Additional description is required!'"
+            />
+          </fui-form-control-layout>
+        </div>
+      </div>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer [isCustomModalFooter]="true">
+    <div class="title-modal-edit foot">
+      <fui-button-icon
+        (onClick)="deleteTimesheet(uuid)"
+        class="create-btn"
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Reject & Remove'"
+        [style]="'secondary'"
+        [color]="'danger'"
+      />
+      <fui-button-icon
+        class="create-btn"
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Accept Tagged Entry'"
+        [style]="'filled'"
+        [color]="'primary'"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>
+<!-- Modal Edit Tag Timesheet -->

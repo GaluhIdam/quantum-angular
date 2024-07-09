@@ -2,8 +2,6 @@
 <app-skeleton [active]="loading">
   <app-utility
     [currentDate]="currentDate"
-    [endDate]="endDate"
-    [startDate]="startDate"
     [startDateForm]="startDateForm"
     [endDateForm]="endDateForm"
     [filterApplied]="filterApplied"
@@ -18,6 +16,10 @@
     [filterApllied]="filterApplied"
     (clearAllFilterOut)="clearAllFilterOut($event)"
   />
+  <app-move-matter *ngIf="timesheetSelected.length > 0"
+    [listMatters]="listMatters"
+    [timesheetSelected]="timesheetSelected"
+  />
   <!-- Utility -->
 
   <!-- Table without filter -->
@@ -26,6 +28,7 @@
     [listActivity]="listActivities"
     [listMatters]="listMatters"
     [dateTimesheetByDate]="dateTimesheetByDate"
+    (timesheetSelectedOut)="timesheetSelectedOut($event)"
   />
   <!-- Table without filter -->
 
@@ -40,6 +43,7 @@
       [totalItems]="totalItems"
       [dataTimesheet]="dataTimesheet"
       (onPageChangeOut)="onPageChangeOut($event)"
+      (timesheetCheckedOut)="timesheetSelectedOut($event)"
     />
   </div>
   <!-- Table with filter -->

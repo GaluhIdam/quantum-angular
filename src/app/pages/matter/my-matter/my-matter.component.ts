@@ -4,13 +4,25 @@ import { ContentCardComponent } from './content-card/content-card.component';
 import { FilterAppliedComponent } from '../../../shared/filter-applied/filter-applied.component';
 import { FilterAplliedDTO } from '../../../shared/filter-applied/filter-apllied.dto';
 import { MyMatterService } from './services/my-matter.service';
-import { FilterGroupButtonComponent, FilterGroupComponent } from '@quantum/fui';
+import {
+  ButtonIconComponent,
+  FilterGroupButtonComponent,
+  FilterGroupComponent,
+} from '@quantum/fui';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-my-matter',
   standalone: true,
-  imports: [RouterModule, FormSearchComponent, ContentCardComponent, FilterAppliedComponent, FilterGroupButtonComponent, FilterGroupComponent],
+  imports: [
+    RouterModule,
+    FormSearchComponent,
+    ContentCardComponent,
+    FilterAppliedComponent,
+    FilterGroupButtonComponent,
+    FilterGroupComponent,
+    ButtonIconComponent,
+  ],
   templateUrl: './my-matter.component.html',
   styleUrl: './my-matter.component.scss',
 })

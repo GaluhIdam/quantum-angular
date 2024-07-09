@@ -18,10 +18,20 @@
       Content not available!
     </fui-tabs-content>
     <fui-tabs-content [id]="'Timesheet'">
-      <h1>Timesheet Tab</h1>
+      <!-- Create Activity -->
+      <div class="card-create-activity">
+        <app-create-timesheet />
+      </div>
+      <!-- Create Activity -->
+
+      <!-- History Activity -->
+      <div class="card-create-activity">
+        <app-history-activity />
+      </div>
+      <!-- History Activity -->
     </fui-tabs-content>
     <fui-tabs-content [id]="'Expenses'">
-      <h1>Expenses Tab</h1>
+      <app-expenses />
     </fui-tabs-content>
     <fui-tabs-content [id]="'Documents'">
       Content not available!

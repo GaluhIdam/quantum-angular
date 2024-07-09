@@ -90,6 +90,8 @@ export class CreateActivityComponent {
 
   userDataKeycloak: UserKeycloakDTO[] = [];
 
+  layout: number = 2;
+
   constructor(
     private readonly myTimesheetService: MyTimesheetService,
     private readonly toastService: ToastService

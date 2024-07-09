@@ -12,7 +12,7 @@ import {
   MyTimesheetDTO,
   MyTimesheetPostDTO,
   TimesheetByDateDTO,
-} from '../../../dtos/my-timesheet.dto';
+} from '../../dtos/my-timesheet.dto';
 import {
   BadgeComponent,
   ButtonIconComponent,
@@ -38,9 +38,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MyTimesheetService } from '../../../services/my-timesheet.service';
-import { BaseController } from '../../../../../../core/controller/basecontroller';
-import { EmptyDataComponent } from '../../../../../../shared/empty-data/empty-data.component';
+import { MyTimesheetService } from '../../services/my-timesheet.service';
+import { BaseController } from '../../../../../core/controller/basecontroller';
+import { EmptyDataComponent } from '../../../../../shared/empty-data/empty-data.component';
 import { debounceTime, map, Subscription, tap } from 'rxjs';
 
 @Component({
@@ -67,6 +67,7 @@ import { debounceTime, map, Subscription, tap } from 'rxjs';
     ModalFooterComponent,
     ModalHeaderComponent,
     PopoverComponent,
+    EmptyDataComponent,
   ],
   templateUrl: './table-without-filter.component.html',
   styleUrl: './table-without-filter.component.scss',
@@ -81,6 +82,8 @@ export class TableWithoutFilterComponent extends BaseController {
   @Input() listActivity: ActivityDTO[] = [];
   @Input() listMatters: MatterDTO[] = [];
   @Output() trigger: EventEmitter<any> = new EventEmitter<any>();
+  @Output() timesheetSelectedOut: EventEmitter<MyTimesheetDTO[]> =
+    new EventEmitter<MyTimesheetDTO[]>();
 
   optionActivity: { name: string; value: any }[] = [];
   optionMatter: { name: string; value: any }[] = [];
@@ -116,6 +119,10 @@ export class TableWithoutFilterComponent extends BaseController {
   /** For hide sub matter if checked */
   hideSubMatter: boolean = false;
 
+  /** Check or uncheck timsheet */
+  timesheetChecked: MyTimesheetDTO[][] = [];
+  timesheetSelected: MyTimesheetDTO[] = [];
+
   subscription!: Subscription;
 
   constructor(private readonly myTimesheetService: MyTimesheetService) {
@@ -135,8 +142,10 @@ export class TableWithoutFilterComponent extends BaseController {
     if (changes) {
       this.showHideTablePerRow = [];
       this.showHideEdit = [];
+      this.timesheetChecked = [];
       this.dateTimesheetByDate.forEach((item) => {
         this.showHideTablePerRow.push(false);
+        this.timesheetChecked.push([]);
         if (item.data.length > 0) {
           const editArray: boolean[] = [];
           item.data.forEach(() => {
@@ -316,5 +325,48 @@ export class TableWithoutFilterComponent extends BaseController {
       .getMatters(search)
       .pipe(map((res) => (this.listMatters = res.result)))
       .subscribe();
+  }
+
+  /** Toggle for check or uncheck matter in popover change matter */
+  checkHideMatter(): void {
+    this.hideSubMatter = !this.hideSubMatter;
+  }
+
+  /** If checked will push data to timesheetChecked */
+  checkItem(index: number, item: MyTimesheetDTO): void {
+    const idx = this.timesheetChecked[index].findIndex(
+      (dto) => dto.idTimesheet === item.idTimesheet
+    );
+    if (idx !== -1) {
+      this.timesheetChecked[index].splice(idx, 1);
+    } else {
+      this.timesheetChecked[index].push(item);
+    }
+    this.timesheetSelected = this.timesheetChecked.reduce(
+      (acc, curr) => acc.concat(curr),
+      []
+    );
+    this.timesheetSelectedOut.emit(this.timesheetSelected);
+  }
+
+  /** Check All Timesheet */
+  checkAllItems(index: number, items: MyTimesheetDTO[]): void {
+    if (this.timesheetChecked[index].length === items.length) {
+      this.timesheetChecked[index] = [];
+    } else {
+      this.timesheetChecked[index] = [...items];
+    }
+    this.timesheetSelected = this.timesheetChecked.reduce(
+      (acc, curr) => acc.concat(curr),
+      []
+    );
+    this.timesheetSelectedOut.emit(this.timesheetSelected);
+  }
+
+  /** Check if item is in timesheetChecked or not */
+  isItemChecked(index: number, item: MyTimesheetDTO): boolean {
+    return this.timesheetChecked[index].some(
+      (dto) => dto.idTimesheet === item.idTimesheet
+    );
   }
 }

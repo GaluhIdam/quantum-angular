@@ -18,7 +18,7 @@ fui-filter-group {
   width: 45%;
 }
 app-filter-applied {
-  width: 50%;
+  width: 45%;
 }
 .filter-title {
   padding: 4px 6px;
@@ -36,3 +36,14 @@ app-filter-applied {
   }
 }
 
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  gap: 0;
+}
+.loader {
+  margin-top: 30px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}

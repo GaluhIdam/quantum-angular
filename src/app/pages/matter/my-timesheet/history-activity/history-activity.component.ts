@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { UtilityComponent } from './components/utility/utility.component';
+import { Component, Input } from '@angular/core';
+import { UtilityComponent } from './utility/utility.component';
 import { ToastComponent } from '@quantum/fui';
 import {
   ActivityDTO,
@@ -11,12 +11,13 @@ import {
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { MyTimesheetService } from '../services/my-timesheet.service';
 import { map } from 'rxjs';
-import { TableWithoutFilterComponent } from './components/table-without-filter/table-without-filter.component';
+import { TableWithoutFilterComponent } from './table-without-filter/table-without-filter.component';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TableFilterComponent } from './components/table-filter/table-filter.component';
+import { TableFilterComponent } from './table-filter/table-filter.component';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
 import { FilterAplliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
+import { MoveMatterComponent } from './move-matter/move-matter.component';
 
 @Component({
   selector: 'app-history-activity',
@@ -33,6 +34,7 @@ import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter
     ToastComponent,
     SkeletonComponent,
     FilterAppliedComponent,
+    MoveMatterComponent,
   ],
 })
 export class HistoryActivityComponent extends BaseController {
@@ -44,6 +46,7 @@ export class HistoryActivityComponent extends BaseController {
 
   dataTimesheet: MyTimesheetDTO[] = [];
   dateTimesheetByDate: TimesheetByDateDTO[] = [];
+  timesheetSelected: MyTimesheetDTO[] = [];
 
   /** Date Config */
   currentDate: Date = new Date();
@@ -170,5 +173,9 @@ export class HistoryActivityComponent extends BaseController {
   /** Checking filter is on or not */
   checkFilter(): boolean {
     return this.filterApplied.some((item) => item.status == true);
+  }
+
+  timesheetSelectedOut(event: MyTimesheetDTO[]): void {
+    this.timesheetSelected = event;
   }
 }

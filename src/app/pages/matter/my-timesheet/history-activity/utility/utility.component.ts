@@ -21,13 +21,13 @@ import {
   InputFieldComponent,
   TooltipComponent,
 } from '@quantum/fui';
-import { BaseController } from '../../../../../../core/controller/basecontroller';
+import { BaseController } from '../../../../../core/controller/basecontroller';
 import {
   MatterDTO,
   MyTimesheetDTO,
   TimesheetByDateDTO,
-} from '../../../dtos/my-timesheet.dto';
-import { FilterAplliedDTO } from '../../../../../../shared/filter-applied/filter-apllied.dto';
+} from '../../dtos/my-timesheet.dto';
+import { FilterAplliedDTO } from '../../../../../shared/filter-applied/filter-apllied.dto';
 
 @Component({
   selector: 'app-utility',
@@ -59,8 +59,6 @@ export class UtilityComponent extends BaseController {
   @Input() listMatter: MatterDTO[] = [];
   @Input() dataTimesheet: MyTimesheetDTO[] = [];
   @Input() currentDate: Date = new Date();
-  @Input() endDate: Date = new Date();
-  @Input() startDate: Date = new Date();
   @Input() startDateForm: FormControl = new FormControl();
   @Input() endDateForm: FormControl = new FormControl();
 
@@ -79,10 +77,10 @@ export class UtilityComponent extends BaseController {
     filterApplied: FilterAplliedDTO[];
   }>();
   @Output() clearFilterAll: EventEmitter<FilterAplliedDTO[]> = new EventEmitter<
-    FilterAplliedDTO[]
+  FilterAplliedDTO[]
   >();
   @Output() dateTimesheetByDateOut: EventEmitter<TimesheetByDateDTO[]> =
-    new EventEmitter<TimesheetByDateDTO[]>();
+  new EventEmitter<TimesheetByDateDTO[]>();
   @Output() dateMoveChanger: EventEmitter<{
     startDate: string;
     endDate: string;
@@ -90,6 +88,9 @@ export class UtilityComponent extends BaseController {
     startDate: string;
     endDate: string;
   }>();
+
+  endDate: Date = new Date();
+  startDate: Date = new Date();
 
   dateTimesheetByDate: TimesheetByDateDTO[] = [];
   searchMatterForm: FormControl = new FormControl('');

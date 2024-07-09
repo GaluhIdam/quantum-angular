@@ -51,7 +51,13 @@
       <!-- table if data is existing -->
       <div class="table" *ngIf="date.data.length > 0">
         <div class="table-row header">
-          <div class="table-cell"><input type="checkbox" /></div>
+          <div class="table-cell">
+            <input
+              type="checkbox"
+              [checked]="timesheetChecked[i].length === date.data.length"
+              (click)="checkAllItems(i, date.data)"
+            />
+          </div>
           <div class="table-cell" *ngFor="let item of headerTable">
             <div class="head-title">{{ item }}</div>
           </div>
@@ -62,7 +68,11 @@
         >
           <div class="table-cell">
             <div>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                [checked]="isItemChecked(i, item)"
+                (click)="checkItem(i, item)"
+              />
             </div>
           </div>
           <div class="table-cell">
@@ -93,7 +103,9 @@
                     <!-- CHECKBOX SEARCH MATTER  -->
                     <div class="checkbox">
                       <input type="checkbox" [(ngModel)]="hideSubMatter" />
-                      <span class="title">Do not show sub-matter</span>
+                      <span class="title" (click)="checkHideMatter()"
+                        >Do not show sub-matter</span
+                      >
                     </div>
                     <!-- CHECKBOX SEARCH MATTER  -->
 
@@ -121,7 +133,7 @@
                     <!-- FORM SEARCH MATTER  -->
 
                     <!-- OPTION MATTER  -->
-                    <div class="body-option">
+                    <div class="body-option" *ngIf="listMatters.length > 0">
                       <div
                         class="option-selector"
                         *ngFor="let item of listMatters"
@@ -133,6 +145,16 @@
                       </div>
                     </div>
                     <!-- OPTION MATTER  -->
+
+                    <!-- OPTION NOT AVAILABLE  -->
+                    <div class="empty-data">
+                      <app-empty-data
+                        [dataLength]="listMatters.length"
+                        [title]="'Not Found'"
+                        [subTitle]="'No matter available.'"
+                      />
+                    </div>
+                    <!-- OPTION NOT AVAILABLE  -->
                   </div>
                 </div>
               </fui-popover>

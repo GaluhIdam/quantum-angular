@@ -26,16 +26,16 @@ import {
   ActivityDTO,
   MyTimesheetDTO,
   MyTimesheetPostDTO,
-} from '../../../dtos/my-timesheet.dto';
-import { BaseController } from '../../../../../../core/controller/basecontroller';
-import { EmptyDataComponent } from '../../../../../../shared/empty-data/empty-data.component';
+} from '../../dtos/my-timesheet.dto';
+import { BaseController } from '../../../../../core/controller/basecontroller';
+import { EmptyDataComponent } from '../../../../../shared/empty-data/empty-data.component';
 import {
   FormControl,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MyTimesheetService } from '../../../services/my-timesheet.service';
+import { MyTimesheetService } from '../../services/my-timesheet.service';
 
 @Component({
   selector: 'app-table-filter',
@@ -74,6 +74,8 @@ export class TableFilterComponent extends BaseController {
     itemsPerPage: number;
   }> = new EventEmitter<{ page: number; itemsPerPage: number }>();
   @Output() trigger: EventEmitter<any> = new EventEmitter<any>();
+  @Output() timesheetCheckedOut: EventEmitter<MyTimesheetDTO[]> =
+  new EventEmitter<MyTimesheetDTO[]>();
 
   optionActivity: { name: string; value: any }[] = [];
   optionMatter: { name: string; value: any }[] = [];
@@ -101,6 +103,9 @@ export class TableFilterComponent extends BaseController {
   /** Modal Variable */
   openModalDelete: boolean = false;
   openModalEditTag: boolean = false;
+
+  /** Check or uncheck timsheet */
+  timesheetChecked: MyTimesheetDTO[] = [];
 
   constructor(private readonly myTimesheetService: MyTimesheetService) {
     super();
@@ -220,6 +225,7 @@ export class TableFilterComponent extends BaseController {
   openDeleteModal(param: string): void {
     this.openModalDelete = true;
     this.uuid = param;
+    console.log(this.openModalDelete);
   }
 
   /** Close Modal Delete */
@@ -230,5 +236,35 @@ export class TableFilterComponent extends BaseController {
   /** Selection activity */
   selection(event: { name: string; value: any }[]): void {
     this.selectedActivity = event;
+  }
+
+  /** If checked will push data to timesheetChecked */
+  checkItem(item: MyTimesheetDTO): void {
+    const idx = this.timesheetChecked.findIndex(
+      (dto) => dto.idTimesheet === item.idTimesheet
+    );
+    if (idx !== -1) {
+      this.timesheetChecked.splice(idx, 1);
+    } else {
+      this.timesheetChecked.push(item);
+    }
+    this.timesheetCheckedOut.emit(this.timesheetChecked);
+  }
+
+  /** Check All Timesheet */
+  checkAllItems(items: MyTimesheetDTO[]): void {
+    if (this.timesheetChecked.length === items.length) {
+      this.timesheetChecked = [];
+    } else {
+      this.timesheetChecked = [...items];
+    }
+    this.timesheetCheckedOut.emit(this.timesheetChecked);
+  }
+
+  /** Check if item is in timesheetChecked or not */
+  isItemChecked(item: MyTimesheetDTO): boolean {
+    return this.timesheetChecked.some(
+      (dto) => dto.idTimesheet === item.idTimesheet
+    );
   }
 }

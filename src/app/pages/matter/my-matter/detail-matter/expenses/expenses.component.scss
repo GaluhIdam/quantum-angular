@@ -1,0 +1,8 @@
+@import "../detail-matter.component.scss";
+
+.card {
+  margin: 40px 0px;
+  padding: 25px 30px 25px 30px;
+  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+  border-radius: 5px;
+}

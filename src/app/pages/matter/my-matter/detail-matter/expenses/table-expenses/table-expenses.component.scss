@@ -1,0 +1,69 @@
+@import "../expenses.component.scss";
+
+.utility {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .sub-utility {
+    display: flex;
+    .title {
+      margin-right: 10px;
+    }
+    .action-btn {
+      display: flex;
+      margin-right: 20px;
+      &:last-child {
+        margin-right: 0px;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+      fui-icons {
+        margin-right: 5px;
+      }
+      .text-btn-primary {
+        color: var(--fuiColorPrimary, $fuiColorPrimary);
+      }
+    }
+  }
+}
+
+
+/** Table Config */
+.table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+.table .table-row {
+  display: table-row;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--fuiColorLightShade, $fuiColorLightShade);
+}
+.table .table-row:last-child {
+  display: table-row;
+  border: none;
+}
+.table .table-cell {
+  text-wrap: nowrap;
+  display: table-cell;
+  padding: 8px;
+  text-align: left;
+  .head-title {
+    font-weight: bold;
+  }
+}
+.table .table-cell:first-child {
+  border-left: 0;
+}
+.table .table-cell:last-child {
+  border-right: 0;
+}
+
+
+.text-wrap {
+  text-wrap: wrap;
+  margin-top: 8px;
+}
+

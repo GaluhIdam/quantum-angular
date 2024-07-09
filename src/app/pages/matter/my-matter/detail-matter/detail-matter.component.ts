@@ -9,6 +9,10 @@ import {
   TabsComponent,
   TabsContentComponent,
 } from '@quantum/fui';
+import { CreateActivityComponent } from '../../my-timesheet/create-activity/create-activity.component';
+import { HistoryActivityComponent } from '../../my-timesheet/history-activity/history-activity.component';
+import { ExpensesComponent } from './expenses/expenses.component';
+import { CreateTimesheetComponent } from './create-timesheet/create-timesheet.component';
 
 @Component({
   selector: 'app-detail-matter',
@@ -20,6 +24,10 @@ import {
     TabsComponent,
     TabsContentComponent,
     IconsComponent,
+    CreateActivityComponent,
+    HistoryActivityComponent,
+    ExpensesComponent,
+    CreateTimesheetComponent,
   ],
   templateUrl: './detail-matter.component.html',
   styleUrl: './detail-matter.component.scss',
