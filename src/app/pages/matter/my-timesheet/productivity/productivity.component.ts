@@ -5,10 +5,9 @@ import {
   IconsComponent,
   PopoverComponent,
   ProgressComponent,
+  TextComponent,
 } from '@quantum/fui';
-import { SampleDataMyTimeSheet } from '../services/sample-data';
 import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.component';
-import { MyTimesheetService } from '../services/my-timesheet.service';
 import { Subscription } from 'rxjs';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
 
@@ -23,6 +22,7 @@ import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.componen
     ProgressComponent,
     EmptyDataComponent,
     SkeletonComponent,
+    TextComponent,
   ],
   templateUrl: './productivity.component.html',
   styleUrl: './productivity.component.scss',
@@ -31,27 +31,11 @@ export class ProductivityComponent {
   loading: boolean = true;
   data: number[] = [70, 90];
 
-  constructor(private readonly myTimesheetService: MyTimesheetService) {}
-
   private subscription!: Subscription;
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.subscription = this.myTimesheetService.data$.subscribe(
-        (value: boolean | null) => {
-          if (value === true) {
-            this.loading = false;
-            this.data = SampleDataMyTimeSheet.productivity;
-          }
-          if (value === false) {
-            this.loading = false;
-            this.data = [];
-          }
-          if (value === null) {
-            this.loading = true;
-          }
-        }
-      );
+      this.loading = false;
     }, 1000);
   }
 

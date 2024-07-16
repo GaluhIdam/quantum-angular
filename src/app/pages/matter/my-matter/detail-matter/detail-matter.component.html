@@ -18,17 +18,48 @@
       Content not available!
     </fui-tabs-content>
     <fui-tabs-content [id]="'Timesheet'">
-      <!-- Create Activity -->
+      <!-- Create Timesheet -->
       <div class="card-create-activity">
         <app-create-timesheet />
       </div>
-      <!-- Create Activity -->
+      <!-- Create Timesheet -->
 
-      <!-- History Activity -->
+      <!-- Table Timesheet -->
       <div class="card-create-activity">
-        <app-history-activity />
+        <!-- UTILITY TABLE DISPLAY DATE & FILTER  -->
+        <app-utility
+          [currentDate]="currentDate"
+          [startDateForm]="startDateForm"
+          [endDateForm]="endDateForm"
+          [filterApplied]="filterApplied"
+          [dataTimesheet]="dataTimesheet"
+        />
+        <!-- UTILITY TABLE DISPLAY DATE & FILTER  -->
+
+        <!-- TIMESHEET MOVER  -->
+        <app-move-matter
+          *ngIf="timesheetSelected.length > 0"
+          [listMatters]="mattersData"
+          [timesheetSelected]="timesheetSelected"
+          (clearSelectionOut)="clearSelectionOut($event)"
+        />
+        <!-- TIMESHEET MOVER  -->
+
+        <!-- TABLE TIMESHEET  -->
+        <app-table-timesheet
+          [page]="page"
+          [limit]="limit"
+          [listActivity]="activitesData"
+          [listMatters]="mattersData"
+          [totalItems]="totalItems"
+          [dataTimesheet]="dataTimesheet"
+          [timesheetChecked]="timesheetSelected"
+          (onPageChangeOut)="onPageChangeOut($event)"
+          (timesheetCheckedOut)="timesheetSelectedOut($event)"
+        />
+        <!-- TABLE TIMESHEET  -->
       </div>
-      <!-- History Activity -->
+      <!-- Table Timesheet -->
     </fui-tabs-content>
     <fui-tabs-content [id]="'Expenses'">
       <app-expenses />

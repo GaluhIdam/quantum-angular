@@ -24,10 +24,6 @@ import {
   HorizontalStackComponent,
   IconsComponent,
   InputFieldComponent,
-  ModalBodyComponent,
-  ModalComponent,
-  ModalFooterComponent,
-  ModalHeaderComponent,
   PopoverComponent,
   TimeSelectionComponent,
   ValidatorFieldComponent,
@@ -42,6 +38,9 @@ import { MyTimesheetService } from '../../services/my-timesheet.service';
 import { BaseController } from '../../../../../core/controller/basecontroller';
 import { EmptyDataComponent } from '../../../../../shared/empty-data/empty-data.component';
 import { debounceTime, map, Subscription, tap } from 'rxjs';
+import { EditTagTimesheetFlyoutComponent } from '../../../../../shared/layouts/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
+import { ModalDeleteComponent } from '../../../../../shared/layouts/modal-delete/modal-delete.component';
+import { EditTimesheetFlyoutComponent } from '../../../../../shared/layouts/edit-timesheet-flyout/edit-timesheet-flyout.component';
 
 @Component({
   selector: 'app-table-without-filter',
@@ -62,60 +61,71 @@ import { debounceTime, map, Subscription, tap } from 'rxjs';
     DatePickerComponent,
     TimeSelectionComponent,
     EmptyDataComponent,
-    ModalBodyComponent,
-    ModalComponent,
-    ModalFooterComponent,
-    ModalHeaderComponent,
     PopoverComponent,
     EmptyDataComponent,
+    EditTagTimesheetFlyoutComponent,
+    EditTimesheetFlyoutComponent,
+    ModalDeleteComponent,
   ],
   templateUrl: './table-without-filter.component.html',
   styleUrl: './table-without-filter.component.scss',
 })
 export class TableWithoutFilterComponent extends BaseController {
+  /** Data will input from History Activity */
   @Input() dateTimesheetByDate: TimesheetByDateDTO[] = [];
   progress: {
     percentage: number;
     color: Color;
   }[][] = [];
+
   @Input() filterDate: boolean = false;
-  @Input() listActivity: ActivityDTO[] = [];
-  @Input() listMatters: MatterDTO[] = [];
-  @Output() trigger: EventEmitter<any> = new EventEmitter<any>();
+
+  /** Parsing data timesheet selected to History Component for move matter */
   @Output() timesheetSelectedOut: EventEmitter<MyTimesheetDTO[]> =
     new EventEmitter<MyTimesheetDTO[]>();
 
-  optionActivity: { name: string; value: any }[] = [];
-  optionMatter: { name: string; value: any }[] = [];
+  /** Parsing data timesheet and status flyout to History Component for update */
+  @Output() clickOpenEdit: EventEmitter<{
+    flyout: boolean;
+    data: MyTimesheetDTO;
+  }> = new EventEmitter<{
+    flyout: boolean;
+    data: MyTimesheetDTO;
+  }>();
+
+  /** Parsing data timesheet with TAGGED and status flyout to History Component for update */
+  @Output() clickOpenEditTag: EventEmitter<{
+    flyout: boolean;
+    data: MyTimesheetDTO;
+  }> = new EventEmitter<{
+    flyout: boolean;
+    data: MyTimesheetDTO;
+  }>();
+
+  /** Parsing data UUID timesheet and status modal to History Component for delete */
+  @Output() clickOpenModalDelete: EventEmitter<{
+    modal: boolean;
+    uuid: string;
+  }> = new EventEmitter<{
+    modal: boolean;
+    uuid: string;
+  }>();
 
   /** Data header table */
   headerTable: string[] = ['Matter#', 'Description', 'Duration', ''];
 
   /** Data for show/hide table in row per row */
   showHideTablePerRow: boolean[] = [];
-  showHideEdit: boolean[][] = [];
 
   /** Variable for search activity combo box */
   activitySearch: FormControl = new FormControl('', Validators.required);
 
   /** Varible for send to request */
-  uuid: string = '';
   selectedActivity: { name: string; value: any }[] = [];
-  objectEventForm: FormControl = new FormControl('', Validators.required);
-  dateFormControl: FormControl = new FormControl('', Validators.required);
-  durationForm: FormControl = new FormControl('', Validators.required);
-  matterSearch: FormControl = new FormControl('', Validators.required);
-  timeDescForm: FormControl = new FormControl('', Validators.required);
-  addDescForm: FormControl = new FormControl('', Validators.required);
-  matterId: number = 0;
-  officialCategoryId: number = 0;
-
-  /** Modal Variable */
-  openModalDelete: boolean = false;
-  openModalEditTag: boolean = false;
 
   /** Search Matter */
   searchMatter: FormControl = new FormControl('');
+
   /** For hide sub matter if checked */
   hideSubMatter: boolean = false;
 
@@ -123,25 +133,9 @@ export class TableWithoutFilterComponent extends BaseController {
   timesheetChecked: MyTimesheetDTO[][] = [];
   timesheetSelected: MyTimesheetDTO[] = [];
 
-  subscription!: Subscription;
-
-  constructor(private readonly myTimesheetService: MyTimesheetService) {
-    super();
-  }
-
-  ngOnInit(): void {
-    this.subscription = this.searchMatter.valueChanges
-      .pipe(
-        debounceTime(500),
-        tap((value) => this.getMatter(value))
-      )
-      .subscribe();
-  }
-
   ngOnChanges(changes: SimpleChange): void {
     if (changes) {
       this.showHideTablePerRow = [];
-      this.showHideEdit = [];
       this.timesheetChecked = [];
       this.dateTimesheetByDate.forEach((item) => {
         this.showHideTablePerRow.push(false);
@@ -151,61 +145,10 @@ export class TableWithoutFilterComponent extends BaseController {
           item.data.forEach(() => {
             editArray.push(false);
           });
-          this.showHideEdit.push(editArray);
-        } else {
-          this.showHideEdit.push([]);
         }
       });
-      this.optionActivity = [];
-      this.listActivity.forEach((item) => {
-        this.optionActivity.push({
-          name: item.activity,
-          value: item.idActivity,
-        });
-      });
-      this.closeAllFormEdit();
       this.progressStackConverter();
     }
-  }
-
-  /** Update Timesheet from MyTimesheetService  */
-  updateTimesheet(uuid: string): void {
-    let request: MyTimesheetPostDTO = {
-      description: this.objectEventForm.value,
-      date: this.dateFormControl.value,
-      duration: this.durationForm.value,
-      matterId: this.matterId,
-      activityId: this.selectedActivity[0].value,
-      officialCategoryId: this.officialCategoryId,
-    };
-    this.myTimesheetService.putTimesheet(uuid, request).subscribe((res) => {
-      this.toggleToast(
-        'success',
-        'Success!',
-        'check',
-        'The data was successfuly updated!',
-        'sizel'
-      );
-      this.closeAllFormEdit();
-      this.trigger.emit(res);
-    });
-  }
-
-  /** Delete Timesheet from MyTimesheetService */
-  deleteTimesheet(uuid: string): void {
-    this.openModalEditTag = false;
-    this.myTimesheetService.deleteTimesheet(uuid).subscribe((res) => {
-      this.closelModalDelete();
-      this.closeModalEditTag();
-      this.toggleToast(
-        'success',
-        'Success!',
-        'check',
-        'The data was successfuly deleted!',
-        'sizel'
-      );
-      this.trigger.emit(res);
-    });
   }
 
   /** Selection activity */
@@ -216,83 +159,6 @@ export class TableWithoutFilterComponent extends BaseController {
   /** Toggle for show or hide row */
   toggleOpenOrCloseTablePerRow(index: number): void {
     this.showHideTablePerRow[index] = !this.showHideTablePerRow[index];
-  }
-
-  /** Cancel Edit without filter */
-  toggleCloseTablePerRow(index: number, subIndex: number): void {
-    this.showHideEdit[index][subIndex] = false;
-  }
-
-  /** Show edit without filter */
-  toggleFormEdit(index: number, subIndex: number, data: MyTimesheetDTO): void {
-    this.closeAllFormEdit();
-
-    this.matterId = data.matter.idMatter;
-    this.officialCategoryId = data.officialCategory.idOfficialCategory;
-    this.objectEventForm.setValue(data.description);
-    this.dateFormControl.setValue(data.date);
-    this.durationForm.setValue(data.duration);
-    const selected: { name: string; value: any }[] = [
-      {
-        name: data.activity.activity,
-        value: data.activity.idActivity,
-      },
-    ];
-    this.selectedActivity = selected;
-    this.showHideEdit[index][subIndex] = true;
-  }
-
-  /** Reset Form Edit */
-  closeAllFormEdit(): void {
-    this.showHideEdit = [];
-    this.dateTimesheetByDate.forEach((item) => {
-      this.showHideTablePerRow.push(false);
-      if (item.data.length > 0) {
-        const editArray: boolean[] = [];
-        item.data.forEach(() => {
-          editArray.push(false);
-        });
-        this.showHideEdit.push(editArray);
-      } else {
-        this.showHideEdit.push([]);
-      }
-    });
-  }
-
-  /** Open Modal Edit Tag */
-  openEditTagModal(param: string, data: MyTimesheetDTO): void {
-    this.openModalEditTag = true;
-    this.uuid = param;
-    this.matterId = data.matter.idMatter;
-    this.officialCategoryId = data.officialCategory.idOfficialCategory;
-    this.objectEventForm.setValue(data.description);
-    this.dateFormControl.setValue(data.date);
-    this.durationForm.setValue(data.duration);
-    this.timeDescForm.setValue(data.description);
-    const selected: { name: string; value: any }[] = [
-      {
-        name: data.activity.activity,
-        value: data.activity.idActivity,
-      },
-    ];
-    this.activitySearch.setValue(selected[0].name);
-    this.selectedActivity = selected;
-  }
-
-  /** Close Modal Edit Tag */
-  closeModalEditTag(): void {
-    this.openModalEditTag = false;
-  }
-
-  /** Open Modal Delete */
-  openDeleteModal(param: string): void {
-    this.openModalDelete = true;
-    this.uuid = param;
-  }
-
-  /** Close Modal Delete */
-  closelModalDelete(): void {
-    this.openModalDelete = false;
   }
 
   /** Progress stack converter */
@@ -317,14 +183,6 @@ export class TableWithoutFilterComponent extends BaseController {
         },
       ]);
     });
-  }
-
-  /** Getting Matter from MyTimesheetService */
-  getMatter(search: string): void {
-    this.myTimesheetService
-      .getMatters(search)
-      .pipe(map((res) => (this.listMatters = res.result)))
-      .subscribe();
   }
 
   /** Toggle for check or uncheck matter in popover change matter */
@@ -368,5 +226,29 @@ export class TableWithoutFilterComponent extends BaseController {
     return this.timesheetChecked[index].some(
       (dto) => dto.idTimesheet === item.idTimesheet
     );
+  }
+
+  /** Open flyout edit form and parsing data */
+  toggleOpenEditFlyout(data: MyTimesheetDTO): void {
+    this.clickOpenEdit.emit({
+      flyout: true,
+      data,
+    });
+  }
+
+  /** Open flyout edit tag form and parsing data */
+  toggleOpenEditTagFlyout(data: MyTimesheetDTO): void {
+    this.clickOpenEditTag.emit({
+      flyout: true,
+      data,
+    });
+  }
+
+  /** Open modal delete and parsing UUID */
+  openDeleteModal(uuid: string): void {
+    this.clickOpenModalDelete.emit({
+      modal: true,
+      uuid,
+    });
   }
 }

@@ -36,39 +36,45 @@
       </div>
       <div class="form">
         <p class="title" style="visibility: hidden">What did you do?</p>
-        <fui-form-control-layout class="full-width mr-10">
-          <fui-input-field
-            [type]="'text'"
-            [invalid]="false"
-            [size]="'m'"
-            [placeholder]="'object/event'"
-          >
-          </fui-input-field>
-        </fui-form-control-layout>
+        <div class="input">
+          <fui-form-control-layout class="full-width mr-10">
+            <fui-input-field
+              [type]="'text'"
+              [invalid]="false"
+              [size]="'m'"
+              [placeholder]="'object/event'"
+            >
+            </fui-input-field>
+          </fui-form-control-layout>
+        </div>
       </div>
       <div class="form">
         <p class="title" style="visibility: hidden">What did you do?</p>
-        <fui-form-control-layout class="full-width mr-10">
-          <fui-input-field
-            [type]="'text'"
-            [invalid]="false"
-            [size]="'m'"
-            [placeholder]="'topics'"
-          >
-          </fui-input-field>
-        </fui-form-control-layout>
+        <div class="input">
+          <fui-form-control-layout class="full-width mr-10">
+            <fui-input-field
+              [type]="'text'"
+              [invalid]="false"
+              [size]="'m'"
+              [placeholder]="'topics'"
+            >
+            </fui-input-field>
+          </fui-form-control-layout>
+        </div>
       </div>
       <div class="form">
         <p class="title" style="visibility: hidden">What did you do?</p>
-        <fui-form-control-layout class="full-width mr-10">
-          <fui-input-field
-            [type]="'text'"
-            [invalid]="false"
-            [size]="'m'"
-            [placeholder]="'additional description'"
-          >
-          </fui-input-field>
-        </fui-form-control-layout>
+        <div class="input">
+          <fui-form-control-layout class="full-width mr-10">
+            <fui-input-field
+              [type]="'text'"
+              [invalid]="false"
+              [size]="'m'"
+              [placeholder]="'additional description'"
+            >
+            </fui-input-field>
+          </fui-form-control-layout>
+        </div>
       </div>
     </div>
 
@@ -112,29 +118,16 @@
       <div class="form duration">
         <span class="title">Duration</span>
         <div class="input">
-          <fui-time-selection
-            [message]="'Duration is required!'"
-          />
+          <fui-time-selection [message]="'Duration is required!'" />
         </div>
       </div>
     </div>
   </div>
   <fui-button-icon
-    class="create-btn"
     [size]="'m'"
     [type]="'button'"
     [option]="'iconText'"
-    [text]="'Create'"
-    [style]="'filled'"
-    [color]="'primary'"
-    [icon]="'plusInCircleFilled'"
-  />
-  <fui-button-icon
-    class="create-btn-min"
-    [size]="'m'"
-    [type]="'button'"
-    [option]="'iconText'"
-    [text]="'Create'"
+    [text]="'Add Timesheet'"
     [style]="'filled'"
     [color]="'primary'"
     [icon]="'plusInCircleFilled'"

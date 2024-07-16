@@ -5,6 +5,7 @@
     [isBadgeIcon]="true"
     [icon]="'cross'"
     [iconPosition]="'end'"
+    (onClickBadge)="clearSelection()"
   >
     <p class="text">{{ timesheetSelected.length }} item on page selected</p>
   </fui-badge>
@@ -22,10 +23,7 @@
   </fui-modal-header>
   <fui-modal-body>
     <div class="body-modal">
-      <p>
-        This will move time of selected member to a new matter for the same
-        dates. The original matter will no longer have this time.
-      </p>
+      <p>Move timesheet from this matter to other matter</p>
       <div class="selector">
         <div class="checkbox">
           <input type="checkbox" />
@@ -51,6 +49,7 @@
         (onClick)="handleCloseModal()"
       />
       <fui-button-icon
+        (onClick)="moveTimesheet()"
         [type]="'button'"
         [option]="'text'"
         [text]="'Move Timesheet'"

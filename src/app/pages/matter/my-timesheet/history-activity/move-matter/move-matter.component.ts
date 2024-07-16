@@ -1,4 +1,10 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   BadgeComponent,
   ButtonIconComponent,
@@ -32,6 +38,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 export class MoveMatterComponent {
   @Input() listMatters: MatterDTO[] = [];
   @Input() timesheetSelected: MyTimesheetDTO[] = [];
+  @Output() clearSelectionOut: EventEmitter<MyTimesheetDTO[]> =
+    new EventEmitter<MyTimesheetDTO[]>();
+  @Output() moveTimesheetOut: EventEmitter<MyTimesheetDTO[]> = new EventEmitter<
+    MyTimesheetDTO[]
+  >();
 
   optionMatters: {
     name: string;
@@ -55,6 +66,18 @@ export class MoveMatterComponent {
         });
       });
     }
+  }
+
+  /** Move timesheet action, return data to consumer */
+  moveTimesheet(): void {
+    this.moveTimesheetOut.emit(this.timesheetSelected);
+  }
+
+  /** Clear Selection */
+  clearSelection(): void {
+    this.selectedMatters = [];
+    this.timesheetSelected = [];
+    this.clearSelectionOut.emit([]);
   }
 
   /** Open Modal */

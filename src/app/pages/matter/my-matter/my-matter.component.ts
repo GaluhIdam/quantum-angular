@@ -10,6 +10,7 @@ import {
   FilterGroupComponent,
 } from '@quantum/fui';
 import { RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-my-matter',
@@ -29,10 +30,36 @@ import { RouterModule } from '@angular/router';
 export class MyMatterComponent {
   filterApllied: FilterAplliedDTO[] = [];
 
+  /** Filter status */
+  filterForActive: boolean = false;
+  filterForPending: boolean = false;
+  filterForOnHold: boolean = false;
+  filterForCompleted: boolean = false;
+  filterForClosed: boolean = false;
+
   constructor(private readonly myMatterService: MyMatterService) {}
 
   ngOnInit(): void {
     this.filterApllied = this.myMatterService.dataFilterMyMatter();
+  }
+
+  /** Toggle for active or deactive */
+  toggleActiveFilter(param: string): void {
+    if (param === 'active') {
+      this.filterForActive = !this.filterForActive;
+    }
+    if (param === 'pending') {
+      this.filterForPending = !this.filterForPending;
+    }
+    if (param === 'onHold') {
+      this.filterForOnHold = !this.filterForOnHold;
+    }
+    if (param === 'completed') {
+      this.filterForCompleted = !this.filterForCompleted;
+    }
+    if (param === 'closed') {
+      this.filterForClosed = !this.filterForClosed;
+    }
   }
 
   /** Clear All Filter */

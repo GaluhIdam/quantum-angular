@@ -34,7 +34,7 @@
 .wrap-action {
   display: flex;
   align-items: baseline;
-  justify-content: end;
+  justify-content: start;
   fui-button-icon {
     margin-left: 3px;
     margin-right: 3px;
@@ -159,4 +159,10 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+
+fui-pagination {
+  margin-top: 20px;
+  display: block;
 }

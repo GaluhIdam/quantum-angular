@@ -19,6 +19,7 @@ import {
   FormControlLayoutComponent,
   IconsComponent,
   InputFieldComponent,
+  TextComponent,
   TooltipComponent,
 } from '@quantum/fui';
 import { BaseController } from '../../../../../core/controller/basecontroller';
@@ -28,6 +29,7 @@ import {
   TimesheetByDateDTO,
 } from '../../dtos/my-timesheet.dto';
 import { FilterAplliedDTO } from '../../../../../shared/filter-applied/filter-apllied.dto';
+import { CreateTimesheetFlyoutComponent } from '../../../../../shared/layouts/create-timesheet-flyout/create-timesheet-flyout.component';
 
 @Component({
   selector: 'app-utility',
@@ -48,6 +50,8 @@ import { FilterAplliedDTO } from '../../../../../shared/filter-applied/filter-ap
     InputFieldComponent,
     IconsComponent,
     TooltipComponent,
+    CreateTimesheetFlyoutComponent,
+    TextComponent,
   ],
   templateUrl: './utility.component.html',
   styleUrl: './utility.component.scss',
@@ -77,10 +81,10 @@ export class UtilityComponent extends BaseController {
     filterApplied: FilterAplliedDTO[];
   }>();
   @Output() clearFilterAll: EventEmitter<FilterAplliedDTO[]> = new EventEmitter<
-  FilterAplliedDTO[]
+    FilterAplliedDTO[]
   >();
   @Output() dateTimesheetByDateOut: EventEmitter<TimesheetByDateDTO[]> =
-  new EventEmitter<TimesheetByDateDTO[]>();
+    new EventEmitter<TimesheetByDateDTO[]>();
   @Output() dateMoveChanger: EventEmitter<{
     startDate: string;
     endDate: string;
@@ -88,6 +92,10 @@ export class UtilityComponent extends BaseController {
     startDate: string;
     endDate: string;
   }>();
+
+  /** Open create timesheet flyout */
+  @Output() clickOpenCreateFlyout: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
 
   endDate: Date = new Date();
   startDate: Date = new Date();
@@ -98,6 +106,7 @@ export class UtilityComponent extends BaseController {
   selectedMatter: { name: string; value: any }[] = [];
   descriptionForm: FormControl = new FormControl('');
   isOpenFlyout: boolean = false;
+  isOpenCreateFlyout: boolean = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
@@ -252,5 +261,15 @@ export class UtilityComponent extends BaseController {
     this.filterApplied.forEach((item) => {
       item.name === param ? (item.status = status) : item.status;
     });
+  }
+
+  /** Toggle for open create timesheet flyout */
+  openCreateFlyout(): void {
+    this.clickOpenCreateFlyout.emit(true);
+  }
+
+  /** Catch changes from flyout */
+  closeOut(event: boolean): void {
+    this.isOpenCreateFlyout = event;
   }
 }

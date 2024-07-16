@@ -18,6 +18,10 @@ import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.componen
 import { FilterAplliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
 import { MoveMatterComponent } from './move-matter/move-matter.component';
+import { CreateTimesheetFlyoutComponent } from '../../../../shared/layouts/create-timesheet-flyout/create-timesheet-flyout.component';
+import { EditTimesheetFlyoutComponent } from '../../../../shared/layouts/edit-timesheet-flyout/edit-timesheet-flyout.component';
+import { EditTagTimesheetFlyoutComponent } from '../../../../shared/layouts/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
+import { ModalDeleteComponent } from '../../../../shared/layouts/modal-delete/modal-delete.component';
 
 @Component({
   selector: 'app-history-activity',
@@ -35,17 +39,30 @@ import { MoveMatterComponent } from './move-matter/move-matter.component';
     SkeletonComponent,
     FilterAppliedComponent,
     MoveMatterComponent,
+    CreateTimesheetFlyoutComponent,
+    EditTimesheetFlyoutComponent,
+    EditTagTimesheetFlyoutComponent,
+    ModalDeleteComponent,
   ],
 })
 export class HistoryActivityComponent extends BaseController {
   loading: boolean = false;
 
-  /** Data will input from MyTimesheetComponent */
-  @Input() listActivities: ActivityDTO[] = [];
+  /**
+   * @description
+   * Data will input from MyTimesheetComponent and will send to :
+   * 1. Utility Component (for filter options).
+   * 2. Move Matter Component (for matter selection).
+   */
   @Input() listMatters: MatterDTO[] = [];
 
+  /** Data will input from service */
   dataTimesheet: MyTimesheetDTO[] = [];
+
+  /** Data will input from utility compnent */
   dateTimesheetByDate: TimesheetByDateDTO[] = [];
+
+  /** Data will input from utility compnent */
   timesheetSelected: MyTimesheetDTO[] = [];
 
   /** Date Config */
@@ -55,7 +72,7 @@ export class HistoryActivityComponent extends BaseController {
   startDateForm: FormControl = new FormControl();
   endDateForm: FormControl = new FormControl();
 
-  /** Data from apply filter */
+  /** Data will change based on filter applied */
   startDateFilter: string = '';
   endDateFilter: string = '';
   selectedMatterFilter: string = '';
@@ -66,8 +83,20 @@ export class HistoryActivityComponent extends BaseController {
   limit: number = 10;
   totalItems: number = 0;
 
-  /** Filter Applied */
+  /** Data input from utility component and send to filter applied component */
   filterApplied: FilterAplliedDTO[] = [];
+
+  /** Varible for create timesheet flyout */
+  isOpenCreateFlyout: boolean = false;
+
+  /** Varible for edit timesheet flyout */
+  isOpenEditFlyout: boolean = false;
+
+  /** Varible for edit tag timesheet flyout */
+  isOpenEditTagFlyout: boolean = false;
+
+  /** Variable for open/close modal delete */
+  openModalDelete: boolean = false;
 
   constructor(private readonly mytimesheetService: MyTimesheetService) {
     super();
@@ -175,7 +204,54 @@ export class HistoryActivityComponent extends BaseController {
     return this.filterApplied.some((item) => item.status == true);
   }
 
+  /** Catch changes from utility component for open create timesheet flyout */
+  clickOpenCreateFlyout(event: boolean): void {
+    this.isOpenCreateFlyout = event;
+  }
+
+  /** Catch data from table without filter component for get data timesheet selected
+   * then will send to service and move matter component */
   timesheetSelectedOut(event: MyTimesheetDTO[]): void {
     this.timesheetSelected = event;
+  }
+
+  /** Catch data from table without filter component for open edit flyout */
+  clickOpenEdit(event: { flyout: boolean; data: MyTimesheetDTO }): void {
+    this.isOpenEditFlyout = event.flyout;
+  }
+
+  /** Catch data from table without filter component for open edit tag flyout */
+  clickOpenEditTag(event: { flyout: boolean; data: MyTimesheetDTO }): void {
+    this.isOpenEditTagFlyout = event.flyout;
+  }
+
+  /** Catch data from table without filter component for open modal delete */
+  clickOpenModalDelete(event: { modal: boolean; uuid: string }): void {
+    this.openModalDelete = event.modal;
+  }
+
+  /** Catch changes from Create Timesheet Component */
+  closeOutCreate(event: boolean): void {
+    this.isOpenCreateFlyout = event;
+  }
+
+  /** Catch changes from edit timesheet flyout component */
+  closeOutEdit(event: boolean): void {
+    this.isOpenEditFlyout = event;
+  }
+
+  /** Catch changes from edit tag timesheet flyout component*/
+  closeOutEditTag(event: boolean): void {
+    this.isOpenEditTagFlyout = event;
+  }
+
+  /** Catch changes from modal delete component */
+  cancelOutDelete(event: boolean): void {
+    this.openModalDelete = event;
+  }
+
+  /** Catch changes from modal delete component */
+  deleteActionOutDelete(event: boolean): void {
+    this.openModalDelete = event;
   }
 }

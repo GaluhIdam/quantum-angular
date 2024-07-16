@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { BadgeComponent, IconsComponent } from '@quantum/fui';
+import {
+  BadgeComponent,
+  IconsComponent,
+  PaginationComponent,
+} from '@quantum/fui';
 
 @Component({
   selector: 'app-table-expenses',
   standalone: true,
-  imports: [CommonModule, IconsComponent, BadgeComponent],
+  imports: [CommonModule, IconsComponent, BadgeComponent, PaginationComponent],
   templateUrl: './table-expenses.component.html',
   styleUrl: './table-expenses.component.scss',
 })

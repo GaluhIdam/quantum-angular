@@ -14,11 +14,8 @@ import {
   FormControlLayoutComponent,
   IconsComponent,
   InputFieldComponent,
-  ModalBodyComponent,
-  ModalComponent,
-  ModalFooterComponent,
-  ModalHeaderComponent,
   PaginationComponent,
+  TextComponent,
   TimeSelectionComponent,
   ValidatorFieldComponent,
 } from '@quantum/fui';
@@ -36,6 +33,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { MyTimesheetService } from '../../services/my-timesheet.service';
+import { EditTagTimesheetFlyoutComponent } from '../../../../../shared/layouts/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
+import { EditTimesheetFlyoutComponent } from '../../../../../shared/layouts/edit-timesheet-flyout/edit-timesheet-flyout.component';
+import { ModalDeleteComponent } from '../../../../../shared/layouts/modal-delete/modal-delete.component';
 
 @Component({
   selector: 'app-table-filter',
@@ -54,18 +54,17 @@ import { MyTimesheetService } from '../../services/my-timesheet.service';
     InputFieldComponent,
     TimeSelectionComponent,
     ValidatorFieldComponent,
-    ModalBodyComponent,
-    ModalComponent,
-    ModalFooterComponent,
-    ModalHeaderComponent,
     PaginationComponent,
+    TextComponent,
+    EditTagTimesheetFlyoutComponent,
+    EditTimesheetFlyoutComponent,
+    ModalDeleteComponent,
   ],
   templateUrl: './table-filter.component.html',
   styleUrl: './table-filter.component.scss',
 })
 export class TableFilterComponent extends BaseController {
   @Input() dataTimesheet: MyTimesheetDTO[] = [];
-  @Input() listActivity: ActivityDTO[] = [];
   @Input() page: number = 1;
   @Input() limit: number = 10;
   @Input() totalItems: number = 100;
@@ -75,7 +74,7 @@ export class TableFilterComponent extends BaseController {
   }> = new EventEmitter<{ page: number; itemsPerPage: number }>();
   @Output() trigger: EventEmitter<any> = new EventEmitter<any>();
   @Output() timesheetCheckedOut: EventEmitter<MyTimesheetDTO[]> =
-  new EventEmitter<MyTimesheetDTO[]>();
+    new EventEmitter<MyTimesheetDTO[]>();
 
   optionActivity: { name: string; value: any }[] = [];
   optionMatter: { name: string; value: any }[] = [];
@@ -102,26 +101,18 @@ export class TableFilterComponent extends BaseController {
 
   /** Modal Variable */
   openModalDelete: boolean = false;
-  openModalEditTag: boolean = false;
 
   /** Check or uncheck timsheet */
   timesheetChecked: MyTimesheetDTO[] = [];
 
+  /** Open edit tag flyout */
+  isOpenFlyoutTagEdit: boolean = false;
+
+  /** Open edit flyout */
+  isOpenFlyoutEdit: boolean = false;
+
   constructor(private readonly myTimesheetService: MyTimesheetService) {
     super();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes) {
-      this.optionActivity = [];
-      this.listActivity.forEach((item) => {
-        this.optionActivity.push({
-          name: item.activity,
-          value: item.idActivity,
-        });
-      });
-      this.closeAllFormEdit();
-    }
   }
 
   /** Update Timesheet from MyTimesheetService  */
@@ -150,8 +141,6 @@ export class TableFilterComponent extends BaseController {
   /** Delete Timesheet from MyTimesheetService */
   deleteTimesheet(uuid: string): void {
     this.myTimesheetService.deleteTimesheet(uuid).subscribe((res) => {
-      this.closelModalDelete();
-      this.closeModalEditTag();
       this.toggleToast(
         'success',
         'Success!',
@@ -165,6 +154,7 @@ export class TableFilterComponent extends BaseController {
 
   /** Show edit form */
   toggleFormEdit(index: number, data: MyTimesheetDTO): void {
+    this.isOpenFlyoutEdit = true;
     this.closeAllFormEdit();
     this.showHideEdit[index] = true;
 
@@ -198,7 +188,7 @@ export class TableFilterComponent extends BaseController {
 
   /** Open Modal Edit Tag */
   openEditTagModal(param: string, data: MyTimesheetDTO): void {
-    this.openModalEditTag = true;
+    this.isOpenFlyoutTagEdit = true;
     this.uuid = param;
     this.matterId = data.matter.idMatter;
     this.officialCategoryId = data.officialCategory.idOfficialCategory;
@@ -214,23 +204,6 @@ export class TableFilterComponent extends BaseController {
     ];
     this.activitySearch.setValue(selected[0].name);
     this.selectedActivity = selected;
-  }
-
-  /** Close Modal Edit Tag */
-  closeModalEditTag(): void {
-    this.openModalEditTag = false;
-  }
-
-  /** Open Modal Delete */
-  openDeleteModal(param: string): void {
-    this.openModalDelete = true;
-    this.uuid = param;
-    console.log(this.openModalDelete);
-  }
-
-  /** Close Modal Delete */
-  closelModalDelete(): void {
-    this.openModalDelete = false;
   }
 
   /** Selection activity */
@@ -266,5 +239,26 @@ export class TableFilterComponent extends BaseController {
     return this.timesheetChecked.some(
       (dto) => dto.idTimesheet === item.idTimesheet
     );
+  }
+
+  /** Catch return from flyout edit tag */
+  closeOutEditTag(event: boolean): void {
+    this.isOpenFlyoutTagEdit = event;
+  }
+
+  /** Catch return from flyout edit */
+  closeOutEdit(event: boolean): void {
+    this.isOpenFlyoutEdit = event;
+  }
+
+  /** Open Modal Delete */
+  openDeleteModal(param: string): void {
+    this.openModalDelete = true;
+    this.uuid = param;
+  }
+
+  /** Close Modal Delete */
+  cancelOut(event: boolean): void {
+    this.openModalDelete = event;
   }
 }

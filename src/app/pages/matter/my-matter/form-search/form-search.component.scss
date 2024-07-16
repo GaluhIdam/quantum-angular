@@ -3,7 +3,7 @@
 /** Container Config */
 .container {
   display: flex;
-  margin: 25px  0px 15px 0px;
+  margin: 25px 0px 15px 0px;
 }
 
 /** full width */
@@ -20,21 +20,36 @@
   margin: 10px 0px;
 }
 .form-group {
-  display: block;
+  display: flex;
   width: 100%;
-  &.child-form {
-    margin: 15px 5px 15px 0px;
+  .child-form {
+    margin: 0px 5px 0px 0px;
     &:last-child {
-      margin: 15px 0px 15px 0px;
+      margin: 0;
+    }
+  }
+  .child-form-adv {
+    width: 200px;
+    margin: 0px 5px 0px 0px;
+    &:last-child {
+      margin: 0;
     }
   }
   &.child-form-adv {
-    margin: 15px 0px 15px 0px;
+    display: block;
+    margin: 0px 5px 0px 0px;
+    &:last-child {
+      margin: 0;
+    }
   }
 }
 .label-form {
   margin-bottom: 6px;
+  margin-top: 10px;
   font-size: smaller;
+  &.mt-0 {
+    margin-top: 0;
+  }
 }
 
 /** Flyout config */
@@ -83,20 +98,18 @@
 
 /** Wrapper for advance filter config */
 .wrap-advance-filter {
-  padding: 10px 20px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 370px;
+  padding: 15px;
   border-radius: 8px;
   background-color: lighten($fuiColorLightShade, 8%);
-  .scroller {
-    height: fit-content;
-    overflow: hidden;
-  }
 }
 
 /** Prepend Form */
 .prepend-title {
   font-weight: bold;
   font-size: small;
+}
+
+/** Wraper */
+.standard-filter {
+  width: -webkit-fill-available;
 }

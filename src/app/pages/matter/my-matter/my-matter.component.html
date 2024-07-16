@@ -7,37 +7,60 @@
 <!-- FILTER SECTION  -->
 <div class="filter-applied">
   <!-- FILTER TAB SECTION  -->
-  <fui-filter-group [fullWidth]="true">
+  <fui-filter-group [fullWidth]="false">
+    <!-- FILTER FOR ACTIVE STATUS  -->
     <fui-filter-group-button
+      [active]="filterForActive"
+      (onClick)="toggleActiveFilter('active')"
       ><div class="filter-title">
         <span>Active</span>
-        <div class="icon">11</div>
+        <div class="icon {{ filterForActive ? 'accent' : '' }}">8</div>
       </div>
     </fui-filter-group-button>
+    <!-- FILTER FOR ACTIVE STATUS  -->
+
+    <!-- FILTER FOR PENDING STATUS  -->
     <fui-filter-group-button
+      [active]="filterForPending"
+      (onClick)="toggleActiveFilter('pending')"
       ><div class="filter-title">
         <span>Pending</span>
-        <div class="icon">11</div>
+        <div class="icon {{ filterForPending ? 'accent' : '' }}">11</div>
       </div></fui-filter-group-button
     >
+    <!-- FILTER FOR PENDING STATUS  -->
+
+    <!-- FILTER FOR ON HOLD STATUS  -->
     <fui-filter-group-button
+      [active]="filterForOnHold"
+      (onClick)="toggleActiveFilter('onHold')"
       ><div class="filter-title">
         <span>On Hold</span>
-        <div class="icon">11</div>
+        <div class="icon {{ filterForOnHold ? 'accent' : '' }}">2</div>
       </div></fui-filter-group-button
     >
+    <!-- FILTER FOR ON HOLD STATUS  -->
+
+    <!-- FILTER FOR COMPLETED STATUS  -->
     <fui-filter-group-button
+      [active]="filterForCompleted"
+      (onClick)="toggleActiveFilter('completed')"
       ><div class="filter-title">
         <span>Completed</span>
-        <div class="icon">11</div>
+        <div class="icon {{ filterForCompleted ? 'accent' : '' }}">100</div>
       </div></fui-filter-group-button
     >
+    <!-- FILTER FOR COMPLETED STATUS  -->
+
+    <!-- FILTER FOR CLOSED STATUS  -->
     <fui-filter-group-button
+      [active]="filterForClosed"
+      (onClick)="toggleActiveFilter('closed')"
       ><div class="filter-title">
         <span>Closed</span>
-        <div class="icon">11</div>
       </div></fui-filter-group-button
     >
+    <!-- FILTER FOR CLOSED STATUS  -->
   </fui-filter-group>
   <!-- FILTER TAB SECTION  -->
 
@@ -49,14 +72,22 @@
   />
   <!-- FILTER APPLIED SECTION  -->
 </div>
-<!-- CONTENT CARD SECTION  -->
+
+<!-- CONTENT CARD LOOP  -->
 <div class="card-container">
-  <app-content-card />
-  <app-content-card />
-  <app-content-card />
-  <app-content-card />
-  <app-content-card />
+  <app-content-card [type]="1" />
+  <app-content-card [type]="2" />
+  <app-content-card [type]="3" />
+  <app-content-card [type]="4" />
+
+  <app-content-card [type]="4" />
+  <app-content-card [type]="3" />
+  <app-content-card [type]="2" />
+  <app-content-card [type]="1" />
 </div>
+<!-- CONTENT CARD LOOP  -->
+
+<!-- LOAD BUTTON  -->
 <div class="loader">
   <fui-button-icon
     [type]="'button'"
@@ -67,4 +98,4 @@
     [text]="'Load more results'"
   />
 </div>
-<!-- CONTENT CARD SECTION  -->
+<!-- LOAD BUTTON  -->

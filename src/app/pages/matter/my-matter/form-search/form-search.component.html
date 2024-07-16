@@ -73,53 +73,67 @@
         </fui-form-control-layout>
         <!-- FORM CLIENT NAME -->
 
-        <!-- GROUPING FLEX  -->
-        <div class="container-form">
-          <!-- FORM MATTER NUMBER  -->
-          <div class="form-group child-form">
-            <div for="form" class="label-form">Matter Number</div>
-            <fui-form-control-layout class="full-width">
-              <fui-input-field
-                [formControlField]="matterNumberForm"
-                [type]="'text'"
-                [invalid]="false"
-                [size]="'m'"
-                [placeholder]="'Type matter number'"
-              >
-              </fui-input-field>
-            </fui-form-control-layout>
-          </div>
-          <!-- FORM MATTER NUMBER  -->
+        <!-- MATTER NUMBER -->
+        <div for="form" class="label-form">Matter Number</div>
+        <fui-combo-box
+          [invalid]="false"
+          [message]="'Matter Number is required!'"
+          [singleSelection]="true"
+          [size]="'m'"
+          [placeholder]="'Select matter number(s)'"
+          [optionValue]="[]"
+          [selectedValue]="[]"
+        />
+        <!-- MATTER NUMBER -->
 
-          <!-- FORM PROJECT NAME  -->
-          <div class="form-group child-form">
-            <div for="form" class="label-form">Project Name</div>
-            <fui-form-control-layout class="full-width">
-              <fui-input-field
-                [formControlField]="projectNameForm"
-                [type]="'text'"
-                [invalid]="false"
-                [size]="'m'"
-                [placeholder]="'Type project name'"
-              >
-              </fui-input-field>
-            </fui-form-control-layout>
-          </div>
-          <!-- FORM PROJECT NAME  -->
+        <!-- FORM PROJECT NAME -->
+        <div for="form" class="label-form">Project Name</div>
+        <div class="form-group">
+          <fui-form-control-layout class="child-form-adv full-width">
+            <fui-select-field
+              [formControlField]="projectNameFormType"
+              [invalid]="true"
+              [size]="'m'"
+              [selectOptions]="selectOption"
+            >
+            </fui-select-field>
+          </fui-form-control-layout>
+
+          <fui-form-control-layout class="child-form full-width">
+            <fui-input-field
+              [type]="'text'"
+              [invalid]="false"
+              [size]="'m'"
+              [placeholder]="'Type matter description'"
+            >
+            </fui-input-field>
+          </fui-form-control-layout>
         </div>
-        <!-- GROUPING FLEX  -->
+        <!-- FORM PROJECT NAME -->
 
         <!-- FORM MATTER DESCRIPTION -->
         <div for="form" class="label-form">Matter Description</div>
-        <fui-form-control-layout class="full-width">
-          <fui-input-field
-            [type]="'text'"
-            [invalid]="false"
-            [size]="'m'"
-            [placeholder]="'Type matter description'"
-          >
-          </fui-input-field>
-        </fui-form-control-layout>
+        <div class="form-group">
+          <fui-form-control-layout class="child-form-adv full-width">
+            <fui-select-field
+              [formControlField]="matterDescriptionFormType"
+              [invalid]="true"
+              [size]="'m'"
+              [selectOptions]="selectOption"
+            >
+            </fui-select-field>
+          </fui-form-control-layout>
+
+          <fui-form-control-layout class="child-form full-width">
+            <fui-input-field
+              [type]="'text'"
+              [invalid]="false"
+              [size]="'m'"
+              [placeholder]="'Type matter description'"
+            >
+            </fui-input-field>
+          </fui-form-control-layout>
+        </div>
         <!-- FORM MATTER DESCRIPTION -->
       </div>
       <!-- STANDARD FILTER -->
@@ -143,125 +157,126 @@
         <!-- BODY AND TOGGLE  -->
         <div body>
           <div class="wrap-advance-filter">
-            <div class="scroller">
-              <!-- MATTER CATEGORY FORM -->
-              <div class="form-group child-form-adv">
-                <div for="form" class="label-form">Matter Category</div>
-                <fui-combo-box
-                  [optionValue]="matterCategoryOption"
-                  [selectedValue]="matterCategorySelected"
-                  [placeholder]="'Select matter category'"
-                />
-              </div>
-              <!-- MATTER CATEGORY FORM -->
-
-              <!-- PRACTICE AREA FORM -->
-              <div class="form-group child-form-adv">
-                <div for="form" class="label-form">Practice Area</div>
-                <fui-combo-box
-                  [optionValue]="pacticeAreaOption"
-                  [selectedValue]="pacticeAreaSelected"
-                  [placeholder]="'Select practice area'"
-                />
-              </div>
-              <!-- PRACTICE AREA FORM -->
-
-              <!-- PRACTICE GROUP FORM -->
-              <div class="form-group child-form-adv">
-                <div for="form" class="label-form">Practice Group</div>
-                <fui-combo-box
-                  [optionValue]="pacticeGroupOption"
-                  [selectedValue]="pacticeGroupSelected"
-                  [placeholder]="'Select practice group'"
-                />
-              </div>
-              <!-- PRACTICE GROUP FORM -->
-
-              <!-- MATTER TYPE FORM -->
-              <div class="form-group child-form-adv">
-                <div for="form" class="label-form">Matter Type</div>
-                <fui-combo-box
-                  [optionValue]="matterTypeOption"
-                  [selectedValue]="matterTypeSelected"
-                  [placeholder]="'Select matter type'"
-                />
-              </div>
-              <!-- MATTER TYPE FORM -->
-
-              <!-- FEE STRUCTURE FORM -->
-              <div class="form-group child-form-adv">
-                <div for="form" class="label-form">Fee Structure</div>
-                <fui-combo-box
-                  [optionValue]="feeStructureOption"
-                  [selectedValue]="feeStructureSelected"
-                  [placeholder]="'Select fee structure'"
-                />
-              </div>
-              <!-- FEE STRUCTURE FORM -->
-
-              <!-- MATTER PIC FORM -->
-              <div class="form-group child-form-adv">
-                <div for="form" class="label-form">Matter PIC</div>
-                <fui-combo-box
-                  [optionValue]="matterPICOption"
-                  [selectedValue]="matterPICSelected"
-                  [placeholder]="'Select matter PIC'"
-                />
-              </div>
-              <!-- MATTER PIC FORM -->
-
-              <!-- MATTER MEMBERS FORM -->
-              <div class="form-group child-form-adv">
-                <div for="form" class="label-form">Matter Members</div>
-                <fui-combo-box
-                  [optionValue]="matterMemberOption"
-                  [selectedValue]="matterMemberSelected"
-                  [placeholder]="'Select matter members'"
-                />
-              </div>
-              <!-- MATTER MEMBERS FORM -->
-
-              <!-- UNBILLED AMOUNT HIGHER OR EQUAL TO FORM -->
-              <div class="form-group child-form-adv">
-                <div for="form" class="label-form">
-                  Unbilled Amount higher or equal to
-                </div>
-                <fui-form-control-layout class="full-width">
-                  <fui-prepend>
-                    <div class="prepend-title">USD</div>
-                  </fui-prepend>
-                  <fui-input-field
-                    [formControlField]="usdForm"
-                    [type]="'text'"
-                    [invalid]="false"
-                    [size]="'m'"
-                    [placeholder]="'Specify the unbilled amount'"
-                  >
-                  </fui-input-field>
-                </fui-form-control-layout>
-              </div>
-              <!-- UNBILLED AMOUNT HIGHER OR EQUAL TO FORM -->
-
-              <!-- COMPLETION DATE FORM -->
-              <div class="form-group child-form-adv">
-                <div for="form" class="label-form">Completion Date</div>
-                <fui-date-range
-                  [startDateControl]="completionDateStart"
-                  [endDateControl]="completionDateEnd"
-                />
-              </div>
-              <!-- COMPLETION DATE FORM -->
-
-              <!-- CREATION DATE FORM -->
-              <div class="form-group child-form-adv">
-                <div for="form" class="label-form">Creation Date</div>
-                <fui-date-range
-                  [startDateControl]="creationDateStart"
-                  [endDateControl]="creationDateEnd"
-                />
-              </div>
-              <!-- CREATION DATE FORM -->
+            <!-- MATTER CATEGORY FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form mt-0">Matter Category</div>
+              <fui-combo-box
+                [optionValue]="matterCategoryOption"
+                [selectedValue]="matterCategorySelected"
+                [placeholder]="'Select matter category'"
+              />
             </div>
+            <!-- MATTER CATEGORY FORM -->
+
+            <!-- PRACTICE AREA FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form">Practice Area</div>
+              <fui-combo-box
+                [optionValue]="pacticeAreaOption"
+                [selectedValue]="pacticeAreaSelected"
+                [placeholder]="'Select practice area'"
+              />
+            </div>
+            <!-- PRACTICE AREA FORM -->
+
+            <!-- PRACTICE GROUP FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form">Practice Group</div>
+              <fui-combo-box
+                [optionValue]="pacticeGroupOption"
+                [selectedValue]="pacticeGroupSelected"
+                [placeholder]="'Select practice group'"
+              />
+            </div>
+            <!-- PRACTICE GROUP FORM -->
+
+            <!-- MATTER TYPE FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form">Matter Type</div>
+              <fui-combo-box
+                [optionValue]="matterTypeOption"
+                [selectedValue]="matterTypeSelected"
+                [placeholder]="'Select matter type'"
+              />
+            </div>
+            <!-- MATTER TYPE FORM -->
+
+            <!-- FEE STRUCTURE FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form">Fee Structure</div>
+              <fui-combo-box
+                [optionValue]="feeStructureOption"
+                [selectedValue]="feeStructureSelected"
+                [placeholder]="'Select fee structure'"
+              />
+            </div>
+            <!-- FEE STRUCTURE FORM -->
+
+            <!-- MATTER PIC FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form">Matter PIC</div>
+              <fui-combo-box
+                [optionValue]="matterPICOption"
+                [selectedValue]="matterPICSelected"
+                [placeholder]="'Select matter PIC'"
+              />
+            </div>
+            <!-- MATTER PIC FORM -->
+
+            <!-- MATTER MEMBERS FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form">Matter Members</div>
+              <fui-combo-box
+                [optionValue]="matterMemberOption"
+                [selectedValue]="matterMemberSelected"
+                [placeholder]="'Select matter members'"
+              />
+            </div>
+            <!-- MATTER MEMBERS FORM -->
+
+            <!-- UNBILLED AMOUNT HIGHER OR EQUAL TO FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form">
+                Unbilled Amount higher or equal to
+              </div>
+              <fui-form-control-layout class="full-width">
+                <fui-prepend>
+                  <div class="prepend-title">USD</div>
+                </fui-prepend>
+                <fui-input-field
+                  [formControlField]="usdForm"
+                  [type]="'text'"
+                  [invalid]="false"
+                  [size]="'m'"
+                  [placeholder]="'Specify the unbilled amount'"
+                >
+                </fui-input-field>
+              </fui-form-control-layout>
+            </div>
+            <!-- UNBILLED AMOUNT HIGHER OR EQUAL TO FORM -->
+
+            <!-- COMPLETION DATE FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form">Completion Date</div>
+              <fui-date-range
+                [position]="'top'"
+                [startDateControl]="completionDateStart"
+                [endDateControl]="completionDateEnd"
+              />
+            </div>
+            <!-- COMPLETION DATE FORM -->
+
+            <!-- CREATION DATE FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form">Creation Date</div>
+              <fui-date-range
+                [position]="'top'"
+                [startDateControl]="creationDateStart"
+                [endDateControl]="creationDateEnd"
+              />
+            </div>
+            <!-- CREATION DATE FORM -->
+            <div class="scroller"></div>
           </div>
         </div>
         <!-- BODY AND TOGGLE  -->

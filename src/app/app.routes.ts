@@ -5,6 +5,18 @@ import { AllMatterComponent } from './pages/matter/all-matter/all-matter.compone
 import { DetailMatterComponent } from './pages/matter/my-matter/detail-matter/detail-matter.component';
 
 export const routes: Routes = [
+  /** Home Modules */
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'home',
+  },
+  {
+    title: 'Home',
+    path: 'home',
+    component: MyTimesheetComponent,
+  },
+
   /** Matter Modules */
   {
     path: 'matter',
@@ -22,17 +34,12 @@ export const routes: Routes = [
       {
         title: 'My Matter',
         path: 'my-matter',
-        children: [
-          {
-            path: '',
-            component: MyMatterComponent,
-          },
-          {
-            title: 'Detail Matter',
-            path: 'detail-matter',
-            component: DetailMatterComponent,
-          },
-        ],
+        component: MyMatterComponent,
+      },
+      {
+        title: 'Detail Matter',
+        path: 'detail-matter',
+        component: DetailMatterComponent,
       },
       {
         title: 'All Matter',

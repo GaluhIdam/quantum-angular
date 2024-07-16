@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateActivityComponent } from './create-activity.component';
+import { TableTimesheetComponent } from './table-timesheet.component';
 
-describe('CreateActivityComponent', () => {
-  let component: CreateActivityComponent;
-  let fixture: ComponentFixture<CreateActivityComponent>;
+describe('TableTimesheetComponent', () => {
+  let component: TableTimesheetComponent;
+  let fixture: ComponentFixture<TableTimesheetComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateActivityComponent]
+      imports: [TableTimesheetComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(CreateActivityComponent);
+    fixture = TestBed.createComponent(TableTimesheetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

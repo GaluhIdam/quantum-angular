@@ -36,20 +36,45 @@
   <div class="hr">
     <hr width="140" />
   </div>
-  <div class="row-sub">
-    <div class="billble">
+
+  <div
+    class="row-sub"
+    [ngStyle]="{
+      visibility: type === 1 || type === 2 || type === 3 ? 'visible' : 'hidden'
+    }"
+  >
+    <div
+      class="billble"
+      [ngStyle]="{
+        visibility:
+          type === 1 || type === 2 || type === 3 ? 'visible' : 'hidden'
+      }"
+    >
       <p>Partner in Charge</p>
       <p>(BS) Brooklyn Simmons</p>
     </div>
-    <div class="billble">
+    <div
+      class="billble"
+      [ngStyle]="{
+        visibility: type === 1 || type === 2 ? 'visible' : 'hidden'
+      }"
+    >
       <p>Unbilled</p>
       <p>USD 25,500.00</p>
     </div>
-    <div class="billble">
+    <div
+      class="billble"
+      [ngStyle]="{
+        visibility: type === 1 || type === 2 ? 'visible' : 'hidden'
+      }"
+    >
       <p>Uncollected</p>
       <p>USD 3,500.00</p>
     </div>
-    <div class="billble">
+    <div
+      class="billble"
+      [ngStyle]="{ visibility: type === 1 ? 'visible' : 'hidden' }"
+    >
       <fui-progress
         [value]="50"
         [max]="100"
@@ -59,11 +84,35 @@
       ></fui-progress>
     </div>
   </div>
+
   <hr />
   <div class="row-foot">
     <fui-badge [color]="'ghost'" [size]="'sizem'"> <b>Billable</b> </fui-badge>
-    <fui-badge [color]="'ghost'" [size]="'sizem'"> <b>Hourly</b> </fui-badge>
-    <fui-badge [color]="'success'" [size]="'sizel'"> <b>Active</b> </fui-badge>
+    <fui-badge [color]="'ghost'" [size]="'sizem'">
+      <b>Hourly</b>
+    </fui-badge>
+    <fui-badge
+      [color]="
+        type === 1
+          ? 'success'
+          : type === 2
+          ? 'warning'
+          : type === 3
+          ? 'danger'
+          : 'text'
+      "
+      [size]="'sizel'"
+    >
+      <b>{{
+        type === 1
+          ? "Active"
+          : type === 2
+          ? "Complete"
+          : type === 3
+          ? "Pending"
+          : "Closed"
+      }}</b>
+    </fui-badge>
     <fui-badge
       [isBadgeIcon]="true"
       [color]="'ghost'"

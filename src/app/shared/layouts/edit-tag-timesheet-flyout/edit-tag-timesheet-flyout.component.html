@@ -1,0 +1,253 @@
+<fui-flyout
+  [zIndex]="2"
+  [open]="isOpenFlyout"
+  [flyoutSize]="'s'"
+  [flyoutPadding]="'s'"
+>
+  <fui-flyout-header (onCloseFlyout)="toggleCloseFlyout()">
+    <div class="header-flyout">
+      <h2>Edit Tagged Timesheet</h2>
+    </div>
+  </fui-flyout-header>
+  <fui-flyout-body>
+    <!-- MESSAGE INFO -->
+    <div class="msg-info">
+      <fui-text [color]="'primary'" [weight]="'semibold'"
+        >Feel free to modify!</fui-text
+      >
+      <fui-text [color]="'text'" [size]="'sizes'"
+        >Editing or reject & remove tagged timesheet will not affect the other
+        member timesheet, they have their own version!</fui-text
+      >
+    </div>
+    <!-- MESSAGE INFO -->
+    <div class="flyout-body">
+      <!-- TAG ENTRY -->
+      <fui-badge
+        class="tagged"
+        [color]="'ghost'"
+        [size]="'sizedefault'"
+        [isBadgeIcon]="true"
+        [icon]="'user'"
+        [iconPosition]="'start'"
+      >
+        <fui-text [color]="'text'" [size]="'sizes'"
+          >Tagged timesheet by AMS</fui-text
+        >
+      </fui-badge>
+      <!-- TAG ENTRY -->
+
+      <div class="form">
+        <!-- ACTIVITY FORM  -->
+        <fui-text [size]="'sizes'">What did you do?</fui-text>
+        <div class="form-control">
+          <fui-combo-box
+            [invalid]="activitySearch.invalid && activitySearch.dirty"
+            [message]="'Activity is required!'"
+            (selection)="selectionActivity($event)"
+            [comboxForm]="activitySearch"
+            [singleSelection]="true"
+            [size]="'m'"
+            [placeholder]="'Activity/verb'"
+            [optionValue]="optionActivity"
+            [selectedValue]="selectedActivity"
+          />
+        </div>
+        <!-- ACTIVITY FORM  -->
+
+        <!-- OBJECT/EVENT FORM  -->
+        <div class="form-control">
+          <fui-form-control-layout>
+            <fui-input-field
+              [formControlField]="objectEventForm"
+              [placeholder]="'object/event'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="objectEventForm.invalid && objectEventForm.dirty"
+            >
+              <fui-icons
+                *ngIf="objectEventForm.invalid && objectEventForm.dirty"
+                right-icon
+                [label]="'right'"
+                [icon]="'alert'"
+                [size]="'sizem'"
+                [color]="'danger'"
+            /></fui-input-field>
+            <fui-validator-field
+              validator
+              [message]="'Object/Event is required!'"
+            />
+          </fui-form-control-layout>
+        </div>
+        <!-- OBJECT/EVENT FORM  -->
+
+        <!-- TOPICS FORM  -->
+        <div class="form-control">
+          <fui-form-control-layout>
+            <fui-input-field
+              [formControlField]="objectEventForm"
+              [placeholder]="'topics'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="objectEventForm.invalid && objectEventForm.dirty"
+            >
+              <fui-icons
+                *ngIf="objectEventForm.invalid && objectEventForm.dirty"
+                right-icon
+                [label]="'right'"
+                [icon]="'alert'"
+                [size]="'sizem'"
+                [color]="'danger'"
+            /></fui-input-field>
+            <fui-validator-field validator [message]="'Topics is required!'" />
+          </fui-form-control-layout>
+        </div>
+        <!-- TOPICS FORM  -->
+
+        <!-- TOPICS FORM  -->
+        <div class="form-control">
+          <fui-form-control-layout>
+            <fui-input-field
+              [formControlField]="objectEventForm"
+              [placeholder]="'Additional description'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="objectEventForm.invalid && objectEventForm.dirty"
+            >
+              <fui-icons
+                *ngIf="objectEventForm.invalid && objectEventForm.dirty"
+                right-icon
+                [label]="'right'"
+                [icon]="'alert'"
+                [size]="'sizem'"
+                [color]="'danger'"
+            /></fui-input-field>
+            <fui-validator-field
+              validator
+              [message]="'Additional description is required!'"
+            />
+          </fui-form-control-layout>
+          <fui-text class="italic" [size]="'sizexs'" [color]="'disabled'"
+            >*Conduct desk research on licensing agreement with JJ.</fui-text
+          >
+        </div>
+        <!-- TOPICS FORM  -->
+      </div>
+
+      <!-- MATTER FORM  -->
+      <div class="form">
+        <div class="flex-between">
+          <fui-text [size]="'sizes'">Which matter?</fui-text>
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              [(ngModel)]="lockMatter"
+              [checked]="lockMatter"
+              (change)="onCheckboxChangeMatter($event)"
+            />
+            <fui-text [size]="'sizes'">Lock</fui-text>
+            <fui-tooltip
+              [position]="'top'"
+              [align]="'end'"
+              [content]="
+                'Allows you to keep using this value after adding new timesheet.'
+              "
+              ><fui-icons [icon]="'questionInCircle'"
+            /></fui-tooltip>
+          </div>
+        </div>
+        <div class="form-control">
+          <fui-combo-box
+            [leftIcon]="'search'"
+            (selection)="selectionMatter($event)"
+            [comboxForm]="matterSearch"
+            [invalid]="matterSearch.invalid && matterSearch.dirty"
+            [message]="'Matter is required!'"
+            [singleSelection]="true"
+            [size]="'m'"
+            [placeholder]="'Search by number or project name'"
+            [optionValue]="optionMatter"
+            [selectedValue]="selectedOptionMatter"
+          />
+        </div>
+      </div>
+      <!-- MATTER FORM  -->
+
+      <div class="form">
+        <div class="flex-between">
+          <!-- DATE FORM -->
+          <div class="sub-form">
+            <div class="flex-between">
+              <fui-text [size]="'sizes'">Date</fui-text>
+              <div class="checkbox">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="lockMatter"
+                  [checked]="lockMatter"
+                  (change)="onCheckboxChangeMatter($event)"
+                />
+                <fui-text [size]="'sizes'">Lock</fui-text>
+                <fui-tooltip
+                  [position]="'top'"
+                  [align]="'center'"
+                  [content]="
+                    'Allows you to keep using this value after adding new timesheet.'
+                  "
+                  ><fui-icons [icon]="'questionInCircle'"
+                /></fui-tooltip>
+              </div>
+            </div>
+            <fui-date-picker
+              class="form-control"
+              format="MM/DD/YYYY"
+              [position]="'top'"
+              [dateFormControl]="dateFormControl"
+              [message]="'Date is required!'"
+              [isInvalid]="dateFormControl.invalid && dateFormControl.dirty"
+            />
+          </div>
+          <!-- DATE FORM -->
+
+          <!-- DURATION FORM -->
+          <div class="sub-form">
+            <fui-text [size]="'sizes'">Duration</fui-text>
+            <fui-time-selection
+              class="form-control"
+              [timeFormControl]="durationForm"
+              [position]="'top'"
+              [isInvalid]="durationForm.invalid && durationForm.dirty"
+              [message]="'Duration is required!'"
+            />
+          </div>
+          <!-- DURATION FORM -->
+        </div>
+      </div>
+    </div>
+  </fui-flyout-body>
+  <fui-flyout-footer [isFlyoutFooterCustom]="true">
+    <div class="footer-flyout flex-between">
+      <fui-button-icon
+        (onClick)="toggleCloseFlyout()"
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'secondary'"
+        [text]="'Cancel'"
+      />
+      <div class="flex-between">
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'text'"
+          [color]="'danger'"
+          [style]="'secondary'"
+          [text]="'Reject & Remove'"
+        />
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'text'"
+          [style]="'filled'"
+          [text]="'Accept'"
+        />
+      </div>
+    </div>
+  </fui-flyout-footer>
+</fui-flyout>

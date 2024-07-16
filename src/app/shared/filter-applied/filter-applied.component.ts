@@ -26,7 +26,9 @@ export class FilterAppliedComponent {
   /** Clear Filter Per Item */
   clearFilterPerItem(item: FilterAplliedDTO): void {
     this.filterApllied.forEach((items) => {
-      items === item ? (items.status = false) : item.status;
+      if (items === item) {
+        items.status = false
+      }
     });
     this.clearFilterPerItemOut.emit(this.filterApllied);
   }

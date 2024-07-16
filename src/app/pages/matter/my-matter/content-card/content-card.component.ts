@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import {
   BadgeComponent,
@@ -23,10 +23,12 @@ import {
   styleUrl: './content-card.component.scss',
 })
 export class ContentCardComponent {
+  @Input() type: number = 1;
+
   constructor(private router: Router) {}
 
   /** Go to detail page */
   gotoPage(): void {
-    this.router.navigate(['matter', 'my-matter', 'detail-matter']);
+    this.router.navigate(['matter', 'detail-matter']);
   }
 }

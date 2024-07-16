@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
-import { EchartsComponent, OptionChart } from '@quantum/fui';
+import { Component } from '@angular/core';
+import { EchartsComponent, TextComponent } from '@quantum/fui';
 import * as echarts from 'echarts/core';
 import { ThemesChartCustom } from './theme-chart';
 import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.component';
@@ -17,13 +17,14 @@ import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.componen
     EchartsComponent,
     EmptyDataComponent,
     SkeletonComponent,
+    TextComponent,
   ],
   templateUrl: './ytd-productivity.component.html',
   styleUrl: './ytd-productivity.component.scss',
 })
 export class YtdProductivityComponent {
   loading: boolean = true;
-  triggered: boolean = false;
+
   optionBar: any = {
     legend: {
       data: ['Billable', 'Non-Billable'],
@@ -75,23 +76,8 @@ export class YtdProductivityComponent {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.subscription = this.myTimesheetService.data$.subscribe(
-        (value: boolean | null) => {
-          if (value === true) {
-            this.loading = false;
-            this.optionBar.series = SampleDataMyTimeSheet.ytdProductivity;
-            this.triggeredAction();
-          }
-          if (value === false) {
-            this.loading = false;
-            this.optionBar.series = [];
-            this.triggeredAction();
-          }
-          if (value === null) {
-            this.loading = true;
-          }
-        }
-      );
+      this.loading = false;
+      this.optionBar.series = SampleDataMyTimeSheet.ytdProductivity;
     }, 1000);
   }
 
@@ -99,9 +85,5 @@ export class YtdProductivityComponent {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
-
-  triggeredAction(): void {
-    this.triggered = !this.triggered;
   }
 }

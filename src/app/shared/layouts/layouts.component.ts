@@ -16,6 +16,8 @@ import {
   FormControlLayoutComponent,
   InputFieldComponent,
   LoadingComponent,
+  PopoverComponent,
+  TextComponent,
 } from '@quantum/fui';
 import {
   debounceTime,
@@ -27,6 +29,7 @@ import {
   tap,
 } from 'rxjs';
 import { DataSideBar } from './data-sidebar';
+import { CreateTimesheetFlyoutComponent } from './create-timesheet-flyout/create-timesheet-flyout.component';
 
 @Component({
   selector: 'app-layouts',
@@ -45,6 +48,9 @@ import { DataSideBar } from './data-sidebar';
     FormControlLayoutComponent,
     InputFieldComponent,
     LoadingComponent,
+    PopoverComponent,
+    TextComponent,
+    CreateTimesheetFlyoutComponent,
   ],
   templateUrl: './layouts.component.html',
   styleUrl: './layouts.component.scss',
@@ -62,6 +68,9 @@ export class LayoutsComponent {
   private destroy$ = new Subject<void>();
   private obs!: Subscription;
 
+  tab: number = 1;
+  isOpenFlyout: boolean = false;
+
   constructor(private router: Router, private cdr: ChangeDetectorRef) {
     this.dataSide = DataSideBar.dataSideBar;
   }
@@ -69,6 +78,7 @@ export class LayoutsComponent {
   ngOnInit(): void {
     this.themeService.currentTheme$.subscribe((data) => {
       this.theme = data;
+      console.log(data);
     });
     this.obs = this.searchForm.valueChanges
       .pipe(
@@ -161,5 +171,20 @@ export class LayoutsComponent {
         };
       })
       .filter((item) => item.active || item.children.length > 0);
+  }
+
+  /** Move Tab */
+  clickTab(param: number): void {
+    this.tab = param;
+  }
+
+  /** Toggle for open flyout */
+  toggleOpenFlyout(): void {
+    this.isOpenFlyout = true;
+  }
+
+  /** Observe changes from flyout */
+  closeOut(event: boolean): void {
+    this.isOpenFlyout = event;
   }
 }

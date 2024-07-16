@@ -14,6 +14,7 @@ import {
   IconsComponent,
   InputFieldComponent,
   PrependComponent,
+  SelectFieldComponent,
 } from '@quantum/fui';
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { Subscription, tap } from 'rxjs';
@@ -37,6 +38,7 @@ import { Subscription, tap } from 'rxjs';
     CollapsibleNavGroupComponent,
     ComboBoxComponent,
     DateRangeComponent,
+    SelectFieldComponent,
   ],
   providers: [DecimalPipe],
   templateUrl: './form-search.component.html',
@@ -55,6 +57,16 @@ export class FormSearchComponent extends BaseController {
   feeStructureOption: { name: string; value: any }[] = [];
   matterPICOption: { name: string; value: any }[] = [];
   matterMemberOption: { name: string; value: any }[] = [];
+  selectOption: { label: string; value: any }[] = [
+    {
+      label: 'Like',
+      value: 'Like',
+    },
+    {
+      label: 'Equal',
+      value: 'Equal',
+    },
+  ];
 
   /** Selected option for form */
   matterCategorySelected: { name: string; value: any }[] = [];
@@ -70,6 +82,8 @@ export class FormSearchComponent extends BaseController {
   matterNumberForm: FormControl = new FormControl();
   projectNameForm: FormControl = new FormControl();
   matterDescriptionForm: FormControl = new FormControl();
+  projectNameFormType: FormControl = new FormControl('Like');
+  matterDescriptionFormType: FormControl = new FormControl('Like');
   usdForm: FormControl = new FormControl();
   completionDateStart: FormControl = new FormControl();
   completionDateEnd: FormControl = new FormControl();
@@ -81,6 +95,8 @@ export class FormSearchComponent extends BaseController {
 
   constructor(private readonly decimalPipe: DecimalPipe) {
     super();
+    this.projectNameFormType.disable();
+    this.matterDescriptionFormType.disable();
   }
 
   ngOnInit(): void {

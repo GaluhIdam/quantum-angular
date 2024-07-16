@@ -10,14 +10,14 @@
         [color]="'text'"
         (onClick)="moveDate(-5)"
       />
-      <p class="date" *ngIf="!checkFilter()">
+      <fui-text *ngIf="!checkFilter()" [weight]="'semibold'">
         {{ startDate | date : "d MMMM yyyy" }} -
         {{ endDate | date : "d MMMM yyyy" }}
-      </p>
-      <p class="date" *ngIf="checkFilter()">
+      </fui-text>
+      <fui-text *ngIf="checkFilter()" [weight]="'semibold'">
         {{ startDateForm.value | date : "d MMMM yyyy" }} -
-        {{ endDateForm.value | date : "d MMMM yyyy" }}
-      </p>
+        {{ endDateForm.value | date : "d MMMM yyyy" }}</fui-text
+      >
       <fui-button-icon
         *ngIf="endDate < currentDate && !checkFilter()"
         [type]="'button'"
@@ -28,7 +28,7 @@
         (onClick)="moveDate(5)"
       />
       <div class="duration">
-        <fui-tooltip [position]="'top'" [custom]="true">
+        <fui-tooltip [position]="'top'" [content]="'Total Hours'">
           <fui-badge
             [color]="'ghost'"
             [size]="'sizem'"
@@ -40,25 +40,11 @@
               {{ calculateTotalDuration(dataTimesheet) }}
             </div>
           </fui-badge>
-          <div title>
-            <p class="date" *ngIf="!checkFilter()">
-              {{ startDate | date : "d MMMM yyyy" }} -
-              {{ endDate | date : "d MMMM yyyy" }}
-            </p>
-            <p class="date" *ngIf="checkFilter()">
-              {{ startDateForm.value | date : "d MMMM yyyy" }} -
-              {{ endDateForm.value | date : "d MMMM yyyy" }}
-            </p>
-          </div>
-          <div content>
-            <div class="tootips">Billable: 130h 32m</div>
-            <div class="tootips">Nonbillable: 130h 32m</div>
-          </div>
         </fui-tooltip>
       </div>
     </div>
   </div>
-  <div class="desktop">
+  <div class="flex-between">
     <fui-button-icon
       [type]="'button'"
       [option]="'iconText'"
@@ -70,10 +56,20 @@
       [iconSide]="'left'"
       (onClick)="toggleOpenFlyout()"
     />
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'icon'"
+      [style]="'filled'"
+      [text]="'Filter'"
+      [size]="'m'"
+      [color]="'primary'"
+      [icon]="'plusInCircle'"
+      (onClick)="openCreateFlyout()"
+    />
   </div>
 </div>
 
-<!-- Flyout -->
+<!-- FLYOUT FILTER -->
 <fui-flyout
   [zIndex]="2"
   [open]="isOpenFlyout"
@@ -82,7 +78,7 @@
 >
   <fui-flyout-header (onCloseFlyout)="toggleCloseFlyout()">
     <div class="header-flyout">
-      <h2>Filter</h2>
+      <fui-text [size]="'sizexl'" [weight]="'semibold'">Filter</fui-text>
     </div>
   </fui-flyout-header>
   <fui-flyout-body>
@@ -186,4 +182,4 @@
     </div>
   </fui-flyout-footer>
 </fui-flyout>
-<!-- Flyout -->
+<!-- FLYOUT FILTER -->

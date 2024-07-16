@@ -1,5 +1,5 @@
-<!-- Utility -->
 <app-skeleton [active]="loading">
+  <!-- Utility -->
   <app-utility
     [currentDate]="currentDate"
     [startDateForm]="startDateForm"
@@ -11,42 +11,79 @@
     (clearFilterAll)="clearAllFilterOut($event)"
     (dateTimesheetByDateOut)="getDataTimesheetByDate($event)"
     (dateMoveChanger)="dateMoveWatcher($event)"
+    (clickOpenCreateFlyout)="clickOpenCreateFlyout($event)"
   />
+  <!-- Utility -->
+
+  <!-- FILTER APPLIED -->
   <app-filter-applied
     [filterApllied]="filterApplied"
     (clearAllFilterOut)="clearAllFilterOut($event)"
   />
-  <app-move-matter *ngIf="timesheetSelected.length > 0"
+  <!-- FILTER APPLIED -->
+
+  <!-- MATTER MOVE -->
+  <app-move-matter
+    *ngIf="timesheetSelected.length > 0"
     [listMatters]="listMatters"
     [timesheetSelected]="timesheetSelected"
   />
-  <!-- Utility -->
+  <!-- MATTER MOVE -->
 
-  <!-- Table without filter -->
+  <!-- TABLE WITHOUT FILTER -->
   <app-table-without-filter
     *ngIf="!checkFilter()"
-    [listActivity]="listActivities"
-    [listMatters]="listMatters"
     [dateTimesheetByDate]="dateTimesheetByDate"
     (timesheetSelectedOut)="timesheetSelectedOut($event)"
+    (clickOpenEdit)="clickOpenEdit($event)"
+    (clickOpenEditTag)="clickOpenEditTag($event)"
+    (clickOpenModalDelete)="clickOpenModalDelete($event)"
   />
-  <!-- Table without filter -->
+  <!-- TABLE WITHOUT FILTER -->
 
-  <!-- Table with filter -->
-  <div class="container-table">
-    <app-table-filter
-      class="container-table"
-      *ngIf="checkFilter()"
-      [page]="page"
-      [limit]="limit"
-      [listActivity]="listActivities"
-      [totalItems]="totalItems"
-      [dataTimesheet]="dataTimesheet"
-      (onPageChangeOut)="onPageChangeOut($event)"
-      (timesheetCheckedOut)="timesheetSelectedOut($event)"
-    />
-  </div>
-  <!-- Table with filter -->
+  <!-- TABLE WITH FILTER-->
+  <app-table-filter
+    class="container-table"
+    *ngIf="checkFilter()"
+    [page]="page"
+    [limit]="limit"
+    [totalItems]="totalItems"
+    [dataTimesheet]="dataTimesheet"
+    (onPageChangeOut)="onPageChangeOut($event)"
+    (timesheetCheckedOut)="timesheetSelectedOut($event)"
+  />
+  <!-- TABLE WITH FILTER-->
 </app-skeleton>
 
-<fui-toast></fui-toast>
+<!-- FLYOUT CREATE TIMESHEET -->
+<app-create-timesheet-flyout
+  [isOpenFlyout]="isOpenCreateFlyout"
+  (closeOut)="closeOutCreate($event)"
+/>
+<!-- FLYOUT CREATE TIMESHEET -->
+
+<!-- EDIT TIMESHEET FLYOUT -->
+<app-edit-timesheet-flyout
+  [isOpenFlyout]="isOpenEditFlyout"
+  (closeOut)="closeOutEdit($event)"
+/>
+<!-- EDIT TIMESHEET FLYOUT -->
+
+<!-- EDIT TAG FLYOUT -->
+<app-edit-tag-timesheet-flyout
+  [isOpenFlyout]="isOpenEditTagFlyout"
+  (closeOut)="closeOutEditTag($event)"
+/>
+<!-- EDIT TAG FLYOUT -->
+
+<!-- MODAL DELETE -->
+<app-modal-delete
+  [openModalDelete]="openModalDelete"
+  [title]="'Delete Timesheet?'"
+  [desc]="'You can’t recover the deleted timesheet'"
+  (cancelOut)="cancelOutDelete($event)"
+  (deleteActionOut)="deleteActionOutDelete($event)"
+/>
+<!-- MODAL DELETE -->
+
+<fui-toast />

@@ -18,10 +18,11 @@ fui-filter-group {
   width: 45%;
 }
 app-filter-applied {
-  width: 45%;
+  width: 55%;
 }
 .filter-title {
   padding: 4px 6px;
+  width: fit-content;
   text-wrap: nowrap;
   display: flex;
   align-items: center;
@@ -33,6 +34,10 @@ app-filter-applied {
     border-radius: 3px;
     margin-left: 5px;
     text-decoration: none;
+    &.accent {
+      color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+      background-color: var(--fuiColorAccent, $fuiColorAccent);
+    }
   }
 }
 
