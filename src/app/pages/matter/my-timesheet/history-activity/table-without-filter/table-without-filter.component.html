@@ -1,4 +1,4 @@
-<div class="container" *ngIf="!filterDate">
+<div class="container">
   <fui-collapsible-nav-group
     *ngFor="let date of dateTimesheetByDate; let i = index"
     [isCollapsed]="showHideTablePerRow[i]"
@@ -43,7 +43,7 @@
             [color]="'text'"
             [icon]="showHideTablePerRow[i] ? 'arrowDown' : 'arrowRight'"
             [iconSide]="'left'"
-            (onClick)="toggleOpenOrCloseTablePerRow(i)"
+            (onClick)="openOrCloseTablePerRow(i)"
           />
         </div>
       </div>
@@ -103,8 +103,8 @@
               <fui-button-icon
                 (onClick)="
                   item.tagEntityList.length > 0
-                    ? toggleOpenEditTagFlyout(item)
-                    : toggleOpenEditFlyout(item)
+                    ? openEditTagFlyout(item)
+                    : openEditFlyout(item)
                 "
                 [type]="'button'"
                 [option]="'icon'"

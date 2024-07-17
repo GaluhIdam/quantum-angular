@@ -57,16 +57,15 @@ import { CreateTimesheetFlyoutComponent } from '../../../../../shared/layouts/cr
   styleUrl: './utility.component.scss',
 })
 export class UtilityComponent extends BaseController {
-  /** Data will input from HistoryActivityComponent */
-  /** Filter Applied */
-  @Input() filterApplied: FilterAplliedDTO[] = [];
-  @Input() listMatter: MatterDTO[] = [];
-  @Input() dataTimesheet: MyTimesheetDTO[] = [];
-  @Input() currentDate: Date = new Date();
-  @Input() startDateForm: FormControl = new FormControl();
-  @Input() endDateForm: FormControl = new FormControl();
+  /** Show/Hide button next or previous date */
+  @Input() btnUtility: boolean = true;
 
-  /** Data will output to HistoryActivityComponent */
+  /** Data will input from HistoryActivityComponent */
+  @Input() dataTimesheet: MyTimesheetDTO[] = [];
+  @Input() listMatter: MatterDTO[] = [];
+  @Input() filterApplied: FilterAplliedDTO[] = [];
+
+  /** How many filter apllied and send to consumer */
   @Output() filterAction: EventEmitter<{
     startDate: string;
     endDate: string;
@@ -80,11 +79,17 @@ export class UtilityComponent extends BaseController {
     description: string;
     filterApplied: FilterAplliedDTO[];
   }>();
+
+  /** Parsing filter is clear */
   @Output() clearFilterAll: EventEmitter<FilterAplliedDTO[]> = new EventEmitter<
     FilterAplliedDTO[]
   >();
+
+  /** Parsing timesheet after generate by date */
   @Output() dateTimesheetByDateOut: EventEmitter<TimesheetByDateDTO[]> =
     new EventEmitter<TimesheetByDateDTO[]>();
+
+  /** Change date by next or previous */
   @Output() dateMoveChanger: EventEmitter<{
     startDate: string;
     endDate: string;
@@ -100,66 +105,104 @@ export class UtilityComponent extends BaseController {
   endDate: Date = new Date();
   startDate: Date = new Date();
 
+  /** After gruping by date, data will return to consumer */
   dateTimesheetByDate: TimesheetByDateDTO[] = [];
+
+  /** Date Now */
+  currentDate: Date = new Date();
+
+  /** Start date form */
+  startDateForm: FormControl = new FormControl();
+
+  /** End date form */
+  endDateForm: FormControl = new FormControl();
+
+  /** Matter form */
   searchMatterForm: FormControl = new FormControl('');
   optionMatter: { name: string; value: any }[] = [];
   selectedMatter: { name: string; value: any }[] = [];
+
+  /** Additional description form */
   descriptionForm: FormControl = new FormControl('');
-  isOpenFlyout: boolean = false;
+
+  /** Variable for open/close filter timesheet flyout */
+  isOpenFilterFlyout: boolean = false;
+
+  /** Variable for open/close create timesheet flyout */
   isOpenCreateFlyout: boolean = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
-      this.dateTimesheetByDate = this.groupingTimesheetByRangeDate(
-        this.dataTimesheet,
-        this.startDateForm.value,
-        this.endDateForm.value
-      );
-      this.listMatter.forEach((item) => {
-        this.optionMatter.push({
-          name: item.matter,
-          value: item.idMatter,
-        });
-      });
-      if (
-        !this.filterApplied.some(
-          (item) => item.name === 'Matter' && item.status === false
-        )
-      ) {
-        this.searchMatterForm.setValue('');
-        this.selectedMatter = [];
-      }
-      this.filterApplied.forEach((item) => {
-        switch (item.name) {
-          case 'Date':
-            if (!item.status) {
-              this.startDateForm.setValue(this.defaultDate().startDateForm);
-              this.endDateForm.setValue(this.defaultDate().endDateForm);
-              this.selectedMatter = [];
-              this.searchMatterForm.setValue('');
-              this.descriptionForm.setValue('');
-            }
-            break;
-          case 'Matter':
-            if (!item.status) {
-              this.searchMatterForm.setValue('');
-              this.selectedMatter = [];
-            }
-            break;
-          case 'Time Description':
-            if (!item.status) {
-              this.descriptionForm.setValue('');
-            }
-            break;
-          default:
-            break;
-        }
-      });
+      /** Grouping data timesheet by date */
+      this.groupingTimesheet();
+
+      /** Restructure data list matters to be options */
+      this.restructureMatter();
+
+      /** Condition for what filter applied */
+      this.checkConditionFilterApplied();
     }
+  }
+
+  /** Grouping data timesheet by date */
+  groupingTimesheet(): void {
+    this.dateTimesheetByDate = this.groupingTimesheetByRangeDate(
+      this.dataTimesheet,
+      this.startDateForm.value,
+      this.endDateForm.value
+    );
     this.dateTimesheetByDateOut.emit(this.dateTimesheetByDate);
   }
 
-  /** Mode date by date */
+  /** Restructure data list matters to be options */
+  restructureMatter(): void {
+    this.listMatter.forEach((item) => {
+      this.optionMatter.push({
+        name: item.matter,
+        value: item.idMatter,
+      });
+    });
+  }
+
+  /** Condition for what filter applied */
+  checkConditionFilterApplied(): void {
+    if (
+      !this.filterApplied.some(
+        (item) => item.name === 'Matter' && item.status === false
+      )
+    ) {
+      this.searchMatterForm.setValue('');
+      this.selectedMatter = [];
+    }
+    this.filterApplied.forEach((item) => {
+      switch (item.name) {
+        case 'Date':
+          if (!item.status) {
+            this.startDateForm.setValue(this.defaultDate().startDateForm);
+            this.endDateForm.setValue(this.defaultDate().endDateForm);
+            this.selectedMatter = [];
+            this.searchMatterForm.setValue('');
+            this.descriptionForm.setValue('');
+          }
+          break;
+        case 'Matter':
+          if (!item.status) {
+            this.searchMatterForm.setValue('');
+            this.selectedMatter = [];
+          }
+          break;
+        case 'Time Description':
+          if (!item.status) {
+            this.descriptionForm.setValue('');
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
+  /** Move date and change regrouping data timesheet by date */
   moveDate(days: number): void {
     const newDate = new Date(this.endDate);
     newDate.setDate(newDate.getDate() + days);
@@ -180,10 +223,10 @@ export class UtilityComponent extends BaseController {
     this.dateTimesheetByDateOut.emit(this.dateTimesheetByDate);
   }
 
-  /** Filter timesheet action */
+  /** Parsing data filter to consumer and close filter flyout */
   applyFilterAction(): void {
     this.enableFilter('Date', true);
-    this.isOpenFlyout = false;
+    this.closeFilterFlyout();
     this.filterAction.emit({
       startDate: this.startDateForm.value,
       endDate: this.endDateForm.value,
@@ -194,12 +237,13 @@ export class UtilityComponent extends BaseController {
   }
 
   /** Toggle for open flyout */
-  toggleOpenFlyout(): void {
-    this.isOpenFlyout = true;
+  openFilterFlyout(): void {
+    this.isOpenFilterFlyout = true;
   }
+
   /** Toggle for open flyout */
-  toggleCloseFlyout(): void {
-    this.isOpenFlyout = false;
+  closeFilterFlyout(): void {
+    this.isOpenFilterFlyout = false;
   }
 
   /** Observe for startDate changes */
@@ -247,7 +291,7 @@ export class UtilityComponent extends BaseController {
   clearFiltersAll(): void {
     this.clearFilters();
     this.filterApplied.forEach((item) => (item.status = false));
-    this.isOpenFlyout = false;
+    this.closeFilterFlyout();
     this.clearFilterAll.emit(this.filterApplied);
   }
 

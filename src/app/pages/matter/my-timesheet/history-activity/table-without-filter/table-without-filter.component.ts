@@ -5,6 +5,7 @@ import {
   Input,
   Output,
   SimpleChange,
+  SimpleChanges,
 } from '@angular/core';
 import {
   ActivityDTO,
@@ -77,8 +78,7 @@ export class TableWithoutFilterComponent extends BaseController {
     percentage: number;
     color: Color;
   }[][] = [];
-
-  @Input() filterDate: boolean = false;
+  @Input() timesheetSelected: MyTimesheetDTO[] = [];
 
   /** Parsing data timesheet selected to History Component for move matter */
   @Output() timesheetSelectedOut: EventEmitter<MyTimesheetDTO[]> =
@@ -131,12 +131,9 @@ export class TableWithoutFilterComponent extends BaseController {
 
   /** Check or uncheck timsheet */
   timesheetChecked: MyTimesheetDTO[][] = [];
-  timesheetSelected: MyTimesheetDTO[] = [];
 
-  ngOnChanges(changes: SimpleChange): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
-      this.showHideTablePerRow = [];
-      this.timesheetChecked = [];
       this.dateTimesheetByDate.forEach((item) => {
         this.showHideTablePerRow.push(false);
         this.timesheetChecked.push([]);
@@ -157,7 +154,7 @@ export class TableWithoutFilterComponent extends BaseController {
   }
 
   /** Toggle for show or hide row */
-  toggleOpenOrCloseTablePerRow(index: number): void {
+  openOrCloseTablePerRow(index: number): void {
     this.showHideTablePerRow[index] = !this.showHideTablePerRow[index];
   }
 
@@ -229,7 +226,7 @@ export class TableWithoutFilterComponent extends BaseController {
   }
 
   /** Open flyout edit form and parsing data */
-  toggleOpenEditFlyout(data: MyTimesheetDTO): void {
+  openEditFlyout(data: MyTimesheetDTO): void {
     this.clickOpenEdit.emit({
       flyout: true,
       data,
@@ -237,7 +234,7 @@ export class TableWithoutFilterComponent extends BaseController {
   }
 
   /** Open flyout edit tag form and parsing data */
-  toggleOpenEditTagFlyout(data: MyTimesheetDTO): void {
+  openEditTagFlyout(data: MyTimesheetDTO): void {
     this.clickOpenEditTag.emit({
       flyout: true,
       data,

@@ -1,9 +1,6 @@
 <app-skeleton [active]="loading">
   <!-- Utility -->
   <app-utility
-    [currentDate]="currentDate"
-    [startDateForm]="startDateForm"
-    [endDateForm]="endDateForm"
     [filterApplied]="filterApplied"
     [listMatter]="listMatters"
     [dataTimesheet]="dataTimesheet"
@@ -17,6 +14,7 @@
 
   <!-- FILTER APPLIED -->
   <app-filter-applied
+    class="mb-15"
     [filterApllied]="filterApplied"
     (clearAllFilterOut)="clearAllFilterOut($event)"
   />
@@ -27,6 +25,7 @@
     *ngIf="timesheetSelected.length > 0"
     [listMatters]="listMatters"
     [timesheetSelected]="timesheetSelected"
+    (clearSelectionOut)="clearSelectionOut($event)"
   />
   <!-- MATTER MOVE -->
 
@@ -34,6 +33,7 @@
   <app-table-without-filter
     *ngIf="!checkFilter()"
     [dateTimesheetByDate]="dateTimesheetByDate"
+    [timesheetSelected]="timesheetSelected"
     (timesheetSelectedOut)="timesheetSelectedOut($event)"
     (clickOpenEdit)="clickOpenEdit($event)"
     (clickOpenEditTag)="clickOpenEditTag($event)"

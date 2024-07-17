@@ -78,15 +78,18 @@
     </div>
   </div>
 </div>
-<fui-pagination
-  [totalItems]="totalItems"
-  (onPageChange)="onPageChange($event)"
-/>
 <!-- table if data is existing -->
 
 <!-- message if data is empy -->
 <app-empty-data [dataLength]="dataTimesheet.length" />
 <!-- message if data is empy -->
+
+<!-- PAGINATION -->
+<fui-pagination
+  [totalItems]="totalItems"
+  (onPageChange)="onPageChange($event)"
+/>
+<!-- PAGINATION -->
 
 <!-- EDIT TAG TIMESHEET -->
 <app-edit-tag-timesheet-flyout

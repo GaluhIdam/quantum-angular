@@ -48,9 +48,7 @@ import { ModalDeleteComponent } from '../../../../shared/layouts/modal-delete/mo
 export class HistoryActivityComponent extends BaseController {
   loading: boolean = false;
 
-  /**
-   * @description
-   * Data will input from MyTimesheetComponent and will send to :
+  /** Data will input from MyTimesheetComponent and will send to :
    * 1. Utility Component (for filter options).
    * 2. Move Matter Component (for matter selection).
    */
@@ -64,13 +62,6 @@ export class HistoryActivityComponent extends BaseController {
 
   /** Data will input from utility compnent */
   timesheetSelected: MyTimesheetDTO[] = [];
-
-  /** Date Config */
-  currentDate: Date = new Date();
-  endDate: Date = new Date();
-  startDate: Date = new Date();
-  startDateForm: FormControl = new FormControl();
-  endDateForm: FormControl = new FormControl();
 
   /** Data will change based on filter applied */
   startDateFilter: string = '';
@@ -100,14 +91,14 @@ export class HistoryActivityComponent extends BaseController {
 
   constructor(private readonly mytimesheetService: MyTimesheetService) {
     super();
-    this.startDate.setDate(this.startDate.getDate() - 5);
-    this.startDateForm.setValue(this.defaultDate().startDateForm);
-    this.endDateForm.setValue(this.defaultDate().endDateForm);
+    /** Initialize start to end date */
+    this.startDateFilter = this.defaultDate().startDateForm;
+    this.endDateFilter = this.defaultDate().endDateForm;
   }
 
   ngOnInit(): void {
     this.filterApplied = this.mytimesheetService.dataFilterMyTimesheet();
-    this.getTimesheet(this.startDateForm.value, this.endDateForm.value);
+    this.getTimesheet(this.startDateFilter, this.endDateFilter);
     this.loading = true;
     setTimeout(() => {
       this.loading = false;
@@ -122,7 +113,7 @@ export class HistoryActivityComponent extends BaseController {
       .subscribe();
   }
 
-  /** Filter Timesheet */
+  /** Filter timesheet to MyTimesheetService */
   filterTimesheet(
     startDate: string,
     endDate: string,
@@ -142,7 +133,7 @@ export class HistoryActivityComponent extends BaseController {
       .subscribe();
   }
 
-  /** Apply Filter */
+  /** Apply Filter and recall data from service */
   applyFilterAction(event: {
     startDate: string;
     endDate: string;
@@ -150,12 +141,14 @@ export class HistoryActivityComponent extends BaseController {
     description: string;
     filterApplied: FilterAplliedDTO[];
   }): void {
+    /** Replace filter */
     this.filterApplied = event.filterApplied;
     this.startDateFilter = event.startDate;
     this.endDateFilter = event.endDate;
     this.selectedMatterFilter = event.selectedMatter;
     this.descriptionFilter = event.description;
 
+    /** Recall data */
     this.filterTimesheet(
       this.startDateFilter,
       this.endDateFilter,
@@ -166,10 +159,18 @@ export class HistoryActivityComponent extends BaseController {
     );
   }
 
+  /** Clear all filter */
+  clearAllFilterOut(event: FilterAplliedDTO[]): void {
+    this.filterApplied = event;
+  }
+
   /** Pagination changes */
   onPageChangeOut(event: { page: number; itemsPerPage: number }): void {
+    /** Rpelace page & limit */
     this.page = event.page;
     this.limit = event.itemsPerPage;
+
+    /** Recall data */
     this.filterTimesheet(
       this.startDateFilter,
       this.endDateFilter,
@@ -187,16 +188,7 @@ export class HistoryActivityComponent extends BaseController {
 
   /** Observe dange when move next or previous */
   dateMoveWatcher(event: { startDate: string; endDate: string }): void {
-    this.startDate = new Date(event.startDate);
-    this.endDate = new Date(event.endDate);
-    this.startDateForm.setValue(event.startDate);
-    this.endDateForm.setValue(event.endDate);
     this.getTimesheet(event.startDate, event.endDate);
-  }
-
-  /** Clear all filter */
-  clearAllFilterOut(event: FilterAplliedDTO[]): void {
-    this.filterApplied = event;
   }
 
   /** Checking filter is on or not */
@@ -212,6 +204,11 @@ export class HistoryActivityComponent extends BaseController {
   /** Catch data from table without filter component for get data timesheet selected
    * then will send to service and move matter component */
   timesheetSelectedOut(event: MyTimesheetDTO[]): void {
+    this.timesheetSelected = event;
+  }
+
+  /** Clear timesheet selected */
+  clearSelectionOut(event: MyTimesheetDTO[]): void {
     this.timesheetSelected = event;
   }
 

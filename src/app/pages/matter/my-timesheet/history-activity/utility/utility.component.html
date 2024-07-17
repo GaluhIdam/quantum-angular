@@ -1,8 +1,9 @@
 <div class="utility block">
   <div class="sub-utility block">
     <div class="date-duration">
+      <!-- PREVIOUS BUTTON -->
       <fui-button-icon
-        *ngIf="!checkFilter()"
+        *ngIf="!checkFilter() && btnUtility"
         [type]="'button'"
         [option]="'icon'"
         [icon]="'arrowLeft'"
@@ -10,16 +11,25 @@
         [color]="'text'"
         (onClick)="moveDate(-5)"
       />
+      <!-- PREVIOUS BUTTON -->
+
+      <!-- IF FILTER IS OFF -->
       <fui-text *ngIf="!checkFilter()" [weight]="'semibold'">
         {{ startDate | date : "d MMMM yyyy" }} -
         {{ endDate | date : "d MMMM yyyy" }}
       </fui-text>
+      <!-- IF FILTER IS OFF -->
+
+      <!-- IF FILTER IS ON -->
       <fui-text *ngIf="checkFilter()" [weight]="'semibold'">
         {{ startDateForm.value | date : "d MMMM yyyy" }} -
         {{ endDateForm.value | date : "d MMMM yyyy" }}</fui-text
       >
+      <!-- IF FILTER IS ON -->
+
+      <!-- NEXT BUTTON -->
       <fui-button-icon
-        *ngIf="endDate < currentDate && !checkFilter()"
+        *ngIf="endDate < currentDate && !checkFilter() && btnUtility"
         [type]="'button'"
         [option]="'icon'"
         [icon]="'arrowRight'"
@@ -27,6 +37,9 @@
         [color]="'text'"
         (onClick)="moveDate(5)"
       />
+      <!-- NEXT BUTTON -->
+
+      <!-- TOTAL DURATION -->
       <div class="duration">
         <fui-tooltip [position]="'top'" [content]="'Total Hours'">
           <fui-badge
@@ -42,9 +55,11 @@
           </fui-badge>
         </fui-tooltip>
       </div>
+      <!-- TOTAL DURATION -->
     </div>
   </div>
   <div class="flex-between">
+    <!-- BTN OPEN FILTER FLYOUT -->
     <fui-button-icon
       [type]="'button'"
       [option]="'iconText'"
@@ -54,8 +69,11 @@
       [color]="'text'"
       [icon]="'filter'"
       [iconSide]="'left'"
-      (onClick)="toggleOpenFlyout()"
+      (onClick)="openFilterFlyout()"
     />
+    <!-- BTN OPEN FILTER FLYOUT -->
+
+    <!-- BTN OPEN CREATE TIMESHEET FLYOUT -->
     <fui-button-icon
       [type]="'button'"
       [option]="'icon'"
@@ -66,17 +84,18 @@
       [icon]="'plusInCircle'"
       (onClick)="openCreateFlyout()"
     />
+    <!-- BTN OPEN CREATE TIMESHEET FLYOUT -->
   </div>
 </div>
 
 <!-- FLYOUT FILTER -->
 <fui-flyout
   [zIndex]="2"
-  [open]="isOpenFlyout"
+  [open]="isOpenFilterFlyout"
   [flyoutSize]="'s'"
   [flyoutPadding]="'s'"
 >
-  <fui-flyout-header (onCloseFlyout)="toggleCloseFlyout()">
+  <fui-flyout-header (onCloseFlyout)="closeFilterFlyout()">
     <div class="header-flyout">
       <fui-text [size]="'sizexl'" [weight]="'semibold'">Filter</fui-text>
     </div>
