@@ -134,9 +134,11 @@ export class UtilityComponent extends BaseController {
 
   constructor() {
     super();
+    /** Replace start date and end date */
     this.startDate = new Date(this.defaultDate().startDateForm);
     this.endDate = new Date(this.defaultDate().endDateForm);
 
+    /** Replace start date form and end date form in filter flyout */
     this.startDateForm.setValue(this.defaultDate().startDateForm);
     this.endDateForm.setValue(this.defaultDate().endDateForm);
   }
