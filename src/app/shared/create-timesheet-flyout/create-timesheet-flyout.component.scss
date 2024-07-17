@@ -1,24 +1,4 @@
-@import "../layouts.component.scss";
-
-/** Message Information */
-.msg-info {
-  padding: 15px;
-  background-color: var(--fuiPrimarySecondary, $fuiPrimarySecondary);
-  fui-text {
-    display: block;
-    width: 100%;
-    margin-bottom: 5px;
-    &:last-child {
-      margin: 0px;
-    }
-  }
-}
-
-/** Bagde Tagged */
-.tagged {
-  margin: 10px 0px 20px 0px;
-  display: block;
-}
+@import "../layouts/layouts.component.scss";
 
 /** Flyout Config */
 .header-flyout {
@@ -50,13 +30,13 @@
   }
 }
 
-/** Form Style */
 .sub-form {
   margin-right: 15px;
   &:last-child {
     margin: 0;
   }
 }
+
 .flex-between {
   display: flex;
   justify-content: space-between;
@@ -67,6 +47,7 @@
     }
   }
 }
+
 .checkbox {
   align-items: center;
   display: flex;
@@ -74,9 +55,4 @@
     margin-left: 5px;
     margin-right: 5px;
   }
-}
-.italic {
-  font-style: italic;
-  margin-top: 3px;
-  display: block;
 }

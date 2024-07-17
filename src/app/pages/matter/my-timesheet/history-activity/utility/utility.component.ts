@@ -29,7 +29,7 @@ import {
   TimesheetByDateDTO,
 } from '../../dtos/my-timesheet.dto';
 import { FilterAplliedDTO } from '../../../../../shared/filter-applied/filter-apllied.dto';
-import { CreateTimesheetFlyoutComponent } from '../../../../../shared/layouts/create-timesheet-flyout/create-timesheet-flyout.component';
+import { CreateTimesheetFlyoutComponent } from '../../../../../shared/create-timesheet-flyout/create-timesheet-flyout.component';
 
 @Component({
   selector: 'app-utility',
@@ -102,6 +102,7 @@ export class UtilityComponent extends BaseController {
   @Output() clickOpenCreateFlyout: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
+  /** Date for without filter */
   endDate: Date = new Date();
   startDate: Date = new Date();
 
@@ -130,6 +131,15 @@ export class UtilityComponent extends BaseController {
 
   /** Variable for open/close create timesheet flyout */
   isOpenCreateFlyout: boolean = false;
+
+  constructor() {
+    super();
+    this.startDate = new Date(this.defaultDate().startDateForm);
+    this.endDate = new Date(this.defaultDate().endDateForm);
+
+    this.startDateForm.setValue(this.defaultDate().startDateForm);
+    this.endDateForm.setValue(this.defaultDate().endDateForm);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {

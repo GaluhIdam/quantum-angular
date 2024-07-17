@@ -29,7 +29,7 @@ import {
   tap,
 } from 'rxjs';
 import { DataSideBar } from './data-sidebar';
-import { CreateTimesheetFlyoutComponent } from './create-timesheet-flyout/create-timesheet-flyout.component';
+import { CreateTimesheetFlyoutComponent } from '../create-timesheet-flyout/create-timesheet-flyout.component';
 
 @Component({
   selector: 'app-layouts',
@@ -78,7 +78,6 @@ export class LayoutsComponent {
   ngOnInit(): void {
     this.themeService.currentTheme$.subscribe((data) => {
       this.theme = data;
-      console.log(data);
     });
     this.obs = this.searchForm.valueChanges
       .pipe(

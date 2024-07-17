@@ -18,10 +18,10 @@ import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.componen
 import { FilterAplliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
 import { MoveMatterComponent } from './move-matter/move-matter.component';
-import { CreateTimesheetFlyoutComponent } from '../../../../shared/layouts/create-timesheet-flyout/create-timesheet-flyout.component';
-import { EditTimesheetFlyoutComponent } from '../../../../shared/layouts/edit-timesheet-flyout/edit-timesheet-flyout.component';
-import { EditTagTimesheetFlyoutComponent } from '../../../../shared/layouts/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
-import { ModalDeleteComponent } from '../../../../shared/layouts/modal-delete/modal-delete.component';
+import { CreateTimesheetFlyoutComponent } from '../../../../shared/create-timesheet-flyout/create-timesheet-flyout.component';
+import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
+import { EditTagTimesheetFlyoutComponent } from '../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
+import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
 
 @Component({
   selector: 'app-history-activity',

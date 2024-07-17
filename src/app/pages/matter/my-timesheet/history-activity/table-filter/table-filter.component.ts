@@ -33,9 +33,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { MyTimesheetService } from '../../services/my-timesheet.service';
-import { EditTagTimesheetFlyoutComponent } from '../../../../../shared/layouts/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
-import { EditTimesheetFlyoutComponent } from '../../../../../shared/layouts/edit-timesheet-flyout/edit-timesheet-flyout.component';
-import { ModalDeleteComponent } from '../../../../../shared/layouts/modal-delete/modal-delete.component';
+import { EditTagTimesheetFlyoutComponent } from '../../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
+import { EditTimesheetFlyoutComponent } from '../../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
+import { ModalDeleteComponent } from '../../../../../shared/modal-delete/modal-delete.component';
 
 @Component({
   selector: 'app-table-filter',

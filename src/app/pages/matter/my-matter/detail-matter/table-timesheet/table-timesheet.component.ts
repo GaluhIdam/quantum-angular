@@ -28,15 +28,15 @@ import {
   TimeSelectionComponent,
   ValidatorFieldComponent,
 } from '@quantum/fui';
-import { EmptyDataComponent } from '../../../../../../shared/empty-data/empty-data.component';
+import { EmptyDataComponent } from '../../../../../shared/empty-data/empty-data.component';
 import {
   ActivityDTO,
   MatterDTO,
   MyTimesheetDTO,
   MyTimesheetPostDTO,
-} from '../../../../my-timesheet/dtos/my-timesheet.dto';
-import { MyTimesheetService } from '../../../../my-timesheet/services/my-timesheet.service';
-import { BaseController } from '../../../../../../core/controller/basecontroller';
+} from '../../../my-timesheet/dtos/my-timesheet.dto';
+import { MyTimesheetService } from '../../../my-timesheet/services/my-timesheet.service';
+import { BaseController } from '../../../../../core/controller/basecontroller';
 
 @Component({
   selector: 'app-table-timesheet',

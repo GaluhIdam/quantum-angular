@@ -39,9 +39,9 @@ import { MyTimesheetService } from '../../services/my-timesheet.service';
 import { BaseController } from '../../../../../core/controller/basecontroller';
 import { EmptyDataComponent } from '../../../../../shared/empty-data/empty-data.component';
 import { debounceTime, map, Subscription, tap } from 'rxjs';
-import { EditTagTimesheetFlyoutComponent } from '../../../../../shared/layouts/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
-import { ModalDeleteComponent } from '../../../../../shared/layouts/modal-delete/modal-delete.component';
-import { EditTimesheetFlyoutComponent } from '../../../../../shared/layouts/edit-timesheet-flyout/edit-timesheet-flyout.component';
+import { EditTagTimesheetFlyoutComponent } from '../../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
+import { ModalDeleteComponent } from '../../../../../shared/modal-delete/modal-delete.component';
+import { EditTimesheetFlyoutComponent } from '../../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
 
 @Component({
   selector: 'app-table-without-filter',

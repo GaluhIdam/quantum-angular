@@ -12,26 +12,24 @@ import {
 } from '@quantum/fui';
 import { HistoryActivityComponent } from '../../my-timesheet/history-activity/history-activity.component';
 import { ExpensesComponent } from './expenses/expenses.component';
-import { TableTimesheetComponent } from './timesheet/table-timesheet/table-timesheet.component';
 import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
 import { FilterAplliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { BaseController } from '../../../../core/controller/basecontroller';
-import { MyMatterService } from '../services/my-matter.service';
 import { FormControl } from '@angular/forms';
 import {
-  ActivityDTO,
   MatterDTO,
   MyTimesheetDTO,
 } from '../../my-timesheet/dtos/my-timesheet.dto';
 import { MoveMatterComponent } from '../../my-timesheet/history-activity/move-matter/move-matter.component';
 import { MyTimesheetService } from '../../my-timesheet/services/my-timesheet.service';
-import { map, Subscription } from 'rxjs';
+import { map } from 'rxjs';
 import { UtilityComponent } from '../../my-timesheet/history-activity/utility/utility.component';
 import { TableFilterComponent } from '../../my-timesheet/history-activity/table-filter/table-filter.component';
-import { CreateTimesheetFlyoutComponent } from '../../../../shared/layouts/create-timesheet-flyout/create-timesheet-flyout.component';
-import { EditTimesheetFlyoutComponent } from '../../../../shared/layouts/edit-timesheet-flyout/edit-timesheet-flyout.component';
-import { EditTagTimesheetFlyoutComponent } from '../../../../shared/layouts/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
-import { ModalDeleteComponent } from '../../../../shared/layouts/modal-delete/modal-delete.component';
+import { CreateTimesheetFlyoutComponent } from '../../../../shared/create-timesheet-flyout/create-timesheet-flyout.component';
+import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
+import { EditTagTimesheetFlyoutComponent } from '../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
+import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
+import { TableTimesheetComponent } from './table-timesheet/table-timesheet.component';
 
 @Component({
   selector: 'app-detail-matter',
