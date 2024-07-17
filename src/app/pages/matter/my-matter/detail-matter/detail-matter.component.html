@@ -1,0 +1,113 @@
+<!-- RETURN BUTTON -->
+<a [routerLink]="'/matter/my-matter'" class="back-link">
+  <fui-icons [icon]="'arrowLeft'" [size]="'sizes'" [color]="'primary'" />
+  <span>Return</span>
+</a>
+<!-- RETURN BUTTON -->
+
+<!-- TITLE PAGE -->
+<div class="grid">
+  <fui-text [weight]="'semibold'" [size]="'sizexl'"
+    >5889-1 Matter Project Name</fui-text
+  >
+  <fui-text>
+    Data entered in the 'Matter Descriptions' field on the matter information
+    page.</fui-text
+  >
+</div>
+<!-- TITLE PAGE -->
+
+<!-- TABS  -->
+<div class="tabs">
+  <fui-tabs [dataTabs]="dataTabs">
+    <fui-tabs-content [id]="'Overview'">
+      Content not available!
+    </fui-tabs-content>
+    <fui-tabs-content [id]="'Information'">
+      Content not available!
+    </fui-tabs-content>
+    <fui-tabs-content [id]="'Timesheet'">
+      <!-- Table Timesheet -->
+      <div class="card-create-activity">
+        <!-- Utility -->
+        <app-utility
+          [btnUtility]="false"
+          [filterApplied]="filterApplied"
+          [listMatter]="listMatters"
+          [dataTimesheet]="dataTimesheet"
+          (filterAction)="applyFilterAction($event)"
+          (clearFilterAll)="clearAllFilterOut($event)"
+          (clickOpenCreateFlyout)="clickOpenCreateFlyout($event)"
+        />
+        <!-- Utility -->
+
+        <!-- FILTER APPLIED -->
+        <app-filter-applied
+          class="mb-15"
+          [filterApllied]="filterApplied"
+          (clearAllFilterOut)="clearAllFilterOut($event)"
+        />
+        <!-- FILTER APPLIED -->
+
+        <!-- MATTER MOVE -->
+        <app-move-matter
+          *ngIf="timesheetSelected.length > 0"
+          [listMatters]="listMatters"
+          [timesheetSelected]="timesheetSelected"
+          (clearSelectionOut)="clearSelectionOut($event)"
+        />
+        <!-- MATTER MOVE -->
+
+        <!-- TABLE WITH FILTER-->
+        <app-table-filter
+          [page]="page"
+          [limit]="limit"
+          [totalItems]="totalItems"
+          [dataTimesheet]="dataTimesheet"
+          (onPageChangeOut)="onPageChangeOut($event)"
+          (timesheetCheckedOut)="timesheetSelectedOut($event)"
+        />
+        <!-- TABLE WITH FILTER-->
+      </div>
+      <!-- Table Timesheet -->
+    </fui-tabs-content>
+    <fui-tabs-content [id]="'Expenses'">
+      <app-expenses />
+    </fui-tabs-content>
+    <fui-tabs-content [id]="'Documents'">
+      Content not available!
+    </fui-tabs-content>
+  </fui-tabs>
+</div>
+<!-- TABS  -->
+
+<!-- FLYOUT CREATE TIMESHEET -->
+<app-create-timesheet-flyout
+  [isOpenFlyout]="isOpenCreateFlyout"
+  (closeOut)="closeOutCreate($event)"
+/>
+<!-- FLYOUT CREATE TIMESHEET -->
+
+<!-- EDIT TIMESHEET FLYOUT -->
+<app-edit-timesheet-flyout
+  [isOpenFlyout]="isOpenEditFlyout"
+  (closeOut)="closeOutEdit($event)"
+/>
+<!-- EDIT TIMESHEET FLYOUT -->
+
+<!-- EDIT TAG FLYOUT -->
+<app-edit-tag-timesheet-flyout
+  [isOpenFlyout]="isOpenEditTagFlyout"
+  (closeOut)="closeOutEditTag($event)"
+/>
+<!-- EDIT TAG FLYOUT -->
+
+<!-- MODAL DELETE -->
+<app-modal-delete
+  [openModalDelete]="openModalDelete"
+  [title]="'Delete Timesheet?'"
+  [desc]="'You can’t recover the deleted timesheet'"
+  (cancelOut)="cancelOutDelete($event)"
+  (deleteActionOut)="deleteActionOutDelete($event)"
+/>
+<!-- MODAL DELETE -->

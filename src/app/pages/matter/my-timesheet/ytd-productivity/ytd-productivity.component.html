@@ -1,11 +1,10 @@
 <div class="header ytd">
-  <p class="head-title">YTD Productivity</p>
+  <fui-text [weight]="'semibold'" [size]="'sizem'">YTD Productivity</fui-text>
 </div>
 <div class="body" *ngIf="optionBar.series.length > 0">
   <div class="chart">
     <app-skeleton [active]="loading">
       <fui-echarts
-        [triggered]="triggered"
         [height]="'160px'"
         [chartOption]="optionBar"
         [themeCustom]="true"

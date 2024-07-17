@@ -1,0 +1,31 @@
+@import "../../app.component.scss";
+
+.container {
+  display: flex;
+  padding-top: 150px;
+  justify-content: center;
+  align-items: center;
+  .sub-container {
+    margin: 0px 10px 0px 10px;
+    justify-content: center;
+    display: flex;
+    .title {
+      font-size: 100px;
+    }
+    &.block {
+      display: block;
+    }
+  }
+  &:last-child {
+    padding-top: 20px;
+  }
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  fui-text {
+    margin-left: 5px;
+  }
+}

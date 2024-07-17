@@ -7,6 +7,7 @@ import {
 import { FormControl } from '@angular/forms';
 
 export class BaseController {
+  /** Injector */
   toastService = inject(ToastService);
 
   /** Convert e.x 02:30 to be 2h 30m */
@@ -135,27 +136,28 @@ export class BaseController {
 
   /** Date Formatter */
   defaultDate(
-    startDate: Date,
-    endDate: Date,
-    startDateForm: FormControl,
-    endDateForm: FormControl
-  ): void {
-    const currentDate: Date = startDate;
+  ): {
+    startDateForm: string;
+    endDateForm: string;
+  } {
+    const currentDate: Date = new Date();
+    currentDate.setDate(new Date().getDate() - 5);
     const year: number = currentDate.getFullYear();
     const month: string = (currentDate.getMonth() + 1)
       .toString()
       .padStart(2, '0');
     const day: string = currentDate.getDate().toString().padStart(2, '0');
 
-    const currentDateC: Date = endDate;
+    const currentDateC: Date = new Date();
     const yearC: number = currentDateC.getFullYear();
     const monthC: string = (currentDateC.getMonth() + 1)
       .toString()
       .padStart(2, '0');
     const dayC: string = currentDateC.getDate().toString().padStart(2, '0');
-
-    startDateForm.setValue(`${year}-${month}-${day}`);
-    endDateForm.setValue(`${yearC}-${monthC}-${dayC}`);
+    return {
+      startDateForm: `${year}-${month}-${day}`,
+      endDateForm: `${yearC}-${monthC}-${dayC}`,
+    };
   }
 
   /** Count total duration by tag or non tag */

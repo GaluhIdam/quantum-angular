@@ -1,0 +1,204 @@
+<div class="utility block">
+  <div class="sub-utility block">
+    <div class="date-duration">
+      <!-- PREVIOUS BUTTON -->
+      <fui-button-icon
+        *ngIf="!checkFilter() && btnUtility"
+        [type]="'button'"
+        [option]="'icon'"
+        [icon]="'arrowLeft'"
+        [style]="'secondary'"
+        [color]="'text'"
+        (onClick)="moveDate(-5)"
+      />
+      <!-- PREVIOUS BUTTON -->
+
+      <!-- IF FILTER IS OFF -->
+      <fui-text *ngIf="!checkFilter()" [weight]="'semibold'">
+        {{ startDate | date : "d MMMM yyyy" }} -
+        {{ endDate | date : "d MMMM yyyy" }}
+      </fui-text>
+      <!-- IF FILTER IS OFF -->
+
+      <!-- IF FILTER IS ON -->
+      <fui-text *ngIf="checkFilter()" [weight]="'semibold'">
+        {{ startDateForm.value | date : "d MMMM yyyy" }} -
+        {{ endDateForm.value | date : "d MMMM yyyy" }}</fui-text
+      >
+      <!-- IF FILTER IS ON -->
+
+      <!-- NEXT BUTTON -->
+      <fui-button-icon
+        *ngIf="endDate < currentDate && !checkFilter() && btnUtility"
+        [type]="'button'"
+        [option]="'icon'"
+        [icon]="'arrowRight'"
+        [style]="'secondary'"
+        [color]="'text'"
+        (onClick)="moveDate(5)"
+      />
+      <!-- NEXT BUTTON -->
+
+      <!-- TOTAL DURATION -->
+      <div class="duration">
+        <fui-tooltip [position]="'top'" [content]="'Total Hours'">
+          <fui-badge
+            [color]="'ghost'"
+            [size]="'sizem'"
+            [isBadgeIcon]="true"
+            [icon]="'clock'"
+            [iconPosition]="'start'"
+          >
+            <div class="content">
+              {{ calculateTotalDuration(dataTimesheet) }}
+            </div>
+          </fui-badge>
+        </fui-tooltip>
+      </div>
+      <!-- TOTAL DURATION -->
+    </div>
+  </div>
+  <div class="flex-between">
+    <!-- BTN OPEN FILTER FLYOUT -->
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'iconText'"
+      [style]="'secondary'"
+      [text]="'Filter'"
+      [size]="'m'"
+      [color]="'text'"
+      [icon]="'filter'"
+      [iconSide]="'left'"
+      (onClick)="openFilterFlyout()"
+    />
+    <!-- BTN OPEN FILTER FLYOUT -->
+
+    <!-- BTN OPEN CREATE TIMESHEET FLYOUT -->
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'icon'"
+      [style]="'filled'"
+      [text]="'Filter'"
+      [size]="'m'"
+      [color]="'primary'"
+      [icon]="'plusInCircle'"
+      (onClick)="openCreateFlyout()"
+    />
+    <!-- BTN OPEN CREATE TIMESHEET FLYOUT -->
+  </div>
+</div>
+
+<!-- FLYOUT FILTER -->
+<fui-flyout
+  [zIndex]="2"
+  [open]="isOpenFilterFlyout"
+  [flyoutSize]="'s'"
+  [flyoutPadding]="'s'"
+>
+  <fui-flyout-header (onCloseFlyout)="closeFilterFlyout()">
+    <div class="header-flyout">
+      <fui-text [size]="'sizexl'" [weight]="'semibold'">Filter</fui-text>
+    </div>
+  </fui-flyout-header>
+  <fui-flyout-body>
+    <div class="flyout-body">
+      <div class="form">
+        <label for="desc" class="label">Date</label>
+        <div class="time-description">
+          <fui-date-range
+            [startDateControl]="startDateForm"
+            [endDateControl]="endDateForm"
+            (onChangeStartDate)="changeStartDate($event)"
+            (onChangeEndDate)="changeEndDate($event)"
+          />
+        </div>
+        <span
+          class="filter-valid"
+          *ngIf="startDateForm.value === '' || endDateForm.value === ''"
+        >
+          <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
+          Date range is required!
+        </span>
+        <span class="filter-valid" *ngIf="invalidStartEndDate()">
+          <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
+          the start date cannot exceed the end date!
+        </span>
+      </div>
+      <div class="form">
+        <label for="desc" class="label">Matter</label>
+        <div class="time-description">
+          <fui-combo-box
+            (selection)="selectionMatter($event)"
+            [comboxForm]="searchMatterForm"
+            [size]="'m'"
+            [placeholder]="'Matter'"
+            [optionValue]="optionMatter"
+            [selectedValue]="selectedMatter"
+          />
+        </div>
+      </div>
+      <hr class="line-hr" />
+      <div class="form">
+        <label for="desc" class="label">Time Description</label>
+        <div class="time-description">
+          <fui-form-control-layout>
+            <fui-input-field
+              [formControlField]="descriptionForm"
+              [placeholder]="'Description'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="false"
+            />
+          </fui-form-control-layout>
+        </div>
+      </div>
+    </div>
+  </fui-flyout-body>
+  <fui-flyout-footer [isFlyoutFooterCustom]="true">
+    <div class="footer-flyout">
+      <fui-button-icon
+        (onClick)="clearFiltersAll()"
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'secondary'"
+        [text]="'Cancel'"
+        [size]="'m'"
+        [color]="'text'"
+      />
+      <div class="footer-flyout-btn">
+        <fui-button-icon
+          (onClick)="clearFilters()"
+          [type]="'button'"
+          [option]="'text'"
+          [style]="'secondary'"
+          [text]="'Clear Filters'"
+          [size]="'m'"
+          [color]="'primary'"
+        />
+        <fui-button-icon
+          [type]="'button'"
+          [disabled]="
+            startDateForm.value === '' ||
+            endDateForm.value === '' ||
+            invalidStartEndDate()
+          "
+          [option]="'iconText'"
+          [style]="'filled'"
+          [text]="'Apply Filter'"
+          [size]="'m'"
+          [color]="
+            startDateForm.value === '' ||
+            endDateForm.value === '' ||
+            invalidStartEndDate()
+              ? 'disabled'
+              : 'primary'
+          "
+          [icon]="'filter'"
+          [iconSide]="'left'"
+          (onClick)="applyFilterAction()"
+        />
+      </div>
+    </div>
+  </fui-flyout-footer>
+</fui-flyout>
+<!-- FLYOUT FILTER -->

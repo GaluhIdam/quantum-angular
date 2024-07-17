@@ -1,8 +1,6 @@
 @import "../my-timesheet.component.scss";
 
-.head-title {
-  font-weight: bold;
-}
+
 .header.productivity {
   justify-content: space-between;
   margin-bottom: 20px;
@@ -92,5 +90,5 @@
   background-color: var(--fuiColorDarkShade, $fuiColorDarkShade);
 }
 .color-square.disabled {
-  background-color: var(--fuiColorLightShade, $fuiColorLightShade);
+  background-color: #d3dae6;
 }

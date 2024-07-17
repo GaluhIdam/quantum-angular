@@ -24,11 +24,71 @@
 }
 .create-new {
   margin-right: 10px;
+  .select-option {
+    min-width: 200px;
+    text-wrap: nowrap;
+    .tab-1 {
+      .timesheet {
+        margin-bottom: 10px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        &:hover {
+          fui-text {
+            text-decoration: underline;
+          }
+          cursor: pointer;
+        }
+        &:last-child {
+          margin: 0;
+        }
+        fui-icons {
+          margin-right: 3px;
+        }
+        &.between {
+          justify-content: space-between;
+        }
+      }
+    }
+    .tab-2 {
+      .flex {
+        display: flex;
+        align-items: center;
+        .back {
+          margin-right: 5px;
+        }
+      }
+      .timesheet {
+        margin-bottom: 10px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        &:hover {
+          fui-text {
+            text-decoration: underline;
+          }
+          cursor: pointer;
+        }
+        &:last-child {
+          margin: 0;
+        }
+        fui-icons {
+          margin-right: 3px;
+        }
+        &.between {
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}
+.title {
+  display: block;
+  margin: 1px 0px;
 }
 .icon-mode {
   margin-right: 18px;
 }
-
 /** Sidebar Style */
 .sidebar-container {
   padding: 20px;
@@ -67,31 +127,20 @@
   width: 100%;
 }
 .page-body {
-  padding: 25px;
   width: -webkit-fill-available;
   height: -webkit-fill-available;
   position: fixed;
   overflow-y: auto;
   overflow-x: hidden;
+  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+}
+.wrap-page-body {
+  padding: 25px;
+  margin-top: 70px;
 }
 
 @media (max-width: 400px) {
   .page-body {
     padding: 20px;
   }
-}
-
-::-webkit-scrollbar {
-  height: 5px;
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--fuiColorMediumShade, $fuiColorMediumShade);
-  border-radius: 25px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--fuiColorDarkShade, $fuiColorDarkShade);
 }

@@ -1,1 +1,101 @@
-<h1>My Matter</h1>
+<h1 class="title-page">My Matter</h1>
+
+<!-- FORM SEARCH SECTION -->
+<app-form-search />
+<!-- FORM SEARCH SECTION  -->
+
+<!-- FILTER SECTION  -->
+<div class="filter-applied">
+  <!-- FILTER TAB SECTION  -->
+  <fui-filter-group [fullWidth]="false">
+    <!-- FILTER FOR ACTIVE STATUS  -->
+    <fui-filter-group-button
+      [active]="filterForActive"
+      (onClick)="toggleActiveFilter('active')"
+      ><div class="filter-title">
+        <span>Active</span>
+        <div class="icon {{ filterForActive ? 'accent' : '' }}">8</div>
+      </div>
+    </fui-filter-group-button>
+    <!-- FILTER FOR ACTIVE STATUS  -->
+
+    <!-- FILTER FOR PENDING STATUS  -->
+    <fui-filter-group-button
+      [active]="filterForPending"
+      (onClick)="toggleActiveFilter('pending')"
+      ><div class="filter-title">
+        <span>Pending</span>
+        <div class="icon {{ filterForPending ? 'accent' : '' }}">11</div>
+      </div></fui-filter-group-button
+    >
+    <!-- FILTER FOR PENDING STATUS  -->
+
+    <!-- FILTER FOR ON HOLD STATUS  -->
+    <fui-filter-group-button
+      [active]="filterForOnHold"
+      (onClick)="toggleActiveFilter('onHold')"
+      ><div class="filter-title">
+        <span>On Hold</span>
+        <div class="icon {{ filterForOnHold ? 'accent' : '' }}">2</div>
+      </div></fui-filter-group-button
+    >
+    <!-- FILTER FOR ON HOLD STATUS  -->
+
+    <!-- FILTER FOR COMPLETED STATUS  -->
+    <fui-filter-group-button
+      [active]="filterForCompleted"
+      (onClick)="toggleActiveFilter('completed')"
+      ><div class="filter-title">
+        <span>Completed</span>
+        <div class="icon {{ filterForCompleted ? 'accent' : '' }}">100</div>
+      </div></fui-filter-group-button
+    >
+    <!-- FILTER FOR COMPLETED STATUS  -->
+
+    <!-- FILTER FOR CLOSED STATUS  -->
+    <fui-filter-group-button
+      [active]="filterForClosed"
+      (onClick)="toggleActiveFilter('closed')"
+      ><div class="filter-title">
+        <span>Closed</span>
+      </div></fui-filter-group-button
+    >
+    <!-- FILTER FOR CLOSED STATUS  -->
+  </fui-filter-group>
+  <!-- FILTER TAB SECTION  -->
+
+  <!-- FILTER APPLIED SECTION  -->
+  <app-filter-applied
+    [filterApllied]="filterApllied"
+    (clearAllFilterOut)="clearAllFilterOut($event)"
+    (clearFilterPerItemOut)="clearFilterPerItemOut($event)"
+  />
+  <!-- FILTER APPLIED SECTION  -->
+</div>
+
+<!-- CONTENT CARD LOOP  -->
+<div class="card-container">
+  <app-content-card [type]="1" />
+  <app-content-card [type]="2" />
+  <app-content-card [type]="3" />
+  <app-content-card [type]="4" />
+
+  <app-content-card [type]="4" />
+  <app-content-card [type]="3" />
+  <app-content-card [type]="2" />
+  <app-content-card [type]="1" />
+</div>
+<!-- CONTENT CARD LOOP  -->
+
+<!-- LOAD BUTTON  -->
+<div class="loader">
+  <fui-button-icon
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'refresh'"
+    [color]="'text'"
+    [style]="'secondary'"
+    [text]="'Load more results'"
+  />
+</div>
+<!-- LOAD BUTTON  -->

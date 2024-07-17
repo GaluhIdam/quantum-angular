@@ -1,5 +1,5 @@
 <div class="header productivity">
-  <p class="head-title">Productivity</p>
+  <fui-text [weight]="'semibold'" [size]="'sizem'">Productivity</fui-text>
   <fui-popover [position]="'bottom'">
     <div class="select">
       <span class="title-select">This Month </span>
@@ -57,15 +57,15 @@
   <div class="legend">
     <span class="legend-title">
       <div class="color-square primary"></div>
-      Billable
+      <fui-text>Billable</fui-text>
     </span>
     <span class="legend-title"
       ><div class="color-square text"></div>
-      Non-Billable</span
+      <fui-text [textWrap]="'nowrap'"> Non-Billable </fui-text></span
     >
     <span class="legend-title"
       ><div class="color-square disabled"></div>
-      Untracked</span
+      <fui-text>Untracked</fui-text></span
     >
   </div>
 </div>

@@ -3,10 +3,10 @@ import {
   ButtonIconComponent,
   ComboBoxComponent,
   PopoverComponent,
+  TextComponent,
 } from '@quantum/fui';
 import { ProductivityComponent } from './productivity/productivity.component';
 import { YtdProductivityComponent } from './ytd-productivity/ytd-productivity.component';
-import { CreateActivityComponent } from './create-activity/create-activity.component';
 import { HistoryActivityComponent } from './history-activity/history-activity.component';
 import { MyTimesheetService } from './services/my-timesheet.service';
 import { map, Subscription } from 'rxjs';
@@ -19,10 +19,10 @@ import { ActivityDTO, MatterDTO } from './dtos/my-timesheet.dto';
     ComboBoxComponent,
     ProductivityComponent,
     YtdProductivityComponent,
-    CreateActivityComponent,
     HistoryActivityComponent,
     ButtonIconComponent,
     PopoverComponent,
+    TextComponent,
   ],
   templateUrl: './my-timesheet.component.html',
   styleUrl: './my-timesheet.component.scss',
@@ -37,7 +37,6 @@ export class MyTimesheetComponent {
 
   ngOnInit(): void {
     this.getMatter('');
-    this.getActivity('');
   }
 
   ngOnDestroy(): void {
@@ -51,14 +50,6 @@ export class MyTimesheetComponent {
     this.subscription = this.myTimesheetService
       .getMatters(search)
       .pipe(map((res) => (this.mattersData = res.result)))
-      .subscribe();
-  }
-
-  /** Getting acvities from MyTimesheetService */
-  getActivity(search: string): void {
-    this.subscription = this.myTimesheetService
-      .getActivity(search)
-      .pipe(map((res) => (this.activitesData = res.result)))
       .subscribe();
   }
 }

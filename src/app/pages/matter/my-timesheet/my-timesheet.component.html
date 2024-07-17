@@ -1,5 +1,7 @@
 <div class="title">
-  <h1>My Timesheet</h1>
+  <fui-text [color]="'text'" [size]="'sizexl'" [weight]="'bold'"
+    >My Timesheet</fui-text
+  >
 </div>
 <div class="section-two-card">
   <!-- Productivity -->
@@ -14,18 +16,9 @@
   </div>
   <!-- YTD -->
 </div>
-<!-- Create Activity -->
-<div class="card-create-activity">
-  <app-create-activity
-    [activitesData]="activitesData"
-    [mattersData]="mattersData"
-  />
-</div>
-<!-- Create Activity -->
 <!-- History Activity -->
 <div class="card-create-activity">
   <app-history-activity
-    [listActivities]="activitesData"
     [listMatters]="mattersData"
   />
 </div>

@@ -10,13 +10,13 @@
         <div class="title">
           <img
             *ngIf="theme === 'light'"
-            src="../../../../assets/Logo.svg"
+            src="../../../assets/Logo.svg"
             class="img-logo"
             alt="logo"
           />
           <img
             *ngIf="theme === 'dark'"
-            src="../../../../assets/logo-white.svg"
+            src="../../../assets/logo-white.svg"
             class="img-logo"
             alt="logo"
           />
@@ -83,82 +83,137 @@
     </div>
   </fui-page-sidebar>
   <div class="wrap-body">
-    <fui-header [display]="'flex'" [shadow]="true" [zIndex]="0">
-      <fui-header-panel class="header">
-        <fui-button-icon
-          [type]="'button'"
-          [size]="'m'"
-          [option]="'icon'"
-          [style]="'secondary'"
-          [color]="'text'"
-          [icon]="showSidebar ? 'menuLeft' : 'menuRight'"
-          [iconSide]="'left'"
-          (onClick)="toggleSidebar()"
-        />
-      </fui-header-panel>
-      <fui-header-panel class="header">
-        <fui-button-icon
-          class="icon-mode"
-          *ngIf="themeService.getTheme() === 'light'"
-          [type]="'button'"
-          [size]="'m'"
-          [option]="'icon'"
-          [style]="'secondary'"
-          [color]="'text'"
-          [icon]="'moon'"
-          [iconSide]="'left'"
-          (onClick)="toggleMode('dark')"
-        />
-        <fui-button-icon
-          class="icon-mode"
-          *ngIf="themeService.getTheme() === 'dark'"
-          [type]="'button'"
-          [size]="'m'"
-          [option]="'icon'"
-          [style]="'secondary'"
-          [color]="'text'"
-          [icon]="'sun'"
-          [iconSide]="'left'"
-          (onClick)="toggleMode('light')"
-        />
-        <fui-button-icon
-          [type]="'button'"
-          [size]="'m'"
-          [option]="'icon'"
-          [style]="'secondary'"
-          [color]="'text'"
-          [icon]="'bell'"
-          [iconSide]="'left'"
-        />
-        <span class="count-notif">{{ notifyCount }}</span>
-        <fui-button-icon
-          [type]="'button'"
-          [size]="'m'"
-          [option]="'icon'"
-          [style]="'secondary'"
-          [color]="'text'"
-          [icon]="'email'"
-          [iconSide]="'left'"
-        />
-        <span class="count-notif">{{ emailCount }}</span>
-        <fui-button-icon
-          class="create-new"
-          [type]="'button'"
-          [size]="'m'"
-          [option]="'iconText'"
-          [text]="'Create New'"
-          [style]="'filled'"
-          [color]="'primary'"
-          [icon]="'arrowDown'"
-          [iconSide]="'right'"
-        />
-      </fui-header-panel>
-    </fui-header>
     <div class="page-body">
+      <fui-header [display]="'flex'" [position]="'fixed-top'" [shadow]="true">
+        <fui-header-panel class="header">
+          <fui-button-icon
+            [type]="'button'"
+            [size]="'m'"
+            [option]="'icon'"
+            [style]="'secondary'"
+            [color]="'text'"
+            [icon]="showSidebar ? 'menuLeft' : 'menuRight'"
+            [iconSide]="'left'"
+            (onClick)="toggleSidebar()"
+          />
+        </fui-header-panel>
+        <fui-header-panel class="header">
+          <fui-button-icon
+            class="icon-mode"
+            *ngIf="themeService.getTheme() === 'light'"
+            [type]="'button'"
+            [size]="'m'"
+            [option]="'icon'"
+            [style]="'secondary'"
+            [color]="'text'"
+            [icon]="'moon'"
+            [iconSide]="'left'"
+            (onClick)="toggleMode('dark')"
+          />
+          <fui-button-icon
+            class="icon-mode"
+            *ngIf="themeService.getTheme() === 'dark'"
+            [type]="'button'"
+            [size]="'m'"
+            [option]="'icon'"
+            [style]="'secondary'"
+            [color]="'text'"
+            [icon]="'sun'"
+            [iconSide]="'left'"
+            (onClick)="toggleMode('light')"
+          />
+          <fui-button-icon
+            [type]="'button'"
+            [size]="'m'"
+            [option]="'icon'"
+            [style]="'secondary'"
+            [color]="'text'"
+            [icon]="'bell'"
+            [iconSide]="'left'"
+          />
+          <span class="count-notif">{{ notifyCount }}</span>
+          <fui-button-icon
+            [type]="'button'"
+            [size]="'m'"
+            [option]="'icon'"
+            [style]="'secondary'"
+            [color]="'text'"
+            [icon]="'email'"
+            [iconSide]="'left'"
+          />
+          <span class="count-notif">{{ emailCount }}</span>
+          <fui-popover class="create-new" [position]="'bottom'" [align]="'end'">
+            <fui-button-icon
+              [type]="'button'"
+              [size]="'m'"
+              [option]="'iconText'"
+              [text]="'Create New'"
+              [style]="'filled'"
+              [color]="'primary'"
+              [icon]="'arrowDown'"
+              [iconSide]="'right'"
+            />
+            <div popover-body class="select-option">
+              <!-- TAB 1  -->
+              <div
+                class="tab-1"
+                [ngStyle]="{ display: tab !== 1 ? 'none' : 'block' }"
+              >
+                <fui-text class="title" [size]="'sizem'"
+                  ><b>Select Options</b></fui-text
+                >
+                <hr />
+                <a class="timesheet" (click)="toggleOpenFlyout()"
+                  ><fui-icons [icon]="'clock'" [color]="'text'" />
+                  <fui-text>Timesheet</fui-text></a
+                >
+                <a class="timesheet"><fui-text>Matter Opening</fui-text></a>
+                <a class="timesheet between" (click)="clickTab(2)"
+                  ><fui-text>Payment Request</fui-text
+                  ><fui-icons [icon]="'arrowRight'" [color]="'text'"
+                /></a>
+                <a class="timesheet"><fui-text>Leave Request</fui-text></a>
+              </div>
+              <!-- TAB 1  -->
+
+              <!-- TAB 2  -->
+              <div
+                class="tab-2"
+                [ngStyle]="{ display: tab !== 2 ? 'none' : 'block' }"
+              >
+                <div class="flex">
+                  <fui-icons
+                    class="back"
+                    [icon]="'sortLeft'"
+                    [color]="'text'"
+                    (click)="clickTab(1)"
+                  />
+                  <fui-text class="title" [size]="'sizem'"
+                    ><b>Payment Request</b></fui-text
+                  >
+                </div>
+                <hr />
+                <a class="timesheet">
+                  <fui-text>Payment For Vendor</fui-text></a
+                >
+                <a class="timesheet"
+                  ><fui-text>Payment For Employee</fui-text></a
+                >
+                <a class="timesheet"><fui-text>Cash Advance</fui-text></a>
+              </div>
+              <!-- TAB 2  -->
+            </div>
+          </fui-popover>
+        </fui-header-panel>
+      </fui-header>
       <div class="wrap-page-body">
-        <router-outlet></router-outlet>
+        <ng-content />
       </div>
     </div>
   </div>
 </div>
+<app-create-timesheet-flyout
+  [isOpenFlyout]="isOpenFlyout"
+  (closeOut)="closeOut($event)"
+/>
 <!-- </fui-page> -->
