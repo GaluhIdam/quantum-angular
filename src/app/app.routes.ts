@@ -19,6 +19,7 @@ export const routes: Routes = [
     title: 'Home',
     path: 'home',
     component: HomeComponent,
+    canActivate: mapToCanActivate([AuthGuard]),
   },
 
   /** Forbidden Page */
@@ -26,6 +27,7 @@ export const routes: Routes = [
     title: 'Access Forbidden',
     path: 'forbidden',
     component: ForbiddenComponent,
+    canActivate: mapToCanActivate([AuthGuard]),
   },
 
   /** Matter Modules */
@@ -47,16 +49,19 @@ export const routes: Routes = [
         title: 'My Matter',
         path: 'my-matter',
         component: MyMatterComponent,
+        canActivate: mapToCanActivate([AuthGuard]),
       },
       {
         title: 'Detail Matter',
         path: 'detail-matter',
         component: DetailMatterComponent,
+        canActivate: mapToCanActivate([AuthGuard]),
       },
       {
         title: 'All Matter',
         path: 'all-matter',
         component: AllMatterComponent,
+        canActivate: mapToCanActivate([AuthGuard]),
       },
     ],
   },
@@ -66,5 +71,6 @@ export const routes: Routes = [
     title: 'Page Not Found',
     path: '**',
     component: NotFoundComponent,
+    canActivate: mapToCanActivate([AuthGuard]),
   },
 ];

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { OidcAuthenticatorService } from '@quantum/fui';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -10,7 +9,6 @@ import { keycloak } from '../../environment/env';
 })
 export class AuthGuard {
   constructor(
-    private readonly router: Router,
     private readonly authService: OidcAuthenticatorService
   ) {}
 
@@ -18,7 +16,7 @@ export class AuthGuard {
     return this.authService.checkAuth(keycloak).pipe(
       tap((isAuthenticated) => {
         if (!isAuthenticated) {
-          this.router.navigate(['/forbidden']);
+          this.authService.loginWithPage(keycloak);
         }
       }),
       map((isAuthenticated) => isAuthenticated)

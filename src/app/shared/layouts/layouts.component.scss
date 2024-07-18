@@ -139,8 +139,23 @@
   margin-top: 70px;
 }
 
-@media (max-width: 400px) {
-  .page-body {
-    padding: 20px;
+.profile {
+  position: fixed;
+  bottom: 25px;
+  left: 20px;
+  width: 13rem;
+  .flex {
+    margin-top: 20px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    .sub-flex {
+      margin-right: 20px;
+      align-items: center;
+      display: flex;
+      fui-avatar {
+        margin-right: 10px;
+      }
+    }
   }
 }
