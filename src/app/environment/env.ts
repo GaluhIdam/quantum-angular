@@ -26,5 +26,5 @@ export const keycloak: ConfigDTO = {
   scope: 'openid email profile roles',
   authWellknownEndpointUrl:
     'http://localhost:8080/realms/quantum-demo/.well-known/openid-configuration',
-  storageUsage: 'session',
+  storageUsage: 'local',
 };

@@ -18,6 +18,7 @@ import {
   LoadingComponent,
   PopoverComponent,
   TextComponent,
+  AvatarComponent,
 } from '@quantum/fui';
 import {
   debounceTime,
@@ -51,6 +52,7 @@ import { CreateTimesheetFlyoutComponent } from '../create-timesheet-flyout/creat
     PopoverComponent,
     TextComponent,
     CreateTimesheetFlyoutComponent,
+    AvatarComponent,
   ],
   templateUrl: './layouts.component.html',
   styleUrl: './layouts.component.scss',
