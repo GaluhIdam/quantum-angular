@@ -3,6 +3,8 @@ import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   ButtonIconComponent,
+  FilterGroupButtonComponent,
+  FilterGroupComponent,
   Icon,
   IconsComponent,
   Size,
@@ -23,13 +25,12 @@ import {
 import { MoveMatterComponent } from '../../my-timesheet/history-activity/move-matter/move-matter.component';
 import { MyTimesheetService } from '../../my-timesheet/services/my-timesheet.service';
 import { map } from 'rxjs';
-import { UtilityComponent } from '../../my-timesheet/history-activity/utility/utility.component';
-import { TableFilterComponent } from '../../my-timesheet/history-activity/table-filter/table-filter.component';
 import { CreateTimesheetFlyoutComponent } from '../../../../shared/create-timesheet-flyout/create-timesheet-flyout.component';
 import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
 import { EditTagTimesheetFlyoutComponent } from '../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
 import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
-import { TableTimesheetComponent } from './table-timesheet/table-timesheet.component';
+import { UtilityDetailMatterComponent } from './utility-detail-matter/utility-detail-matter.component';
+import { TableDetailMatterComponent } from './table-detail-matter/table-detail-matter.component';
 
 @Component({
   selector: 'app-detail-matter',
@@ -43,16 +44,17 @@ import { TableTimesheetComponent } from './table-timesheet/table-timesheet.compo
     IconsComponent,
     HistoryActivityComponent,
     ExpensesComponent,
-    TableTimesheetComponent,
-    UtilityComponent,
     FilterAppliedComponent,
     MoveMatterComponent,
-    TableFilterComponent,
+    TableDetailMatterComponent,
     CreateTimesheetFlyoutComponent,
     EditTimesheetFlyoutComponent,
     EditTagTimesheetFlyoutComponent,
     ModalDeleteComponent,
     TextComponent,
+    UtilityDetailMatterComponent,
+    FilterGroupButtonComponent,
+    FilterGroupComponent,
   ],
   templateUrl: './detail-matter.component.html',
   styleUrl: './detail-matter.component.scss',
@@ -99,6 +101,7 @@ export class DetailMatterComponent extends BaseController {
   endDateFilter: string = '';
   selectedMatterFilter: string = '';
   descriptionFilter: string = '';
+  uncolleted: boolean = false;
 
   /** Pagination */
   page: number = 1;
@@ -282,5 +285,10 @@ export class DetailMatterComponent extends BaseController {
   /** Catch changes from modal delete component */
   deleteActionOutDelete(event: boolean): void {
     this.openModalDelete = event;
+  }
+
+  /** Toggle for filter colleted/uncollected */
+  toggleFilter(param: boolean): void {
+    this.uncolleted = param;
   }
 }

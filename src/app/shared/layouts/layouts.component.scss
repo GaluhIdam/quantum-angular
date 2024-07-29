@@ -159,3 +159,19 @@
     }
   }
 }
+
+
+.flex-signout {
+  display: flex;
+  margin: 20px 0px;
+  width: fit-content;
+  fui-icons {
+    margin-right: 5px;
+  }
+  &:hover {
+    cursor: pointer;
+    p {
+      text-decoration: underline;
+    }
+  }
+}

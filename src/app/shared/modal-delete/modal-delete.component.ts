@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   ButtonIconComponent,
+  Icon,
   IconsComponent,
   ModalBodyComponent,
   ModalComponent,
@@ -29,6 +30,9 @@ export class ModalDeleteComponent {
   @Input() title: string = 'Delete Confirmation?';
   @Input() desc: string =
     'This data will be permanently deleted. Do you want to continue?';
+  @Input() btnContinue: string = 'Delete';
+  @Input() option: 'iconText' | 'icon' | 'text' = 'text';
+  @Input() icon: Icon = 'trash';
   @Output() deleteActionOut: EventEmitter<boolean> =
     new EventEmitter<boolean>();
   @Output() cancelOut: EventEmitter<boolean> = new EventEmitter<boolean>();

@@ -6,11 +6,30 @@
 >
   <fui-flyout-header (onCloseFlyout)="toggleCloseFlyout()">
     <div class="header-flyout">
-      <h2>Add Timesheet</h2>
+      <h2>{{ title }}</h2>
     </div>
   </fui-flyout-header>
   <fui-flyout-body>
     <div class="flyout-body">
+      <div class="form" *ngIf="feeEarner">
+        <!-- FEE EARNER FORM  -->
+        <fui-text [size]="'sizes'">Fee Earner</fui-text>
+        <div class="form-control">
+          <fui-combo-box
+            [invalid]="feeEarnerSearch.invalid && feeEarnerSearch.dirty"
+            [message]="'Activity is required!'"
+            (selection)="selectionFeeEarner($event)"
+            [comboxForm]="feeEarnerSearch"
+            [singleSelection]="true"
+            [leftIcon]="'search'"
+            [size]="'m'"
+            [placeholder]="'Fee earner'"
+            [optionValue]="optionFeeEarner"
+            [selectedValue]="selectedFeeEarner"
+          />
+        </div>
+        <!-- FEE EARNER FORM  -->
+      </div>
       <div class="form">
         <!-- ACTIVITY FORM  -->
         <fui-text [size]="'sizes'">What did you do?</fui-text>
@@ -101,6 +120,9 @@
               [message]="'Additional description is required!'"
             />
           </fui-form-control-layout>
+          <fui-text class="italic" [size]="'sizexs'" [color]="'disabled'">{{
+            note
+          }}</fui-text>
         </div>
         <!-- TOPICS FORM  -->
       </div>
@@ -112,6 +134,7 @@
           <div class="checkbox">
             <input
               type="checkbox"
+              [disabled]="!enableMatterSearchForm"
               [(ngModel)]="lockMatter"
               [checked]="lockMatter"
               (change)="onCheckboxChangeMatter($event)"
@@ -153,9 +176,10 @@
               <div class="checkbox">
                 <input
                   type="checkbox"
-                  [(ngModel)]="lockMatter"
-                  [checked]="lockMatter"
-                  (change)="onCheckboxChangeMatter($event)"
+                  [disabled]="!enableDateForm"
+                  [(ngModel)]="lockDate"
+                  [checked]="lockDate"
+                  (change)="onCheckboxChangeDate($event)"
                 />
                 <fui-text [size]="'sizes'">Lock</fui-text>
                 <fui-tooltip
@@ -172,6 +196,7 @@
               class="form-control"
               format="MM/DD/YYYY"
               [dateFormControl]="dateFormControl"
+              [position]="'top'"
               [message]="'Date is required!'"
               [isInvalid]="dateFormControl.invalid && dateFormControl.dirty"
             />
@@ -183,6 +208,7 @@
             <fui-text [size]="'sizes'">Duration</fui-text>
             <fui-time-selection
               class="form-control"
+              [position]="'top'"
               [timeFormControl]="durationForm"
               [isInvalid]="durationForm.invalid && durationForm.dirty"
               [message]="'Duration is required!'"
