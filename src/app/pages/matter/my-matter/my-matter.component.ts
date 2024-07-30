@@ -10,7 +10,6 @@ import {
   FilterGroupComponent,
 } from '@quantum/fui';
 import { RouterModule } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-my-matter',

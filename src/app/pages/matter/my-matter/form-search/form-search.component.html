@@ -73,19 +73,6 @@
         </fui-form-control-layout>
         <!-- FORM CLIENT NAME -->
 
-        <!-- MATTER NUMBER -->
-        <div for="form" class="label-form">Matter Number</div>
-        <fui-combo-box
-          [invalid]="false"
-          [message]="'Matter Number is required!'"
-          [singleSelection]="true"
-          [size]="'m'"
-          [placeholder]="'Select matter number(s)'"
-          [optionValue]="[]"
-          [selectedValue]="[]"
-        />
-        <!-- MATTER NUMBER -->
-
         <!-- FORM PROJECT NAME -->
         <div for="form" class="label-form">Project Name</div>
         <div class="form-group">
@@ -159,7 +146,7 @@
           <div class="wrap-advance-filter">
             <!-- MATTER CATEGORY FORM -->
             <div class="form-group child-form-adv">
-              <div for="form" class="label-form mt-0">Matter Category</div>
+              <div for="form" class="label-form mt-0">Billability</div>
               <fui-combo-box
                 [optionValue]="matterCategoryOption"
                 [selectedValue]="matterCategorySelected"
@@ -167,17 +154,6 @@
               />
             </div>
             <!-- MATTER CATEGORY FORM -->
-
-            <!-- PRACTICE AREA FORM -->
-            <div class="form-group child-form-adv">
-              <div for="form" class="label-form">Practice Area</div>
-              <fui-combo-box
-                [optionValue]="pacticeAreaOption"
-                [selectedValue]="pacticeAreaSelected"
-                [placeholder]="'Select practice area'"
-              />
-            </div>
-            <!-- PRACTICE AREA FORM -->
 
             <!-- PRACTICE GROUP FORM -->
             <div class="form-group child-form-adv">
@@ -189,6 +165,17 @@
               />
             </div>
             <!-- PRACTICE GROUP FORM -->
+
+            <!-- PRACTICE AREA FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form">Practice Area</div>
+              <fui-combo-box
+                [optionValue]="pacticeAreaOption"
+                [selectedValue]="pacticeAreaSelected"
+                [placeholder]="'Select practice area'"
+              />
+            </div>
+            <!-- PRACTICE AREA FORM -->
 
             <!-- MATTER TYPE FORM -->
             <div class="form-group child-form-adv">
@@ -214,7 +201,7 @@
 
             <!-- MATTER PIC FORM -->
             <div class="form-group child-form-adv">
-              <div for="form" class="label-form">Matter PIC</div>
+              <div for="form" class="label-form">Partner In Charge (PIC)</div>
               <fui-combo-box
                 [optionValue]="matterPICOption"
                 [selectedValue]="matterPICSelected"
@@ -294,7 +281,7 @@
         [option]="'text'"
         [text]="'Cancel'"
         [style]="'secondary'"
-        [color]="'text'"
+        [color]="'primary'"
       />
       <div class="sub-button">
         <fui-button-icon

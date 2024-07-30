@@ -30,7 +30,7 @@
       <!-- Table Timesheet -->
       <div class="card-create-activity">
         <!-- Utility -->
-        <app-utility
+        <app-utility-detail-matter
           [btnUtility]="false"
           [filterApplied]="filterApplied"
           [listMatter]="listMatters"
@@ -41,13 +41,40 @@
         />
         <!-- Utility -->
 
-        <!-- FILTER APPLIED -->
-        <app-filter-applied
-          class="mb-15"
-          [filterApllied]="filterApplied"
-          (clearAllFilterOut)="clearAllFilterOut($event)"
-        />
-        <!-- FILTER APPLIED -->
+        <div class="flex">
+          <!-- FILTER UNCOLLECTED/COLLECTED  -->
+          <fui-filter-group [fullWidth]="false">
+            <!-- FILTER FOR Uncollected  -->
+            <fui-filter-group-button
+              [active]="uncolleted"
+              (onClick)="toggleFilter(true)"
+              ><div class="filter-title">
+                <span>Uncollected</span>
+                <div class="icon {{ uncolleted ? 'accent' : '' }}">8</div>
+              </div>
+            </fui-filter-group-button>
+            <!-- FILTER FOR Uncollected  -->
+
+            <!-- FILTER FOR Collected  -->
+            <fui-filter-group-button
+              [active]="!uncolleted"
+              (onClick)="toggleFilter(false)"
+              ><div class="filter-title">
+                <span>Collected</span>
+              </div>
+            </fui-filter-group-button>
+            <!-- FILTER FOR Collected  -->
+          </fui-filter-group>
+          <!-- FILTER UNCOLLECTED/COLLECTED  -->
+
+          <!-- FILTER APPLIED -->
+          <app-filter-applied
+            class="mb-15"
+            [filterApllied]="filterApplied"
+            (clearAllFilterOut)="clearAllFilterOut($event)"
+          />
+          <!-- FILTER APPLIED -->
+        </div>
 
         <!-- MATTER MOVE -->
         <app-move-matter
@@ -59,7 +86,7 @@
         <!-- MATTER MOVE -->
 
         <!-- TABLE WITH FILTER-->
-        <app-table-filter
+        <app-table-detail-matter
           [page]="page"
           [limit]="limit"
           [totalItems]="totalItems"
@@ -83,7 +110,11 @@
 
 <!-- FLYOUT CREATE TIMESHEET -->
 <app-create-timesheet-flyout
+  [title]="'Add Timesheet to 5889-1'"
+  [note]="'*Conduct desk research & prepare summary on licensing regulation'"
+  [feeEarner]="true"
   [isOpenFlyout]="isOpenCreateFlyout"
+  [enableMatterSearchForm]="false"
   (closeOut)="closeOutCreate($event)"
 />
 <!-- FLYOUT CREATE TIMESHEET -->

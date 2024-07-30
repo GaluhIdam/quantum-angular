@@ -17,6 +17,7 @@
   border: none;
 }
 .table .table-cell {
+  text-wrap: nowrap;
   display: table-cell;
   padding: 8px;
   text-align: left;
@@ -33,7 +34,7 @@
 .wrap-action {
   display: flex;
   align-items: baseline;
-  justify-content: end;
+  justify-content: start;
   fui-button-icon {
     margin-left: 3px;
     margin-right: 3px;
@@ -160,6 +161,7 @@
   }
 }
 
-.nowrap {
-  text-wrap: nowrap;
+fui-pagination {
+  margin-top: 20px;
+  display: block;
 }

@@ -52,6 +52,14 @@ import {
 })
 export class EditTimesheetFlyoutComponent {
   @Input() isOpenFlyout: boolean = false;
+
+  /** Form enable/disable */
+  @Input() enableActivitySearchForm: boolean = true;
+  @Input() enableObjectEventForm: boolean = true;
+  @Input() enableMatterSearchForm: boolean = true;
+  @Input() enableDateForm: boolean = true;
+  @Input() enableDurationForm: boolean = true;
+
   @Output() closeOut: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   /** Activity Form */
@@ -74,6 +82,38 @@ export class EditTimesheetFlyoutComponent {
   durationForm: FormControl = new FormControl('', Validators.required);
 
   lockMatter: boolean = false;
+
+  constructor() {
+    if (this.enableActivitySearchForm) {
+      this.activitySearch.enable();
+    } else {
+      this.activitySearch.disable();
+    }
+
+    if (this.enableObjectEventForm) {
+      this.objectEventForm.enable();
+    } else {
+      this.objectEventForm.disable();
+    }
+
+    if (this.enableMatterSearchForm) {
+      this.matterSearch.enable();
+    } else {
+      this.matterSearch.disable();
+    }
+
+    if (this.enableDateForm) {
+      this.dateFormControl.enable();
+    } else {
+      this.dateFormControl.disable();
+    }
+
+    if (this.enableDurationForm) {
+      this.durationForm.enable();
+    } else {
+      this.durationForm.disable();
+    }
+  }
 
   /** Toggle for open flyout */
   toggleCloseFlyout(): void {

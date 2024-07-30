@@ -1,11 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   FormControl,
   FormsModule,
@@ -20,18 +14,16 @@ import {
   FormControlLayoutComponent,
   IconsComponent,
   InputFieldComponent,
-  ModalBodyComponent,
-  ModalComponent,
-  ModalFooterComponent,
-  ModalHeaderComponent,
   PaginationComponent,
+  TextComponent,
   TimeSelectionComponent,
   ValidatorFieldComponent,
 } from '@quantum/fui';
 import { EmptyDataComponent } from '../../../../../shared/empty-data/empty-data.component';
+import { EditTagTimesheetFlyoutComponent } from '../../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
+import { EditTimesheetFlyoutComponent } from '../../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
+import { ModalDeleteComponent } from '../../../../../shared/modal-delete/modal-delete.component';
 import {
-  ActivityDTO,
-  MatterDTO,
   MyTimesheetDTO,
   MyTimesheetPostDTO,
 } from '../../../my-timesheet/dtos/my-timesheet.dto';
@@ -39,7 +31,7 @@ import { MyTimesheetService } from '../../../my-timesheet/services/my-timesheet.
 import { BaseController } from '../../../../../core/controller/basecontroller';
 
 @Component({
-  selector: 'app-table-timesheet',
+  selector: 'app-table-detail-matter',
   standalone: true,
   imports: [
     CommonModule,
@@ -55,24 +47,20 @@ import { BaseController } from '../../../../../core/controller/basecontroller';
     InputFieldComponent,
     TimeSelectionComponent,
     ValidatorFieldComponent,
-    ModalBodyComponent,
-    ModalComponent,
-    ModalFooterComponent,
-    ModalHeaderComponent,
     PaginationComponent,
+    TextComponent,
+    EditTagTimesheetFlyoutComponent,
+    EditTimesheetFlyoutComponent,
+    ModalDeleteComponent,
   ],
-  templateUrl: './table-timesheet.component.html',
-  styleUrl: './table-timesheet.component.scss',
+  templateUrl: './table-detail-matter.component.html',
+  styleUrl: './table-detail-matter.component.scss',
 })
-export class TableTimesheetComponent extends BaseController {
+export class TableDetailMatterComponent extends BaseController {
   @Input() dataTimesheet: MyTimesheetDTO[] = [];
-  @Input() listActivity: ActivityDTO[] = [];
-  @Input() listMatters: MatterDTO[] = [];
   @Input() page: number = 1;
   @Input() limit: number = 10;
   @Input() totalItems: number = 100;
-  @Input() timesheetChecked: MyTimesheetDTO[] = [];
-
   @Output() onPageChangeOut: EventEmitter<{
     page: number;
     itemsPerPage: number;
@@ -84,7 +72,14 @@ export class TableTimesheetComponent extends BaseController {
   optionActivity: { name: string; value: any }[] = [];
   optionMatter: { name: string; value: any }[] = [];
 
-  headerTable: string[] = ['Date', 'Matter#', 'Description', 'Duration', ''];
+  headerTable: string[] = [
+    'Date',
+    'Name',
+    'Description',
+    'Duration',
+    'Rate',
+    '',
+  ];
 
   /** Data for show/hide table in row per row */
   showHideEdit: boolean[] = [];
@@ -106,23 +101,18 @@ export class TableTimesheetComponent extends BaseController {
 
   /** Modal Variable */
   openModalDelete: boolean = false;
-  openModalEditTag: boolean = false;
+
+  /** Check or uncheck timsheet */
+  timesheetChecked: MyTimesheetDTO[] = [];
+
+  /** Open edit tag flyout */
+  isOpenFlyoutTagEdit: boolean = false;
+
+  /** Open edit flyout */
+  isOpenFlyoutEdit: boolean = false;
 
   constructor(private readonly myTimesheetService: MyTimesheetService) {
     super();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes) {
-      this.optionActivity = [];
-      this.listActivity.forEach((item) => {
-        this.optionActivity.push({
-          name: item.activity,
-          value: item.idActivity,
-        });
-      });
-      this.closeAllFormEdit();
-    }
   }
 
   /** Update Timesheet from MyTimesheetService  */
@@ -151,8 +141,6 @@ export class TableTimesheetComponent extends BaseController {
   /** Delete Timesheet from MyTimesheetService */
   deleteTimesheet(uuid: string): void {
     this.myTimesheetService.deleteTimesheet(uuid).subscribe((res) => {
-      this.closelModalDelete();
-      this.closeModalEditTag();
       this.toggleToast(
         'success',
         'Success!',
@@ -166,6 +154,7 @@ export class TableTimesheetComponent extends BaseController {
 
   /** Show edit form */
   toggleFormEdit(index: number, data: MyTimesheetDTO): void {
+    this.isOpenFlyoutEdit = true;
     this.closeAllFormEdit();
     this.showHideEdit[index] = true;
 
@@ -199,7 +188,7 @@ export class TableTimesheetComponent extends BaseController {
 
   /** Open Modal Edit Tag */
   openEditTagModal(param: string, data: MyTimesheetDTO): void {
-    this.openModalEditTag = true;
+    this.isOpenFlyoutTagEdit = true;
     this.uuid = param;
     this.matterId = data.matter.idMatter;
     this.officialCategoryId = data.officialCategory.idOfficialCategory;
@@ -215,23 +204,6 @@ export class TableTimesheetComponent extends BaseController {
     ];
     this.activitySearch.setValue(selected[0].name);
     this.selectedActivity = selected;
-  }
-
-  /** Close Modal Edit Tag */
-  closeModalEditTag(): void {
-    this.openModalEditTag = false;
-  }
-
-  /** Open Modal Delete */
-  openDeleteModal(param: string): void {
-    this.openModalDelete = true;
-    this.uuid = param;
-    console.log(this.openModalDelete);
-  }
-
-  /** Close Modal Delete */
-  closelModalDelete(): void {
-    this.openModalDelete = false;
   }
 
   /** Selection activity */
@@ -267,5 +239,26 @@ export class TableTimesheetComponent extends BaseController {
     return this.timesheetChecked.some(
       (dto) => dto.idTimesheet === item.idTimesheet
     );
+  }
+
+  /** Catch return from flyout edit tag */
+  closeOutEditTag(event: boolean): void {
+    this.isOpenFlyoutTagEdit = event;
+  }
+
+  /** Catch return from flyout edit */
+  closeOutEdit(event: boolean): void {
+    this.isOpenFlyoutEdit = event;
+  }
+
+  /** Open Modal Delete */
+  openDeleteModal(param: string): void {
+    this.openModalDelete = true;
+    this.uuid = param;
+  }
+
+  /** Close Modal Delete */
+  cancelOut(event: boolean): void {
+    this.openModalDelete = event;
   }
 }

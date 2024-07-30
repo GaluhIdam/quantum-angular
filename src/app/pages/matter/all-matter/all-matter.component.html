@@ -1,1 +1,44 @@
 <h1>All Matter</h1>
+
+<!-- FORM SEARCH SECTION -->
+<div class="flex">
+  <app-form-search />
+  <fui-button-icon
+    [size]="'m'"
+    [type]="'button'"
+    [icon]="'plusInCircleFilled'"
+    [option]="'iconText'"
+    [text]="'Add Matter'"
+  />
+</div>
+<!-- FORM SEARCH SECTION  -->
+
+<!-- FILTER APPLIED SECTION  -->
+<app-filter-applied
+  class="app-filter-applied"
+  [filterApllied]="filterApllied"
+  (clearAllFilterOut)="clearAllFilterOut($event)"
+  (clearFilterPerItemOut)="clearFilterPerItemOut($event)"
+/>
+<!-- FILTER APPLIED SECTION  -->
+
+<!-- CARD MATTER -->
+<div class="container">
+  <app-card-all-matter></app-card-all-matter>
+</div>
+<div class="container">
+  <app-card-all-matter></app-card-all-matter>
+</div>
+<!-- CARD MATTER -->
+
+<div class="loader">
+  <fui-button-icon
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'refresh'"
+    [color]="'text'"
+    [style]="'secondary'"
+    [text]="'Load more results'"
+  />
+</div>
+<!-- LOAD BUTTON  -->

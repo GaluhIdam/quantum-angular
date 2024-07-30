@@ -4,7 +4,6 @@ import {
   EventEmitter,
   Input,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import {
   BadgeComponent,
@@ -20,7 +19,6 @@ import {
   ValidatorFieldComponent,
 } from '@quantum/fui';
 import {
-  ActivityDTO,
   MyTimesheetDTO,
   MyTimesheetPostDTO,
 } from '../../dtos/my-timesheet.dto';

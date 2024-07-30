@@ -19,6 +19,7 @@ import {
   PopoverComponent,
   TextComponent,
   AvatarComponent,
+  OidcAuthenticatorService,
 } from '@quantum/fui';
 import {
   debounceTime,
@@ -31,6 +32,9 @@ import {
 } from 'rxjs';
 import { DataSideBar } from './data-sidebar';
 import { CreateTimesheetFlyoutComponent } from '../create-timesheet-flyout/create-timesheet-flyout.component';
+import { keycloak } from '../../environment/env';
+import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
+import { UserKeycloak } from '../../core/guard/keycloak/keycloak.dto';
 
 @Component({
   selector: 'app-layouts',
@@ -53,6 +57,7 @@ import { CreateTimesheetFlyoutComponent } from '../create-timesheet-flyout/creat
     TextComponent,
     CreateTimesheetFlyoutComponent,
     AvatarComponent,
+    ModalDeleteComponent,
   ],
   templateUrl: './layouts.component.html',
   styleUrl: './layouts.component.scss',
@@ -73,8 +78,18 @@ export class LayoutsComponent {
   tab: number = 1;
   isOpenFlyout: boolean = false;
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef) {
+  logoutModal: boolean = false;
+
+  /** Data user from keycloak */
+  nameUser: string = '';
+
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private readonly authService: OidcAuthenticatorService
+  ) {
     this.dataSide = DataSideBar.dataSideBar;
+    this.getUser();
   }
 
   ngOnInit(): void {
@@ -187,5 +202,22 @@ export class LayoutsComponent {
   /** Observe changes from flyout */
   closeOut(event: boolean): void {
     this.isOpenFlyout = event;
+  }
+
+  /** Open modal for confirm logout */
+  logout(): void {
+    this.logoutModal = !this.logoutModal;
+  }
+
+  /** Logout and direct to login keycloak */
+  logoutAction(): void {
+    this.authService.logoutAuth(keycloak).subscribe();
+  }
+
+  /** Getting data user from keycloak */
+  getUser(): void {
+    this.authService.getUserInfo(keycloak).subscribe((res) => {
+      this.nameUser = res.name;
+    });
   }
 }
