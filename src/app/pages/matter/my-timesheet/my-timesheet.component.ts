@@ -8,8 +8,6 @@ import {
 import { ProductivityComponent } from './productivity/productivity.component';
 import { YtdProductivityComponent } from './ytd-productivity/ytd-productivity.component';
 import { HistoryActivityComponent } from './history-activity/history-activity.component';
-import { MyTimesheetService } from './services/my-timesheet.service';
-import { map, Subscription } from 'rxjs';
 import { ActivityDTO, MatterDTO } from './dtos/my-timesheet.dto';
 
 @Component({
@@ -30,26 +28,4 @@ import { ActivityDTO, MatterDTO } from './dtos/my-timesheet.dto';
 export class MyTimesheetComponent {
   mattersData: MatterDTO[] = [];
   activitesData: ActivityDTO[] = [];
-
-  constructor(private readonly myTimesheetService: MyTimesheetService) {}
-
-  private subscription!: Subscription;
-
-  ngOnInit(): void {
-    this.getMatter('');
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  /** Getting Matter from MyTimesheetService */
-  getMatter(search: string): void {
-    this.subscription = this.myTimesheetService
-      .getMatters(search)
-      .pipe(map((res) => (this.mattersData = res.result)))
-      .subscribe();
-  }
 }

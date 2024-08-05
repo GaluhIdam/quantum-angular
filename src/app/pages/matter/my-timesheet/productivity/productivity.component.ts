@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   ButtonIconComponent,
   IconsComponent,
@@ -27,21 +27,13 @@ import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.componen
   templateUrl: './productivity.component.html',
   styleUrl: './productivity.component.scss',
 })
-export class ProductivityComponent {
-  loading: boolean = true;
-  data: number[] = [70, 90];
-
-  private subscription!: Subscription;
+export class ProductivityComponent implements OnInit {
+  @Input() loading: boolean = true;
+  @Input() data: number[] = [70, 90];
 
   ngOnInit(): void {
     setTimeout(() => {
       this.loading = false;
     }, 1000);
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 }

@@ -1,16 +1,20 @@
 <app-skeleton [active]="loading">
-  <!-- Utility -->
-  <app-utility
-    [filterApplied]="filterApplied"
-    [listMatter]="listMatters"
-    [dataTimesheet]="dataTimesheet"
-    (filterAction)="applyFilterAction($event)"
-    (clearFilterAll)="clearAllFilterOut($event)"
-    (dateTimesheetByDateOut)="getDataTimesheetByDate($event)"
-    (dateMoveChanger)="dateMoveWatcher($event)"
-    (clickOpenCreateFlyout)="clickOpenCreateFlyout($event)"
-  />
-  <!-- Utility -->
+  <!-- SIMPLE UTILITY TABLE  -->
+  <shared-table-utility-simple
+    [leftBeforeBtnUtil]="leftBeforeUtilBtn"
+    [leftAfterBtnUtil]="leftAfterUtilBtn"
+    [leftAfterBagdeUtil]="leftAfterUtilBadge"
+    [rightBeforeBtnUtil]="rightBeforeBtnUtil"
+    (btnAction)="btnActionUtil($event)"
+  >
+    <div left-util>
+      <fui-text class="hour-minute" [weight]="'semibold'">
+        {{ startDate | date : "d MMMM yyyy" }} -
+        {{ endDate | date : "d MMMM yyyy" }}</fui-text
+      >
+    </div>
+  </shared-table-utility-simple>
+  <!-- SIMPLE UTILITY TABLE  -->
 
   <!-- FILTER APPLIED -->
   <app-filter-applied
@@ -37,7 +41,6 @@
     (timesheetSelectedOut)="timesheetSelectedOut($event)"
     (clickOpenEdit)="clickOpenEdit($event)"
     (clickOpenEditTag)="clickOpenEditTag($event)"
-    (clickOpenModalDelete)="clickOpenModalDelete($event)"
   />
   <!-- TABLE WITHOUT FILTER -->
 
@@ -70,20 +73,113 @@
 <!-- EDIT TIMESHEET FLYOUT -->
 
 <!-- EDIT TAG FLYOUT -->
-<app-edit-tag-timesheet-flyout
-  [isOpenFlyout]="isOpenEditTagFlyout"
-  (closeOut)="closeOutEditTag($event)"
-/>
+<app-edit-tag-timesheet-flyout [isOpenFlyout]="isOpenEditTagFlyout" />
 <!-- EDIT TAG FLYOUT -->
 
-<!-- MODAL DELETE -->
-<app-modal-delete
-  [openModalDelete]="openModalDelete"
-  [title]="'Delete Timesheet?'"
-  [desc]="'You can’t recover the deleted timesheet'"
-  (cancelOut)="cancelOutDelete($event)"
-  (deleteActionOut)="deleteActionOutDelete($event)"
-/>
-<!-- MODAL DELETE -->
+<!-- _________________________________________________ -->
 
+<!-- FILTER TIMESHEET  -->
+<shared-flyout-simple
+  [isOpenFlyout]="openFlyoutFilter"
+  [titleFlyout]="'Filter'"
+  (closeOut)="closeOutFilter($event)"
+>
+  <div body>
+    <!-- DATE FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Date</fui-text>
+      <div class="time-description">
+        <fui-date-range
+          [startDateControl]="startDateForm"
+          [endDateControl]="endDateForm"
+          (onChangeStartDate)="changeStartDate($event)"
+          (onChangeEndDate)="changeEndDate($event)"
+        />
+      </div>
+      <span
+        class="filter-valid"
+        *ngIf="startDateForm.value === '' || endDateForm.value === ''"
+      >
+        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
+        Date range is required!
+      </span>
+      <span class="filter-valid" *ngIf="invalidStartEndDate()">
+        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
+        the start date cannot exceed the end date!
+      </span>
+    </div>
+    <!-- DATE FORM  -->
+
+    <!-- MATTER FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Matter</fui-text>
+      <div class="time-description">
+        <fui-combo-box
+          (selection)="selectionMatter($event)"
+          [comboxForm]="searchMatterForm"
+          [size]="'m'"
+          [placeholder]="'Matter'"
+          [optionValue]="optionMatter"
+          [selectedValue]="selectedMatter"
+        />
+      </div>
+    </div>
+    <!-- MATTER FORM  -->
+
+    <hr class="line-hr" />
+
+    <!-- DESC FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Time Description</fui-text>
+      <div class="time-description">
+        <fui-form-control-layout>
+          <fui-input-field
+            [formControlField]="descriptionForm"
+            [placeholder]="'Description'"
+            [type]="'text'"
+            [size]="'m'"
+            [invalid]="false"
+          />
+        </fui-form-control-layout>
+      </div>
+    </div>
+    <!-- DESC FORM  -->
+  </div>
+
+  <!-- FOOTER FLYOUT FILTER  -->
+  <div class="flex" footer>
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'text'"
+      [style]="'secondary'"
+      [text]="'Cancel'"
+      [size]="'s'"
+      [color]="'text'"
+    />
+    <div class="group-flex">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'secondary'"
+        [text]="'Clear Filter'"
+        [size]="'s'"
+        [color]="'text'"
+      />
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'iconText'"
+        [style]="'filled'"
+        [text]="'Apply Filter'"
+        [size]="'s'"
+        [color]="'primary'"
+        [icon]="'filter'"
+      />
+    </div>
+  </div>
+  <!-- FOOTER FLYOUT FILTER  -->
+</shared-flyout-simple>
+<!-- FILTER TIMESHEET  -->
+
+<!-- TOAST -->
 <fui-toast />
+<!-- TOAST -->

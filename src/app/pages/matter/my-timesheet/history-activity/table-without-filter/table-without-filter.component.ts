@@ -4,14 +4,10 @@ import {
   EventEmitter,
   Input,
   Output,
-  SimpleChange,
   SimpleChanges,
 } from '@angular/core';
 import {
-  ActivityDTO,
-  MatterDTO,
   MyTimesheetDTO,
-  MyTimesheetPostDTO,
   TimesheetByDateDTO,
 } from '../../dtos/my-timesheet.dto';
 import {
@@ -35,10 +31,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MyTimesheetService } from '../../services/my-timesheet.service';
 import { BaseController } from '../../../../../core/controller/basecontroller';
 import { EmptyDataComponent } from '../../../../../shared/empty-data/empty-data.component';
-import { debounceTime, map, Subscription, tap } from 'rxjs';
 import { EditTagTimesheetFlyoutComponent } from '../../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
 import { ModalDeleteComponent } from '../../../../../shared/modal-delete/modal-delete.component';
 import { EditTimesheetFlyoutComponent } from '../../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';

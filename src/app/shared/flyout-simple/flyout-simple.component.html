@@ -1,0 +1,28 @@
+<fui-flyout
+  [zIndex]="2"
+  [open]="isOpenFlyout"
+  [flyoutSize]="'s'"
+  [flyoutPadding]="'s'"
+>
+  <fui-flyout-header (onCloseFlyout)="toggleCloseFlyout()">
+    <div class="header-flyout">
+      <fui-text [size]="'sizexl'" [weight]="'semibold'">{{ titleFlyout }}</fui-text>
+    </div>
+  </fui-flyout-header>
+  <fui-flyout-body>
+    <div class="flyout-body">
+
+      <!-- BODY -->
+      <ng-content select="[body]"></ng-content>
+      <!-- BODY -->
+
+    </div>
+  </fui-flyout-body>
+  <fui-flyout-footer [isFlyoutFooterCustom]="true">
+
+    <!-- FOOTER -->
+    <ng-content select="[footer]"></ng-content>
+    <!-- FOOTER -->
+
+  </fui-flyout-footer>
+</fui-flyout>
