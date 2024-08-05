@@ -217,7 +217,11 @@ export class LayoutsComponent {
   /** Getting data user from keycloak */
   getUser(): void {
     this.authService.getUserInfo(keycloak).subscribe((res) => {
-      this.nameUser = res.name;
+      if (res) {
+        this.nameUser = res.name;
+      } else {
+        this.nameUser = 'Username';
+      }
     });
   }
 }
