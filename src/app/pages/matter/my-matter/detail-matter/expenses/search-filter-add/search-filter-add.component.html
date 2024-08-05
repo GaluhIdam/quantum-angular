@@ -1,0 +1,231 @@
+<div class="container">
+  <!-- INPUT FORM SEARCH -->
+  <fui-form-control-layout class="full-width mr-10">
+    <fui-input-field
+      [type]="'text'"
+      [invalid]="false"
+      [size]="'m'"
+      [placeholder]="'Search by expenses description'"
+    >
+      <fui-icons
+        left-icon
+        [color]="'text'"
+        [icon]="'search'"
+        [size]="'sizem'"
+      />
+    </fui-input-field>
+  </fui-form-control-layout>
+  <!-- INPUT FORM SEARCH -->
+
+  <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+  <fui-button-icon
+    (onClick)="toggleOpenFlyout()"
+    [color]="'text'"
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'filter'"
+    [style]="'secondary'"
+    [size]="'m'"
+    [text]="'Filter'"
+  />
+  <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+
+  <!-- BUTTON FILTER FOR Add Expense -->
+  <fui-button-icon
+    [color]="'primary'"
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'plusInCircle'"
+    [style]="'filled'"
+    [size]="'m'"
+    [text]="'Add Expense'"
+  />
+  <!-- BUTTON FILTER FOR Add Expense -->
+</div>
+
+<!-- FLYOUT FILTER -->
+<fui-flyout
+  [zIndex]="2"
+  [open]="isOpenFlyout"
+  [flyoutSize]="'s'"
+  [flyoutPadding]="'s'"
+>
+  <!-- HEADER FLYOUT -->
+  <fui-flyout-header (onCloseFlyout)="toggleCloseFlyout()">
+    <div class="header-flyout">
+      <h2>Expense Filter</h2>
+    </div>
+  </fui-flyout-header>
+  <!-- HEADER FLYOUT -->
+
+  <!-- BODY FLYOUT -->
+  <fui-flyout-body>
+    <div class="body-flyout">
+      <!-- REQUESTED BY -->
+      <div class="form">
+        <p class="label">Requested By</p>
+        <fui-combo-box
+          [invalid]="false"
+          [message]="'Requested by is required!'"
+          [singleSelection]="true"
+          [size]="'m'"
+          [placeholder]="'Select requested by'"
+          [optionValue]="[]"
+          [selectedValue]="[]"
+        />
+      </div>
+      <!-- REQUESTED BY -->
+
+      <!-- ITEM CATEGORY -->
+      <div class="form">
+        <p class="label">Item Category</p>
+        <fui-combo-box
+          [invalid]="false"
+          [message]="'Item category is required!'"
+          [singleSelection]="true"
+          [size]="'m'"
+          [placeholder]="'Select item category'"
+          [optionValue]="[]"
+          [selectedValue]="[]"
+        />
+      </div>
+      <!-- ITEM CATEGORY -->
+
+      <!-- DATE -->
+      <div class="form">
+        <p class="label">Date</p>
+        <fui-date-range />
+      </div>
+      <!-- DATE -->
+
+      <!-- Vendor Invoice Number & Payment Number -->
+      <div class="flex">
+        <!-- Vendor Invoice Number -->
+        <div class="form-flex">
+          <p class="label">Vendor Invoice Number</p>
+          <fui-form-control-layout class="full-width">
+            <fui-input-field
+              [type]="'text'"
+              [invalid]="false"
+              [size]="'m'"
+              [placeholder]="'Type vendor invoice number'"
+            >
+            </fui-input-field>
+          </fui-form-control-layout>
+        </div>
+        <!-- Vendor Invoice Number -->
+
+        <!-- Payment Number -->
+        <div class="form-flex">
+          <p class="label">Payment Number</p>
+          <fui-form-control-layout class="full-width">
+            <fui-input-field
+              [type]="'text'"
+              [invalid]="false"
+              [size]="'m'"
+              [placeholder]="'Type payment number'"
+            >
+            </fui-input-field>
+          </fui-form-control-layout>
+        </div>
+        <!-- Payment Number -->
+      </div>
+      <!-- Vendor Invoice Number & Payment Number -->
+
+      <!-- Amount -->
+      <div class="form">
+        <p class="label">Amount</p>
+        <div class="flex-amount">
+          <!-- Amount -->
+          <div class="form-flex">
+            <fui-form-control-layout class="full-width">
+              <fui-input-field
+                [type]="'text'"
+                [invalid]="false"
+                [size]="'m'"
+                [placeholder]="'Min. Amount'"
+              >
+              </fui-input-field>
+            </fui-form-control-layout>
+          </div>
+          <!-- Amount -->
+          <fui-icons [icon]="'sortRight'" [size]="'sizem'" [color]="'text'" />
+          <!-- Amount -->
+          <div class="form-flex">
+            <fui-form-control-layout class="full-width">
+              <fui-input-field
+                [type]="'text'"
+                [invalid]="false"
+                [size]="'m'"
+                [placeholder]="'Max. Amount'"
+              >
+              </fui-input-field>
+            </fui-form-control-layout>
+          </div>
+          <!-- Amount -->
+        </div>
+      </div>
+      <!-- Amount -->
+
+      <!-- Collection Status -->
+      <div class="form">
+        <p class="label">Collection Status</p>
+        <fui-combo-box
+          [invalid]="false"
+          [message]="'Collection status is required!'"
+          [singleSelection]="true"
+          [size]="'m'"
+          [placeholder]="'Select collection status'"
+          [optionValue]="[]"
+          [selectedValue]="[]"
+        />
+      </div>
+      <!-- Collection Status -->
+
+      <!-- Collected In -->
+      <div class="form">
+        <p class="label">Collected In</p>
+        <fui-combo-box
+          [invalid]="false"
+          [message]="'Collected In is required!'"
+          [singleSelection]="true"
+          [size]="'m'"
+          [placeholder]="'Select billing number'"
+          [optionValue]="[]"
+          [selectedValue]="[]"
+        />
+      </div>
+      <!-- Collected In -->
+    </div>
+  </fui-flyout-body>
+  <fui-flyout-footer [isFlyoutFooterCustom]="true">
+    <div class="footer-flyout">
+      <fui-button-icon
+        (onClick)="toggleCloseFlyout()"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [style]="'secondary'"
+        [color]="'text'"
+      />
+      <div class="sub-button">
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'text'"
+          [text]="'Clear Filters'"
+          [style]="'secondary'"
+          [color]="'primary'"
+        />
+        <fui-button-icon
+          [type]="'button'"
+          [icon]="'filter'"
+          [option]="'iconText'"
+          [text]="'Apply Filters'"
+          [style]="'filled'"
+          [color]="'primary'"
+        />
+      </div>
+    </div>
+  </fui-flyout-footer>
+</fui-flyout>
+<!-- FLYOUT FILTER -->

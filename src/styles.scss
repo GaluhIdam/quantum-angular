@@ -1,1 +1,123 @@
 /* You can add global styles to this file, and also import other style files */
+@import "@quantum/fui";
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+a,
+li,
+blockquote,
+pre,
+code {
+  margin: 0;
+}
+
+/** Custom Theme */
+.dark {
+  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+  color: #fff;
+  :host {
+    --fuiColorGhost: #000;
+    --fuiColorInk: #fff;
+
+    // Core
+    --fuiColorPrimary: rgb(54, 162, 239);
+    --fuiColorAccent: rgb(246, 143, 190);
+    --fuiColorSuccess: rgb(125, 222, 216);
+    --fuiColorWarning: rgb(243, 211, 113);
+    --fuiColorDanger: rgb(248, 114, 107);
+
+    // Grays
+    --fuiColorEmptyShade: #141414;
+    --fuiColorLightestShade: #1e1e1e;
+    --fuiColorLightShade: #343741;
+    --fuiColorMediumShade: #535966;
+    --fuiColorDarkShade: #98a2b3;
+    --fuiColorDarkestShade: #d4dae5;
+    --fuiColorFullShade: #fff;
+
+    /** Button */
+    --fuiBtnPrimary: rgb(54, 162, 239);
+    --fuiBtnSuccess: rgb(125, 222, 216);
+    --fuiBtnWarning: rgb(243, 211, 113);
+    --fuiBtnDanger: rgb(248, 107, 99);
+    --fuiBtnText: rgb(223, 229, 239);
+    --fuiBtnAccent: rgb(246, 143, 190);
+    --fuiBtnDisabled: rgba(52, 55, 65, 0.15);
+
+    /* Button Background Color Secondary */
+    --fuiPrimarySecondary: rgb(16, 49, 72);
+    --fuiSuccessSecondary: rgb(38, 67, 65);
+    --fuiWarningSecondary: rgb(73, 63, 34);
+    --fuiDangerSecondary: rgb(74, 32, 30);
+    --fuiTextSecondary: rgb(42, 44, 52);
+    --fuiAccentSecondary: rgb(74, 43, 57);
+    --fuiDisabledSecondary: rgba(52, 55, 65, 0.15);
+
+    /* Button Text Color Secondary */
+    --fuiBtnPrimaryText: rgb(54, 162, 239);
+    --fuiBtnSuccessText: rgb(125, 222, 216);
+    --fuiBtnWarningText: rgb(243, 211, 113);
+    --fuiBtnDangerText: rgb(248, 114, 107);
+    --fuiBtnTextText: rgb(223, 229, 239);
+    --fuiBtnAccentText: rgb(246, 143, 190);
+    --fuiBtnDisabledText: rgb(81, 87, 97);
+  }
+}
+
+.light {
+  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+  color: #000;
+  :host {
+    --fuiColorGhost: #fff;
+    --fuiColorInk: #000;
+
+    // Core
+    --fuiColorPrimary: #006bb4;
+    --fuiColorAccent: #dd0a73;
+    --fuiColorSuccess: #017d73;
+    --fuiColorWarning: #b37a00;
+    --fuiColorDanger: #bd271e;
+
+    // Grays
+    --fuiColorEmptyShade: #f5f7fa;
+    --fuiColorLightestShade: #fff;
+    --fuiColorLightShade: #d3dae6;
+    --fuiColorMediumShade: #98a2b3;
+    --fuiColorDarkShade: #69707d;
+    --fuiColorDarkestShade: #25282f;
+    --fuiColorFullShade: #000;
+
+    /* Button Background Color Filled */
+    $fuiBtnPrimary: rgb(0, 119, 204);
+    $fuiBtnSuccess: rgb(77, 210, 202);
+    $fuiBtnWarning: rgb(254, 197, 20);
+    $fuiBtnDanger: rgb(189, 39, 30);
+    $fuiBtnText: rgb(105, 112, 125);
+    $fuiBtnAccent: rgb(245, 131, 183);
+    $fuiBtnDisabled: rgba(211, 218, 230, 0.15);
+
+    /* Button Background Color Secondary */
+    $fuiPrimarySecondary: rgb(204, 228, 245);
+    $fuiSuccessSecondary: rgb(204, 242, 240);
+    $fuiWarningSecondary: rgb(255, 243, 208);
+    $fuiDangerSecondary: rgb(242, 212, 210);
+    $fuiTextSecondary: rgb(233, 237, 243);
+    $fuiAccentSecondary: rgb(252, 220, 234);
+    $fuiDisabledSecondary: rgba(211, 218, 230, 0.15);
+
+    /* Button Text Color Secondary */
+    $fuiBtnPrimaryText: rgb(0, 97, 166);
+    $fuiBtnSuccessText: rgb(0, 108, 102);
+    $fuiBtnWarningText: rgb(131, 101, 10);
+    $fuiBtnDangerText: rgb(171, 35, 28);
+    $fuiBtnTextText: rgb(52, 55, 65);
+    $fuiBtnAccentText: rgb(160, 52, 101);
+    $fuiBtnDisabledText: rgb(162, 171, 186);
+  }
+}

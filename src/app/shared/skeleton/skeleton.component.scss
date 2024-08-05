@@ -1,0 +1,28 @@
+@import "../../../styles.scss";
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+
+  .active {
+    background-color: var(--fuiColorLightShade, $fuiColorLightShade);
+    animation: pulse 0.8s infinite alternate;
+    border-radius: 3px;
+  }
+
+  @keyframes pulse {
+    from {
+      background-color: var(--fuiColorLightShade, $fuiColorLightShade);
+    }
+    to {
+      background-color: var(--fuiColorMediumShade, $fuiColorMediumShade);
+    }
+  }
+}
+
+.invisible {
+  visibility: hidden;
+}
+.visible {
+  visibility: visible;
+}

@@ -1,0 +1,23 @@
+<div class="header ytd">
+  <fui-text [weight]="'semibold'" [size]="'sizem'">YTD Productivity</fui-text>
+</div>
+<div class="body" *ngIf="optionBar.series.length > 0">
+  <div class="chart">
+    <app-skeleton [active]="loading">
+      <fui-echarts
+        [height]="'160px'"
+        [chartOption]="optionBar"
+        [themeCustom]="true"
+      ></fui-echarts>
+    </app-skeleton>
+  </div>
+</div>
+<div class="empty" *ngIf="optionBar.series.length === 0">
+  <app-skeleton [active]="loading">
+    <app-empty-data
+      [title]="'N/A'"
+      [subTitle]="'You don’t have any target data for productivity'"
+      [dataLength]="optionBar.series.length"
+    />
+  </app-skeleton>
+</div>

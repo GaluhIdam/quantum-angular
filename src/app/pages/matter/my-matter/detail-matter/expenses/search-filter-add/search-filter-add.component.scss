@@ -1,0 +1,83 @@
+@import "../expenses.component.scss";
+
+.container {
+  display: flex;
+  fui-form-control-layout {
+    width: -webkit-fill-available;
+  }
+  fui-button-icon {
+    margin-left: 15px;
+    margin-right: 15px;
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+
+/** Flyout config */
+.header-flyout {
+  padding: 15px;
+}
+.body-flyout {
+  justify-items: center;
+  padding: 15px;
+}
+.footer-flyout {
+  width: 100%;
+  display: flex;
+  padding: 15px;
+  justify-content: space-between;
+  .sub-button {
+    display: flex;
+    fui-button-icon {
+      margin-right: 8px;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}
+
+/** Form Config */
+.form {
+  margin-bottom: 20px;
+  .label {
+    font-size: smaller;
+    margin-bottom: 5px;
+  }
+}
+
+.flex {
+  display: flex;
+  margin-bottom: 20px;
+  .form-flex {
+    margin-right: 8px;
+    &:last-child {
+      margin: 0;
+    }
+    .label {
+      font-size: smaller;
+      margin-bottom: 5px;
+      text-wrap: nowrap;
+    }
+  }
+}
+
+.flex-amount {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+  .form-flex {
+    margin-right: 8px;
+    &:last-child {
+      margin: 0;
+    }
+    .label {
+      font-size: smaller;
+      margin-bottom: 5px;
+    }
+  }
+  fui-icons {
+    margin-right: 5px;
+  }
+}

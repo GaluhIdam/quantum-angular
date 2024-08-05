@@ -1,0 +1,23 @@
+@import "../layouts/layouts.component.scss";
+
+/** Modal Config */
+.title-modal {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  h3 {
+    color: var(--fuiColorDanger, $fuiColorDanger);
+  }
+}
+.title-modal.foot {
+  display: flex;
+  padding: 10px;
+  justify-content: end;
+  fui-button-icon {
+    margin-left: 10px;
+  }
+}
+.modal {
+  padding: 10px;
+  width: 350px;
+}

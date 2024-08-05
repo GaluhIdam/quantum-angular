@@ -1,0 +1,94 @@
+@import "../my-timesheet.component.scss";
+
+
+.header.productivity {
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-weight: normal;
+  display: flex;
+}
+
+.select {
+  display: flex;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
+  .icon-title {
+    margin-left: 5px;
+  }
+}
+
+.title-select {
+  user-select: none;
+  display: flex;
+  color: var(--fuiColorPrimary, $fuiColorPrimary);
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.container-option {
+  display: flex;
+  .wrap-option {
+    display: grid;
+  }
+  .wrap-icon {
+    display: grid;
+    margin-right: 5px;
+  }
+}
+.option-pop {
+  user-select: none;
+  margin-bottom: 5px;
+  color: var(--fuiColorPrimary, $fuiColorPrimary);
+  text-wrap: nowrap;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.progress {
+  margin: 0px 0px 25px 0px;
+}
+.legend {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+  .legend-title {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    text-wrap: nowrap;
+  }
+
+  margin-right: 0px;
+  .legend-title:last-child {
+    display: flex;
+    align-items: center;
+    text-wrap: nowrap;
+  }
+}
+@media (max-width: 400px) {
+  .legend {
+    display: block;
+  }
+}
+
+.color-square {
+  margin-right: 5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+}
+.color-square.primary {
+  background-color: var(--fuiColorPrimary, $fuiColorPrimary);
+}
+.color-square.text {
+  background-color: var(--fuiColorDarkShade, $fuiColorDarkShade);
+}
+.color-square.disabled {
+  background-color: #d3dae6;
+}

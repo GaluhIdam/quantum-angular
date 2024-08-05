@@ -1,0 +1,54 @@
+@import "../../../app.component.scss";
+
+.title-page {
+  margin-bottom: 45px;
+}
+.filter-applied {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+.filter-group {
+  width: 100%;
+  text-wrap: nowrap;
+}
+fui-filter-group {
+  width: 45%;
+}
+.app-filter-applied {
+  width: 55%;
+}
+.filter-title {
+  padding: 4px 6px;
+  width: fit-content;
+  text-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .icon {
+    background-color: var(--fuiColorLightShade, $fuiColorLightShade);
+    font-size: 11px;
+    padding: 2px 3px;
+    border-radius: 3px;
+    margin-left: 5px;
+    text-decoration: none;
+    &.accent {
+      color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+      background-color: var(--fuiColorAccent, $fuiColorAccent);
+    }
+  }
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  gap: 0;
+}
+.loader {
+  margin-top: 30px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}

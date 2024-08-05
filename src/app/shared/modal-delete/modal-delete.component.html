@@ -1,0 +1,35 @@
+<fui-modal [open]="openModalDelete">
+  <fui-modal-header (onCloseModal)="closelModalDelete()">
+    <div class="title-modal">
+      <h3>{{ title }}</h3>
+    </div>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="modal">
+      <fui-text>{{ desc }}</fui-text>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer [isCustomModalFooter]="true">
+    <div class="title-modal foot">
+      <fui-button-icon
+        (onClick)="closelModalDelete()"
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [style]="'secondary'"
+        [color]="'text'"
+      />
+      <fui-button-icon
+        (onClick)="deleteAction()"
+        [size]="'m'"
+        [type]="'button'"
+        [option]="option"
+        [text]="btnContinue"
+        [style]="'filled'"
+        [color]="'danger'"
+        [icon]="icon"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>

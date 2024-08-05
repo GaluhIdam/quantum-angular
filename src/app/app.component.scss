@@ -1,0 +1,38 @@
+@import "../styles.scss";
+
+.layout {
+  display: flex;
+  .header {
+    width: -webkit-fill-available;
+    .body {
+      padding: 20px;
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 20;
+    }
+  }
+}
+.logo {
+  display: flex;
+  margin-left: 10px;
+  .img-logo {
+    margin-right: 5px;
+  }
+}
+
+
+/** Add On*/
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--fuiColorMediumShade, $fuiColorMediumShade);
+  border-radius: 25px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fuiColorDarkShade, $fuiColorDarkShade);
+}

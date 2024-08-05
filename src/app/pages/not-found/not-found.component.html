@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="sub-container">
+    <h1 class="title">404</h1>
+  </div>
+  <div class="sub-container block">
+    <div class="flex">
+      <fui-icons [icon]="'search'" [size]="'sizexl'" [color]="'danger'" />
+      <fui-text [color]="'danger'" [size]="'sizexxl'" [weight]="'bold'"
+        >Page Not Found</fui-text
+      >
+    </div>
+    <p>
+      We're sorry, but it appears the website address your entered was
+      incorrect.
+    </p>
+  </div>
+</div>
+
+<div class="container">
+  <fui-button-icon
+    (onClick)="backToHome()"
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'sortLeft'"
+    [text]="'Back to home'"
+  />
+</div>

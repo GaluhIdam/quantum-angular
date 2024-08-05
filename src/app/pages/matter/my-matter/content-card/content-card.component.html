@@ -1,0 +1,127 @@
+<div class="card">
+  <div class="row-head">
+    <h1 class="title">5889-1 Matter Project Name</h1>
+    <fui-button-icon
+      (onClick)="gotoPage()"
+      [type]="'button'"
+      [option]="'icon'"
+      [color]="'primary'"
+      [style]="'secondary'"
+      [icon]="'boxesHorizontal'"
+    />
+  </div>
+  <div class="row-sub">
+    <div class="badge-group">
+      <fui-badge
+        [color]="'ghost'"
+        [isBadgeIcon]="true"
+        [icon]="'node'"
+        [sizeIcon]="'sizes'"
+        [size]="'sizel'"
+      >
+        <p class="desc">Ministry of Republic Indonesia</p>
+      </fui-badge>
+      <fui-badge [color]="'ghost'" [size]="'sizel'"> +2 others </fui-badge>
+    </div>
+  </div>
+  <div class="row-desc">
+    <p class="desc">
+      Phasellus accumsan imperdiet tempor. Cras tincidunt, arcu nec eleifend
+      porttitor, orci est vehicula Phasellus accumsan imperdiet tempor. Cras
+      tincidunt, arcu nec eleifend porttitor, orci est vehicula Phasellus
+      accumsan imperdiet tempor. Cras tincidunt, arcu nec eleifend porttitor,
+      orci est vehicula
+    </p>
+  </div>
+  <div class="hr">
+    <hr width="140" />
+  </div>
+
+  <div
+    class="row-sub"
+    [ngStyle]="{
+      visibility: type === 1 || type === 2 || type === 3 ? 'visible' : 'hidden'
+    }"
+  >
+    <div
+      class="billble"
+      [ngStyle]="{
+        visibility:
+          type === 1 || type === 2 || type === 3 ? 'visible' : 'hidden'
+      }"
+    >
+      <p>Partner in Charge</p>
+      <p>(BS) Brooklyn Simmons</p>
+    </div>
+    <div
+      class="billble"
+      [ngStyle]="{
+        visibility: type === 1 || type === 2 ? 'visible' : 'hidden'
+      }"
+    >
+      <p>Unbilled</p>
+      <p>USD 25,500.00</p>
+    </div>
+    <div
+      class="billble"
+      [ngStyle]="{
+        visibility: type === 1 || type === 2 ? 'visible' : 'hidden'
+      }"
+    >
+      <p>Uncollected</p>
+      <p>USD 3,500.00</p>
+    </div>
+    <div
+      class="billble"
+      [ngStyle]="{ visibility: type === 1 ? 'visible' : 'hidden' }"
+    >
+      <fui-progress
+        [value]="50"
+        [max]="100"
+        [color]="'primary'"
+        [size]="'sizedefault'"
+        [label]="'Budget'"
+      ></fui-progress>
+    </div>
+  </div>
+
+  <hr />
+  <div class="row-foot">
+    <fui-badge [color]="'ghost'" [size]="'sizem'"> <b>Billable</b> </fui-badge>
+    <fui-badge [color]="'ghost'" [size]="'sizem'">
+      <b>Hourly</b>
+    </fui-badge>
+    <fui-badge
+      [color]="
+        type === 1
+          ? 'success'
+          : type === 2
+          ? 'warning'
+          : type === 3
+          ? 'danger'
+          : 'text'
+      "
+      [size]="'sizel'"
+    >
+      <b>{{
+        type === 1
+          ? "Active"
+          : type === 2
+          ? "Complete"
+          : type === 3
+          ? "Pending"
+          : "Closed"
+      }}</b>
+    </fui-badge>
+    <fui-badge
+      [isBadgeIcon]="true"
+      [color]="'ghost'"
+      [iconPosition]="'start'"
+      [icon]="'timeRefresh'"
+      [size]="'sizem'"
+      [sizeIcon]="'sizes'"
+    >
+      <b> 3 Jan 24</b>
+    </fui-badge>
+  </div>
+</div>
