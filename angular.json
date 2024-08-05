@@ -17,10 +17,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "allowedCommonJsDependencies": [
-              "dayjs",
-              "dayjs/plugin/customParseFormat"
-            ],
             "outputPath": "dist/quantum-angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -44,13 +40,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "5000000000kb",
-                  "maximumError": "1000mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2000000000kb",
-                  "maximumError": "4000000000kb"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ],
               "outputHashing": "all",
