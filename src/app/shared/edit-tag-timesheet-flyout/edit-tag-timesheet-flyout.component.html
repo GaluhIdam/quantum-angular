@@ -147,6 +147,7 @@
           <fui-combo-box
             [leftIcon]="'search'"
             (selection)="selectionMatter($event)"
+            [disabled]="true"
             [comboxForm]="matterSearch"
             [invalid]="matterSearch.invalid && matterSearch.dirty"
             [message]="'Matter is required!'"
