@@ -1,82 +1,95 @@
 <app-skeleton [active]="loading">
-  <!-- SIMPLE UTILITY TABLE  -->
-  <shared-table-utility-simple
-    [leftBeforeBtnUtil]="leftBeforeUtilBtn"
-    [leftAfterBtnUtil]="leftAfterUtilBtn"
-    [leftAfterBagdeUtil]="leftAfterUtilBadge"
-    [rightBeforeBtnUtil]="rightBeforeBtnUtil"
-    (btnAction)="btnActionUtil($event)"
-  >
-    <div left-util>
-      <fui-text class="hour-minute" [weight]="'semibold'">
-        {{ startDate | date : "d MMMM yyyy" }} -
-        {{ endDate | date : "d MMMM yyyy" }}</fui-text
+  <div class="overlow-x">
+    <div class="wrap">
+      <!-- SIMPLE UTILITY TABLE  -->
+      <shared-table-utility-simple
+        [leftBeforeBtnUtil]="leftBeforeUtilBtn"
+        [leftAfterBtnUtil]="leftAfterUtilBtn"
+        [leftAfterBagdeUtil]="leftAfterUtilBadge"
+        [rightBeforeBtnUtil]="rightBeforeBtnUtil"
+        (btnAction)="btnActionUtil($event)"
       >
+        <div left-util>
+          <fui-text class="hour-minute" [textWrap]="'nowrap'" [weight]="'semibold'">
+            {{ startDate | date : "d MMMM yyyy" }} -
+            {{ endDate | date : "d MMMM yyyy" }}</fui-text
+          >
+        </div>
+      </shared-table-utility-simple>
+      <!-- SIMPLE UTILITY TABLE  -->
+
+      <!-- FILTER APPLIED -->
+      <shared-filter-applied
+        class="mb-15"
+        [filterApllied]="filterApplied"
+        (clearAllFilterOut)="clearAllFilterOut($event)"
+      />
+      <!-- FILTER APPLIED -->
+
+      <!-- MATTER MOVE -->
+      <app-move-matter
+        *ngIf="timesheetSelected.length > 0"
+        [listMatters]="listMatters"
+        [timesheetSelected]="timesheetSelected"
+        (action)="actionMoveTimesheet($event)"
+      />
+      <!-- MATTER MOVE -->
+      <!-- TABLE WITHOUT FILTER -->
+      <app-table-without-filter
+        *ngIf="!checkFilter()"
+        [dateTimesheetByDate]="dateTimesheetByDate"
+        [timesheetSelected]="timesheetSelected"
+        (timesheetSelectedOut)="timesheetSelectedOut($event)"
+        (action)="actionTableFilter($event)"
+      />
+      <!-- TABLE WITHOUT FILTER -->
+
+      <!-- TABLE WITH FILTER-->
+      <app-table-filter
+        class="container-table"
+        *ngIf="checkFilter()"
+        [page]="page"
+        [limit]="limit"
+        [totalItems]="totalItems"
+        [dataTimesheet]="dataTimesheet"
+        [timesheetSelected]="timesheetSelected"
+        (onPageChangeOut)="onPageChangeOut($event)"
+        (timesheetSelectedOut)="timesheetSelectedOut($event)"
+        (action)="actionTableFilter($event)"
+      />
+      <!-- TABLE WITH FILTER-->
     </div>
-  </shared-table-utility-simple>
-  <!-- SIMPLE UTILITY TABLE  -->
-
-  <!-- FILTER APPLIED -->
-  <app-filter-applied
-    class="mb-15"
-    [filterApllied]="filterApplied"
-    (clearAllFilterOut)="clearAllFilterOut($event)"
-  />
-  <!-- FILTER APPLIED -->
-
-  <!-- MATTER MOVE -->
-  <app-move-matter
-    *ngIf="timesheetSelected.length > 0"
-    [listMatters]="listMatters"
-    [timesheetSelected]="timesheetSelected"
-    (clearSelectionOut)="clearSelectionOut($event)"
-  />
-  <!-- MATTER MOVE -->
-
-  <!-- TABLE WITHOUT FILTER -->
-  <app-table-without-filter
-    *ngIf="!checkFilter()"
-    [dateTimesheetByDate]="dateTimesheetByDate"
-    [timesheetSelected]="timesheetSelected"
-    (timesheetSelectedOut)="timesheetSelectedOut($event)"
-    (clickOpenEdit)="clickOpenEdit($event)"
-    (clickOpenEditTag)="clickOpenEditTag($event)"
-  />
-  <!-- TABLE WITHOUT FILTER -->
-
-  <!-- TABLE WITH FILTER-->
-  <app-table-filter
-    class="container-table"
-    *ngIf="checkFilter()"
-    [page]="page"
-    [limit]="limit"
-    [totalItems]="totalItems"
-    [dataTimesheet]="dataTimesheet"
-    (onPageChangeOut)="onPageChangeOut($event)"
-    (timesheetCheckedOut)="timesheetSelectedOut($event)"
-  />
-  <!-- TABLE WITH FILTER-->
+  </div>
 </app-skeleton>
 
 <!-- FLYOUT CREATE TIMESHEET -->
 <app-create-timesheet-flyout
+  [listMatters]="listMatters"
+  [listActivities]="listActivities"
   [isOpenFlyout]="isOpenCreateFlyout"
   (closeOut)="closeOutCreate($event)"
 />
 <!-- FLYOUT CREATE TIMESHEET -->
 
 <!-- EDIT TIMESHEET FLYOUT -->
-<app-edit-timesheet-flyout
+<shared-edit-timesheet-flyout
+  [listActivities]="listActivities"
+  [timesheet]="timesheetEditSelected"
+  [enableMatterSearchForm]="false"
   [isOpenFlyout]="isOpenEditFlyout"
   (closeOut)="closeOutEdit($event)"
 />
 <!-- EDIT TIMESHEET FLYOUT -->
 
 <!-- EDIT TAG FLYOUT -->
-<app-edit-tag-timesheet-flyout [isOpenFlyout]="isOpenEditTagFlyout" />
+<app-edit-tag-timesheet-flyout
+  [listActivities]="listActivities"
+  [timesheet]="timesheetEditSelected"
+  [enableMatterSearchForm]="false"
+  [isOpenFlyout]="isOpenEditTagFlyout"
+  (closeOut)="closeOutEditTag($event)"
+/>
 <!-- EDIT TAG FLYOUT -->
-
-<!-- _________________________________________________ -->
 
 <!-- FILTER TIMESHEET  -->
 <shared-flyout-simple
@@ -147,13 +160,13 @@
   </div>
 
   <!-- FOOTER FLYOUT FILTER  -->
-  <div class="flex" footer>
+  <div class="footer-flyout" footer>
     <fui-button-icon
       [type]="'button'"
       [option]="'text'"
       [style]="'secondary'"
       [text]="'Cancel'"
-      [size]="'s'"
+      [size]="'m'"
       [color]="'text'"
     />
     <div class="group-flex">
@@ -162,15 +175,16 @@
         [option]="'text'"
         [style]="'secondary'"
         [text]="'Clear Filter'"
-        [size]="'s'"
+        [size]="'m'"
         [color]="'text'"
       />
       <fui-button-icon
+        (onClick)="actionFilter($event)"
         [type]="'button'"
         [option]="'iconText'"
         [style]="'filled'"
         [text]="'Apply Filter'"
-        [size]="'s'"
+        [size]="'m'"
         [color]="'primary'"
         [icon]="'filter'"
       />
@@ -179,6 +193,13 @@
   <!-- FOOTER FLYOUT FILTER  -->
 </shared-flyout-simple>
 <!-- FILTER TIMESHEET  -->
+
+<!-- MODAL DELETE  -->
+<shared-modal-delete
+  [openModalDelete]="isModalDelete"
+  (action)="actionModal($event)"
+/>
+<!-- MODAL DELETE  -->
 
 <!-- TOAST -->
 <fui-toast />

@@ -4,7 +4,7 @@ import { BadgeComponent } from '@quantum/fui';
 import { FilterAplliedDTO } from './filter-apllied.dto';
 
 @Component({
-  selector: 'app-filter-applied',
+  selector: 'shared-filter-applied',
   standalone: true,
   imports: [CommonModule, BadgeComponent],
   templateUrl: './filter-applied.component.html',

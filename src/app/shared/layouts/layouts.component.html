@@ -233,11 +233,13 @@
   </div>
 </div>
 <app-create-timesheet-flyout
+  [listActivities]="activitesData"
+  [listMatters]="mattersData"
   [isOpenFlyout]="isOpenFlyout"
   (closeOut)="closeOut($event)"
 />
 <!-- </fui-page> -->
-<app-modal-delete
+<shared-modal-delete
   [openModalDelete]="logoutModal"
   (deleteActionOut)="logoutAction()"
   [title]="'Are you sure want to sign out?'"

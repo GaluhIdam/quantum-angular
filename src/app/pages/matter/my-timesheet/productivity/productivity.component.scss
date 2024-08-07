@@ -1,6 +1,5 @@
 @import "../my-timesheet.component.scss";
 
-
 .header.productivity {
   justify-content: space-between;
   margin-bottom: 20px;
@@ -74,6 +73,12 @@
 @media (max-width: 400px) {
   .legend {
     display: block;
+    .legend-title {
+      margin-bottom: 10px;
+      &:last-child {
+        margin-bottom: 0px;
+      }
+    }
   }
 }
 

@@ -160,7 +160,7 @@ export class TableDetailMatterComponent extends BaseController {
 
     this.uuid = data.uuid;
     this.matterId = data.matter.idMatter;
-    this.officialCategoryId = data.officialCategory.idOfficialCategory;
+    // this.officialCategoryId = data.officialCategory.idOfficialCategory;
     this.objectEventForm.setValue(data.description);
     this.dateFormControl.setValue(data.date);
     this.durationForm.setValue(data.duration);
@@ -191,7 +191,7 @@ export class TableDetailMatterComponent extends BaseController {
     this.isOpenFlyoutTagEdit = true;
     this.uuid = param;
     this.matterId = data.matter.idMatter;
-    this.officialCategoryId = data.officialCategory.idOfficialCategory;
+    // this.officialCategoryId = data.officialCategory.idOfficialCategory;
     this.objectEventForm.setValue(data.description);
     this.dateFormControl.setValue(data.date);
     this.durationForm.setValue(data.duration);

@@ -59,14 +59,14 @@
         <div class="form-control">
           <fui-form-control-layout>
             <fui-input-field
-              [formControlField]="objectEventForm"
+              [formControlField]="topicForm"
               [placeholder]="'topics'"
               [type]="'text'"
               [size]="'m'"
-              [invalid]="objectEventForm.invalid && objectEventForm.dirty"
+              [invalid]="topicForm.invalid && topicForm.dirty"
             >
               <fui-icons
-                *ngIf="objectEventForm.invalid && objectEventForm.dirty"
+                *ngIf="topicForm.invalid && topicForm.dirty"
                 right-icon
                 [label]="'right'"
                 [icon]="'alert'"
@@ -78,18 +78,18 @@
         </div>
         <!-- TOPICS FORM  -->
 
-        <!-- TOPICS FORM  -->
+        <!-- ADD DESC FORM  -->
         <div class="form-control">
           <fui-form-control-layout>
             <fui-input-field
-              [formControlField]="objectEventForm"
+              [formControlField]="addDescForm"
               [placeholder]="'Additional description'"
               [type]="'text'"
               [size]="'m'"
-              [invalid]="objectEventForm.invalid && objectEventForm.dirty"
+              [invalid]="addDescForm.invalid && addDescForm.dirty"
             >
               <fui-icons
-                *ngIf="objectEventForm.invalid && objectEventForm.dirty"
+                *ngIf="addDescForm.invalid && addDescForm.dirty"
                 right-icon
                 [label]="'right'"
                 [icon]="'alert'"
@@ -102,33 +102,17 @@
             />
           </fui-form-control-layout>
           <fui-text class="italic" [size]="'sizexs'" [color]="'disabled'"
-            >*Conduct desk research on licensing agreement with JJ.</fui-text
+            >*Conduct desk research & prepare summary on licensing
+            regulation.</fui-text
           >
         </div>
-        <!-- TOPICS FORM  -->
+        <!-- ADD DESC FORM  -->
       </div>
 
       <!-- MATTER FORM  -->
       <div class="form">
         <div class="flex-between">
           <fui-text [size]="'sizes'">Which matter?</fui-text>
-          <div class="checkbox">
-            <input
-              type="checkbox"
-              [(ngModel)]="lockMatter"
-              [checked]="lockMatter"
-              (change)="onCheckboxChangeMatter($event)"
-            />
-            <fui-text [size]="'sizes'">Lock</fui-text>
-            <fui-tooltip
-              [position]="'top'"
-              [align]="'end'"
-              [content]="
-                'Allows you to keep using this value after adding new timesheet.'
-              "
-              ><fui-icons [icon]="'questionInCircle'"
-            /></fui-tooltip>
-          </div>
         </div>
         <div class="form-control">
           <fui-combo-box
@@ -153,23 +137,6 @@
           <div class="sub-form">
             <div class="flex-between">
               <fui-text [size]="'sizes'">Date</fui-text>
-              <div class="checkbox">
-                <input
-                  type="checkbox"
-                  [(ngModel)]="lockMatter"
-                  [checked]="lockMatter"
-                  (change)="onCheckboxChangeMatter($event)"
-                />
-                <fui-text [size]="'sizes'">Lock</fui-text>
-                <fui-tooltip
-                  [position]="'top'"
-                  [align]="'center'"
-                  [content]="
-                    'Allows you to keep using this value after adding new timesheet.'
-                  "
-                  ><fui-icons [icon]="'questionInCircle'"
-                /></fui-tooltip>
-              </div>
             </div>
             <fui-date-picker
               class="form-control"
@@ -211,7 +178,7 @@
         [type]="'button'"
         [option]="'text'"
         [style]="'filled'"
-        [text]="'Accept'"
+        [text]="'Update Timesheet'"
       />
     </div>
   </fui-flyout-footer>

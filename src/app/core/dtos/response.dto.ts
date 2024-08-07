@@ -11,17 +11,11 @@ export interface ResponseDTO<T> {
 
 /** DTO for pagination */
 export interface Result<T> {
-  content: T;
-  pageable: Pageable;
-  last: boolean;
-  totalElements: number;
+  data: T;
+  page: number;
+  limit: number;
+  totalItems: number;
   totalPages: number;
-  size: number;
-  number: number;
-  sort: Sort;
-  first: boolean;
-  numberOfElements: number;
-  empty: boolean;
 }
 
 export interface Pageable {

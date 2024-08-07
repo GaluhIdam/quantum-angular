@@ -135,8 +135,7 @@ export class BaseController {
   }
 
   /** Date Formatter */
-  defaultDate(
-  ): {
+  defaultDate(): {
     startDateForm: string;
     endDateForm: string;
   } {
@@ -221,5 +220,24 @@ export class BaseController {
       untaggedPercentage,
       remainingPercentage,
     };
+  }
+
+  /** Array converter to string
+   * @example
+   * [
+      {
+        "name": "12345",
+        "value": 10001
+      },
+      {
+        "name": "54321",
+        "value": 10002
+      }
+   *]
+    @description
+    to be "12345, 54321"
+   */
+  getNamesAsString(arr: { name: string; value: number }[]): string {
+    return arr.map((item) => item.name).join(',');
   }
 }

@@ -11,7 +11,7 @@ import {
 } from '@quantum/fui';
 
 @Component({
-  selector: 'app-modal-delete',
+  selector: 'shared-modal-delete',
   standalone: true,
   imports: [
     ModalComponent,
@@ -33,19 +33,29 @@ export class ModalDeleteComponent {
   @Input() btnContinue: string = 'Delete';
   @Input() option: 'iconText' | 'icon' | 'text' = 'text';
   @Input() icon: Icon = 'trash';
-  @Output() deleteActionOut: EventEmitter<boolean> =
-    new EventEmitter<boolean>();
-  @Output() cancelOut: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() action: EventEmitter<{
+    name: string;
+    status: boolean;
+  }> = new EventEmitter<{
+    name: string;
+    status: boolean;
+  }>();
 
   /** Close Modal Delete */
   closelModalDelete(): void {
     this.openModalDelete = false;
-    this.cancelOut.emit(this.openModalDelete);
+    this.action.emit({
+      name: 'cancel',
+      status: false,
+    });
   }
 
   /** Send to consumer for continue a process */
   deleteAction(): void {
     this.openModalDelete = false;
-    this.deleteActionOut.emit(this.openModalDelete);
+    this.action.emit({
+      name: 'delete',
+      status: false,
+    });
   }
 }

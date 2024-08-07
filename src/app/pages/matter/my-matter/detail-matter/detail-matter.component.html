@@ -68,7 +68,7 @@
           <!-- FILTER UNCOLLECTED/COLLECTED  -->
 
           <!-- FILTER APPLIED -->
-          <app-filter-applied
+          <shared-filter-applied
             class="mb-15"
             [filterApllied]="filterApplied"
             (clearAllFilterOut)="clearAllFilterOut($event)"
@@ -81,7 +81,7 @@
           *ngIf="timesheetSelected.length > 0"
           [listMatters]="listMatters"
           [timesheetSelected]="timesheetSelected"
-          (clearSelectionOut)="clearSelectionOut($event)"
+          (action)="clearSelectionOut($event)"
         />
         <!-- MATTER MOVE -->
 
@@ -120,7 +120,7 @@
 <!-- FLYOUT CREATE TIMESHEET -->
 
 <!-- EDIT TIMESHEET FLYOUT -->
-<app-edit-timesheet-flyout
+<shared-edit-timesheet-flyout
   [isOpenFlyout]="isOpenEditFlyout"
   (closeOut)="closeOutEdit($event)"
 />
@@ -134,11 +134,9 @@
 <!-- EDIT TAG FLYOUT -->
 
 <!-- MODAL DELETE -->
-<app-modal-delete
+<shared-modal-delete
   [openModalDelete]="openModalDelete"
   [title]="'Delete Timesheet?'"
   [desc]="'You can’t recover the deleted timesheet'"
-  (cancelOut)="cancelOutDelete($event)"
-  (deleteActionOut)="deleteActionOutDelete($event)"
 />
 <!-- MODAL DELETE -->
