@@ -24,7 +24,6 @@ import {
 } from '../../my-timesheet/dtos/my-timesheet.dto';
 import { MoveMatterComponent } from '../../my-timesheet/history-activity/move-matter/move-matter.component';
 import { MyTimesheetService } from '../../my-timesheet/services/my-timesheet.service';
-import { map } from 'rxjs';
 import { CreateTimesheetFlyoutComponent } from '../../../../shared/create-timesheet-flyout/create-timesheet-flyout.component';
 import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
 import { EditTagTimesheetFlyoutComponent } from '../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
@@ -174,7 +173,7 @@ export class DetailMatterComponent extends BaseController {
   getTimesheet(startDate: string, endDate: string): void {
     this.mytimesheetService
       .getTimesheetWithRange(startDate, endDate)
-      .pipe(map((res) => (this.dataTimesheet = res.result)))
+      // .pipe(map((res) => (this.dataTimesheet = res.result)))
       .subscribe();
   }
 
@@ -190,10 +189,10 @@ export class DetailMatterComponent extends BaseController {
     this.mytimesheetService
       .getFilterTimesheet(startDate, endDate, matters, description, page, size)
       .pipe(
-        map((res) => {
-          this.totalItems = res.result.totalElements;
-          this.dataTimesheet = res.result.content;
-        })
+        // map((res) => {
+        //   this.totalItems = res.result.totalElements;
+        //   this.dataTimesheet = res.result.content;
+        // })
       )
       .subscribe();
   }

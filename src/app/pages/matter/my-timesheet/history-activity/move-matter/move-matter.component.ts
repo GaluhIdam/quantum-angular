@@ -9,20 +9,30 @@ import {
   BadgeComponent,
   ButtonIconComponent,
   ComboBoxComponent,
+  FormControlLayoutComponent,
   IconsComponent,
+  InputFieldComponent,
+  LoadingComponent,
   ModalBodyComponent,
   ModalComponent,
   ModalFooterComponent,
   ModalHeaderComponent,
+  PopoverComponent,
+  TextComponent,
 } from '@quantum/fui';
 import { MatterDTO, MyTimesheetDTO } from '../../dtos/my-timesheet.dto';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MyTimesheetService } from '../../services/my-timesheet.service';
+import { debounceTime, map, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-move-matter',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     ButtonIconComponent,
     BadgeComponent,
     IconsComponent,
@@ -31,6 +41,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     ModalBodyComponent,
     ModalFooterComponent,
     ComboBoxComponent,
+    TextComponent,
+    FormControlLayoutComponent,
+    InputFieldComponent,
+    PopoverComponent,
+    LoadingComponent,
   ],
   templateUrl: './move-matter.component.html',
   styleUrl: './move-matter.component.scss',
@@ -38,9 +53,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 export class MoveMatterComponent {
   @Input() listMatters: MatterDTO[] = [];
   @Input() timesheetSelected: MyTimesheetDTO[] = [];
-  @Output() clearSelectionOut: EventEmitter<MyTimesheetDTO[]> =
-    new EventEmitter<MyTimesheetDTO[]>();
-  @Output() moveTimesheetOut: EventEmitter<MyTimesheetDTO[]> = new EventEmitter<
+  @Output() action: EventEmitter<MyTimesheetDTO[]> = new EventEmitter<
     MyTimesheetDTO[]
   >();
 
@@ -56,6 +69,25 @@ export class MoveMatterComponent {
   searchForm: FormControl = new FormControl('');
 
   isModalOpen: boolean = false;
+  isOption: boolean = false;
+  showDesc: boolean = false;
+  loading: boolean = false;
+
+  constructor(private readonly myTimesheetService: MyTimesheetService) {}
+
+  subscription!: Subscription;
+
+  ngOnInit(): void {
+    this.subscription = this.searchForm.valueChanges
+      .pipe(
+        tap(() => (this.loading = true)),
+        debounceTime(500),
+        map((value) => {
+          this.getMatterData(value);
+        })
+      )
+      .subscribe();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
@@ -68,16 +100,25 @@ export class MoveMatterComponent {
     }
   }
 
+  /** Get matters from service */
+  getMatterData(search: string): void {
+    this.myTimesheetService
+      .getMatters(search)
+      .pipe(map((data) => (this.listMatters = data)))
+      .subscribe(() => {
+        this.loading = false;
+      });
+  }
+
   /** Move timesheet action, return data to consumer */
   moveTimesheet(): void {
-    this.moveTimesheetOut.emit(this.timesheetSelected);
+    this.action.emit(this.timesheetSelected);
   }
 
   /** Clear Selection */
   clearSelection(): void {
-    this.selectedMatters = [];
     this.timesheetSelected = [];
-    this.clearSelectionOut.emit([]);
+    this.action.emit([]);
   }
 
   /** Open Modal */
@@ -88,5 +129,16 @@ export class MoveMatterComponent {
   /** Close Modal */
   handleCloseModal(): void {
     this.isModalOpen = false;
+  }
+
+  /** Open/close option */
+  openClose(param: boolean): void {
+    setTimeout(() => {
+      this.isOption = param;
+    }, 200);
+  }
+
+  selectionOption(param: MatterDTO): void {
+    this.searchForm.setValue(param.matter);
   }
 }

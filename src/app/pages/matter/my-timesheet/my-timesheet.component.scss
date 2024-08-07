@@ -53,13 +53,13 @@
 
 @media (max-width: 1000px) {
   .section-two-card {
-    display: grid;
+    display: block;
     .card-productivity {
-      width: -webkit-fill-available;
+      width: auto;
       margin: 20px 0px 0px 0px;
     }
     .card-ytd {
-      width: -webkit-fill-available;
+      width: auto;
       margin: 20px 0px 0px 0px;
     }
   }

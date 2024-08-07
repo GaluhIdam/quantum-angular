@@ -5,7 +5,7 @@
 }
 
 .mb-15 {
-  margin-bottom: 15px;
+  margin: 15px 0px;
   display: block;
 }
 
@@ -14,10 +14,11 @@
 }
 
 /** Footer Flyout Config */
-.flex {
+.footer-flyout {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding: 5px 10px;
   .group-flex {
     display: flex;
     fui-button-icon {
@@ -49,4 +50,12 @@
 .line-hr {
   border-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
   margin: 30px 0px;
+}
+
+.overlow-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+  .wrap {
+    width: 100%;
+  }
 }

@@ -48,11 +48,9 @@
         </div>
       </div>
     </div>
-    <!-- HEADER TOGGLE SHOW TABLE -->
 
     <!-- BODY WHEN SHOW TABLE -->
     <div body>
-      <!-- table if data is existing -->
       <div class="table" *ngIf="date.data.length > 0">
         <div class="table-row header">
           <div class="table-cell">
@@ -97,14 +95,13 @@
           <div class="table-cell">
             {{ convertTimeToAngularFormat(item.duration) }}
           </div>
-          <!-- Show if edit mode -->
           <div class="table-cell">
             <div class="wrap-action title-cell">
               <fui-button-icon
                 (onClick)="
                   item.tagEntityList.length > 0
-                    ? openEditTagFlyout(item)
-                    : openEditFlyout(item)
+                    ? actionBtn('edit-tag', item)
+                    : actionBtn('edit', item)
                 "
                 [type]="'button'"
                 [option]="'icon'"
@@ -116,7 +113,7 @@
               />
               <fui-button-icon
                 *ngIf="item.tagEntityList.length === 0"
-                (onClick)="openDeleteModal(item.uuid)"
+                (onClick)="actionBtn('delete', item)"
                 [type]="'button'"
                 [option]="'icon'"
                 [style]="'secondary'"
@@ -129,17 +126,13 @@
           </div>
         </div>
       </div>
-      <!-- table if data is existing -->
 
-      <!-- message if data is empy -->
-      <div *ngIf="date.data.length == 0">
+      <div *ngIf="date.data.length === 0">
         <p class="empty-message">
-          You don't have any time recorded on this period.
+          You don't have any time recorded for this period.
         </p>
       </div>
-      <!-- message if data is empy -->
     </div>
-    <!-- BODY WHEN SHOW TABLE -->
   </fui-collapsible-nav-group>
   <app-empty-data [dataLength]="dateTimesheetByDate.length" />
 </div>

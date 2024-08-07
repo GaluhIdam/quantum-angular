@@ -1,5 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormControl,
   FormsModule,
@@ -23,9 +29,13 @@ import {
   TooltipComponent,
   ValidatorFieldComponent,
 } from '@quantum/fui';
+import {
+  ActivityDTO,
+  MyTimesheetDTO,
+} from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
 
 @Component({
-  selector: 'app-edit-timesheet-flyout',
+  selector: 'shared-edit-timesheet-flyout',
   standalone: true,
   imports: [
     CommonModule,
@@ -49,9 +59,13 @@ import {
   ],
   templateUrl: './edit-timesheet-flyout.component.html',
   styleUrl: './edit-timesheet-flyout.component.scss',
+  providers: [DatePipe],
 })
 export class EditTimesheetFlyoutComponent {
+  /** Required data */
   @Input() isOpenFlyout: boolean = false;
+  @Input() timesheet!: MyTimesheetDTO;
+  @Input() listActivities: ActivityDTO[] = [];
 
   /** Form enable/disable */
   @Input() enableActivitySearchForm: boolean = true;
@@ -70,6 +84,8 @@ export class EditTimesheetFlyoutComponent {
 
   /** Objet/Event Form */
   objectEventForm: FormControl = new FormControl('', Validators.required);
+  topicForm: FormControl = new FormControl('', Validators.required);
+  addDescForm: FormControl = new FormControl('', Validators.required);
 
   /** Matter Form */
   matterSearch: FormControl = new FormControl('', Validators.required);
@@ -81,9 +97,12 @@ export class EditTimesheetFlyoutComponent {
 
   durationForm: FormControl = new FormControl('', Validators.required);
 
-  lockMatter: boolean = false;
+  constructor(private datePipe: DatePipe) {}
 
-  constructor() {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['listActivities']) {
+      this.dataTransformActivity();
+    }
     if (this.enableActivitySearchForm) {
       this.activitySearch.enable();
     } else {
@@ -113,6 +132,18 @@ export class EditTimesheetFlyoutComponent {
     } else {
       this.durationForm.disable();
     }
+
+    if (this.timesheet) {
+      this.activitySearch.setValue(this.timesheet.activity.activity);
+      this.objectEventForm.setValue(this.timesheet.objectEvent);
+      this.topicForm.setValue(this.timesheet.topic);
+      this.addDescForm.setValue(this.timesheet.description);
+      this.matterSearch.setValue(this.timesheet.matter.matter);
+      this.dateFormControl.setValue(
+        this.datePipe.transform(this.timesheet.date, 'dd/MM/yyyy')
+      );
+      this.durationForm.setValue(this.timesheet.duration);
+    }
   }
 
   /** Toggle for open flyout */
@@ -135,8 +166,15 @@ export class EditTimesheetFlyoutComponent {
     this.matterForm.setValue(event[0].value);
   }
 
-  /** Lock Matter */
-  onCheckboxChangeMatter(event: any) {
-    this.lockMatter = event.target.checked;
+  /** Transform data activity to be options */
+  dataTransformActivity(): void {
+    if (this.listActivities.length > 0) {
+      this.listActivities.forEach((item) => {
+        this.optionActivity.push({
+          name: item.activity,
+          value: item.idActivity,
+        });
+      });
+    }
   }
 }

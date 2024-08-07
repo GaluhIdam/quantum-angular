@@ -4,7 +4,7 @@
     <div class="table-cell">
       <input
         type="checkbox"
-        [checked]="timesheetChecked.length === dataTimesheet.length"
+        [checked]="timesheetSelected.length === dataTimesheet.length"
         (click)="checkAllItems(dataTimesheet)"
       />
     </div>
@@ -52,8 +52,8 @@
         <fui-button-icon
           (onClick)="
             item.tagEntityList.length > 0
-              ? openEditTagModal(item.uuid, item)
-              : toggleFormEdit(i, item)
+              ? actionBtn('edit-tag', item)
+              : actionBtn('edit', item)
           "
           [type]="'button'"
           [option]="'icon'"
@@ -65,7 +65,7 @@
         />
         <fui-button-icon
           *ngIf="item.tagEntityList.length === 0"
-          (onClick)="openDeleteModal(item.uuid)"
+          (onClick)="actionBtn('delete', item)"
           [type]="'button'"
           [option]="'icon'"
           [style]="'secondary'"
@@ -90,24 +90,3 @@
   (onPageChange)="onPageChange($event)"
 />
 <!-- PAGINATION -->
-
-<!-- EDIT TAG TIMESHEET -->
-<app-edit-tag-timesheet-flyout
-  [isOpenFlyout]="isOpenFlyoutTagEdit"
-  (closeOut)="closeOutEditTag($event)"
-/>
-<!-- EDIT TAG TIMESHEET -->
-
-<!-- EDIT TIMESHEET -->
-<app-edit-timesheet-flyout
-  [isOpenFlyout]="isOpenFlyoutEdit"
-  (closeOut)="closeOutEdit($event)"
-/>
-<!-- EDIT TIMESHEET -->
-
-<!-- MODAL DELETE -->
-<app-modal-delete
-  [openModalDelete]="openModalDelete"
-  (cancelOut)="cancelOut($event)"
-/>
-<!-- MODAL DELETE -->
