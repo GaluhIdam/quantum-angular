@@ -55,23 +55,23 @@
       <div class="standard-filter">
         <!-- FORM CLIENT NAME -->
         <div for="form" class="label-form">Client Name</div>
-        <fui-form-control-layout class="full-width">
-          <fui-input-field
-            [formControlField]="clientNameForm"
-            [type]="'text'"
-            [invalid]="false"
-            [size]="'m'"
-            [placeholder]="'Type client name'"
-          >
-            <fui-icons
-              left-icon
-              [color]="'text'"
-              [icon]="'search'"
-              [size]="'sizem'"
-            />
-          </fui-input-field>
-        </fui-form-control-layout>
+        <fui-combo-box
+          [leftIcon]="'search'"
+          [optionValue]="matterMemberOption"
+          [selectedValue]="matterMemberSelected"
+          [placeholder]="'Type client name'"
+        />
         <!-- FORM CLIENT NAME -->
+
+        <!-- FORM Matter/Sub-matter Number -->
+        <div for="form" class="label-form">Matter/Sub-matter Number</div>
+        <fui-combo-box
+          [leftIcon]="'search'"
+          [optionValue]="matterMemberOption"
+          [selectedValue]="matterMemberSelected"
+          [placeholder]="'Search by matter number'"
+        />
+        <!-- FORM Matter/Sub-matter Number -->
 
         <!-- FORM PROJECT NAME -->
         <div for="form" class="label-form">Project Name</div>
@@ -188,6 +188,17 @@
             </div>
             <!-- MATTER TYPE FORM -->
 
+            <!-- MATTER STATUS FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form">Matter Status</div>
+              <fui-combo-box
+                [optionValue]="matterTypeOption"
+                [selectedValue]="matterTypeSelected"
+                [placeholder]="'Select matter status'"
+              />
+            </div>
+            <!-- MATTER STATUS FORM -->
+
             <!-- FEE STRUCTURE FORM -->
             <div class="form-group child-form-adv">
               <div for="form" class="label-form">Fee Structure</div>
@@ -247,6 +258,7 @@
               <div for="form" class="label-form">Completion Date</div>
               <fui-date-range
                 [position]="'top'"
+                [dateFormat]="'DD-MM-YYYY'"
                 [startDateControl]="completionDateStart"
                 [endDateControl]="completionDateEnd"
               />
@@ -258,6 +270,7 @@
               <div for="form" class="label-form">Creation Date</div>
               <fui-date-range
                 [position]="'top'"
+                [dateFormat]="'DD-MM-YYYY'"
                 [startDateControl]="creationDateStart"
                 [endDateControl]="creationDateEnd"
               />
