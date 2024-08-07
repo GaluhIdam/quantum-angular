@@ -10,7 +10,11 @@
         (btnAction)="btnActionUtil($event)"
       >
         <div left-util>
-          <fui-text class="hour-minute" [textWrap]="'nowrap'" [weight]="'semibold'">
+          <fui-text
+            class="hour-minute"
+            [textWrap]="'nowrap'"
+            [weight]="'semibold'"
+          >
             {{ startDate | date : "d MMMM yyyy" }} -
             {{ endDate | date : "d MMMM yyyy" }}</fui-text
           >
@@ -103,6 +107,7 @@
       <fui-text [size]="'sizes'">Date</fui-text>
       <div class="time-description">
         <fui-date-range
+          [dateFormat]="'DD-MM-YYYY'"
           [startDateControl]="startDateForm"
           [endDateControl]="endDateForm"
           (onChangeStartDate)="changeStartDate($event)"

@@ -34,14 +34,12 @@ import { map } from 'rxjs';
 export class MyTimesheetComponent {
   mattersData: MatterDTO[] = [];
   activitesData: ActivityDTO[] = [];
-  timesheetData: MyTimesheetDTO[] = [];
 
   constructor(private readonly myTimesheetService: MyTimesheetService) {}
 
   ngOnInit(): void {
     this.getMatterData('');
     this.getActivityData();
-    this.getTimesheetData();
   }
 
   /** Get matters from service */
@@ -61,14 +59,6 @@ export class MyTimesheetComponent {
           this.activitesData = data;
         })
       )
-      .subscribe();
-  }
-
-  /** Get timesheet from service */
-  getTimesheetData(): void {
-    this.myTimesheetService
-      .getTimesheets()
-      .pipe(map((data) => (this.timesheetData = data)))
       .subscribe();
   }
 }
