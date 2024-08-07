@@ -117,6 +117,7 @@
         <div class="form-control">
           <fui-combo-box
             [leftIcon]="'search'"
+            [disabled]="true"
             (selection)="selectionMatter($event)"
             [comboxForm]="matterSearch"
             [invalid]="matterSearch.invalid && matterSearch.dirty"
