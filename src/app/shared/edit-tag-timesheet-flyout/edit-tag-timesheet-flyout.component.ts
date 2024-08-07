@@ -141,7 +141,7 @@ export class EditTagTimesheetFlyoutComponent {
       this.addDescForm.setValue(this.timesheet.description);
       this.matterSearch.setValue(this.timesheet.matter.matter);
       this.dateFormControl.setValue(
-        this.datePipe.transform(this.timesheet.date, 'dd/MM/yyyy')
+        this.datePipe.transform(this.timesheet.date, 'dd-MM-yyyy')
       );
       this.durationForm.setValue(this.timesheet.duration);
     }

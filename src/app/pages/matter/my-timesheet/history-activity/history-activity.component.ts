@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { UtilityComponent } from './utility/utility.component';
 import {
@@ -72,6 +72,7 @@ import { map } from 'rxjs';
     ComboBoxComponent,
     ModalDeleteComponent,
   ],
+  providers: [DatePipe],
 })
 export class HistoryActivityComponent extends BaseController {
   /** Data will input from MyTimesheetComponent */
@@ -150,15 +151,22 @@ export class HistoryActivityComponent extends BaseController {
   /** Variable for modal delete */
   isModalDelete: boolean = false;
 
-  constructor(private readonly mytimesheetService: MyTimesheetService) {
+  constructor(
+    private readonly mytimesheetService: MyTimesheetService,
+    private datePipe: DatePipe
+  ) {
     super();
     /** Replace start date and end date */
     this.startDate = new Date(this.defaultDate().startDateForm);
     this.endDate = new Date(this.defaultDate().endDateForm);
 
     /** Replace start date form and end date form in filter flyout */
-    this.startDateForm.setValue(this.defaultDate().startDateForm);
-    this.endDateForm.setValue(this.defaultDate().endDateForm);
+    this.startDateForm.setValue(
+      this.datePipe.transform(this.defaultDate().startDateForm, 'dd-MM-yyyy')
+    );
+    this.endDateForm.setValue(
+      this.datePipe.transform(this.defaultDate().endDateForm, 'dd-MM-yyyy')
+    );
   }
 
   ngOnInit(): void {
@@ -177,7 +185,10 @@ export class HistoryActivityComponent extends BaseController {
   /** Getting timssheet by date range */
   getTimesheetByDate(startDate: string, endDate: string): void {
     this.mytimesheetService
-      .getTimesheetWithRange(startDate, endDate)
+      .getTimesheetWithRange(
+        this.datePipe.transform(startDate, 'yyyy-dd-MM')!.toString(),
+        this.datePipe.transform(endDate, 'yyyy-dd-MM')!.toString()
+      )
       .pipe(
         map((data) => {
           this.groupingData(data, startDate, endDate);
@@ -216,8 +227,8 @@ export class HistoryActivityComponent extends BaseController {
 
     this.mytimesheetService
       .getFilterTimesheet(
-        startDate === '' ? null : startDate,
-        endDate === '' ? null : endDate,
+        startDate === '' ? null :  this.datePipe.transform(startDate, 'yyyy-dd-MM')!.toString(),
+        endDate === '' ? null :  this.datePipe.transform(endDate, 'yyyy-dd-MM')!.toString(),
         matters === '' ? null : matters,
         addDescription === '' ? null : addDescription,
         page,
@@ -307,8 +318,10 @@ export class HistoryActivityComponent extends BaseController {
     const endDate = this.formatDate(this.endDate);
 
     /** Set form start date - end date */
-    this.startDateForm.setValue(startDate);
-    this.endDateForm.setValue(endDate);
+    this.startDateForm.setValue(
+      this.datePipe.transform(startDate, 'dd-MM-yyyy')
+    );
+    this.endDateForm.setValue(this.datePipe.transform(endDate, 'dd-MM-yyyy'));
   }
 
   /** Grouping and get total hours */
@@ -333,8 +346,8 @@ export class HistoryActivityComponent extends BaseController {
     /** Grrouping process */
     this.dateTimesheetByDate = this.groupingTimesheetByRangeDate(
       data,
-      startDate,
-      endDate
+      this.datePipe.transform(startDate, 'yyyy-dd-MM')!.toString(),
+      this.datePipe.transform(endDate, 'yyyy-dd-MM')!.toString()
     );
   }
 
