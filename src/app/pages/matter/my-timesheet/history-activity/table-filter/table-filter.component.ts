@@ -59,7 +59,6 @@ export class TableFilterComponent extends BaseController {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['timesheetSelected']) {
-      console.log(this.timesheetSelected);
       this.updateShowHideEdit();
     }
   }

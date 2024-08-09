@@ -6,7 +6,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   BadgeComponent,
   ButtonIconComponent,
@@ -37,7 +37,6 @@ import { CreateTimesheetFlyoutComponent } from '../../../../../shared/create-tim
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
     ButtonIconComponent,
     BadgeComponent,
     FlyoutBodyComponent,

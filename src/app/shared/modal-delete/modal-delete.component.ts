@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   ButtonIconComponent,
@@ -14,6 +15,7 @@ import {
   selector: 'shared-modal-delete',
   standalone: true,
   imports: [
+    CommonModule,
     ModalComponent,
     ModalHeaderComponent,
     ModalBodyComponent,
@@ -27,12 +29,11 @@ import {
 })
 export class ModalDeleteComponent {
   @Input({ required: true }) openModalDelete: boolean = false;
-  @Input() title: string = 'Delete Confirmation?';
+  @Input() title: string = 'Delete Confirmation';
   @Input() desc: string =
     'This data will be permanently deleted. Do you want to continue?';
-  @Input() btnContinue: string = 'Delete';
-  @Input() option: 'iconText' | 'icon' | 'text' = 'text';
-  @Input() icon: Icon = 'trash';
+  @Input() btnContinue: string = 'Yes, Delete';
+  @Input() btnCancel: string = 'No, Keep it';
   @Output() action: EventEmitter<{
     name: string;
     status: boolean;

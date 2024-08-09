@@ -9,3 +9,41 @@
   display: flex;
   align-items: center;
 }
+.mobile {
+  display: none;
+}
+
+.badge {
+  margin-left: 10px;
+}
+.filter {
+  margin-right: 10px;
+}
+fui-text {
+  margin: 0px 10px;
+}
+
+.group {
+  display: flex;
+}
+
+@media (max-width: 1000px) {
+  .container {
+    .flex-between {
+      display: block;
+    }
+  }
+  .flex {
+    margin-bottom: 15px;
+    justify-content: space-between;
+  }
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: block;
+  }
+  .badge {
+    margin-left: 0px;
+  }
+}

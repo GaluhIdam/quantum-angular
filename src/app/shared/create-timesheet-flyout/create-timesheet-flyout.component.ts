@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
+  HostListener,
   Input,
   Output,
   SimpleChanges,
@@ -150,6 +151,11 @@ export class CreateTimesheetFlyoutComponent {
     if (changes['listActivities']) {
       this.dataTransformActivity();
     }
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent) {
+    this.toggleCloseFlyout();
   }
 
   /** Transform data matters to be options */

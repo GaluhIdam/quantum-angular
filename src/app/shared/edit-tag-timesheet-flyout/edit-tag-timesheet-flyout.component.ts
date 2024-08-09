@@ -2,13 +2,13 @@ import { CommonModule, DatePipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
+  HostListener,
   Input,
   Output,
   SimpleChanges,
 } from '@angular/core';
 import {
   FormControl,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -40,7 +40,6 @@ import {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
     FlyoutBodyComponent,
     FlyoutComponent,
     FlyoutFooterComponent,
@@ -66,6 +65,7 @@ export class EditTagTimesheetFlyoutComponent {
   @Input() isOpenFlyout: boolean = false;
   @Input() timesheet!: MyTimesheetDTO;
   @Input() listActivities: ActivityDTO[] = [];
+  @Input() fee: boolean = false;
 
   /** Form enable/disable */
   @Input() enableActivitySearchForm: boolean = true;
@@ -76,6 +76,7 @@ export class EditTagTimesheetFlyoutComponent {
 
   @Output() closeOut: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  feeEarnerForm: FormControl = new FormControl('', Validators.required);
   /** Activity Form */
   activitySearch: FormControl = new FormControl('', Validators.required);
   optionActivity: { name: string; value: any }[] = [];
@@ -145,6 +146,11 @@ export class EditTagTimesheetFlyoutComponent {
       );
       this.durationForm.setValue(this.timesheet.duration);
     }
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent) {
+    this.toggleCloseFlyout();
   }
 
   /** Toggle for open flyout */

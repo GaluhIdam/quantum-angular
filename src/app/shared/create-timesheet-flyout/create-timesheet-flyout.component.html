@@ -195,7 +195,7 @@
             </div>
             <fui-date-picker
               class="form-control"
-              [dateFormat]="'DD/MM/YYYY'"
+              [dateFormat]="'DD-MM-YYYY'"
               [dateFormControl]="dateFormControl"
               [disabled]="lockDate"
               [position]="'top'"
@@ -213,6 +213,7 @@
               [position]="'top'"
               [timeFormControl]="durationForm"
               [isInvalid]="durationForm.invalid && durationForm.dirty"
+              [minuteInterval]="'15 minutes'"
               [message]="'Duration is required!'"
             />
           </div>

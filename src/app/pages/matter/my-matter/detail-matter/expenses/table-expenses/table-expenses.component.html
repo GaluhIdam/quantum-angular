@@ -39,75 +39,77 @@
     <!-- LEFT UTIL  -->
   </div>
   <hr />
-  <div class="table">
-    <!-- HEADER TABLE  -->
-    <div class="table-row header">
-      <div class="table-cell">
-        <input type="checkbox" />
+  <div class="overflow">
+    <div class="table">
+      <!-- HEADER TABLE  -->
+      <div class="table-row header">
+        <div class="table-cell">
+          <input type="checkbox" />
+        </div>
+        <div class="table-cell" *ngFor="let item of headerTable">
+          <div class="head-title">{{ item }}</div>
+        </div>
       </div>
-      <div class="table-cell" *ngFor="let item of headerTable">
-        <div class="head-title">{{ item }}</div>
-      </div>
-    </div>
-    <!-- HEADER TABLE  -->
+      <!-- HEADER TABLE  -->
 
-    <!-- BODY TABLE  -->
-    <div class="table-row">
-      <div class="table-cell">
-        <input type="checkbox" />
+      <!-- BODY TABLE  -->
+      <div class="table-row">
+        <div class="table-cell">
+          <input type="checkbox" />
+        </div>
+        <div class="table-cell">
+          <fui-badge [color]="'success'" [size]="'sizedefault'"
+            ><b>Collected</b></fui-badge
+          >
+          <p class="text-wrap">Jacob Jones</p>
+        </div>
+        <div class="table-cell">24 Jan 23</div>
+        <div class="table-cell">PO000001</div>
+        <div class="table-cell">
+          <fui-badge [color]="'ghost'" [size]="'sizedefault'"
+            ><b>GADM-General Administration</b></fui-badge
+          >
+          <p class="text-wrap">
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatu
+          </p>
+        </div>
+        <div class="table-cell">1</div>
+        <div class="table-cell">USD 200.00</div>
+        <div class="table-cell">
+          <p class="text-wrap">00001/INV/2024 Base - Base Corporation</p>
+        </div>
       </div>
-      <div class="table-cell">
-        <fui-badge [color]="'success'" [size]="'sizedefault'"
-          ><b>Collected</b></fui-badge
-        >
-        <p class="text-wrap">Jacob Jones</p>
-      </div>
-      <div class="table-cell">24 Jan 23</div>
-      <div class="table-cell">PO000001</div>
-      <div class="table-cell">
-        <fui-badge [color]="'ghost'" [size]="'sizedefault'"
-          ><b>GADM-General Administration</b></fui-badge
-        >
-        <p class="text-wrap">
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-          dolore eu fugiat nulla pariatu
-        </p>
-      </div>
-      <div class="table-cell">1</div>
-      <div class="table-cell">USD 200.00</div>
-      <div class="table-cell">
-        <p class="text-wrap">00001/INV/2024 Base - Base Corporation</p>
-      </div>
-    </div>
 
-    <div class="table-row">
-      <div class="table-cell">
-        <input type="checkbox" />
+      <div class="table-row">
+        <div class="table-cell">
+          <input type="checkbox" />
+        </div>
+        <div class="table-cell">
+          <fui-badge [color]="'warning'" [size]="'sizedefault'"
+            ><b>Written-off</b></fui-badge
+          >
+          <p class="text-wrap">Dianne Russell</p>
+        </div>
+        <div class="table-cell">24 Jan 23</div>
+        <div class="table-cell">PO000001</div>
+        <div class="table-cell">
+          <fui-badge [color]="'ghost'" [size]="'sizedefault'"
+            ><b>GADM-General Administration</b></fui-badge
+          >
+          <p class="text-wrap">
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatu
+          </p>
+        </div>
+        <div class="table-cell">1</div>
+        <div class="table-cell">USD 200.00</div>
+        <div class="table-cell">
+          <p class="text-wrap">00001/INV/2024 Base - Base Corporation</p>
+        </div>
       </div>
-      <div class="table-cell">
-        <fui-badge [color]="'warning'" [size]="'sizedefault'"
-          ><b>Written-off</b></fui-badge
-        >
-        <p class="text-wrap">Dianne Russell</p>
-      </div>
-      <div class="table-cell">24 Jan 23</div>
-      <div class="table-cell">PO000001</div>
-      <div class="table-cell">
-        <fui-badge [color]="'ghost'" [size]="'sizedefault'"
-          ><b>GADM-General Administration</b></fui-badge
-        >
-        <p class="text-wrap">
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-          dolore eu fugiat nulla pariatu
-        </p>
-      </div>
-      <div class="table-cell">1</div>
-      <div class="table-cell">USD 200.00</div>
-      <div class="table-cell">
-        <p class="text-wrap">00001/INV/2024 Base - Base Corporation</p>
-      </div>
+      <!-- BODY TABLE  -->
     </div>
-    <!-- BODY TABLE  -->
   </div>
   <fui-pagination [totalItems]="10" />
 </div>

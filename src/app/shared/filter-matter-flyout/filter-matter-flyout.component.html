@@ -1,39 +1,3 @@
-<!-- FORM SEARCH MATTER -->
-<div class="container">
-  <!-- INPUT FORM SEARCH -->
-  <fui-form-control-layout class="full-width mr-10">
-    <fui-input-field
-      [type]="'text'"
-      [invalid]="false"
-      [size]="'m'"
-      [placeholder]="'Search by Number or Project Name'"
-    >
-      <fui-icons
-        left-icon
-        [color]="'text'"
-        [icon]="'search'"
-        [size]="'sizem'"
-      />
-    </fui-input-field>
-  </fui-form-control-layout>
-  <!-- INPUT FORM SEARCH -->
-
-  <!-- BUTTON FILTER FOR OPEN FLYOUT -->
-  <fui-button-icon
-    (onClick)="toggleOpenFlyout()"
-    [color]="'text'"
-    [type]="'button'"
-    [option]="'iconText'"
-    [icon]="'filter'"
-    [style]="'secondary'"
-    [size]="'m'"
-    [text]="'Filter'"
-  />
-  <!-- BUTTON FILTER FOR OPEN FLYOUT -->
-</div>
-<!-- FORM SEARCH MATTER -->
-
-<!-- FLYOUT FILTER -->
 <fui-flyout
   [zIndex]="2"
   [open]="isOpenFlyout"
@@ -57,8 +21,9 @@
         <div for="form" class="label-form">Client Name</div>
         <fui-combo-box
           [leftIcon]="'search'"
-          [optionValue]="matterMemberOption"
-          [selectedValue]="matterMemberSelected"
+          [comboxForm]="clientNameForm"
+          [optionValue]="clientNameOption"
+          [selectedValue]="clientNameSelected"
           [placeholder]="'Type client name'"
         />
         <!-- FORM CLIENT NAME -->
@@ -67,8 +32,9 @@
         <div for="form" class="label-form">Matter/Sub-matter Number</div>
         <fui-combo-box
           [leftIcon]="'search'"
-          [optionValue]="matterMemberOption"
-          [selectedValue]="matterMemberSelected"
+          [comboxForm]="matterForm"
+          [optionValue]="matterOption"
+          [selectedValue]="matterSelected"
           [placeholder]="'Search by matter number'"
         />
         <!-- FORM Matter/Sub-matter Number -->
@@ -76,10 +42,9 @@
         <!-- FORM PROJECT NAME -->
         <div for="form" class="label-form">Project Name</div>
         <div class="form-group">
-          <fui-form-control-layout class="child-form-adv full-width">
+          <fui-form-control-layout class="child-form-adv mr-10">
             <fui-select-field
               [disabled]="true"
-              [formControlField]="projectNameFormType"
               [invalid]="false"
               [size]="'m'"
               [selectOptions]="selectOption"
@@ -87,9 +52,10 @@
             </fui-select-field>
           </fui-form-control-layout>
 
-          <fui-form-control-layout class="child-form full-width">
+          <fui-form-control-layout class="child-form">
             <fui-input-field
               [type]="'text'"
+              [formControlField]="projectNameForm"
               [invalid]="false"
               [size]="'m'"
               [placeholder]="'Type matter description'"
@@ -102,10 +68,9 @@
         <!-- FORM MATTER DESCRIPTION -->
         <div for="form" class="label-form">Matter Description</div>
         <div class="form-group">
-          <fui-form-control-layout class="child-form-adv full-width">
+          <fui-form-control-layout class="child-form-adv mr-10">
             <fui-select-field
               [disabled]="true"
-              [formControlField]="matterDescriptionFormType"
               [invalid]="false"
               [size]="'m'"
               [selectOptions]="selectOption"
@@ -113,8 +78,9 @@
             </fui-select-field>
           </fui-form-control-layout>
 
-          <fui-form-control-layout class="child-form full-width">
+          <fui-form-control-layout class="child-form">
             <fui-input-field
+              [formControlField]="matterDescriptionForm"
               [type]="'text'"
               [invalid]="false"
               [size]="'m'"
@@ -150,8 +116,9 @@
             <div class="form-group child-form-adv">
               <div for="form" class="label-form mt-0">Billability</div>
               <fui-combo-box
-                [optionValue]="matterCategoryOption"
-                [selectedValue]="matterCategorySelected"
+                [comboxForm]="billabilityForm"
+                [optionValue]="billabilityOption"
+                [selectedValue]="billabilitySelected"
                 [placeholder]="'Select matter category'"
               />
             </div>
@@ -161,8 +128,9 @@
             <div class="form-group child-form-adv">
               <div for="form" class="label-form">Practice Group</div>
               <fui-combo-box
-                [optionValue]="pacticeGroupOption"
-                [selectedValue]="pacticeGroupSelected"
+                [comboxForm]="practiceGroupForm"
+                [optionValue]="practiceGroupOption"
+                [selectedValue]="practiceGroupSelected"
                 [placeholder]="'Select practice group'"
               />
             </div>
@@ -172,8 +140,9 @@
             <div class="form-group child-form-adv">
               <div for="form" class="label-form">Practice Area</div>
               <fui-combo-box
-                [optionValue]="pacticeAreaOption"
-                [selectedValue]="pacticeAreaSelected"
+                [comboxForm]="practiceAreaForm"
+                [optionValue]="practiceAreaOption"
+                [selectedValue]="practiceAreaSelected"
                 [placeholder]="'Select practice area'"
               />
             </div>
@@ -183,6 +152,7 @@
             <div class="form-group child-form-adv">
               <div for="form" class="label-form">Matter Type</div>
               <fui-combo-box
+                [comboxForm]="matterTypeForm"
                 [optionValue]="matterTypeOption"
                 [selectedValue]="matterTypeSelected"
                 [placeholder]="'Select matter type'"
@@ -194,8 +164,9 @@
             <div class="form-group child-form-adv">
               <div for="form" class="label-form">Matter Status</div>
               <fui-combo-box
-                [optionValue]="matterTypeOption"
-                [selectedValue]="matterTypeSelected"
+                [comboxForm]="matterStatusForm"
+                [optionValue]="matterStatusOption"
+                [selectedValue]="matterStatusSelected"
                 [placeholder]="'Select matter status'"
               />
             </div>
@@ -205,6 +176,7 @@
             <div class="form-group child-form-adv">
               <div for="form" class="label-form">Fee Structure</div>
               <fui-combo-box
+                [comboxForm]="feeStructureForm"
                 [optionValue]="feeStructureOption"
                 [selectedValue]="feeStructureSelected"
                 [placeholder]="'Select fee structure'"
@@ -216,8 +188,9 @@
             <div class="form-group child-form-adv">
               <div for="form" class="label-form">Partner In Charge (PIC)</div>
               <fui-combo-box
-                [optionValue]="matterPICOption"
-                [selectedValue]="matterPICSelected"
+                [comboxForm]="partnerInChargeForm"
+                [optionValue]="partnerInChargeOption"
+                [selectedValue]="partnerInChargeSelected"
                 [placeholder]="'Select matter PIC'"
               />
             </div>
@@ -227,8 +200,9 @@
             <div class="form-group child-form-adv">
               <div for="form" class="label-form">Matter Members</div>
               <fui-combo-box
-                [optionValue]="matterMemberOption"
-                [selectedValue]="matterMemberSelected"
+                [comboxForm]="matterMembersForm"
+                [optionValue]="matterMembersOption"
+                [selectedValue]="matterMembersSelected"
                 [placeholder]="'Select matter members'"
               />
             </div>
@@ -237,14 +211,14 @@
             <!-- UNBILLED AMOUNT HIGHER OR EQUAL TO FORM -->
             <div class="form-group child-form-adv">
               <div for="form" class="label-form">
-                Unbilled Amount higher or equal to
+                Unbilled Amount (R3) higher or equal to
               </div>
               <fui-form-control-layout class="full-width">
                 <fui-prepend>
                   <div class="prepend-title">USD</div>
                 </fui-prepend>
                 <fui-input-field
-                  [formControlField]="usdForm"
+                  [formControlField]="unbilledAmountForm"
                   [type]="'text'"
                   [invalid]="false"
                   [size]="'m'"
@@ -255,29 +229,30 @@
             </div>
             <!-- UNBILLED AMOUNT HIGHER OR EQUAL TO FORM -->
 
-            <!-- COMPLETION DATE FORM -->
-            <div class="form-group child-form-adv">
-              <div for="form" class="label-form">Completion Date</div>
-              <fui-date-range
-                [position]="'top'"
-                [dateFormat]="'DD-MM-YYYY'"
-                [startDateControl]="completionDateStart"
-                [endDateControl]="completionDateEnd"
-              />
-            </div>
-            <!-- COMPLETION DATE FORM -->
-
             <!-- CREATION DATE FORM -->
             <div class="form-group child-form-adv">
               <div for="form" class="label-form">Creation Date</div>
               <fui-date-range
                 [position]="'top'"
                 [dateFormat]="'DD-MM-YYYY'"
-                [startDateControl]="creationDateStart"
-                [endDateControl]="creationDateEnd"
+                [startDateControl]="completionDateStartForm"
+                [endDateControl]="completionDateEndForm"
               />
             </div>
             <!-- CREATION DATE FORM -->
+
+            <!-- COMPLETION DATE FORM -->
+            <div class="form-group child-form-adv">
+              <div for="form" class="label-form">Completion Date</div>
+              <fui-date-range
+                [position]="'top'"
+                [dateFormat]="'DD-MM-YYYY'"
+                [startDateControl]="creationDateStartForm"
+                [endDateControl]="creationDateEndForm"
+              />
+            </div>
+            <!-- COMPLETION DATE FORM -->
+
             <div class="scroller"></div>
           </div>
         </div>
@@ -296,27 +271,29 @@
         [option]="'text'"
         [text]="'Cancel'"
         [style]="'secondary'"
-        [color]="'primary'"
+        [color]="'text'"
+        (onClick)="toggleCloseFlyout()"
       />
       <div class="sub-button">
         <fui-button-icon
           [type]="'button'"
           [option]="'text'"
-          [text]="'Clear Filters'"
+          [text]="'Clear Filter'"
           [style]="'secondary'"
-          [color]="'primary'"
+          [color]="'text'"
+          (onClick)="toggleCloseFlyout()"
         />
         <fui-button-icon
           [type]="'button'"
           [icon]="'filter'"
           [option]="'iconText'"
-          [text]="'Apply Filters'"
+          [text]="'Apply Filter'"
           [style]="'filled'"
           [color]="'primary'"
+          (onClick)="toggleCloseFlyout()"
         />
       </div>
     </div>
   </fui-flyout-footer>
   <!-- FOOTER FLYOUT -->
 </fui-flyout>
-<!-- FLYOUT FILTER -->

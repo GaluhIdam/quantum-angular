@@ -2,75 +2,46 @@
   <div class="flex-between">
     <!-- LEFT CONTENT  -->
     <div class="flex">
-      <!-- BEFORE BUTTON LOOP  -->
-      <fui-button-icon
-        [ngStyle]="{ margin: btn.margin }"
-        *ngFor="let btn of leftBeforeBtnUtil; let i = index"
+      <fui-button-icon *ngIf="nextPrevBtn"
+        [option]="'icon'"
         [type]="'button'"
-        [option]="btn.option"
-        [color]="btn.color"
-        [text]="btn.text"
-        [icon]="btn.icon"
-        [size]="btn.size"
-        [iconSide]="btn.iconSide"
-        [style]="btn.style"
-        [disabled]="btn.disabled"
-        (onClick)="toggleBtn(btn.id)"
+        [icon]="'arrowLeft'"
+        [color]="'text'"
+        [style]="'secondary'"
+        (onClick)="toggleBtn('prev')"
       />
-      <!-- BEFORE BUTTON LOOP  -->
-
-      <!-- BEFORE BADGE LOOP  -->
-      <fui-badge
-        *ngFor="let badge of leftBeforeBagdeUtil; let i = index"
-        [ngStyle]="{ margin: badge.margin }"
-        [color]="badge.color"
-        [size]="badge.size"
-        [isBadgeIcon]="badge.isBadgeIcon"
-        [icon]="badge.icon"
-        [iconPosition]="badge.iconPosition"
-        [underline]="badge.underline"
-        [rounded]="badge.rounded"
+      <fui-text class="desktop" [weight]="'semibold'">
+        {{ startDate | date : "d MMMM yyyy" }} -
+        {{ endDate | date : "d MMMM yyyy" }}</fui-text
       >
-        {{ badge.text }}
-      </fui-badge>
-      <!-- BEFORE BADGE LOOP  -->
-
-      <!-- CUSTOM CONTENT  -->
-      <ng-content select="[left-util]"></ng-content>
-      <!-- CUSTOM CONTENT  -->
-
-      <!-- AFTER BUTTON LOOP  -->
-      <fui-button-icon
-        *ngFor="let btn of leftAfterBtnUtil; let i = index"
-        [ngStyle]="{ margin: btn.margin }"
+      <fui-text class="mobile" [size]="'sizes'" [weight]="'semibold'">
+        {{ startDate | date : "d MMMM yyyy" }} -
+        {{ endDate | date : "d MMMM yyyy" }}</fui-text
+      >
+      <fui-button-icon *ngIf="nextPrevBtn"
+        [option]="'icon'"
         [type]="'button'"
-        [option]="btn.option"
-        [color]="btn.color"
-        [text]="btn.text"
-        [icon]="btn.icon"
-        [size]="btn.size"
-        [iconSide]="btn.iconSide"
-        [style]="btn.style"
-        [disabled]="btn.disabled"
-        (onClick)="toggleBtn(btn.id)"
+        [icon]="'arrowRight'"
+        [color]="'text'"
+        [style]="'secondary'"
+        (onClick)="toggleBtn('next')"
       />
-      <!-- AFTER BUTTON LOOP  -->
 
-      <!-- AFTER BADGE LOOP  -->
-      <fui-badge
-        *ngFor="let badge of leftAfterBagdeUtil; let i = index"
-        [ngStyle]="{ margin: badge.margin }"
-        [color]="badge.color"
-        [size]="badge.size"
-        [isBadgeIcon]="badge.isBadgeIcon"
-        [icon]="badge.icon"
-        [iconPosition]="badge.iconPosition"
-        [underline]="badge.underline"
-        [rounded]="badge.rounded"
+      <fui-tooltip
+        class="badge desktop"
+        [position]="'top'"
+        [title]="'Total Hours'"
       >
-        {{ badge.text }}
-      </fui-badge>
-      <!-- AFTER BADGE LOOP  -->
+        <fui-badge
+          [color]="'ghost'"
+          [icon]="'clock'"
+          [isBadgeIcon]="true"
+          [iconPosition]="'start'"
+          [size]="'sizel'"
+        >
+          {{ duration }}
+        </fui-badge>
+      </fui-tooltip>
     </div>
     <!-- LEFT CONTENT  -->
 
@@ -78,79 +49,44 @@
 
     <!-- RIGHT CONTENT  -->
     <div class="flex">
-      <!-- BUTTON AFTER LOOP  -->
-      <fui-button-icon
-        *ngFor="let btn of rightBeforeBtnUtil; let i = index"
-        [ngStyle]="{ margin: btn.margin }"
-        [type]="'button'"
-        [option]="btn.option"
-        [color]="btn.color"
-        [text]="btn.text"
-        [icon]="btn.icon"
-        [size]="btn.size"
-        [iconSide]="btn.iconSide"
-        [style]="btn.style"
-        [disabled]="btn.disabled"
-        (onClick)="toggleBtn(btn.id)"
-      />
-      <!-- BUTTON AFTER LOOP  -->
-
-      <!-- BADGE BEFORE LOOP  -->
-      <fui-badge
-        *ngFor="let badge of rightBeforeBagdeUtil; let i = index"
-        [ngStyle]="{ margin: badge.margin }"
-        [color]="badge.color"
-        [size]="badge.size"
-        [isBadgeIcon]="badge.isBadgeIcon"
-        [icon]="badge.icon"
-        [iconPosition]="badge.iconPosition"
-        [underline]="badge.underline"
-        [rounded]="badge.rounded"
+      <fui-tooltip
+        class="badge mobile"
+        [position]="'top'"
+        [title]="'Total Hours'"
       >
-        {{ badge.text }}
-      </fui-badge>
-      <!-- BADGE BEFORE LOOP  -->
+        <fui-badge
+          [color]="'ghost'"
+          [icon]="'clock'"
+          [isBadgeIcon]="true"
+          [iconPosition]="'start'"
+          [size]="'sizel'"
+        >
+          {{ duration }}
+        </fui-badge>
+      </fui-tooltip>
 
-      <!-- CUSTOM CONTENT  -->
-      <ng-content select="[right-util]"></ng-content>
-      <!-- CUSTOM CONTENT  -->
-
-      <!-- BUTTON AFTER LOOP  -->
-      <fui-button-icon
-        *ngFor="let btn of rightAfterBtnUtil; let i = index"
-        [ngStyle]="{ margin: btn.margin }"
-        [type]="'button'"
-        [option]="btn.option"
-        [color]="btn.color"
-        [text]="btn.text"
-        [icon]="btn.icon"
-        [size]="btn.size"
-        [iconSide]="btn.iconSide"
-        [style]="btn.style"
-        [disabled]="btn.disabled"
-        (onClick)="toggleBtn(btn.id)"
-      />
-      <!-- BUTTON AFTER LOOP  -->
-
-      <!-- BADGE AFTER LOOP  -->
-      <fui-badge
-        *ngFor="let badge of rightAfterBagdeUtil; let i = index"
-        [ngStyle]="{ margin: badge.margin }"
-        [color]="badge.color"
-        [size]="badge.size"
-        [isBadgeIcon]="badge.isBadgeIcon"
-        [icon]="badge.icon"
-        [iconPosition]="badge.iconPosition"
-        [underline]="badge.underline"
-        [rounded]="badge.rounded"
-      >
-        {{ badge.text }}
-      </fui-badge>
-      <!-- BADGE AFTER LOOP  -->
-
-      <!-- CUSTOM CONTENT  -->
-      <ng-content select="[after-right-util]"></ng-content>
-      <!-- CUSTOM CONTENT  -->
+      <div class="group">
+        <fui-button-icon
+          class="filter"
+          [option]="'iconText'"
+          [type]="'button'"
+          [icon]="'filter'"
+          [color]="'text'"
+          [text]="'Filter'"
+          [style]="'secondary'"
+          (onClick)="toggleBtn('filter')"
+          [size]="'m'"
+        />
+        <fui-button-icon
+          [option]="'icon'"
+          [type]="'button'"
+          [icon]="'plusInCircle'"
+          [color]="'primary'"
+          [style]="'filled'"
+          [size]="'m'"
+          (onClick)="toggleBtn('add')"
+        />
+      </div>
     </div>
     <!-- RIGHT CONTENT  -->
   </div>

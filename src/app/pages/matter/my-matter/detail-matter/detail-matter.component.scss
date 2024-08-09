@@ -70,3 +70,19 @@
     }
   }
 }
+
+
+
+.flex-filter {
+  display: flex;
+  flex-wrap: wrap;
+  .mb-15 {
+    margin-bottom: 15px;
+  }
+}
+
+.overflow {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 10px;
+}

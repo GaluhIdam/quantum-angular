@@ -42,6 +42,23 @@
       <!-- TAG ENTRY -->
 
       <div class="form">
+        <!-- Fee Earner FORM  -->
+        <fui-text [size]="'sizes'" *ngIf="fee === true">Fee Earner</fui-text>
+        <div class="form-control" *ngIf="fee === true">
+          <fui-combo-box
+            [invalid]="feeEarnerForm.invalid && feeEarnerForm.dirty"
+            [message]="'Fee Earner is required!'"
+            (selection)="selectionActivity($event)"
+            [comboxForm]="feeEarnerForm"
+            [singleSelection]="true"
+            [size]="'m'"
+            [placeholder]="'Fee Earner'"
+            [optionValue]="optionActivity"
+            [selectedValue]="selectedActivity"
+          />
+        </div>
+        <!-- Fee Earner FORM  -->
+
         <!-- ACTIVITY FORM  -->
         <fui-text [size]="'sizes'">What did you do?</fui-text>
         <div class="form-control">

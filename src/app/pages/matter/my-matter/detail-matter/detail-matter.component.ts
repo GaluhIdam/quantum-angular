@@ -22,14 +22,14 @@ import {
   MatterDTO,
   MyTimesheetDTO,
 } from '../../my-timesheet/dtos/my-timesheet.dto';
-import { MoveMatterComponent } from '../../my-timesheet/history-activity/move-matter/move-matter.component';
+import { MoveMatterComponent } from '../../../../shared/move-matter/move-matter.component';
 import { MyTimesheetService } from '../../my-timesheet/services/my-timesheet.service';
 import { CreateTimesheetFlyoutComponent } from '../../../../shared/create-timesheet-flyout/create-timesheet-flyout.component';
-import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
 import { EditTagTimesheetFlyoutComponent } from '../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
 import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
 import { UtilityDetailMatterComponent } from './utility-detail-matter/utility-detail-matter.component';
 import { TableDetailMatterComponent } from './table-detail-matter/table-detail-matter.component';
+import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
 
 @Component({
   selector: 'app-detail-matter',

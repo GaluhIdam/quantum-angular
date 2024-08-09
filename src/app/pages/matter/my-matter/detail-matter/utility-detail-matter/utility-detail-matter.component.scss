@@ -3,6 +3,8 @@
 /** Utility Style */
 .utility {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px 0px;
   justify-content: space-between;
   margin-bottom: 20px;
 }
@@ -16,7 +18,7 @@
     display: flex;
     align-items: center;
     fui-text {
-      margin: 0px 10px;
+      margin-right: 10px;
     }
     fui-icons {
       &:hover {
@@ -72,9 +74,6 @@
     width: -webkit-fill-available;
     justify-content: end;
     display: flex;
-    fui-button-icon {
-      margin: 0px 0px 0px 10px;
-    }
   }
 }
 .filter-valid {
@@ -110,9 +109,7 @@
 
 .flex-between {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  fui-button-icon {
-    margin-left: 10px;
-  }
+  gap: 0px 10px;
 }
+

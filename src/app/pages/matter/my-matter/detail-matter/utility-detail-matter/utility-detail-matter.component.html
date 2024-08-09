@@ -92,6 +92,7 @@
         <div class="time-description">
           <fui-date-range
             [startDateControl]="startDateForm"
+            [dateFormat]="'DD-MM-YYYY'"
             [endDateControl]="endDateForm"
             (onChangeStartDate)="changeStartDate($event)"
             (onChangeEndDate)="changeEndDate($event)"

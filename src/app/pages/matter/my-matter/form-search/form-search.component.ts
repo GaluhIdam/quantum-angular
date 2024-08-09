@@ -1,6 +1,6 @@
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, HostListener } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   ButtonIconComponent,
   CollapsibleNavGroupComponent,
@@ -16,7 +16,6 @@ import {
   PrependComponent,
   SelectFieldComponent,
 } from '@quantum/fui';
-import { BaseController } from '../../../../core/controller/basecontroller';
 import { Subscription, tap } from 'rxjs';
 
 @Component({
@@ -25,7 +24,6 @@ import { Subscription, tap } from 'rxjs';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
     FormControlLayoutComponent,
     PrependComponent,
     InputFieldComponent,
@@ -44,7 +42,7 @@ import { Subscription, tap } from 'rxjs';
   templateUrl: './form-search.component.html',
   styleUrl: './form-search.component.scss',
 })
-export class FormSearchComponent extends BaseController {
+export class FormSearchComponent  {
   /** Variable Flyout & Collapsible */
   isOpenFlyout: boolean = false;
   isCollapsible: boolean = false;
@@ -66,6 +64,10 @@ export class FormSearchComponent extends BaseController {
       label: 'Equal',
       value: 'Equal',
     },
+    {
+      label: 'Is',
+      value: 'Is',
+    },
   ];
 
   /** Selected option for form */
@@ -82,7 +84,7 @@ export class FormSearchComponent extends BaseController {
   matterNumberForm: FormControl = new FormControl();
   projectNameForm: FormControl = new FormControl();
   matterDescriptionForm: FormControl = new FormControl();
-  projectNameFormType: FormControl = new FormControl('Like');
+  projectNameFormType: FormControl = new FormControl('Is');
   matterDescriptionFormType: FormControl = new FormControl('Like');
   usdForm: FormControl = new FormControl();
   completionDateStart: FormControl = new FormControl();
@@ -94,9 +96,6 @@ export class FormSearchComponent extends BaseController {
   subscription!: Subscription;
 
   constructor(private readonly decimalPipe: DecimalPipe) {
-    super();
-    this.projectNameFormType.disable();
-    this.matterDescriptionFormType.disable();
   }
 
   ngOnInit(): void {
@@ -113,6 +112,11 @@ export class FormSearchComponent extends BaseController {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent) {
+    this.toggleCloseFlyout();
   }
 
   /** Toggle for open flyout */
