@@ -65,3 +65,8 @@ export interface TokenDTO {
   'not-before-policy': number;
   scope: string;
 }
+
+export interface OptionDTO {
+  name: string;
+  value: any;
+}

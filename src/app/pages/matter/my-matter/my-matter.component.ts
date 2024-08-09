@@ -8,8 +8,13 @@ import {
   ButtonIconComponent,
   FilterGroupButtonComponent,
   FilterGroupComponent,
+  FormControlLayoutComponent,
+  IconsComponent,
+  InputFieldComponent,
 } from '@quantum/fui';
 import { RouterModule } from '@angular/router';
+import { ButtonGroupComponent } from '../../../shared/button-group/button-group.component';
+import { FilterMatterFlyoutComponent } from '../../../shared/filter-matter-flyout/filter-matter-flyout.component';
 
 @Component({
   selector: 'app-my-matter',
@@ -22,19 +27,51 @@ import { RouterModule } from '@angular/router';
     FilterGroupButtonComponent,
     FilterGroupComponent,
     ButtonIconComponent,
+    FormControlLayoutComponent,
+    InputFieldComponent,
+    IconsComponent,
+    ButtonGroupComponent,
+    FilterMatterFlyoutComponent,
   ],
   templateUrl: './my-matter.component.html',
   styleUrl: './my-matter.component.scss',
 })
 export class MyMatterComponent {
+  /** Button filter */
+  btnFilterList: {
+    title: string;
+    status: boolean;
+    total: number | null;
+  }[] = [
+    {
+      title: 'Active',
+      status: false,
+      total: 11,
+    },
+    {
+      title: 'Pending',
+      status: false,
+      total: 11,
+    },
+    {
+      title: 'On Hold',
+      status: false,
+      total: 11,
+    },
+    {
+      title: 'Completed',
+      status: false,
+      total: 11,
+    },
+    {
+      title: 'Closed',
+      status: false,
+      total: null,
+    },
+  ];
   filterApllied: FilterAplliedDTO[] = [];
 
-  /** Filter status */
-  filterForActive: boolean = false;
-  filterForPending: boolean = false;
-  filterForOnHold: boolean = false;
-  filterForCompleted: boolean = false;
-  filterForClosed: boolean = false;
+  isOpenFlyoutFilter: boolean = false;
 
   constructor(private readonly myMatterService: MyMatterService) {}
 
@@ -42,31 +79,27 @@ export class MyMatterComponent {
     this.filterApllied = this.myMatterService.dataFilterMyMatter();
   }
 
-  /** Toggle for active or deactive */
-  toggleActiveFilter(param: string): void {
-    if (param === 'active') {
-      this.filterForActive = !this.filterForActive;
-    }
-    if (param === 'pending') {
-      this.filterForPending = !this.filterForPending;
-    }
-    if (param === 'onHold') {
-      this.filterForOnHold = !this.filterForOnHold;
-    }
-    if (param === 'completed') {
-      this.filterForCompleted = !this.filterForCompleted;
-    }
-    if (param === 'closed') {
-      this.filterForClosed = !this.filterForClosed;
-    }
+  /** Catch action filter button */
+  actionFilterBtn(event: {
+    title: string;
+    status: boolean;
+    total: number | null;
+  }): void {
+    console.log(event);
   }
 
-  /** Clear All Filter */
-  clearAllFilterOut(event: FilterAplliedDTO[]): void {
-    this.filterApllied = event;
+  /** Open filter flyout */
+  openFilterFlyout(): void {
+    this.isOpenFlyoutFilter = true;
   }
-  /** Clear Filter per Item */
-  clearFilterPerItemOut(event: FilterAplliedDTO[]): void {
+
+  /** Catch filter action */
+  actionFilter(event: boolean): void {
+    this.isOpenFlyoutFilter = event;
+  }
+
+  /** Catch action from applied filter */
+  actionFilterApplied(event: FilterAplliedDTO[]): void {
     this.filterApllied = event;
   }
 }

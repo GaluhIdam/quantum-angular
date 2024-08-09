@@ -1,43 +1,17 @@
 @import "../../../app.component.scss";
 
 .title-page {
-  margin-bottom: 45px;
+  margin-bottom: 20px;
 }
 .filter-applied {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 30px;
-}
-.filter-group {
-  width: 100%;
-  text-wrap: nowrap;
-}
-fui-filter-group {
-  width: 45%;
-}
-.shared-filter-applied {
-  width: 55%;
-}
-.filter-title {
-  padding: 4px 6px;
-  width: fit-content;
-  text-wrap: nowrap;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .icon {
-    background-color: var(--fuiColorLightShade, $fuiColorLightShade);
-    font-size: 11px;
-    padding: 2px 3px;
-    border-radius: 3px;
-    margin-left: 5px;
-    text-decoration: none;
-    &.accent {
-      color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
-      background-color: var(--fuiColorAccent, $fuiColorAccent);
-    }
+  margin-bottom: 15px;
+  .filter {
+    overflow-x: auto;
+    margin-left: 10px;
   }
 }
 
@@ -51,4 +25,39 @@ fui-filter-group {
   display: flex;
   width: 100%;
   justify-content: center;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+  fui-form-control-layout {
+    width: 100%;
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .filter-applied {
+    display: block;
+    .overflow {
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      overflow-x: auto;
+    }
+    .filter {
+      margin-left: 0px;
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+
+@media (max-width: 1000px) {
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 0;
+  }
 }

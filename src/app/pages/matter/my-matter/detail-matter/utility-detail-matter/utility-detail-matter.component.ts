@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -6,7 +6,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   BadgeComponent,
   ButtonIconComponent,
@@ -38,7 +38,6 @@ import { FilterAplliedDTO } from '../../../../../shared/filter-applied/filter-ap
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
     ButtonIconComponent,
     BadgeComponent,
     FlyoutBodyComponent,
@@ -55,6 +54,7 @@ import { FilterAplliedDTO } from '../../../../../shared/filter-applied/filter-ap
     TextComponent,
     SelectFieldComponent,
   ],
+  providers: [DatePipe],
   templateUrl: './utility-detail-matter.component.html',
   styleUrl: './utility-detail-matter.component.scss',
 })
@@ -164,15 +164,19 @@ export class UtilityDetailMatterComponent extends BaseController {
   /** Variable for open/close create timesheet flyout */
   isOpenCreateFlyout: boolean = false;
 
-  constructor() {
+  constructor(private datePipe: DatePipe) {
     super();
     /** Replace start date and end date */
     this.startDate = new Date(this.defaultDate().startDateForm);
     this.endDate = new Date(this.defaultDate().endDateForm);
 
     /** Replace start date form and end date form in filter flyout */
-    this.startDateForm.setValue(this.defaultDate().startDateForm);
-    this.endDateForm.setValue(this.defaultDate().endDateForm);
+    this.startDateForm.setValue(
+      this.datePipe.transform(this.defaultDate().startDateForm, 'dd-MM-yyyy')
+    );
+    this.endDateForm.setValue(
+      this.datePipe.transform(this.defaultDate().endDateForm, 'dd-MM-yyyy')
+    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -222,8 +226,6 @@ export class UtilityDetailMatterComponent extends BaseController {
       switch (item.name) {
         case 'Date':
           if (!item.status) {
-            this.startDateForm.setValue(this.defaultDate().startDateForm);
-            this.endDateForm.setValue(this.defaultDate().endDateForm);
             this.selectedMatter = [];
             this.searchMatterForm.setValue('');
             this.descriptionForm.setValue('');
@@ -292,12 +294,12 @@ export class UtilityDetailMatterComponent extends BaseController {
 
   /** Observe for startDate changes */
   changeStartDate(event: string): void {
-    this.startDateForm.setValue(event);
+    // this.startDateForm.setValue(event);
   }
 
   /** Observe for endDate changes */
   changeEndDate(event: string): void {
-    this.endDateForm.setValue(event);
+    // this.endDateForm.setValue(event);
   }
 
   /** Matter Selection */

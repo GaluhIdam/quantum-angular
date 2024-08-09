@@ -10,8 +10,7 @@ import { YtdProductivityComponent } from './ytd-productivity/ytd-productivity.co
 import { HistoryActivityComponent } from './history-activity/history-activity.component';
 import {
   ActivityDTO,
-  MatterDTO,
-  MyTimesheetDTO,
+  MatterDTO
 } from './dtos/my-timesheet.dto';
 import { MyTimesheetService } from './services/my-timesheet.service';
 import { map } from 'rxjs';

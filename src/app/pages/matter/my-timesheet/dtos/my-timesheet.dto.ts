@@ -21,20 +21,35 @@ export interface MyTimesheetDTO {
   objectEvent: string;
   topic: string;
   description: string;
-  date: Date;
+  date: string;
   duration: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   matter: MatterDTO;
   tagEntityList: TagEntityList[];
+}
+export interface ActivityDTO {
+  idActivity: number;
+  uuid: string;
+  activity: string;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface MatterDTO {
+  idMatter: number;
+  uuid: string;
+  matter: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
 }
 export interface TagEntityList {
   idTag: number;
   uuid: string;
   tagBy: string;
   tagged: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface MyTimesheetPostDTO {
@@ -52,19 +67,4 @@ export interface TimesheetByDateDTO {
   data: MyTimesheetDTO[];
 }
 
-/** Master Data Dummy */
-export interface MatterDTO {
-  idMatter: number;
-  uuid: string;
-  matter: string;
-  description: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-export interface ActivityDTO {
-  idActivity: number;
-  uuid: string;
-  activity: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+

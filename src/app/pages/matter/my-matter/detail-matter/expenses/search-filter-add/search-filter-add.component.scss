@@ -2,6 +2,7 @@
 
 .container {
   display: flex;
+  gap: 10px;
   fui-form-control-layout {
     width: -webkit-fill-available;
   }
@@ -79,5 +80,16 @@
   }
   fui-icons {
     margin-right: 5px;
+  }
+}
+
+.group-filter {
+  display: flex;
+  width: -webkit-fill-available;
+}
+
+@media (max-width: 1000px) {
+  .container {
+    flex-wrap: wrap;
   }
 }

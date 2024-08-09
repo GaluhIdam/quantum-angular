@@ -1,4 +1,4 @@
-@import "../history-activity.component.scss";
+@import "../../app.component.scss";
 
 .flex {
   display: flex;
@@ -44,6 +44,7 @@
 }
 .footer-modal {
   display: flex;
+  padding: 0px 5px;
   justify-content: end;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -95,5 +96,20 @@
     &:last-child {
       border: none;
     }
+  }
+}
+
+@media (max-width: 1000px) {
+  .flex {
+    display: block;
+  }
+  .toggle {
+    margin-top: 10px;
+  }
+  .vertical-line {
+    display: none;
+  }
+  .body-modal {
+    width: 300px;
   }
 }

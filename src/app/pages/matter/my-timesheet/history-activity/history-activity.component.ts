@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { UtilityComponent } from './utility/utility.component';
 import {
   ButtonIconComponent,
@@ -20,12 +20,12 @@ import {
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { MyTimesheetService } from '../services/my-timesheet.service';
 import { TableWithoutFilterComponent } from './table-without-filter/table-without-filter.component';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TableFilterComponent } from './table-filter/table-filter.component';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
 import { FilterAplliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
-import { MoveMatterComponent } from './move-matter/move-matter.component';
+import { MoveMatterComponent } from '../../../../shared/move-matter/move-matter.component';
 import { CreateTimesheetFlyoutComponent } from '../../../../shared/create-timesheet-flyout/create-timesheet-flyout.component';
 import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
 import { EditTagTimesheetFlyoutComponent } from '../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
@@ -60,7 +60,6 @@ import { map } from 'rxjs';
     //-----------
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
     TextComponent,
     TableUtilitySimpleComponent,
     FlyoutSimpleComponent,
@@ -159,14 +158,6 @@ export class HistoryActivityComponent extends BaseController {
     /** Replace start date and end date */
     this.startDate = new Date(this.defaultDate().startDateForm);
     this.endDate = new Date(this.defaultDate().endDateForm);
-
-    /** Replace start date form and end date form in filter flyout */
-    this.startDateForm.setValue(
-      this.datePipe.transform(this.defaultDate().startDateForm, 'dd-MM-yyyy')
-    );
-    this.endDateForm.setValue(
-      this.datePipe.transform(this.defaultDate().endDateForm, 'dd-MM-yyyy')
-    );
   }
 
   ngOnInit(): void {
@@ -182,16 +173,22 @@ export class HistoryActivityComponent extends BaseController {
     this.dataTransform();
   }
 
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent) {
+    this.openFlyoutFilter = false;
+  }
+
   /** Getting timssheet by date range */
   getTimesheetByDate(startDate: string, endDate: string): void {
+    const startDateObj = startDate.split('-').reverse().join('-');
+    const endDateObj = endDate.split('-').reverse().join('-');
+    this.startDate = new Date(startDateObj);
+    this.endDate = new Date(endDateObj);
     this.mytimesheetService
-      .getTimesheetWithRange(
-        this.datePipe.transform(startDate, 'yyyy-dd-MM')!.toString(),
-        this.datePipe.transform(endDate, 'yyyy-dd-MM')!.toString()
-      )
+      .getTimesheetWithRange(startDateObj, endDateObj)
       .pipe(
         map((data) => {
-          this.groupingData(data, startDate, endDate);
+          this.groupingData(data, startDateObj, endDateObj);
         })
       )
       .subscribe();
@@ -206,6 +203,11 @@ export class HistoryActivityComponent extends BaseController {
     page: number,
     limit: number
   ): void {
+    this.filterApplied = [];
+    const startDateObj = startDate.split('-').reverse().join('-');
+    const endDateObj = endDate.split('-').reverse().join('-');
+    this.startDate = new Date(startDateObj);
+    this.endDate = new Date(endDateObj);
     if (startDate !== '' && endDate !== '') {
       this.filterApplied.push({
         name: 'Date',
@@ -227,8 +229,12 @@ export class HistoryActivityComponent extends BaseController {
 
     this.mytimesheetService
       .getFilterTimesheet(
-        startDate === '' ? null :  this.datePipe.transform(startDate, 'yyyy-dd-MM')!.toString(),
-        endDate === '' ? null :  this.datePipe.transform(endDate, 'yyyy-dd-MM')!.toString(),
+        startDate === ''
+          ? null
+          : this.datePipe.transform(startDate, 'yyyy-dd-MM')!.toString(),
+        endDate === ''
+          ? null
+          : this.datePipe.transform(endDate, 'yyyy-dd-MM')!.toString(),
         matters === '' ? null : matters,
         addDescription === '' ? null : addDescription,
         page,
@@ -264,6 +270,29 @@ export class HistoryActivityComponent extends BaseController {
       event.page,
       event.itemsPerPage
     );
+  }
+
+  /** Cancel Fiter */
+  cancelFilter(): void {
+    this.openFlyoutFilter = false;
+    this.resetFilter();
+  }
+
+  /** Reset form filter */
+  resetFilter(): void {
+    this.startDateForm = new FormControl(
+      `${this.datePipe.transform(
+        this.defaultDate().startDateForm,
+        'dd-MM-yyyy'
+      )}`
+    );
+    this.endDateForm = new FormControl(
+      this.datePipe.transform(this.defaultDate().endDateForm, 'dd-MM-yyyy')
+    );
+    console.log(this.startDateForm.value);
+    this.searchMatterForm.setValue('');
+    this.selectedMatter = [];
+    this.descriptionForm.reset();
   }
 
   /** Action for apply filter */
@@ -330,24 +359,12 @@ export class HistoryActivityComponent extends BaseController {
     startDate: string,
     endDate: string
   ): void {
-    this.leftAfterUtilBadge = [
-      {
-        text: this.calculateTotalDuration(data),
-        color: 'ghost',
-        size: 'sizem',
-        sizeIcon: 'sizes',
-        isBadgeIcon: true,
-        iconPosition: 'start',
-        icon: 'clock',
-        underline: false,
-        rounded: false,
-      },
-    ];
+    this.hourMinute = this.calculateTotalDuration(data);
     /** Grrouping process */
     this.dateTimesheetByDate = this.groupingTimesheetByRangeDate(
       data,
-      this.datePipe.transform(startDate, 'yyyy-dd-MM')!.toString(),
-      this.datePipe.transform(endDate, 'yyyy-dd-MM')!.toString()
+      startDate,
+      endDate
     );
   }
 
@@ -370,22 +387,17 @@ export class HistoryActivityComponent extends BaseController {
   }
   /** Invalid if start date less last date */
   invalidStartEndDate(): boolean {
-    const startDate = new Date(this.startDateForm.value);
-    const endDate = new Date(this.endDateForm.value);
-    if (startDate < endDate) {
-      return false;
-    } else {
-      return true;
-    }
+    const [startDay, startMonth, startYear] =
+      this.startDateForm.value.split('-');
+    const [endDay, endMonth, endYear] = this.endDateForm.value.split('-');
+    const startDate = new Date(+startYear, +startMonth - 1, +startDay);
+    const endDate = new Date(+endYear, +endMonth - 1, +endDay);
+    return startDate >= endDate;
   }
+
   /** Matter Selection */
   selectionMatter(event: { name: string; value: any }[]): void {
     this.selectedMatter = event;
-    // if (event.length > 0) {
-    //   this.enableFilter('Matter', true);
-    // } else {
-    //   this.enableFilter('Matter', false);
-    // }
   }
 
   /** Action for move timesheet */
@@ -419,9 +431,10 @@ export class HistoryActivityComponent extends BaseController {
 
   /** Catch changes from edit timesheet flyout component */
   closeOutEdit(event: boolean): void {
-    this.isOpenEditFlyout = event;
+    this.isOpenEditFlyout = false;
   }
   /** Catch changes from edit tag timesheet flyout component */
+
   closeOutEditTag(event: boolean): void {
     this.isOpenEditTagFlyout = event;
   }

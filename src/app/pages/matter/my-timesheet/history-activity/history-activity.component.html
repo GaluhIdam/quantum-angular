@@ -1,43 +1,33 @@
 <app-skeleton [active]="loading">
+  <!-- SIMPLE UTILITY TABLE  -->
+  <shared-table-utility-simple
+    [nextPrevBtn]="!checkFilter()"
+    [startDate]="startDate"
+    [endDate]="endDate"
+    [duration]="hourMinute"
+    (btnAction)="btnActionUtil($event)"
+  />
+  <!-- SIMPLE UTILITY TABLE  -->
+
+  <!-- FILTER APPLIED -->
+  <shared-filter-applied
+    class="mb-15"
+    [filterApllied]="filterApplied"
+    (action)="clearAllFilterOut($event)"
+  />
+  <!-- FILTER APPLIED -->
+
+  <!-- MATTER MOVE -->
+  <shared-move-matter
+    *ngIf="timesheetSelected.length > 0"
+    [listMatters]="listMatters"
+    [timesheetSelected]="timesheetSelected"
+    (action)="actionMoveTimesheet($event)"
+  />
+  <!-- MATTER MOVE -->
+
   <div class="overlow-x">
     <div class="wrap">
-      <!-- SIMPLE UTILITY TABLE  -->
-      <shared-table-utility-simple
-        [leftBeforeBtnUtil]="leftBeforeUtilBtn"
-        [leftAfterBtnUtil]="leftAfterUtilBtn"
-        [leftAfterBagdeUtil]="leftAfterUtilBadge"
-        [rightBeforeBtnUtil]="rightBeforeBtnUtil"
-        (btnAction)="btnActionUtil($event)"
-      >
-        <div left-util>
-          <fui-text
-            class="hour-minute"
-            [textWrap]="'nowrap'"
-            [weight]="'semibold'"
-          >
-            {{ startDate | date : "d MMMM yyyy" }} -
-            {{ endDate | date : "d MMMM yyyy" }}</fui-text
-          >
-        </div>
-      </shared-table-utility-simple>
-      <!-- SIMPLE UTILITY TABLE  -->
-
-      <!-- FILTER APPLIED -->
-      <shared-filter-applied
-        class="mb-15"
-        [filterApllied]="filterApplied"
-        (clearAllFilterOut)="clearAllFilterOut($event)"
-      />
-      <!-- FILTER APPLIED -->
-
-      <!-- MATTER MOVE -->
-      <app-move-matter
-        *ngIf="timesheetSelected.length > 0"
-        [listMatters]="listMatters"
-        [timesheetSelected]="timesheetSelected"
-        (action)="actionMoveTimesheet($event)"
-      />
-      <!-- MATTER MOVE -->
       <!-- TABLE WITHOUT FILTER -->
       <app-table-without-filter
         *ngIf="!checkFilter()"
@@ -173,6 +163,7 @@
       [text]="'Cancel'"
       [size]="'m'"
       [color]="'text'"
+      (onClick)="cancelFilter()"
     />
     <div class="group-flex">
       <fui-button-icon
@@ -182,9 +173,9 @@
         [text]="'Clear Filter'"
         [size]="'m'"
         [color]="'text'"
+        (onClick)="resetFilter()"
       />
       <fui-button-icon
-        (onClick)="actionFilter($event)"
         [type]="'button'"
         [option]="'iconText'"
         [style]="'filled'"
@@ -192,6 +183,7 @@
         [size]="'m'"
         [color]="'primary'"
         [icon]="'filter'"
+        (onClick)="actionFilter($event)"
       />
     </div>
   </div>
@@ -202,6 +194,7 @@
 <!-- MODAL DELETE  -->
 <shared-modal-delete
   [openModalDelete]="isModalDelete"
+  [title]="'Delete Timesheet'"
   (action)="actionModal($event)"
 />
 <!-- MODAL DELETE  -->

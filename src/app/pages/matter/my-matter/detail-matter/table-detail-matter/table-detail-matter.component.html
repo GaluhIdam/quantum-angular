@@ -9,7 +9,12 @@
       />
     </div>
     <div class="table-cell" *ngFor="let item of headerTable">
-      <div class="head-title">{{ item }}</div>
+      <div
+        class="head-title"
+        [ngStyle]="{ 'text-align': item === 'Rate' ? 'center' : '' }"
+      >
+        {{ item }}
+      </div>
     </div>
   </div>
   <div
@@ -26,9 +31,7 @@
     <div class="table-cell">
       {{ item.date | date : "d MMMM yy" }}
     </div>
-    <div class="table-cell">
-      {{ item.matter.matter }}
-    </div>
+    <div class="table-cell">Jacob Jones (JJ)</div>
     <div class="table-cell">
       <fui-text>{{ item.description }}</fui-text>
       <br />
@@ -43,9 +46,7 @@
       {{ convertTimeToAngularFormat(item.duration) }}
     </div>
 
-    <div class="table-cell">
-      {{ item.matter.matter }}
-    </div>
+    <div class="table-cell">USD 300.00</div>
 
     <div class="table-cell">
       <div class="wrap-action title-cell">
@@ -94,19 +95,19 @@
 <!-- EDIT TAG TIMESHEET -->
 <app-edit-tag-timesheet-flyout
   [isOpenFlyout]="isOpenFlyoutTagEdit"
+  [fee]="true"
   (closeOut)="closeOutEditTag($event)"
 />
 <!-- EDIT TAG TIMESHEET -->
 
 <!-- EDIT TIMESHEET -->
 <shared-edit-timesheet-flyout
+  [fee]="true"
   [isOpenFlyout]="isOpenFlyoutEdit"
   (closeOut)="closeOutEdit($event)"
 />
 <!-- EDIT TIMESHEET -->
 
 <!-- MODAL DELETE -->
-<shared-modal-delete
-  [openModalDelete]="openModalDelete"
-/>
+<shared-modal-delete [openModalDelete]="openModalDelete" />
 <!-- MODAL DELETE -->

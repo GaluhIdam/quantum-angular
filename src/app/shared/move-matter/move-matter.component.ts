@@ -20,14 +20,14 @@ import {
   PopoverComponent,
   TextComponent,
 } from '@quantum/fui';
-import { MatterDTO, MyTimesheetDTO } from '../../dtos/my-timesheet.dto';
+import { MatterDTO, MyTimesheetDTO } from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MyTimesheetService } from '../../services/my-timesheet.service';
+import { MyTimesheetService } from '../../pages/matter/my-timesheet/services/my-timesheet.service';
 import { debounceTime, map, Subscription, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-move-matter',
+  selector: 'shared-move-matter',
   standalone: true,
   imports: [
     CommonModule,

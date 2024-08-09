@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   FormControl,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -36,7 +35,6 @@ import { BaseController } from '../../../../../core/controller/basecontroller';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
     BadgeComponent,
     ButtonIconComponent,
     EmptyDataComponent,
@@ -113,6 +111,40 @@ export class TableDetailMatterComponent extends BaseController {
 
   constructor(private readonly myTimesheetService: MyTimesheetService) {
     super();
+  }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.dataTimesheet = [
+      {
+        idTimesheet: 1,
+        uuid: 'a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6',
+        activity: {
+          idActivity: 1,
+          uuid: 'c0e1a8f4-b5a3-4d8b-9f01-124d8a23a8a1',
+          activity: 'Team Meeting',
+          createdAt: '2023-01-10T09:00:00Z',
+          updatedAt: '2023-01-10T09:00:00Z',
+        },
+        objectEvent: 'Code Review',
+        topic: 'Reviewing new feature code',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ',
+        date: '2024-08-05T12:00:00Z',
+        duration: '2:00',
+        createdAt: '2024-08-07T12:00:00Z',
+        updatedAt: '2024-08-07T12:00:00Z',
+        matter: {
+          idMatter: 10002,
+          uuid: 'f84ef2a2-5b6f-4d4d-8b58-1bcebe24dfd3',
+          matter: '54321',
+          description: 'Matter description 2',
+          createdAt: '2024-08-06T12:01:00Z',
+          updatedAt: '2024-08-06T12:01:00Z',
+        },
+        tagEntityList: [],
+      },
+    ];
   }
 
   /** Update Timesheet from MyTimesheetService  */

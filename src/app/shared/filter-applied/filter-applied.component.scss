@@ -3,6 +3,9 @@
 .container {
   display: flex;
   align-items: center;
+  .group {
+    display: flex;
+  }
 }
 .title {
   text-wrap: nowrap;
@@ -22,7 +25,22 @@
   overflow-y: hidden;
   width: 100%;
   padding: 3px 0px;
+  fui-badge {
+    margin: 0px 5px 0px 5px;
+    &:first-child {
+      margin: 0px 5px 0px 0px;
+    }
+    &:last-child {
+      margin: 0px 0px 0px 5px;
+    }
+  }
 }
-fui-badge {
-  margin: 0px 5px;
+
+@media (max-width: 1000px) {
+  .container {
+    display: block;
+  }
+  .scroller {
+    margin-top: 10px;
+  }
 }

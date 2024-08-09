@@ -27,7 +27,6 @@ import {
 } from '@quantum/fui';
 import {
   FormControl,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -43,7 +42,6 @@ import { EditTimesheetFlyoutComponent } from '../../../../../shared/edit-timeshe
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
     CollapsibleNavGroupComponent,
     HorizontalStackComponent,
     BadgeComponent,

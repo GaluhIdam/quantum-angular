@@ -41,43 +41,46 @@
         />
         <!-- Utility -->
 
-        <div class="flex">
-          <!-- FILTER UNCOLLECTED/COLLECTED  -->
-          <fui-filter-group [fullWidth]="false">
-            <!-- FILTER FOR Uncollected  -->
-            <fui-filter-group-button
-              [active]="uncolleted"
-              (onClick)="toggleFilter(true)"
-              ><div class="filter-title">
-                <span>Uncollected</span>
-                <div class="icon {{ uncolleted ? 'accent' : '' }}">8</div>
-              </div>
-            </fui-filter-group-button>
-            <!-- FILTER FOR Uncollected  -->
+        <div class="flex-filter">
+          <div class="mb-15">
+            <!-- FILTER UNCOLLECTED/COLLECTED  -->
+            <fui-filter-group [fullWidth]="false">
+              <!-- FILTER FOR Uncollected  -->
+              <fui-filter-group-button
+                [active]="uncolleted"
+                (onClick)="toggleFilter(true)"
+                ><div class="filter-title">
+                  <span>Uncollected</span>
+                  <div class="icon {{ uncolleted ? 'accent' : '' }}">8</div>
+                </div>
+              </fui-filter-group-button>
+              <!-- FILTER FOR Uncollected  -->
 
-            <!-- FILTER FOR Collected  -->
-            <fui-filter-group-button
-              [active]="!uncolleted"
-              (onClick)="toggleFilter(false)"
-              ><div class="filter-title">
-                <span>Collected</span>
-              </div>
-            </fui-filter-group-button>
-            <!-- FILTER FOR Collected  -->
-          </fui-filter-group>
-          <!-- FILTER UNCOLLECTED/COLLECTED  -->
+              <!-- FILTER FOR Collected  -->
+              <fui-filter-group-button
+                [active]="!uncolleted"
+                (onClick)="toggleFilter(false)"
+                ><div class="filter-title">
+                  <span>Collected</span>
+                </div>
+              </fui-filter-group-button>
+              <!-- FILTER FOR Collected  -->
+            </fui-filter-group>
+            <!-- FILTER UNCOLLECTED/COLLECTED  -->
+          </div>
 
-          <!-- FILTER APPLIED -->
-          <shared-filter-applied
-            class="mb-15"
-            [filterApllied]="filterApplied"
-            (clearAllFilterOut)="clearAllFilterOut($event)"
-          />
-          <!-- FILTER APPLIED -->
+          <div class="mb-15">
+            <!-- FILTER APPLIED -->
+            <shared-filter-applied
+              [filterApllied]="filterApplied"
+              (action)="clearAllFilterOut($event)"
+            />
+            <!-- FILTER APPLIED -->
+          </div>
         </div>
 
         <!-- MATTER MOVE -->
-        <app-move-matter
+        <shared-move-matter
           *ngIf="timesheetSelected.length > 0"
           [listMatters]="listMatters"
           [timesheetSelected]="timesheetSelected"
@@ -85,16 +88,18 @@
         />
         <!-- MATTER MOVE -->
 
-        <!-- TABLE WITH FILTER-->
-        <app-table-detail-matter
-          [page]="page"
-          [limit]="limit"
-          [totalItems]="totalItems"
-          [dataTimesheet]="dataTimesheet"
-          (onPageChangeOut)="onPageChangeOut($event)"
-          (timesheetCheckedOut)="timesheetSelectedOut($event)"
-        />
-        <!-- TABLE WITH FILTER-->
+        <div class="overflow">
+          <!-- TABLE WITH FILTER-->
+          <app-table-detail-matter
+            [page]="page"
+            [limit]="limit"
+            [totalItems]="totalItems"
+            [dataTimesheet]="dataTimesheet"
+            (onPageChangeOut)="onPageChangeOut($event)"
+            (timesheetCheckedOut)="timesheetSelectedOut($event)"
+          />
+          <!-- TABLE WITH FILTER-->
+        </div>
       </div>
       <!-- Table Timesheet -->
     </fui-tabs-content>
@@ -114,29 +119,30 @@
   [note]="'*Conduct desk research & prepare summary on licensing regulation'"
   [feeEarner]="true"
   [isOpenFlyout]="isOpenCreateFlyout"
-  [enableMatterSearchForm]="false"
   (closeOut)="closeOutCreate($event)"
 />
 <!-- FLYOUT CREATE TIMESHEET -->
 
 <!-- EDIT TIMESHEET FLYOUT -->
 <shared-edit-timesheet-flyout
+  [listActivities]="[]"
+  [enableMatterSearchForm]="false"
   [isOpenFlyout]="isOpenEditFlyout"
   (closeOut)="closeOutEdit($event)"
 />
 <!-- EDIT TIMESHEET FLYOUT -->
 
-<!-- EDIT TAG FLYOUT -->
-<app-edit-tag-timesheet-flyout
-  [isOpenFlyout]="isOpenEditTagFlyout"
-  (closeOut)="closeOutEditTag($event)"
+<!-- EDIT TIMESHEET FLYOUT -->
+<shared-edit-timesheet-flyout
+  [listActivities]="[]"
+  [enableMatterSearchForm]="false"
+  [isOpenFlyout]="isOpenEditFlyout"
+  (closeOut)="closeOutEdit($event)"
 />
-<!-- EDIT TAG FLYOUT -->
+<!-- EDIT TIMESHEET FLYOUT -->
 
 <!-- MODAL DELETE -->
 <shared-modal-delete
   [openModalDelete]="openModalDelete"
-  [title]="'Delete Timesheet?'"
-  [desc]="'You can’t recover the deleted timesheet'"
 />
 <!-- MODAL DELETE -->
