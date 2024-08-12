@@ -13,8 +13,8 @@
     <div class="flyout-body">
       <div class="form">
         <!-- Fee Earner FORM  -->
-        <fui-text [size]="'sizes'" *ngIf="fee === true">Fee Earner</fui-text>
-        <div class="form-control" *ngIf="fee === true">
+        <fui-text [size]="'sizes'" *ngIf="feeEarner === true">Fee Earner</fui-text>
+        <div class="form-control" *ngIf="feeEarner === true">
           <fui-combo-box
             [invalid]="feeEarnerForm.invalid && feeEarnerForm.dirty"
             [message]="'Fee Earner is required!'"

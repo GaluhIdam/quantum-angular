@@ -20,6 +20,8 @@ import {
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
 import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
+import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
+import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
 
 @Component({
   selector: 'app-timesheet',
@@ -41,6 +43,8 @@ import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-aplli
     FormControlLayoutComponent,
     InputFieldComponent,
     FilterAppliedComponent,
+    ModalDeleteComponent,
+    EditTimesheetFlyoutComponent,
   ],
   templateUrl: './timesheet.component.html',
   styleUrl: './timesheet.component.scss',
@@ -68,27 +72,27 @@ export class TimesheetComponent {
   filterApplied: FilterAppliedDTO[] = [
     {
       name: 'Date',
-      status: true
+      status: true,
     },
     {
       name: 'Date',
-      status: true
+      status: true,
     },
     {
       name: 'Date',
-      status: true
+      status: true,
     },
     {
       name: 'Date',
-      status: true
+      status: true,
     },
     {
       name: 'Date',
-      status: true
+      status: true,
     },
     {
       name: 'Date',
-      status: true
+      status: true,
     },
   ];
 
@@ -123,7 +127,9 @@ export class TimesheetComponent {
 
   /**  Flyout */
   isOpenFlyoutCreate: boolean = false;
+  isOpenFlyoutEdit: boolean = false;
   isOpenFlyoutFilter: boolean = false;
+  openModalDelete: boolean = false;
 
   /** Form Filter */
   startDateForm: FormControl = new FormControl();
@@ -194,8 +200,18 @@ export class TimesheetComponent {
   }
 
   /** Catch action from table */
-  actionOutTable(event: any): void {
-    console.log(event);
+  actionOutTable(event: { action: ActionBtn; data: any }): void {
+    if (event.action === 'delete') {
+      this.openModalDelete = true;
+    }
+    if (event.action === 'edit') {
+      this.isOpenFlyoutEdit = true;
+    }
+  }
+
+  /** Catch action from table */
+  actionModal(event: { name: string; status: boolean }): void {
+    this.openModalDelete = false;
   }
 
   /** Catch data selected from table and catch cleared data selected from move matter */
@@ -207,12 +223,15 @@ export class TimesheetComponent {
   }
 
   /** Catch close create flyout */
-  closeOut(event: boolean, param: 'create' | 'filter'): void {
+  closeOut(event: boolean, param: 'create' | 'filter' | 'edit'): void {
     if (param === 'create') {
       this.isOpenFlyoutCreate = event;
     }
     if (param === 'filter') {
       this.isOpenFlyoutFilter = event;
+    }
+    if (param === 'edit') {
+      this.isOpenFlyoutEdit = event;
     }
   }
 
