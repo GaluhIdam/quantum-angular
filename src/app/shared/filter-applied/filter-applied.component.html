@@ -4,7 +4,7 @@
     <p class="toggle-clear" (click)="clearAllFilter()">Clear All</p>
   </div>
   <div class="scroller">
-    @for (item of filterApllied; track $index) {
+    @for (item of filterApplied; track $index) {
     <fui-badge
       *ngIf="item.status"
       [color]="'text'"

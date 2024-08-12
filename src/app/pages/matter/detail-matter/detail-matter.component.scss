@@ -1,0 +1,78 @@
+@import "../../../app.component.scss";
+
+.tabs {
+  margin: 20px 0px;
+}
+.back-link {
+  display: flex;
+  align-items: baseline;
+  text-decoration: none;
+  color: var(--fuiColorPrimary, $fuiColorPrimary);
+  &:hover {
+    span {
+      text-decoration: underline;
+    }
+  }
+  fui-icons {
+    margin-right: 5px;
+  }
+}
+.card-content {
+  padding: 25px 20px;
+  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+  border-radius: 5px;
+  margin: 10px 0px 20px 0px;
+}
+
+.grid {
+  display: grid;
+  fui-text {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    &:last-child {
+      margin-top: 0px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.flex {
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.filter-title {
+  padding: 4px 6px;
+  width: fit-content;
+  text-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .icon {
+    background-color: var(--fuiColorLightShade, $fuiColorLightShade);
+    font-size: 11px;
+    padding: 2px 3px;
+    border-radius: 3px;
+    margin-left: 5px;
+    text-decoration: none;
+    &.accent {
+      color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+      background-color: var(--fuiColorAccent, $fuiColorAccent);
+    }
+  }
+}
+
+.flex-filter {
+  display: flex;
+  flex-wrap: wrap;
+  .mb-15 {
+    margin-bottom: 15px;
+  }
+}
+
+.overflow {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 10px;
+}

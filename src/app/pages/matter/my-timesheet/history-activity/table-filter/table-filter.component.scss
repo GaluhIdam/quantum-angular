@@ -1,5 +1,11 @@
 @import "../history-activity.component.scss";
 
+.container {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+
 /** Table Config */
 .table {
   display: table;
@@ -163,6 +169,6 @@
 
 
 fui-pagination {
-  margin-top: 20px;
+  margin-top: 10px;
   display: block;
 }

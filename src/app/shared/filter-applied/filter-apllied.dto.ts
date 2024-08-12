@@ -1,4 +1,4 @@
-export interface FilterAplliedDTO {
+export interface FilterAppliedDTO {
   name: string;
   status: boolean;
 }

@@ -43,4 +43,7 @@
   .scroller {
     margin-top: 10px;
   }
+  :host {
+    width: -webkit-fill-available;
+  }
 }

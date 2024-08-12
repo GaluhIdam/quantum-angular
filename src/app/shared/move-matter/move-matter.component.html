@@ -14,6 +14,9 @@
     <fui-icons [icon]="'push'" [size]="'sizem'" [color]="'primary'" />
     <p class="toggle-clear">Move</p>
   </div>
+  <div class="toggle danger" *ngIf="writeOff" (click)="handleOpenModal()">
+    <p class="toggle-clear danger">Write-off</p>
+  </div>
 </div>
 
 <!-- MODAL MOVE  -->

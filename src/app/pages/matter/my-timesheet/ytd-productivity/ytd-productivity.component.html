@@ -3,21 +3,21 @@
 </div>
 <div class="body" *ngIf="optionBar.series.length > 0">
   <div class="chart">
-    <app-skeleton [active]="loading">
+    <shared-skeleton [active]="loading">
       <fui-echarts
         [height]="'160px'"
         [chartOption]="optionBar"
         [themeCustom]="true"
       ></fui-echarts>
-    </app-skeleton>
+    </shared-skeleton>
   </div>
 </div>
 <div class="empty" *ngIf="optionBar.series.length === 0">
-  <app-skeleton [active]="loading">
+  <shared-skeleton [active]="loading">
     <app-empty-data
       [title]="'N/A'"
       [subTitle]="'You don’t have any target data for productivity'"
       [dataLength]="optionBar.series.length"
     />
-  </app-skeleton>
+  </shared-skeleton>
 </div>

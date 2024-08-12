@@ -57,7 +57,7 @@
   <!-- FILTER APPLIED SECTION  -->
   <div class="overflow filter">
     <shared-filter-applied
-      [filterApllied]="filterApllied"
+      [filterApplied]="filterApplied"
       (action)="actionFilterApplied($event)"
     />
   </div>
@@ -66,15 +66,30 @@
 
 <!-- CONTENT CARD LOOP  -->
 <div class="card-container">
-  <app-content-card [type]="1" />
-  <app-content-card [type]="2" />
-  <app-content-card [type]="3" />
-  <app-content-card [type]="4" />
-
-  <app-content-card [type]="4" />
-  <app-content-card [type]="3" />
-  <app-content-card [type]="2" />
-  <app-content-card [type]="1" />
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="1" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="2" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="3" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="4" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="1" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="2" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="3" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="4" />
+  </shared-skeleton>
 </div>
 <!-- CONTENT CARD LOOP  -->
 

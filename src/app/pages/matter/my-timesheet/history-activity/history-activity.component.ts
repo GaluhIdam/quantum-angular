@@ -1,6 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, HostListener, Input } from '@angular/core';
-import { UtilityComponent } from './utility/utility.component';
 import {
   ButtonIconComponent,
   ComboBoxComponent,
@@ -23,7 +22,7 @@ import { TableWithoutFilterComponent } from './table-without-filter/table-withou
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TableFilterComponent } from './table-filter/table-filter.component';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
-import { FilterAplliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
+import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
 import { MoveMatterComponent } from '../../../../shared/move-matter/move-matter.component';
 import { CreateTimesheetFlyoutComponent } from '../../../../shared/create-timesheet-flyout/create-timesheet-flyout.component';
@@ -31,12 +30,6 @@ import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-
 import { EditTagTimesheetFlyoutComponent } from '../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
 import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
 import { TableUtilitySimpleComponent } from '../../../../shared/table-utility-simple/table-utility-simple.component';
-import {
-  leftAfterUtilBtn,
-  leftBeforeUtilBtn,
-  rightBeforeBtnUtil,
-} from '../data/data';
-import { BadgeUtilDTO } from '../../../../shared/table-utility-simple/dto/table-utility.dto';
 import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-simple.component';
 import { map } from 'rxjs';
 
@@ -46,18 +39,6 @@ import { map } from 'rxjs';
   templateUrl: './history-activity.component.html',
   styleUrl: './history-activity.component.scss',
   imports: [
-    UtilityComponent,
-    TableWithoutFilterComponent,
-    TableFilterComponent,
-    ToastComponent,
-    SkeletonComponent,
-    FilterAppliedComponent,
-    MoveMatterComponent,
-    CreateTimesheetFlyoutComponent,
-    EditTimesheetFlyoutComponent,
-    EditTagTimesheetFlyoutComponent,
-
-    //-----------
     CommonModule,
     ReactiveFormsModule,
     TextComponent,
@@ -70,6 +51,15 @@ import { map } from 'rxjs';
     InputFieldComponent,
     ComboBoxComponent,
     ModalDeleteComponent,
+    FilterAppliedComponent,
+    MoveMatterComponent,
+    TableWithoutFilterComponent,
+    TableFilterComponent,
+    SkeletonComponent,
+    CreateTimesheetFlyoutComponent,
+    EditTimesheetFlyoutComponent,
+    EditTagTimesheetFlyoutComponent,
+    ToastComponent,
   ],
   providers: [DatePipe],
 })
@@ -78,31 +68,11 @@ export class HistoryActivityComponent extends BaseController {
   @Input({ required: true }) listMatters: MatterDTO[] = [];
   @Input({ required: true }) listActivities: ActivityDTO[] = [];
 
-  /** Getting from service */
-  // listTimesheets: MyTimesheetDTO[] = [];
-
   /** Loading Status */
   loading: boolean = false;
 
   /** Config Utility */
-  readonly leftBeforeUtilBtn = leftBeforeUtilBtn;
-  readonly leftAfterUtilBtn = leftAfterUtilBtn;
-  leftAfterUtilBadge: BadgeUtilDTO[] = [];
-  readonly rightBeforeBtnUtil = rightBeforeBtnUtil;
   hourMinute: string = '0h 0m';
-  readonly leftUtilBadge: BadgeUtilDTO[] = [
-    {
-      text: this.hourMinute,
-      color: 'ghost',
-      size: 'sizem',
-      sizeIcon: 'sizes',
-      isBadgeIcon: true,
-      iconPosition: 'start',
-      icon: 'clock',
-      underline: false,
-      rounded: false,
-    },
-  ];
 
   /** Date for without filter */
   endDate: Date = new Date();
@@ -130,13 +100,11 @@ export class HistoryActivityComponent extends BaseController {
   limit: number = 10;
   totalItems: number = 0;
 
-  //____________________________________________________________________________
-
   /** Data will input from utility compnent */
   timesheetSelected: MyTimesheetDTO[] = [];
 
   /** Data input from utility component and send to filter applied component */
-  filterApplied: FilterAplliedDTO[] = [];
+  filterApplied: FilterAppliedDTO[] = [];
 
   /** Variable for create timesheet flyout */
   isOpenCreateFlyout: boolean = false;
@@ -242,17 +210,13 @@ export class HistoryActivityComponent extends BaseController {
       )
       .pipe(
         map((data) => {
-          this.dataTimesheet = data.data; // Adjust according to the response structure
+          this.dataTimesheet = data.data;
           this.page = data.page;
           this.limit = data.limit;
           this.totalItems = data.totalItems;
         })
       )
-      .subscribe({
-        error: (err) => {
-          console.error('Error fetching timesheets:', err);
-        },
-      });
+      .subscribe();
   }
 
   /** Pagination changes */
@@ -289,7 +253,6 @@ export class HistoryActivityComponent extends BaseController {
     this.endDateForm = new FormControl(
       this.datePipe.transform(this.defaultDate().endDateForm, 'dd-MM-yyyy')
     );
-    console.log(this.startDateForm.value);
     this.searchMatterForm.setValue('');
     this.selectedMatter = [];
     this.descriptionForm.reset();
@@ -378,13 +341,15 @@ export class HistoryActivityComponent extends BaseController {
   }
 
   /** Observe for startDate changes */
-  changeStartDate(event: string): void {
-    this.startDateForm.setValue(event);
+  changeDateForm(event: string, param: 'start' | 'end'): void {
+    if (param === 'start') {
+      this.startDateForm.setValue(event);
+    }
+    if (param === 'end') {
+      this.endDateForm.setValue(event);
+    }
   }
-  /** Observe for endDate changes */
-  changeEndDate(event: string): void {
-    this.endDateForm.setValue(event);
-  }
+
   /** Invalid if start date less last date */
   invalidStartEndDate(): boolean {
     const [startDay, startMonth, startYear] =
@@ -440,7 +405,7 @@ export class HistoryActivityComponent extends BaseController {
   }
 
   /** Clear all filter */
-  clearAllFilterOut(event: FilterAplliedDTO[]): void {
+  clearAllFilterOut(event: FilterAppliedDTO[]): void {
     this.filterApplied = event;
   }
 

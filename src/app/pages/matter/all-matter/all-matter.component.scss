@@ -1,16 +1,42 @@
 @import "../../../app.component.scss";
 
-.flex {
+.title {
+  margin-bottom: 20px;
+}
+.container {
+  width: -webkit-fill-available;
   display: flex;
-  align-items: baseline;
-  app-form-search {
-    width: 100%;
-    margin-right: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+  justify-content: space-between;
+  gap: 10px 10px;
+  &:last-child {
+    padding: 25px 20px;
+    width: auto;
+    background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+  }
+
+  fui-form-control-layout {
+    width: -webkit-fill-available;
+  }
+
+  .group-btn {
+    display: flex;
+    gap: 10px 10px;
   }
 }
 
-.container {
-  margin-top: 20px;
+shared-filter-applied {
+  margin: 20px 0px;
+  display: block;
+}
+
+.content-wrapper {
+  display: block;
+  app-card-all-matter {
+    margin-bottom: 20px;
+    display: block;
+  }
 }
 
 .loader {
@@ -18,4 +44,10 @@
   display: flex;
   width: 100%;
   justify-content: center;
+}
+
+@media (max-width: 1000px) {
+  .container {
+    flex-wrap: wrap;
+  }
 }

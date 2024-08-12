@@ -161,6 +161,7 @@ export class FilterMatterFlyoutComponent {
   @HostListener('document:keydown.escape', ['$event'])
   handleEscapeKey(event: KeyboardEvent) {
     this.isOpenFlyout = false;
+    this.action.emit(false);
   }
 
   /** Number/String converter to be 1.000.000 from 1000000 */
