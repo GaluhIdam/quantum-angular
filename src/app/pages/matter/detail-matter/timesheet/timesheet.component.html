@@ -190,3 +190,19 @@
   <!-- FOOTER FLYOUT FILTER  -->
 </shared-flyout-simple>
 <!-- FILTER FLYOUT  -->
+
+<!-- MODEL DELETE  -->
+<shared-modal-delete
+  [openModalDelete]="openModalDelete"
+  (action)="actionModal($event)"
+/>
+<!-- MODEL DELETE  -->
+
+<!-- EDIT FLYOUT  -->
+<shared-edit-timesheet-flyout
+  [feeEarner]="true"
+  [enableMatterSearchForm]="false"
+  [isOpenFlyout]="isOpenFlyoutEdit"
+  (closeOut)="closeOut($event, 'edit')"
+/>
+<!-- EDIT FLYOUT  -->

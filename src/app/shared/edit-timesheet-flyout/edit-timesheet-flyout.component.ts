@@ -108,7 +108,7 @@ export class EditTimesheetFlyoutComponent {
     ],
   };
   @Input() listActivities: ActivityDTO[] = [];
-  @Input() fee: boolean = false;
+  @Input() feeEarner: boolean = false;
 
   /** Form enable/disable */
   @Input() enableActivitySearchForm: boolean = true;
