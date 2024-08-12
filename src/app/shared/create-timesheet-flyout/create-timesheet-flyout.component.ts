@@ -36,7 +36,7 @@ import {
 } from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
 
 @Component({
-  selector: 'app-create-timesheet-flyout',
+  selector: 'shared-create-timesheet-flyout',
   standalone: true,
   imports: [
     CommonModule,
@@ -62,7 +62,7 @@ import {
   styleUrl: './create-timesheet-flyout.component.scss',
 })
 export class CreateTimesheetFlyoutComponent {
-  @Input() isOpenFlyout: boolean = false;
+  @Input({ required: true }) isOpenFlyout: boolean = false;
   @Input() title: string = 'Add Timesheet';
   @Input() note: string = '';
   @Output() closeOut: EventEmitter<boolean> = new EventEmitter<boolean>();

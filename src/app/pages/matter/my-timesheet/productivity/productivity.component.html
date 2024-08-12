@@ -32,7 +32,7 @@
 </div>
 <div class="body" *ngIf="data.length > 0">
   <div class="progress">
-    <app-skeleton [active]="loading">
+    <shared-skeleton [active]="loading">
       <fui-progress
         [value]="data[0]"
         [max]="100"
@@ -40,10 +40,10 @@
         [size]="'sizedefault'"
         [label]="'134 of 160 Billable Hours'"
       />
-    </app-skeleton>
+    </shared-skeleton>
   </div>
   <div class="progress">
-    <app-skeleton [active]="loading">
+    <shared-skeleton [active]="loading">
       <fui-progress
         class="progress"
         [value]="data[1]"
@@ -52,7 +52,7 @@
         [size]="'sizedefault'"
         [label]="'80 of 120 Non-Billable Hours'"
       />
-    </app-skeleton>
+    </shared-skeleton>
   </div>
   <div class="legend">
     <span class="legend-title">
@@ -69,10 +69,10 @@
     >
   </div>
 </div>
-<app-skeleton [active]="loading">
+<shared-skeleton [active]="loading">
   <app-empty-data
     [title]="'N/A'"
     [subTitle]="'You don’t have any target data for productivity'"
     [dataLength]="data.length"
   />
-</app-skeleton>
+</shared-skeleton>

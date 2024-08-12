@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { FormSearchComponent } from './form-search/form-search.component';
 import { ContentCardComponent } from './content-card/content-card.component';
 import { FilterAppliedComponent } from '../../../shared/filter-applied/filter-applied.component';
-import { FilterAplliedDTO } from '../../../shared/filter-applied/filter-apllied.dto';
+import { FilterAppliedDTO } from '../../../shared/filter-applied/filter-apllied.dto';
 import { MyMatterService } from './services/my-matter.service';
 import {
   ButtonIconComponent,
-  FilterGroupButtonComponent,
-  FilterGroupComponent,
   FormControlLayoutComponent,
   IconsComponent,
   InputFieldComponent,
@@ -15,28 +12,28 @@ import {
 import { RouterModule } from '@angular/router';
 import { ButtonGroupComponent } from '../../../shared/button-group/button-group.component';
 import { FilterMatterFlyoutComponent } from '../../../shared/filter-matter-flyout/filter-matter-flyout.component';
+import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
 
 @Component({
   selector: 'app-my-matter',
   standalone: true,
   imports: [
     RouterModule,
-    FormSearchComponent,
     ContentCardComponent,
     FilterAppliedComponent,
-    FilterGroupButtonComponent,
-    FilterGroupComponent,
     ButtonIconComponent,
     FormControlLayoutComponent,
     InputFieldComponent,
     IconsComponent,
     ButtonGroupComponent,
     FilterMatterFlyoutComponent,
+    SkeletonComponent,
   ],
   templateUrl: './my-matter.component.html',
   styleUrl: './my-matter.component.scss',
 })
 export class MyMatterComponent {
+  loading: boolean = false;
   /** Button filter */
   btnFilterList: {
     title: string;
@@ -69,14 +66,18 @@ export class MyMatterComponent {
       total: null,
     },
   ];
-  filterApllied: FilterAplliedDTO[] = [];
+  filterApplied: FilterAppliedDTO[] = [];
 
   isOpenFlyoutFilter: boolean = false;
 
   constructor(private readonly myMatterService: MyMatterService) {}
 
   ngOnInit(): void {
-    this.filterApllied = this.myMatterService.dataFilterMyMatter();
+    this.filterApplied = this.myMatterService.dataFilterMyMatter();
+    // this.loading = true;
+    // setTimeout(() => {
+    //   this.loading = false;
+    // }, 1000);
   }
 
   /** Catch action filter button */
@@ -99,7 +100,7 @@ export class MyMatterComponent {
   }
 
   /** Catch action from applied filter */
-  actionFilterApplied(event: FilterAplliedDTO[]): void {
-    this.filterApllied = event;
+  actionFilterApplied(event: FilterAppliedDTO[]): void {
+    this.filterApplied = event;
   }
 }

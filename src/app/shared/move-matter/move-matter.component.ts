@@ -20,7 +20,10 @@ import {
   PopoverComponent,
   TextComponent,
 } from '@quantum/fui';
-import { MatterDTO, MyTimesheetDTO } from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
+import {
+  MatterDTO,
+  MyTimesheetDTO,
+} from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MyTimesheetService } from '../../pages/matter/my-timesheet/services/my-timesheet.service';
@@ -52,7 +55,8 @@ import { debounceTime, map, Subscription, tap } from 'rxjs';
 })
 export class MoveMatterComponent {
   @Input() listMatters: MatterDTO[] = [];
-  @Input() timesheetSelected: MyTimesheetDTO[] = [];
+  @Input() timesheetSelected: any[] = [];
+  @Input() writeOff: boolean = false;
   @Output() action: EventEmitter<MyTimesheetDTO[]> = new EventEmitter<
     MyTimesheetDTO[]
   >();

@@ -1,0 +1,192 @@
+<!-- UTILITY TABLE  -->
+<div class="container-w">
+  <app-utility-detail-matter (actionBtn)="actionBtnUtil($event)" />
+</div>
+<!-- UTILITY TABLE  -->
+
+<!-- FILTER STATUS  -->
+<div class="container-w flex">
+  <shared-button-group [btnList]="btnFilterList" />
+  <shared-filter-applied
+    [filterApplied]="filterApplied"
+    (action)="clearAllFilterOut($event)"
+  />
+</div>
+<!-- FILTER STATUS  -->
+
+<!-- MOVE MATTER  -->
+<div class="container-w" *ngIf="timesheetSelected.length > 0">
+  <shared-move-matter
+    [writeOff]="true"
+    [timesheetSelected]="timesheetSelected"
+    (action)="onSelectedItemsChange($event)"
+  />
+</div>
+<!-- MOVE MATTER  -->
+
+<!-- TABLE  -->
+<div class="container-w last">
+  <shared-table-auto-generate
+    [title]="titleTable"
+    [property]="propertyTable"
+    [data]="dataTable"
+    [action]="action"
+    [limit]="limit"
+    [totalItems]="totalItems"
+    [clearSelection]="clearSelection"
+    (actionOut)="actionOutTable($event)"
+    (selectedItemsChange)="onSelectedItemsChange($event)"
+  />
+</div>
+<!-- TABLE  -->
+
+<!-- CREATE FLYOUT  -->
+<shared-create-timesheet-flyout
+  [title]="'Add Timesheet to 5889-1'"
+  [isOpenFlyout]="isOpenFlyoutCreate"
+  [feeEarner]="true"
+  [enableMatterSearchForm]="false"
+  (closeOut)="closeOut($event, 'create')"
+/>
+<!-- CREATE FLYOUT  -->
+
+<!-- FILTER FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="isOpenFlyoutFilter"
+  (closeOut)="closeOut($event, 'filter')"
+  [titleFlyout]="'Filter'"
+>
+  <!-- BODY FLYOUT  -->
+  <div body>
+    <!-- DATE FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Date</fui-text>
+      <div class="time-description">
+        <fui-date-range
+          [dateFormat]="'DD-MM-YYYY'"
+          [startDateControl]="startDateForm"
+          [endDateControl]="endDateForm"
+          (onChangeStartDate)="changeDateForm($event, 'start')"
+          (onChangeEndDate)="changeDateForm($event, 'end')"
+        />
+      </div>
+      <span
+        class="filter-valid"
+        *ngIf="startDateForm.value === '' || endDateForm.value === ''"
+      >
+        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
+        Date range is required!
+      </span>
+      <span class="filter-valid" *ngIf="invalidStartEndDate()">
+        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
+        the start date cannot exceed the end date!
+      </span>
+    </div>
+    <!-- DATE FORM  -->
+
+    <!-- NAME FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Name</fui-text>
+      <div class="time-description">
+        <fui-combo-box
+          (selection)="selectionCombox($event, 'name')"
+          [comboxForm]="nameForm"
+          [size]="'m'"
+          [placeholder]="'Select name'"
+          [optionValue]="nameOption"
+          [selectedValue]="nameSelected"
+        />
+      </div>
+    </div>
+    <!-- NAME FORM  -->
+
+    <!-- DESC FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Time Description</fui-text>
+      <div class="time-description">
+        <fui-form-control-layout>
+          <fui-input-field
+            [formControlField]="descriptionForm"
+            [placeholder]="'e.g Meeting with client'"
+            [type]="'text'"
+            [size]="'m'"
+            [invalid]="false"
+          />
+        </fui-form-control-layout>
+      </div>
+    </div>
+    <!-- DESC FORM  -->
+
+    <hr />
+
+    <!-- WRITE OFF FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Write-off Status</fui-text>
+      <div class="time-description">
+        <fui-combo-box
+          (selection)="selectionCombox($event, 'writeoff')"
+          [comboxForm]="writeOffStatusForm"
+          [size]="'m'"
+          [singleSelection]="true"
+          [placeholder]="'Select Write-off Status'"
+          [optionValue]="writeOffStatusOption"
+          [selectedValue]="writeOffStatusSelected"
+        />
+      </div>
+    </div>
+    <!-- WRITE OFF FORM  -->
+
+    <!-- BILLING NUMBER FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Billing Number</fui-text>
+      <div class="time-description">
+        <fui-combo-box
+          (selection)="selectionCombox($event, 'billing')"
+          [comboxForm]="billingNumberForm"
+          [size]="'m'"
+          [placeholder]="'Select Billing Number'"
+          [optionValue]="billingNumberOption"
+          [selectedValue]="billingNumberSelected"
+        />
+      </div>
+    </div>
+    <!-- BILLING NUMBER FORM  -->
+  </div>
+  <!-- BODY FLYOUT  -->
+
+  <!-- FOOTER FLYOUT FILTER  -->
+  <div class="footer-flyout" footer>
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'text'"
+      [style]="'secondary'"
+      [text]="'Cancel'"
+      [size]="'m'"
+      [color]="'text'"
+      (onClick)="closeOut(false, 'filter')"
+    />
+    <div class="group-flex">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'secondary'"
+        [text]="'Clear Filter'"
+        [size]="'m'"
+        [color]="'text'"
+        (onClick)="closeOut(false, 'filter')"
+      />
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'iconText'"
+        [style]="'filled'"
+        [text]="'Apply Filter'"
+        [size]="'m'"
+        [color]="'primary'"
+        [icon]="'filter'"
+        (onClick)="closeOut(false, 'filter')"
+      />
+    </div>
+  </div>
+  <!-- FOOTER FLYOUT FILTER  -->
+</shared-flyout-simple>
+<!-- FILTER FLYOUT  -->

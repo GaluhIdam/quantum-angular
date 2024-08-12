@@ -1,29 +1,39 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormSearchComponent } from '../my-matter/form-search/form-search.component';
-import { ButtonIconComponent } from '@quantum/fui';
+import {
+  ButtonIconComponent,
+  FormControlLayoutComponent,
+  IconsComponent,
+  InputFieldComponent,
+  TextComponent,
+} from '@quantum/fui';
 import { FilterAppliedComponent } from '../../../shared/filter-applied/filter-applied.component';
-import { FilterAplliedDTO } from '../../../shared/filter-applied/filter-apllied.dto';
+import { FilterAppliedDTO } from '../../../shared/filter-applied/filter-apllied.dto';
 import { CardAllMatterComponent } from './card-all-matter/card-all-matter.component';
+import { FilterMatterFlyoutComponent } from '../../../shared/filter-matter-flyout/filter-matter-flyout.component';
 
 @Component({
   selector: 'app-all-matter',
   standalone: true,
   imports: [
     CommonModule,
-    FormSearchComponent,
     ButtonIconComponent,
     FilterAppliedComponent,
     CardAllMatterComponent,
+    FormControlLayoutComponent,
+    InputFieldComponent,
+    IconsComponent,
+    TextComponent,
+    FilterMatterFlyoutComponent,
   ],
   templateUrl: './all-matter.component.html',
   styleUrl: './all-matter.component.scss',
 })
 export class AllMatterComponent {
-  filterApllied: FilterAplliedDTO[] = [];
+  filterApplied: FilterAppliedDTO[] = [];
 
   ngOnInit(): void {
-    this.filterApllied = [
+    this.filterApplied = [
       {
         name: 'Date',
         status: true,
@@ -59,12 +69,33 @@ export class AllMatterComponent {
     ];
   }
 
+  /**  Flyout */
+  isOpenFlyoutCreate: boolean = false;
+  isOpenFlyoutFilter: boolean = false;
+
+  /** Catch action from util */
+  actionBtnUtil(event: 'filter' | 'create'): void {
+    if (event === 'create') {
+      this.isOpenFlyoutCreate = true;
+    }
+    if (event === 'filter') {
+      this.isOpenFlyoutFilter = true;
+    }
+  }
+
+  /** Catch action from flyout */
+  closeOut(event: boolean, param: 'filter' | 'create'): void {
+    if (param === 'filter') {
+      this.isOpenFlyoutFilter = event;
+    }
+  }
+
   /** Clear All Filter */
-  clearAllFilterOut(event: FilterAplliedDTO[]): void {
-    this.filterApllied = event;
+  clearAllFilterOut(event: FilterAppliedDTO[]): void {
+    this.filterApplied = event;
   }
   /** Clear Filter per Item */
-  clearFilterPerItemOut(event: FilterAplliedDTO[]): void {
-    this.filterApllied = event;
+  clearFilterPerItemOut(event: FilterAppliedDTO[]): void {
+    this.filterApplied = event;
   }
 }

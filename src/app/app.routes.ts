@@ -2,11 +2,11 @@ import { mapToCanActivate, Routes } from '@angular/router';
 import { MyTimesheetComponent } from './pages/matter/my-timesheet/my-timesheet.component';
 import { MyMatterComponent } from './pages/matter/my-matter/my-matter.component';
 import { AllMatterComponent } from './pages/matter/all-matter/all-matter.component';
-import { DetailMatterComponent } from './pages/matter/my-matter/detail-matter/detail-matter.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { HomeComponent } from './pages/home/home.component';
 import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { DetailMatterComponent } from './pages/matter/detail-matter/detail-matter.component';
 
 export const routes: Routes = [
   /** Home Modules */

@@ -1,0 +1,75 @@
+<div class="utility">
+  <!-- LEFT INFO  -->
+  <div class="container">
+    <!-- TOTAL DURATION -->
+    <fui-text [weight]="'semibold'">Total Hours</fui-text>
+    <fui-tooltip [position]="'top'" [content]="'Total Hours'">
+      <fui-badge
+        [color]="'ghost'"
+        [size]="'sizem'"
+        [isBadgeIcon]="true"
+        [icon]="'clock'"
+        [iconPosition]="'start'"
+      >
+        <div>0h 0m</div>
+      </fui-badge>
+    </fui-tooltip>
+    <!-- TOTAL DURATION -->
+  </div>
+  <!-- LEFT INFO  -->
+
+  <!-- RIGHT BTN  -->
+  <div class="container">
+    <!-- BTN DOWNLOAD -->
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'iconText'"
+      [text]="'Update Rate'"
+      [style]="'secondary'"
+      [size]="'m'"
+      [color]="'text'"
+      [icon]="'refresh'"
+      (onClick)="action('update')"
+    />
+    <!-- BTN DOWNLOAD -->
+
+    <!-- BTN DOWNLOAD -->
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'icon'"
+      [style]="'secondary'"
+      [size]="'m'"
+      [color]="'text'"
+      [icon]="'download'"
+      [iconSide]="'left'"
+      (onClick)="action('download')"
+    />
+    <!-- BTN DOWNLOAD -->
+
+    <!-- BTN OPEN FILTER FLYOUT -->
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'icon'"
+      [style]="'secondary'"
+      [size]="'m'"
+      [color]="'text'"
+      [icon]="'filter'"
+      (onClick)="action('filter')"
+    />
+    <!-- BTN OPEN FILTER FLYOUT -->
+
+    <!-- BTN OPEN CREATE TIMESHEET FLYOUT -->
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'icon'"
+      [style]="'filled'"
+      [text]="'Filter'"
+      [size]="'m'"
+      [color]="'primary'"
+      [icon]="'plusInCircle'"
+      (onClick)="action('create')"
+    />
+    <!-- BTN OPEN CREATE TIMESHEET FLYOUT -->
+  </div>
+  <!-- RIGHT BTN  -->
+</div>

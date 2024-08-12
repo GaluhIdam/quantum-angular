@@ -10,7 +10,7 @@ import {
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { environment } from '../../../../environment/env';
 import { ResponseDTO, Result } from '../../../../core/dtos/response.dto';
-import { FilterAplliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
+import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class MyTimesheetService extends BaseController {
   private readonly _http = inject(HttpClient);
 
   /** Data filter for my timesheet */
-  dataFilterMyTimesheet(): FilterAplliedDTO[] {
+  dataFilterMyTimesheet(): FilterAppliedDTO[] {
     return [
       {
         name: 'Date',

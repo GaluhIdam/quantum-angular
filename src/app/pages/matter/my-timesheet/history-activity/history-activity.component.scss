@@ -9,10 +9,6 @@
   display: block;
 }
 
-.hour-minute {
-  margin: 0px 10px;
-}
-
 /** Footer Flyout Config */
 .footer-flyout {
   width: 100%;
@@ -52,11 +48,6 @@
   margin: 30px 0px;
 }
 
-.overlow-x {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 10px;
-  .wrap {
-    width: 100%;
-  }
+.wrap {
+  width: 100%;
 }

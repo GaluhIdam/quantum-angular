@@ -1,0 +1,267 @@
+<div class="wrap-container">
+  <!-- FORM SEARCH & FILTER BUTTON  -->
+  <div class="container">
+    <!-- FORM SEARCH -->
+    <fui-form-control-layout>
+      <fui-input-field
+        [type]="'text'"
+        [borderRadius]="['6px', '6px', '6px', '6px']"
+        [invalid]="false"
+        [size]="'m'"
+        [placeholder]="'Search by Number or Project Name'"
+      >
+        <fui-icons
+          left-icon
+          [color]="'text'"
+          [icon]="'search'"
+          [size]="'sizem'"
+        />
+      </fui-input-field>
+    </fui-form-control-layout>
+    <!-- FORM SEARCH  -->
+
+    <div class="group-btn">
+      <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+      <fui-button-icon
+        [color]="'text'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'filter'"
+        [style]="'secondary'"
+        [size]="'m'"
+        [text]="'Filter'"
+        (onClick)="actionBtnUtil('filter')"
+      />
+      <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+
+      <!-- ADD EXPENSE MATTER -->
+      <fui-button-icon
+        [color]="'primary'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircle'"
+        [style]="'filled'"
+        [size]="'m'"
+        [text]="'Add Expense'"
+      />
+      <!-- ADD EXPENSE MATTER -->
+    </div>
+  </div>
+  <!-- FORM SEARCH & FILTER BUTTON  -->
+
+  <!-- TABLE  -->
+  <div class="container">
+    <app-table-expenses />
+  </div>
+  <!-- TABLE  -->
+</div>
+
+<!-- FILTER FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="isOpenFlyoutFilter"
+  (closeOut)="closeOut($event, 'filter')"
+  [titleFlyout]="'Expense Filter'"
+>
+  <div body>
+    <!-- REQUESTED FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Requested By</fui-text>
+      <div class="time-description">
+        <fui-combo-box
+          (selection)="selectionCombox($event, 'requested')"
+          [comboxForm]="requestForm"
+          [size]="'m'"
+          [placeholder]="'Select requested'"
+          [optionValue]="requestOption"
+          [selectedValue]="requestSelected"
+        />
+      </div>
+    </div>
+    <!-- REQUESTED FORM  -->
+
+    <!-- ITEM CAT FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Item Category</fui-text>
+      <div class="time-description">
+        <fui-combo-box
+          (selection)="selectionCombox($event, 'itemCat')"
+          [comboxForm]="itemCatForm"
+          [size]="'m'"
+          [placeholder]="'Select item category'"
+          [optionValue]="itemCatOption"
+          [selectedValue]="itemCatSelected"
+        />
+      </div>
+    </div>
+    <!-- ITEM CAT FORM  -->
+
+    <!-- DATE FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Date</fui-text>
+      <div class="time-description">
+        <fui-date-range
+          [dateFormat]="'DD-MM-YYYY'"
+          [startDateControl]="startDateForm"
+          [endDateControl]="endDateForm"
+          (onChangeStartDate)="changeDateForm($event, 'start')"
+          (onChangeEndDate)="changeDateForm($event, 'end')"
+        />
+      </div>
+      <span
+        class="filter-valid"
+        *ngIf="startDateForm.value === '' || endDateForm.value === ''"
+      >
+        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
+        Date range is required!
+      </span>
+      <span class="filter-valid" *ngIf="invalidStartEndDate()">
+        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
+        the start date cannot exceed the end date!
+      </span>
+    </div>
+    <!-- DATE FORM  -->
+
+    <div class="group-form">
+      <!-- VENDOR IN FORM  -->
+      <div class="form">
+        <fui-text [size]="'sizes'">Vendor Invoice Number</fui-text>
+        <div class="time-description">
+          <fui-form-control-layout>
+            <fui-input-field
+              [formControlField]="vendorINForm"
+              [placeholder]="'Type invoice number'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="false"
+            />
+          </fui-form-control-layout>
+        </div>
+      </div>
+      <!-- VENDOR IN FORM  -->
+
+      <!-- PAYMENT NUMBER FORM  -->
+      <div class="form">
+        <fui-text [size]="'sizes'">Payment Number</fui-text>
+        <div class="time-description">
+          <fui-form-control-layout>
+            <fui-input-field
+              [formControlField]="paymentNumberForm"
+              [placeholder]="'Type payment number'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="false"
+            />
+          </fui-form-control-layout>
+        </div>
+      </div>
+      <!-- PAYMENT NUMBER FORM  -->
+    </div>
+
+    <div class="alone-t">
+      <fui-text [size]="'sizes'">Amount</fui-text>
+    </div>
+    <div class="group-form">
+      <!-- MIN AMOUNT FORM  -->
+      <div class="form">
+        <div class="time-description">
+          <fui-form-control-layout>
+            <fui-input-field
+              [formControlField]="minAmountForm"
+              [placeholder]="'Min. amount'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="false"
+            />
+          </fui-form-control-layout>
+        </div>
+      </div>
+      <!-- MIN AMOUNT FORM  -->
+      <fui-icons [icon]="'sortRight'" />
+      <!-- MAX AMOUNT FORM  -->
+      <div class="form">
+        <div class="time-description">
+          <fui-form-control-layout>
+            <fui-input-field
+              [formControlField]="maxAmountForm"
+              [placeholder]="'Max. amount'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="false"
+            />
+          </fui-form-control-layout>
+        </div>
+      </div>
+      <!-- MAX AMOUNT FORM  -->
+    </div>
+
+    <hr />
+
+    <!-- COLLECTION STATUS FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Collection Status</fui-text>
+      <div class="time-description">
+        <fui-combo-box
+          (selection)="selectionCombox($event, 'collection')"
+          [comboxForm]="collectionStatusForm"
+          [size]="'m'"
+          [placeholder]="'Select collection status'"
+          [optionValue]="collectionStatusOption"
+          [selectedValue]="collectionStatusSelected"
+        />
+      </div>
+    </div>
+    <!-- COLLECTION STATUS FORM  -->
+
+    <!-- COLLECTED IN FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Collected In</fui-text>
+      <div class="time-description">
+        <fui-combo-box
+          (selection)="selectionCombox($event, 'collected')"
+          [comboxForm]="collectionStatusForm"
+          [size]="'m'"
+          [placeholder]="'Select collected in'"
+          [optionValue]="collectionStatusOption"
+          [selectedValue]="collectionStatusSelected"
+        />
+      </div>
+    </div>
+    <!-- COLLECTED IN FORM  -->
+  </div>
+
+  <!-- FOOTER FLYOUT FILTER  -->
+  <div class="footer-flyout" footer>
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'text'"
+      [style]="'secondary'"
+      [text]="'Cancel'"
+      [size]="'m'"
+      [color]="'text'"
+      (onClick)="closeOut(false, 'filter')"
+    />
+    <div class="group-flex">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'secondary'"
+        [text]="'Clear Filter'"
+        [size]="'m'"
+        [color]="'text'"
+        (onClick)="closeOut(false, 'filter')"
+      />
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'iconText'"
+        [style]="'filled'"
+        [text]="'Apply Filter'"
+        [size]="'m'"
+        [color]="'primary'"
+        [icon]="'filter'"
+        (onClick)="closeOut(false, 'filter')"
+      />
+    </div>
+  </div>
+  <!-- FOOTER FLYOUT FILTER  -->
+</shared-flyout-simple>
+<!-- FILTER FLYOUT  -->

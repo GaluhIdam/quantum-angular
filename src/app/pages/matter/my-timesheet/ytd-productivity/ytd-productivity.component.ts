@@ -26,21 +26,6 @@ export class YtdProductivityComponent {
   loading: boolean = true;
 
   optionBar: any = {
-    legend: {
-      data: ['Billable', 'Non-Billable'],
-      bottom: '0%',
-      left: '0%',
-    },
-    tooltip: {
-      trigger: 'axis',
-    },
-    grid: {
-      top: '15%',
-      left: '0%',
-      right: '0%',
-      bottom: '33%',
-      containLabel: false,
-    },
     xAxis: {
       type: 'category',
       data: [
@@ -57,12 +42,25 @@ export class YtdProductivityComponent {
         'November',
         'December',
       ],
-      axisLabel: {
-        show: true,
-      },
     },
     yAxis: {
       type: 'value',
+    },
+    legend: {
+      data: ['Billable Hours', 'Non-Billable'],
+      top: 'bottom',
+      bottom: '0%',
+      left: '0%',
+    },
+    grid: {
+      top: '15%',
+      left: '0%',
+      right: '0%',
+      bottom: '33%',
+      containLabel: false,
+    },
+    tooltip: {
+      trigger: 'axis',
     },
     series: [],
   };

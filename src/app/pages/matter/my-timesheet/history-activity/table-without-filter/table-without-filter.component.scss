@@ -1,6 +1,8 @@
 @import "../history-activity.component.scss";
 
 .container {
+  overflow-x: auto;
+  overflow-y: hidden;
   fui-collapsible-nav-group {
     min-width: 600px;
     width: -webkit-fill-available;

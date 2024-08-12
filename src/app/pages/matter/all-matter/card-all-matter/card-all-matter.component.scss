@@ -13,22 +13,25 @@
   }
   .status {
     display: flex;
-    fui-badge {
-      margin-right: 8px;
-    }
+    flex-wrap: wrap;
+    gap: 0px 5px;
   }
+
   .row-start {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-start;
     margin-top: 30px;
   }
   .row-foot {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 20px;
   }
   .row {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin: 20px 0px;
   }
@@ -36,13 +39,14 @@
     display: flex;
     flex-direction: column;
     .item {
-      height: 75px;
+      // height: 75px;
       margin-bottom: 30px;
       display: flex;
       flex-direction: column;
       .flex {
         margin-bottom: 5px;
         display: flex;
+        flex-wrap: wrap;
         fui-icons {
           margin-right: 5px;
         }
@@ -93,4 +97,10 @@
 hr {
   border-color: var(--fuiColorLightShade, $fuiColorLightShade);
   border-style: solid;
+}
+
+@media (max-width: 1000px) {
+  .vertical-line {
+    display: none;
+  }
 }

@@ -1,0 +1,49 @@
+<!-- RETURN BUTTON -->
+<a [routerLink]="'/matter/my-matter'" class="back-link">
+  <fui-icons [icon]="'arrowLeft'" [size]="'sizes'" [color]="'primary'" />
+  <span>Return</span>
+</a>
+<!-- RETURN BUTTON -->
+
+<!-- TITLE PAGE -->
+<div class="grid">
+  <fui-text [weight]="'semibold'" [size]="'sizexl'"
+    >5889-1 Matter Project Name</fui-text
+  >
+  <fui-text>
+    Data entered in the 'Matter Descriptions' field on the matter information
+    page.</fui-text
+  >
+</div>
+<!-- TITLE PAGE -->
+
+<!-- TABS  -->
+<div class="tabs">
+  <fui-tabs [dataTabs]="dataTabs">
+    <fui-tabs-content [id]="'Overview'">
+      Content not available!
+    </fui-tabs-content>
+    <fui-tabs-content [id]="'Information'">
+      Content not available!
+    </fui-tabs-content>
+
+    <!-- TIMESHEET  -->
+    <fui-tabs-content [id]="'Timesheet'">
+      <div class="card-content">
+        <app-timesheet />
+      </div>
+    </fui-tabs-content>
+    <!-- TIMESHEET  -->
+
+    <!-- EXPENSE  -->
+    <fui-tabs-content [id]="'Expenses'">
+      <app-expenses />
+    </fui-tabs-content>
+    <!-- EXPENSE  -->
+
+    <fui-tabs-content [id]="'Documents'">
+      Content not available!
+    </fui-tabs-content>
+  </fui-tabs>
+</div>
+<!-- TABS  -->

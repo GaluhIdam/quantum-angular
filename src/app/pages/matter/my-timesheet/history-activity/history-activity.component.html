@@ -1,4 +1,4 @@
-<app-skeleton [active]="loading">
+<shared-skeleton [active]="loading">
   <!-- SIMPLE UTILITY TABLE  -->
   <shared-table-utility-simple
     [nextPrevBtn]="!checkFilter()"
@@ -12,7 +12,7 @@
   <!-- FILTER APPLIED -->
   <shared-filter-applied
     class="mb-15"
-    [filterApllied]="filterApplied"
+    [filterApplied]="filterApplied"
     (action)="clearAllFilterOut($event)"
   />
   <!-- FILTER APPLIED -->
@@ -26,38 +26,36 @@
   />
   <!-- MATTER MOVE -->
 
-  <div class="overlow-x">
-    <div class="wrap">
-      <!-- TABLE WITHOUT FILTER -->
-      <app-table-without-filter
-        *ngIf="!checkFilter()"
-        [dateTimesheetByDate]="dateTimesheetByDate"
-        [timesheetSelected]="timesheetSelected"
-        (timesheetSelectedOut)="timesheetSelectedOut($event)"
-        (action)="actionTableFilter($event)"
-      />
-      <!-- TABLE WITHOUT FILTER -->
+  <div class="wrap">
+    <!-- TABLE WITHOUT FILTER -->
+    <app-table-without-filter
+      *ngIf="!checkFilter()"
+      [dateTimesheetByDate]="dateTimesheetByDate"
+      [timesheetSelected]="timesheetSelected"
+      (timesheetSelectedOut)="timesheetSelectedOut($event)"
+      (action)="actionTableFilter($event)"
+    />
+    <!-- TABLE WITHOUT FILTER -->
 
-      <!-- TABLE WITH FILTER-->
-      <app-table-filter
-        class="container-table"
-        *ngIf="checkFilter()"
-        [page]="page"
-        [limit]="limit"
-        [totalItems]="totalItems"
-        [dataTimesheet]="dataTimesheet"
-        [timesheetSelected]="timesheetSelected"
-        (onPageChangeOut)="onPageChangeOut($event)"
-        (timesheetSelectedOut)="timesheetSelectedOut($event)"
-        (action)="actionTableFilter($event)"
-      />
-      <!-- TABLE WITH FILTER-->
-    </div>
+    <!-- TABLE WITH FILTER-->
+    <app-table-filter
+      class="container-table"
+      *ngIf="checkFilter()"
+      [page]="page"
+      [limit]="limit"
+      [totalItems]="totalItems"
+      [dataTimesheet]="dataTimesheet"
+      [timesheetSelected]="timesheetSelected"
+      (onPageChangeOut)="onPageChangeOut($event)"
+      (timesheetSelectedOut)="timesheetSelectedOut($event)"
+      (action)="actionTableFilter($event)"
+    />
+    <!-- TABLE WITH FILTER-->
   </div>
-</app-skeleton>
+</shared-skeleton>
 
 <!-- FLYOUT CREATE TIMESHEET -->
-<app-create-timesheet-flyout
+<shared-create-timesheet-flyout
   [listMatters]="listMatters"
   [listActivities]="listActivities"
   [isOpenFlyout]="isOpenCreateFlyout"
@@ -100,8 +98,8 @@
           [dateFormat]="'DD-MM-YYYY'"
           [startDateControl]="startDateForm"
           [endDateControl]="endDateForm"
-          (onChangeStartDate)="changeStartDate($event)"
-          (onChangeEndDate)="changeEndDate($event)"
+          (onChangeStartDate)="changeDateForm($event, 'start')"
+          (onChangeEndDate)="changeDateForm($event, 'end')"
         />
       </div>
       <span
@@ -143,7 +141,7 @@
         <fui-form-control-layout>
           <fui-input-field
             [formControlField]="descriptionForm"
-            [placeholder]="'Description'"
+            [placeholder]="'e.g Meeting with client'"
             [type]="'text'"
             [size]="'m'"
             [invalid]="false"
