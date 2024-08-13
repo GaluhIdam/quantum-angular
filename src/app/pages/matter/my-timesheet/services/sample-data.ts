@@ -1,53 +1,52 @@
 import { Color } from '@quantum/fui';
-import { DailyActivityDTO } from '../dtos/my-timesheet.dto';
 
 export class SampleDataMyTimeSheet {
+  static maxValue = 200;
+
+  static dataSeries1 = [
+    110, 175, 140, 200, 95, 185, 130, 145, 180, 165, 120, 190,
+  ];
+  static dataSeries2 = [
+    135, 155, 125, 180, 105, 160, 195, 140, 170, 115, 150, 185,
+  ];
 
   /** YTD Productivity  */
   static readonly ytdProductivity: any[] = [
     {
-      name: 'Billable',
+      name: 'Billable Hours',
+      data: this.dataSeries1,
       type: 'bar',
-      stack: 'total',
-      barWidth: '60%',
+      showBackground: true,
+      backgroundStyle: {
+        color: 'rgba(180, 180, 180, 0.2)',
+      },
       label: {
-        fontSize: 9,
         show: true,
-        formatter: (params: any) => {
-          const total =
-            SampleDataMyTimeSheet.ytdProductivity[0].data[params.dataIndex] +
-            SampleDataMyTimeSheet.ytdProductivity[1].data[params.dataIndex];
-          const percentage = ((params.value / total) * 100).toFixed(2);
-          return `${percentage}%`;
+        position: 'top',
+        textBorderWidth: 0,
+        formatter: (params: { data: number }) => {
+          let percent = Math.round((params.data / this.maxValue) * 100);
+          return percent + '%';
         },
       },
-      emphasis: {
-        focus: 'series',
-      },
-      data: [320, 302, 301, 334, 390, 330, 320, 120, 132, 101, 134, 90],
-      showBackground: true,
     },
     {
       name: 'Non-Billable',
+      data: this.dataSeries2,
       type: 'bar',
-      stack: 'total',
-      barWidth: '60%',
+      showBackground: true,
+      backgroundStyle: {
+        color: 'rgba(180, 180, 180, 0.2)',
+      },
       label: {
-        fontSize: 9,
         show: true,
-        formatter: (params: any) => {
-          const total =
-            SampleDataMyTimeSheet.ytdProductivity[0].data[params.dataIndex] +
-            SampleDataMyTimeSheet.ytdProductivity[1].data[params.dataIndex];
-          const percentage = ((params.value / total) * 100).toFixed(2);
-          return `${percentage}%`;
+        position: 'top',
+        textBorderWidth: 0,
+        formatter: (params: { data: number }) => {
+          let percent = Math.round((params.data / this.maxValue) * 100);
+          return percent + '%';
         },
       },
-      emphasis: {
-        focus: 'series',
-      },
-      data: [120, 132, 101, 134, 90, 230, 210, 320, 302, 301, 334, 390],
-      showBackground: true,
     },
   ];
 

@@ -17,15 +17,39 @@ export interface HourActivityDTO {
 export interface MyTimesheetDTO {
   idTimesheet: number;
   uuid: string;
-  description: string;
-  date: Date;
-  duration: string;
-  createdAt: Date;
-  updatedAt: Date;
-  matter: MatterDTO;
   activity: ActivityDTO;
-  officialCategory: OfficialCategoryDTO;
+  objectEvent: string;
+  topic: string;
+  description: string;
+  date: string;
+  duration: string;
+  createdAt: string;
+  updatedAt: string;
+  matter: MatterDTO;
   tagEntityList: TagEntityList[];
+}
+export interface ActivityDTO {
+  idActivity: number;
+  uuid: string;
+  activity: string;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface MatterDTO {
+  idMatter: number;
+  uuid: string;
+  matter: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface TagEntityList {
+  idTag: number;
+  uuid: string;
+  tagBy: string;
+  tagged: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface MyTimesheetPostDTO {
@@ -43,35 +67,4 @@ export interface TimesheetByDateDTO {
   data: MyTimesheetDTO[];
 }
 
-/** Master Data Dummy */
-export interface MatterDTO {
-  idMatter: number;
-  uuid: string;
-  matter: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-export interface ActivityDTO {
-  idActivity: number;
-  uuid: string;
-  activity: string;
-  createdAt: Date;
-  updatedAt: Date;
-  officialCategoryEntityList: OfficialCategoryDTO[];
-}
-export interface OfficialCategoryDTO {
-  idOfficialCategory: number;
-  uuid: string;
-  officialCategory: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
 
-export interface TagEntityList {
-  idTag: number;
-  uuid: string;
-  tagBy: string;
-  tagged: string;
-  createdAt: Date;
-  updatedAt: Date;
-}

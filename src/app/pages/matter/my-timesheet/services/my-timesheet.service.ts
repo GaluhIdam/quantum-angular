@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, pipe, retry, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
+  ActivityDTO,
   MatterDTO,
   MyTimesheetDTO,
   MyTimesheetPostDTO,
@@ -9,7 +10,7 @@ import {
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { environment } from '../../../../environment/env';
 import { ResponseDTO, Result } from '../../../../core/dtos/response.dto';
-import { FilterAplliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
+import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class MyTimesheetService extends BaseController {
   private readonly _http = inject(HttpClient);
 
   /** Data filter for my timesheet */
-  dataFilterMyTimesheet(): FilterAplliedDTO[] {
+  dataFilterMyTimesheet(): FilterAppliedDTO[] {
     return [
       {
         name: 'Date',
@@ -35,13 +36,22 @@ export class MyTimesheetService extends BaseController {
     ];
   }
 
-  /** Get matter and Search */
-  getMatters(search: string): Observable<ResponseDTO<MatterDTO[]>> {
-    return this._http.get<ResponseDTO<MatterDTO[]>>(
-      `${environment.httpUrl}/matter`,
-      {
-        params: new HttpParams().set('search', search),
-      }
+  /** Get matter */
+  getMatters(search: string): Observable<MatterDTO[]> {
+    return this._http.get<MatterDTO[]>(`${environment.httpUrl}/matters`, {
+      params: new HttpParams().set('matter', search),
+    });
+  }
+
+  /** Get activities */
+  getActivites(): Observable<ActivityDTO[]> {
+    return this._http.get<ActivityDTO[]>(`${environment.httpUrl}/activities`);
+  }
+
+  /** Get timesheets */
+  getTimesheets(): Observable<MyTimesheetDTO[]> {
+    return this._http.get<MyTimesheetDTO[]>(
+      `${environment.httpUrl}/timesheets`
     );
   }
 
@@ -49,9 +59,9 @@ export class MyTimesheetService extends BaseController {
   getTimesheetWithRange(
     startDate: string,
     endDate: string
-  ): Observable<ResponseDTO<MyTimesheetDTO[]>> {
-    return this._http.get<ResponseDTO<MyTimesheetDTO[]>>(
-      `${environment.httpUrl}/my-timesheet`,
+  ): Observable<MyTimesheetDTO[]> {
+    return this._http.get<MyTimesheetDTO[]>(
+      `${environment.httpUrl}/timesheets`,
       {
         params: new HttpParams()
           .set('startDate', startDate)
@@ -67,27 +77,19 @@ export class MyTimesheetService extends BaseController {
     matters: string | null,
     addDescription: string | null,
     page: number,
-    size: number
-  ): Observable<ResponseDTO<Result<MyTimesheetDTO[]>>> {
-    let params = new HttpParams();
+    limit: number
+  ): Observable<Result<MyTimesheetDTO[]>> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
 
-    if (startDate) {
-      params = params.set('startDate', startDate);
-    }
-    if (endDate) {
-      params = params.set('endDate', endDate);
-    }
-    if (matters) {
-      params = params.set('matters', matters);
-    }
-    if (addDescription) {
-      params = params.set('addDescription', addDescription);
-    }
-    params = params.set('page', page.toString());
-    params = params.set('size', size.toString());
+    if (startDate) params = params.set('startDate', startDate);
+    if (endDate) params = params.set('endDate', endDate);
+    if (matters) params = params.set('matters', matters);
+    if (addDescription) params = params.set('description', addDescription);
 
-    return this._http.get<ResponseDTO<Result<MyTimesheetDTO[]>>>(
-      `${environment.httpUrl}/my-timesheet/filter`,
+    return this._http.get<Result<MyTimesheetDTO[]>>(
+      `${environment.httpUrl}/filter-timesheets`,
       { params: params }
     );
   }

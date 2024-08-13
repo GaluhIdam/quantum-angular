@@ -1,69 +1,73 @@
-<app-skeleton [active]="loading">
-  <!-- Utility -->
-  <app-utility
-    [filterApplied]="filterApplied"
-    [listMatter]="listMatters"
-    [dataTimesheet]="dataTimesheet"
-    (filterAction)="applyFilterAction($event)"
-    (clearFilterAll)="clearAllFilterOut($event)"
-    (dateTimesheetByDateOut)="getDataTimesheetByDate($event)"
-    (dateMoveChanger)="dateMoveWatcher($event)"
-    (clickOpenCreateFlyout)="clickOpenCreateFlyout($event)"
+<shared-skeleton [active]="loading">
+  <!-- SIMPLE UTILITY TABLE  -->
+  <shared-table-utility-simple
+    [nextPrevBtn]="!checkFilter()"
+    [startDate]="startDate"
+    [endDate]="endDate"
+    [duration]="hourMinute"
+    (btnAction)="btnActionUtil($event)"
   />
-  <!-- Utility -->
+  <!-- SIMPLE UTILITY TABLE  -->
 
   <!-- FILTER APPLIED -->
-  <app-filter-applied
+  <shared-filter-applied
     class="mb-15"
-    [filterApllied]="filterApplied"
-    (clearAllFilterOut)="clearAllFilterOut($event)"
+    [filterApplied]="filterApplied"
+    (action)="clearAllFilterOut($event)"
   />
   <!-- FILTER APPLIED -->
 
   <!-- MATTER MOVE -->
-  <app-move-matter
+  <shared-move-matter
     *ngIf="timesheetSelected.length > 0"
     [listMatters]="listMatters"
     [timesheetSelected]="timesheetSelected"
-    (clearSelectionOut)="clearSelectionOut($event)"
+    (action)="actionMoveTimesheet($event)"
   />
   <!-- MATTER MOVE -->
 
-  <!-- TABLE WITHOUT FILTER -->
-  <app-table-without-filter
-    *ngIf="!checkFilter()"
-    [dateTimesheetByDate]="dateTimesheetByDate"
-    [timesheetSelected]="timesheetSelected"
-    (timesheetSelectedOut)="timesheetSelectedOut($event)"
-    (clickOpenEdit)="clickOpenEdit($event)"
-    (clickOpenEditTag)="clickOpenEditTag($event)"
-    (clickOpenModalDelete)="clickOpenModalDelete($event)"
-  />
-  <!-- TABLE WITHOUT FILTER -->
+  <div class="wrap">
+    <!-- TABLE WITHOUT FILTER -->
+    <app-table-without-filter
+      *ngIf="!checkFilter()"
+      [dateTimesheetByDate]="dateTimesheetByDate"
+      [timesheetSelected]="timesheetSelected"
+      (timesheetSelectedOut)="timesheetSelectedOut($event)"
+      (action)="actionTableFilter($event)"
+    />
+    <!-- TABLE WITHOUT FILTER -->
 
-  <!-- TABLE WITH FILTER-->
-  <app-table-filter
-    class="container-table"
-    *ngIf="checkFilter()"
-    [page]="page"
-    [limit]="limit"
-    [totalItems]="totalItems"
-    [dataTimesheet]="dataTimesheet"
-    (onPageChangeOut)="onPageChangeOut($event)"
-    (timesheetCheckedOut)="timesheetSelectedOut($event)"
-  />
-  <!-- TABLE WITH FILTER-->
-</app-skeleton>
+    <!-- TABLE WITH FILTER-->
+    <app-table-filter
+      class="container-table"
+      *ngIf="checkFilter()"
+      [page]="page"
+      [limit]="limit"
+      [totalItems]="totalItems"
+      [dataTimesheet]="dataTimesheet"
+      [timesheetSelected]="timesheetSelected"
+      (onPageChangeOut)="onPageChangeOut($event)"
+      (timesheetSelectedOut)="timesheetSelectedOut($event)"
+      (action)="actionTableFilter($event)"
+    />
+    <!-- TABLE WITH FILTER-->
+  </div>
+</shared-skeleton>
 
 <!-- FLYOUT CREATE TIMESHEET -->
-<app-create-timesheet-flyout
+<shared-create-timesheet-flyout
+  [listMatters]="listMatters"
+  [listActivities]="listActivities"
   [isOpenFlyout]="isOpenCreateFlyout"
   (closeOut)="closeOutCreate($event)"
 />
 <!-- FLYOUT CREATE TIMESHEET -->
 
 <!-- EDIT TIMESHEET FLYOUT -->
-<app-edit-timesheet-flyout
+<shared-edit-timesheet-flyout
+  [listActivities]="listActivities"
+  [timesheet]="timesheetEditSelected"
+  [enableMatterSearchForm]="false"
   [isOpenFlyout]="isOpenEditFlyout"
   (closeOut)="closeOutEdit($event)"
 />
@@ -71,19 +75,128 @@
 
 <!-- EDIT TAG FLYOUT -->
 <app-edit-tag-timesheet-flyout
+  [listActivities]="listActivities"
+  [timesheet]="timesheetEditSelected"
+  [enableMatterSearchForm]="false"
   [isOpenFlyout]="isOpenEditTagFlyout"
   (closeOut)="closeOutEditTag($event)"
 />
 <!-- EDIT TAG FLYOUT -->
 
-<!-- MODAL DELETE -->
-<app-modal-delete
-  [openModalDelete]="openModalDelete"
-  [title]="'Delete Timesheet?'"
-  [desc]="'You can’t recover the deleted timesheet'"
-  (cancelOut)="cancelOutDelete($event)"
-  (deleteActionOut)="deleteActionOutDelete($event)"
-/>
-<!-- MODAL DELETE -->
+<!-- FILTER TIMESHEET  -->
+<shared-flyout-simple
+  [isOpenFlyout]="openFlyoutFilter"
+  [titleFlyout]="'Filter'"
+  (closeOut)="closeOutFilter($event)"
+>
+  <div body>
+    <!-- DATE FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Date</fui-text>
+      <div class="time-description">
+        <fui-date-range
+          [dateFormat]="'DD-MM-YYYY'"
+          [startDateControl]="startDateForm"
+          [endDateControl]="endDateForm"
+          (onChangeStartDate)="changeDateForm($event, 'start')"
+          (onChangeEndDate)="changeDateForm($event, 'end')"
+        />
+      </div>
+      <span
+        class="filter-valid"
+        *ngIf="startDateForm.value === '' || endDateForm.value === ''"
+      >
+        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
+        Date range is required!
+      </span>
+      <span class="filter-valid" *ngIf="invalidStartEndDate()">
+        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
+        the start date cannot exceed the end date!
+      </span>
+    </div>
+    <!-- DATE FORM  -->
 
+    <!-- MATTER FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Matter</fui-text>
+      <div class="time-description">
+        <fui-combo-box
+          (selection)="selectionMatter($event)"
+          [comboxForm]="searchMatterForm"
+          [size]="'m'"
+          [placeholder]="'Matter'"
+          [optionValue]="optionMatter"
+          [selectedValue]="selectedMatter"
+        />
+      </div>
+    </div>
+    <!-- MATTER FORM  -->
+
+    <hr class="line-hr" />
+
+    <!-- DESC FORM  -->
+    <div class="form">
+      <fui-text [size]="'sizes'">Time Description</fui-text>
+      <div class="time-description">
+        <fui-form-control-layout>
+          <fui-input-field
+            [formControlField]="descriptionForm"
+            [placeholder]="'e.g Meeting with client'"
+            [type]="'text'"
+            [size]="'m'"
+            [invalid]="false"
+          />
+        </fui-form-control-layout>
+      </div>
+    </div>
+    <!-- DESC FORM  -->
+  </div>
+
+  <!-- FOOTER FLYOUT FILTER  -->
+  <div class="footer-flyout" footer>
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'text'"
+      [style]="'secondary'"
+      [text]="'Cancel'"
+      [size]="'m'"
+      [color]="'text'"
+      (onClick)="cancelFilter()"
+    />
+    <div class="group-flex">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'secondary'"
+        [text]="'Clear Filter'"
+        [size]="'m'"
+        [color]="'text'"
+        (onClick)="resetFilter()"
+      />
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'iconText'"
+        [style]="'filled'"
+        [text]="'Apply Filter'"
+        [size]="'m'"
+        [color]="'primary'"
+        [icon]="'filter'"
+        (onClick)="actionFilter($event)"
+      />
+    </div>
+  </div>
+  <!-- FOOTER FLYOUT FILTER  -->
+</shared-flyout-simple>
+<!-- FILTER TIMESHEET  -->
+
+<!-- MODAL DELETE  -->
+<shared-modal-delete
+  [openModalDelete]="isModalDelete"
+  [title]="'Delete Timesheet'"
+  (action)="actionModal($event)"
+/>
+<!-- MODAL DELETE  -->
+
+<!-- TOAST -->
 <fui-toast />
+<!-- TOAST -->

@@ -1,79 +1,81 @@
 <!-- table if data is existing -->
-<div class="table" *ngIf="dataTimesheet.length > 0">
-  <div class="table-row header">
-    <div class="table-cell">
-      <input
-        type="checkbox"
-        [checked]="timesheetChecked.length === dataTimesheet.length"
-        (click)="checkAllItems(dataTimesheet)"
-      />
+<div class="container">
+  <div class="table" *ngIf="dataTimesheet.length > 0">
+    <div class="table-row header">
+      <div class="table-cell">
+        <input
+          type="checkbox"
+          [checked]="timesheetSelected.length === dataTimesheet.length"
+          (click)="checkAllItems(dataTimesheet)"
+        />
+      </div>
+      <div class="table-cell" *ngFor="let item of headerTable">
+        <div class="head-title">{{ item }}</div>
+      </div>
     </div>
-    <div class="table-cell" *ngFor="let item of headerTable">
-      <div class="head-title">{{ item }}</div>
-    </div>
-  </div>
-  <div
-    class="table-row {{ item.tagEntityList.length > 0 ? 'tag-bg' : '' }}"
-    *ngFor="let item of dataTimesheet; let i = index"
-  >
-    <div class="table-cell">
-      <input
-        type="checkbox"
-        [checked]="isItemChecked(item)"
-        (click)="checkItem(item)"
-      />
-    </div>
-    <div class="table-cell">
-      {{ item.date | date : "d MMMM yy" }}
-    </div>
-    <div class="table-cell">
-      <div class="custom-badge">
-        <div class="item">
-          {{ item.matter.matter }}
+    <div
+      class="table-row {{ item.tagEntityList.length > 0 ? 'tag-bg' : '' }}"
+      *ngFor="let item of dataTimesheet; let i = index"
+    >
+      <div class="table-cell">
+        <input
+          type="checkbox"
+          [checked]="isItemChecked(item)"
+          (click)="checkItem(item)"
+        />
+      </div>
+      <div class="table-cell">
+        {{ item.date | date : "d MMMM yy" }}
+      </div>
+      <div class="table-cell">
+        <div class="custom-badge">
+          <div class="item">
+            {{ item.matter.matter }}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="table-cell">
-      <fui-text>{{ item.description }}</fui-text>
-      <br />
-      <div class="tag-badge" *ngIf="item.tagEntityList.length > 0">
-        <fui-icons [icon]="'user'" [color]="'text'" />
-        <fui-text [weight]="'semibold'"
-          >Tagged entry by {{ item.tagEntityList[0].tagBy }}</fui-text
-        >
+      <div class="table-cell">
+        <fui-text>{{ item.description }}</fui-text>
+        <br />
+        <div class="tag-badge" *ngIf="item.tagEntityList.length > 0">
+          <fui-icons [icon]="'user'" [color]="'text'" />
+          <fui-text [textWrap]="'nowrap'" [weight]="'semibold'"
+            >Tagged entry by {{ item.tagEntityList[0].tagBy }}</fui-text
+          >
+        </div>
       </div>
-    </div>
-    <div class="table-cell">
-      {{ convertTimeToAngularFormat(item.duration) }}
-    </div>
+      <div class="table-cell">
+        {{ convertTimeToAngularFormat(item.duration) }}
+      </div>
 
-    <div class="table-cell">
-      <div class="wrap-action title-cell">
-        <fui-button-icon
-          (onClick)="
-            item.tagEntityList.length > 0
-              ? openEditTagModal(item.uuid, item)
-              : toggleFormEdit(i, item)
-          "
-          [type]="'button'"
-          [option]="'icon'"
-          [style]="'secondary'"
-          [size]="'m'"
-          [color]="'primary'"
-          [icon]="'pencil'"
-          [iconSide]="'left'"
-        />
-        <fui-button-icon
-          *ngIf="item.tagEntityList.length === 0"
-          (onClick)="openDeleteModal(item.uuid)"
-          [type]="'button'"
-          [option]="'icon'"
-          [style]="'secondary'"
-          [size]="'m'"
-          [color]="'danger'"
-          [icon]="'trash'"
-          [iconSide]="'left'"
-        />
+      <div class="table-cell">
+        <div class="wrap-action title-cell">
+          <fui-button-icon
+            (onClick)="
+              item.tagEntityList.length > 0
+                ? actionBtn('edit-tag', item)
+                : actionBtn('edit', item)
+            "
+            [type]="'button'"
+            [option]="'icon'"
+            [style]="'secondary'"
+            [size]="'m'"
+            [color]="'primary'"
+            [icon]="'pencil'"
+            [iconSide]="'left'"
+          />
+          <fui-button-icon
+            *ngIf="item.tagEntityList.length === 0"
+            (onClick)="actionBtn('delete', item)"
+            [type]="'button'"
+            [option]="'icon'"
+            [style]="'secondary'"
+            [size]="'m'"
+            [color]="'danger'"
+            [icon]="'trash'"
+            [iconSide]="'left'"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -86,28 +88,8 @@
 
 <!-- PAGINATION -->
 <fui-pagination
+  *ngIf="dataTimesheet.length > 0"
   [totalItems]="totalItems"
   (onPageChange)="onPageChange($event)"
 />
 <!-- PAGINATION -->
-
-<!-- EDIT TAG TIMESHEET -->
-<app-edit-tag-timesheet-flyout
-  [isOpenFlyout]="isOpenFlyoutTagEdit"
-  (closeOut)="closeOutEditTag($event)"
-/>
-<!-- EDIT TAG TIMESHEET -->
-
-<!-- EDIT TIMESHEET -->
-<app-edit-timesheet-flyout
-  [isOpenFlyout]="isOpenFlyoutEdit"
-  (closeOut)="closeOutEdit($event)"
-/>
-<!-- EDIT TIMESHEET -->
-
-<!-- MODAL DELETE -->
-<app-modal-delete
-  [openModalDelete]="openModalDelete"
-  (cancelOut)="cancelOut($event)"
-/>
-<!-- MODAL DELETE -->

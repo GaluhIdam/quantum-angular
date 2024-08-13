@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FilterAplliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
+import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { Observable } from 'rxjs';
 import { MatterDTO } from '../../my-timesheet/dtos/my-timesheet.dto';
 import { ResponseDTO } from '../../../../core/dtos/response.dto';
@@ -13,7 +13,7 @@ export class MyMatterService {
   private readonly _http = inject(HttpClient);
 
   /** Data filter my matter */
-  dataFilterMyMatter(): FilterAplliedDTO[] {
+  dataFilterMyMatter(): FilterAppliedDTO[] {
     return [
       {
         name: 'Client Project',

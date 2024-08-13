@@ -108,7 +108,7 @@
         <fui-header-panel class="header">
           <fui-button-icon
             [type]="'button'"
-            [size]="'s'"
+            [size]="'m'"
             [option]="'icon'"
             [style]="'secondary'"
             [color]="'text'"
@@ -122,7 +122,7 @@
             class="icon-mode"
             *ngIf="themeService.getTheme() === 'light'"
             [type]="'button'"
-            [size]="'s'"
+            [size]="'m'"
             [option]="'icon'"
             [style]="'secondary'"
             [color]="'text'"
@@ -134,7 +134,7 @@
             class="icon-mode"
             *ngIf="themeService.getTheme() === 'dark'"
             [type]="'button'"
-            [size]="'s'"
+            [size]="'m'"
             [option]="'icon'"
             [style]="'secondary'"
             [color]="'text'"
@@ -144,7 +144,7 @@
           />
           <fui-button-icon
             [type]="'button'"
-            [size]="'s'"
+            [size]="'m'"
             [option]="'icon'"
             [style]="'secondary'"
             [color]="'text'"
@@ -154,7 +154,7 @@
           <span class="count-notif">{{ notifyCount }}</span>
           <fui-button-icon
             [type]="'button'"
-            [size]="'s'"
+            [size]="'m'"
             [option]="'icon'"
             [style]="'secondary'"
             [color]="'text'"
@@ -165,7 +165,7 @@
           <fui-popover class="create-new" [position]="'bottom'" [align]="'end'">
             <fui-button-icon
               [type]="'button'"
-              [size]="'s'"
+              [size]="'m'"
               [option]="'iconText'"
               [text]="'Create New'"
               [style]="'filled'"
@@ -232,17 +232,17 @@
     </div>
   </div>
 </div>
-<app-create-timesheet-flyout
+<shared-create-timesheet-flyout
+  [listActivities]="activitesData"
+  [listMatters]="mattersData"
   [isOpenFlyout]="isOpenFlyout"
   (closeOut)="closeOut($event)"
 />
 <!-- </fui-page> -->
-<app-modal-delete
+<shared-modal-delete
   [openModalDelete]="logoutModal"
   (deleteActionOut)="logoutAction()"
   [title]="'Are you sure want to sign out?'"
   [desc]="''"
-  [option]="'iconText'"
-  [icon]="'continuityBelow'"
   [btnContinue]="'Sign Out'"
 />

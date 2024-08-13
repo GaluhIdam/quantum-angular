@@ -4,7 +4,8 @@ import { EnvironmentInterface } from './env.interface';
 /** Config for rest api connection */
 export const environment: EnvironmentInterface = {
   role: 'admin',
-  httpUrl: 'http://localhost:8081/api/v1',
+  httpUrl: 'https://quantum-api-dummy.vercel.app/api',
+  // httpUrl: 'http://localhost:3001/api',
   keycloakUrl: '',
   keycloakClientId: '',
   baseUrl: '',

@@ -155,6 +155,7 @@
             [leftIcon]="'search'"
             (selection)="selectionMatter($event)"
             [comboxForm]="matterSearch"
+            [disabled]="lockMatter"
             [invalid]="matterSearch.invalid && matterSearch.dirty"
             [message]="'Matter is required!'"
             [singleSelection]="true"
@@ -194,8 +195,9 @@
             </div>
             <fui-date-picker
               class="form-control"
-              format="MM/DD/YYYY"
+              [dateFormat]="'DD-MM-YYYY'"
               [dateFormControl]="dateFormControl"
+              [disabled]="lockDate"
               [position]="'top'"
               [message]="'Date is required!'"
               [isInvalid]="dateFormControl.invalid && dateFormControl.dirty"
@@ -211,6 +213,7 @@
               [position]="'top'"
               [timeFormControl]="durationForm"
               [isInvalid]="durationForm.invalid && durationForm.dirty"
+              [minuteInterval]="'15 minutes'"
               [message]="'Duration is required!'"
             />
           </div>

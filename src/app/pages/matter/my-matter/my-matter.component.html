@@ -1,90 +1,95 @@
 <h1 class="title-page">My Matter</h1>
 
-<!-- FORM SEARCH SECTION -->
-<app-form-search />
-<!-- FORM SEARCH SECTION  -->
+<!-- FORM SEARCH & FILTER BUTTON  -->
+<div class="container">
+  <!-- FORM SEARCH -->
+  <fui-form-control-layout>
+    <fui-input-field
+      [type]="'text'"
+      [borderRadius]="['6px', '6px', '6px', '6px']"
+      [invalid]="false"
+      [size]="'m'"
+      [placeholder]="'Search by Number or Project Name'"
+    >
+      <fui-icons
+        left-icon
+        [color]="'text'"
+        [icon]="'search'"
+        [size]="'sizem'"
+      />
+    </fui-input-field>
+  </fui-form-control-layout>
+  <!-- FORM SEARCH  -->
+
+  <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+  <fui-button-icon
+    [color]="'text'"
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'filter'"
+    [style]="'secondary'"
+    [size]="'m'"
+    [text]="'Filter'"
+    (onClick)="openFilterFlyout()"
+  />
+  <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+</div>
+<!-- FORM SEARCH & FILTER BUTTON  -->
+
+<!-- FILTER FLYOUT  -->
+<shared-filter-matter-flyout
+  [isOpenFlyout]="isOpenFlyoutFilter"
+  (action)="actionFilter($event)"
+/>
+<!-- FILTER FLYOUT  -->
 
 <!-- FILTER SECTION  -->
 <div class="filter-applied">
   <!-- FILTER TAB SECTION  -->
-  <fui-filter-group [fullWidth]="false">
-    <!-- FILTER FOR ACTIVE STATUS  -->
-    <fui-filter-group-button
-      [active]="filterForActive"
-      (onClick)="toggleActiveFilter('active')"
-      ><div class="filter-title">
-        <span>Active</span>
-        <div class="icon {{ filterForActive ? 'accent' : '' }}">8</div>
-      </div>
-    </fui-filter-group-button>
-    <!-- FILTER FOR ACTIVE STATUS  -->
-
-    <!-- FILTER FOR PENDING STATUS  -->
-    <fui-filter-group-button
-      [active]="filterForPending"
-      (onClick)="toggleActiveFilter('pending')"
-      ><div class="filter-title">
-        <span>Pending</span>
-        <div class="icon {{ filterForPending ? 'accent' : '' }}">11</div>
-      </div></fui-filter-group-button
-    >
-    <!-- FILTER FOR PENDING STATUS  -->
-
-    <!-- FILTER FOR ON HOLD STATUS  -->
-    <fui-filter-group-button
-      [active]="filterForOnHold"
-      (onClick)="toggleActiveFilter('onHold')"
-      ><div class="filter-title">
-        <span>On Hold</span>
-        <div class="icon {{ filterForOnHold ? 'accent' : '' }}">2</div>
-      </div></fui-filter-group-button
-    >
-    <!-- FILTER FOR ON HOLD STATUS  -->
-
-    <!-- FILTER FOR COMPLETED STATUS  -->
-    <fui-filter-group-button
-      [active]="filterForCompleted"
-      (onClick)="toggleActiveFilter('completed')"
-      ><div class="filter-title">
-        <span>Completed</span>
-        <div class="icon {{ filterForCompleted ? 'accent' : '' }}">100</div>
-      </div></fui-filter-group-button
-    >
-    <!-- FILTER FOR COMPLETED STATUS  -->
-
-    <!-- FILTER FOR CLOSED STATUS  -->
-    <fui-filter-group-button
-      [active]="filterForClosed"
-      (onClick)="toggleActiveFilter('closed')"
-      ><div class="filter-title">
-        <span>Closed</span>
-      </div></fui-filter-group-button
-    >
-    <!-- FILTER FOR CLOSED STATUS  -->
-  </fui-filter-group>
+  <div class="overflow">
+    <shared-button-group
+      [btnList]="btnFilterList"
+      (action)="actionFilterBtn($event)"
+    />
+  </div>
   <!-- FILTER TAB SECTION  -->
 
   <!-- FILTER APPLIED SECTION  -->
-  <app-filter-applied
-    class="app-filter-applied"
-    [filterApllied]="filterApllied"
-    (clearAllFilterOut)="clearAllFilterOut($event)"
-    (clearFilterPerItemOut)="clearFilterPerItemOut($event)"
-  />
+  <div class="overflow filter">
+    <shared-filter-applied
+      [filterApplied]="filterApplied"
+      (action)="actionFilterApplied($event)"
+    />
+  </div>
   <!-- FILTER APPLIED SECTION  -->
 </div>
 
 <!-- CONTENT CARD LOOP  -->
 <div class="card-container">
-  <app-content-card [type]="1" />
-  <app-content-card [type]="2" />
-  <app-content-card [type]="3" />
-  <app-content-card [type]="4" />
-
-  <app-content-card [type]="4" />
-  <app-content-card [type]="3" />
-  <app-content-card [type]="2" />
-  <app-content-card [type]="1" />
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="1" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="2" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="3" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="4" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="1" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="2" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="3" />
+  </shared-skeleton>
+  <shared-skeleton [active]="loading">
+    <app-content-card [type]="4" />
+  </shared-skeleton>
 </div>
 <!-- CONTENT CARD LOOP  -->
 

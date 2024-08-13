@@ -1,7 +1,15 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { UtilityComponent } from './utility/utility.component';
-import { ToastComponent } from '@quantum/fui';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Component, HostListener, Input } from '@angular/core';
+import {
+  ButtonIconComponent,
+  ComboBoxComponent,
+  DateRangeComponent,
+  FormControlLayoutComponent,
+  IconsComponent,
+  InputFieldComponent,
+  TextComponent,
+  ToastComponent,
+} from '@quantum/fui';
 import {
   ActivityDTO,
   MatterDTO,
@@ -10,18 +18,20 @@ import {
 } from '../dtos/my-timesheet.dto';
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { MyTimesheetService } from '../services/my-timesheet.service';
-import { map } from 'rxjs';
 import { TableWithoutFilterComponent } from './table-without-filter/table-without-filter.component';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TableFilterComponent } from './table-filter/table-filter.component';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
-import { FilterAplliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
+import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
-import { MoveMatterComponent } from './move-matter/move-matter.component';
+import { MoveMatterComponent } from '../../../../shared/move-matter/move-matter.component';
 import { CreateTimesheetFlyoutComponent } from '../../../../shared/create-timesheet-flyout/create-timesheet-flyout.component';
 import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
 import { EditTagTimesheetFlyoutComponent } from '../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
 import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
+import { TableUtilitySimpleComponent } from '../../../../shared/table-utility-simple/table-utility-simple.component';
+import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-simple.component';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-history-activity',
@@ -31,174 +41,351 @@ import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-dele
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
-    UtilityComponent,
-    TableWithoutFilterComponent,
-    TableFilterComponent,
-    ToastComponent,
-    SkeletonComponent,
+    TextComponent,
+    TableUtilitySimpleComponent,
+    FlyoutSimpleComponent,
+    ButtonIconComponent,
+    DateRangeComponent,
+    IconsComponent,
+    FormControlLayoutComponent,
+    InputFieldComponent,
+    ComboBoxComponent,
+    ModalDeleteComponent,
     FilterAppliedComponent,
     MoveMatterComponent,
+    TableWithoutFilterComponent,
+    TableFilterComponent,
+    SkeletonComponent,
     CreateTimesheetFlyoutComponent,
     EditTimesheetFlyoutComponent,
     EditTagTimesheetFlyoutComponent,
-    ModalDeleteComponent,
+    ToastComponent,
   ],
+  providers: [DatePipe],
 })
 export class HistoryActivityComponent extends BaseController {
+  /** Data will input from MyTimesheetComponent */
+  @Input({ required: true }) listMatters: MatterDTO[] = [];
+  @Input({ required: true }) listActivities: ActivityDTO[] = [];
+
+  /** Loading Status */
   loading: boolean = false;
 
-  /** Data will input from MyTimesheetComponent and will send to :
-   * 1. Utility Component (for filter options).
-   * 2. Move Matter Component (for matter selection).
-   */
-  @Input() listMatters: MatterDTO[] = [];
+  /** Config Utility */
+  hourMinute: string = '0h 0m';
+
+  /** Date for without filter */
+  endDate: Date = new Date();
+  startDate: Date = new Date();
 
   /** Data will input from service */
-  dataTimesheet: MyTimesheetDTO[] = [];
+  @Input() dataTimesheet: MyTimesheetDTO[] = [];
 
-  /** Data will input from utility compnent */
+  /** After gruping by date */
   dateTimesheetByDate: TimesheetByDateDTO[] = [];
 
-  /** Data will input from utility compnent */
-  timesheetSelected: MyTimesheetDTO[] = [];
+  timesheetEditSelected!: MyTimesheetDTO;
 
-  /** Data will change based on filter applied */
-  startDateFilter: string = '';
-  endDateFilter: string = '';
-  selectedMatterFilter: string = '';
-  descriptionFilter: string = '';
+  /** Filter Timesheet */
+  openFlyoutFilter: boolean = false;
+  startDateForm: FormControl = new FormControl();
+  endDateForm: FormControl = new FormControl();
+  descriptionForm: FormControl = new FormControl('');
+  searchMatterForm: FormControl = new FormControl('');
+  optionMatter: { name: string; value: any }[] = [];
+  selectedMatter: { name: string; value: any }[] = [];
 
-  /** Pagination */
+  /** Pagination for table filter */
   page: number = 1;
   limit: number = 10;
   totalItems: number = 0;
 
-  /** Data input from utility component and send to filter applied component */
-  filterApplied: FilterAplliedDTO[] = [];
+  /** Data will input from utility compnent */
+  timesheetSelected: MyTimesheetDTO[] = [];
 
-  /** Varible for create timesheet flyout */
+  /** Data input from utility component and send to filter applied component */
+  filterApplied: FilterAppliedDTO[] = [];
+
+  /** Variable for create timesheet flyout */
   isOpenCreateFlyout: boolean = false;
 
-  /** Varible for edit timesheet flyout */
+  /** Variable for edit timesheet flyout */
   isOpenEditFlyout: boolean = false;
 
-  /** Varible for edit tag timesheet flyout */
+  /** Variable for edit tag timesheet flyout */
   isOpenEditTagFlyout: boolean = false;
 
-  /** Variable for open/close modal delete */
-  openModalDelete: boolean = false;
+  /** Variable for modal delete */
+  isModalDelete: boolean = false;
 
-  constructor(private readonly mytimesheetService: MyTimesheetService) {
+  constructor(
+    private readonly mytimesheetService: MyTimesheetService,
+    private datePipe: DatePipe
+  ) {
     super();
-    /** Initialize start to end date */
-    this.startDateFilter = this.defaultDate().startDateForm;
-    this.endDateFilter = this.defaultDate().endDateForm;
+    /** Replace start date and end date */
+    this.startDate = new Date(this.defaultDate().startDateForm);
+    this.endDate = new Date(this.defaultDate().endDateForm);
   }
 
   ngOnInit(): void {
-    this.filterApplied = this.mytimesheetService.dataFilterMyTimesheet();
-    this.getTimesheet(this.startDateFilter, this.endDateFilter);
+    this.moveDate(0);
+    this.getTimesheetByDate(this.startDateForm.value, this.endDateForm.value);
     this.loading = true;
     setTimeout(() => {
       this.loading = false;
     }, 1000);
   }
 
-  /** Geting timesheet from MyTimesheetService */
-  getTimesheet(startDate: string, endDate: string): void {
-    this.mytimesheetService
-      .getTimesheetWithRange(startDate, endDate)
-      .pipe(map((res) => (this.dataTimesheet = res.result)))
-      .subscribe();
+  ngOnChanges(): void {
+    this.dataTransform();
   }
 
-  /** Filter timesheet to MyTimesheetService */
-  filterTimesheet(
-    startDate: string,
-    endDate: string,
-    matters: string,
-    description: string,
-    page: number,
-    size: number
-  ): void {
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent) {
+    this.openFlyoutFilter = false;
+  }
+
+  /** Getting timssheet by date range */
+  getTimesheetByDate(startDate: string, endDate: string): void {
+    const startDateObj = startDate.split('-').reverse().join('-');
+    const endDateObj = endDate.split('-').reverse().join('-');
+    this.startDate = new Date(startDateObj);
+    this.endDate = new Date(endDateObj);
     this.mytimesheetService
-      .getFilterTimesheet(startDate, endDate, matters, description, page, size)
+      .getTimesheetWithRange(startDateObj, endDateObj)
       .pipe(
-        map((res) => {
-          this.totalItems = res.result.totalElements;
-          this.dataTimesheet = res.result.content;
+        map((data) => {
+          this.groupingData(data, startDateObj, endDateObj);
         })
       )
       .subscribe();
   }
 
-  /** Apply Filter and recall data from service */
-  applyFilterAction(event: {
-    startDate: string;
-    endDate: string;
-    selectedMatter: string;
-    description: string;
-    filterApplied: FilterAplliedDTO[];
-  }): void {
-    /** Replace filter */
-    this.filterApplied = event.filterApplied;
-    this.startDateFilter = event.startDate;
-    this.endDateFilter = event.endDate;
-    this.selectedMatterFilter = event.selectedMatter;
-    this.descriptionFilter = event.description;
+  /** Getting timesheet by filter */
+  getTimesheetFilter(
+    startDate: string,
+    endDate: string,
+    matters: string,
+    addDescription: string,
+    page: number,
+    limit: number
+  ): void {
+    this.filterApplied = [];
+    const startDateObj = startDate.split('-').reverse().join('-');
+    const endDateObj = endDate.split('-').reverse().join('-');
+    this.startDate = new Date(startDateObj);
+    this.endDate = new Date(endDateObj);
+    if (startDate !== '' && endDate !== '') {
+      this.filterApplied.push({
+        name: 'Date',
+        status: true,
+      });
+    }
+    if (matters !== '') {
+      this.filterApplied.push({
+        name: 'Matter',
+        status: true,
+      });
+    }
+    if (addDescription !== '') {
+      this.filterApplied.push({
+        name: 'Time Description',
+        status: true,
+      });
+    }
 
-    /** Recall data */
-    this.filterTimesheet(
-      this.startDateFilter,
-      this.endDateFilter,
-      this.selectedMatterFilter,
-      this.descriptionFilter,
-      this.page,
-      this.limit
-    );
-  }
-
-  /** Clear all filter */
-  clearAllFilterOut(event: FilterAplliedDTO[]): void {
-    this.filterApplied = event;
+    this.mytimesheetService
+      .getFilterTimesheet(
+        startDate === ''
+          ? null
+          : this.datePipe.transform(startDate, 'yyyy-dd-MM')!.toString(),
+        endDate === ''
+          ? null
+          : this.datePipe.transform(endDate, 'yyyy-dd-MM')!.toString(),
+        matters === '' ? null : matters,
+        addDescription === '' ? null : addDescription,
+        page,
+        limit
+      )
+      .pipe(
+        map((data) => {
+          this.dataTimesheet = data.data;
+          this.page = data.page;
+          this.limit = data.limit;
+          this.totalItems = data.totalItems;
+        })
+      )
+      .subscribe();
   }
 
   /** Pagination changes */
   onPageChangeOut(event: { page: number; itemsPerPage: number }): void {
-    /** Rpelace page & limit */
+    this.filterApplied = [];
+    /** Repelace page & limit */
     this.page = event.page;
     this.limit = event.itemsPerPage;
 
-    /** Recall data */
-    this.filterTimesheet(
-      this.startDateFilter,
-      this.endDateFilter,
-      this.selectedMatterFilter,
-      this.descriptionFilter,
+    this.getTimesheetFilter(
+      this.startDateForm.value,
+      this.endDateForm.value,
+      this.getNamesAsString(this.selectedMatter),
+      this.descriptionForm.value,
       event.page,
       event.itemsPerPage
     );
   }
 
-  /** Getting data timesheet by date from generate ini utlity component */
-  getDataTimesheetByDate(event: TimesheetByDateDTO[]): void {
-    this.dateTimesheetByDate = event;
+  /** Cancel Fiter */
+  cancelFilter(): void {
+    this.openFlyoutFilter = false;
+    this.resetFilter();
   }
 
-  /** Observe dange when move next or previous */
-  dateMoveWatcher(event: { startDate: string; endDate: string }): void {
-    this.getTimesheet(event.startDate, event.endDate);
+  /** Reset form filter */
+  resetFilter(): void {
+    this.startDateForm = new FormControl(
+      `${this.datePipe.transform(
+        this.defaultDate().startDateForm,
+        'dd-MM-yyyy'
+      )}`
+    );
+    this.endDateForm = new FormControl(
+      this.datePipe.transform(this.defaultDate().endDateForm, 'dd-MM-yyyy')
+    );
+    this.searchMatterForm.setValue('');
+    this.selectedMatter = [];
+    this.descriptionForm.reset();
   }
 
-  /** Checking filter is on or not */
-  checkFilter(): boolean {
-    return this.filterApplied.some((item) => item.status == true);
+  /** Action for apply filter */
+  actionFilter(event: any): void {
+    this.getTimesheetFilter(
+      this.startDateForm.value,
+      this.endDateForm.value,
+      this.getNamesAsString(this.selectedMatter),
+      this.descriptionForm.value,
+      this.page,
+      this.limit
+    );
+    this.openFlyoutFilter = false;
   }
 
-  /** Catch changes from utility component for open create timesheet flyout */
-  clickOpenCreateFlyout(event: boolean): void {
+  /** Transform data matters to be options */
+  dataTransform(): void {
+    this.listMatters.forEach((item) => {
+      this.optionMatter.push({
+        name: item.matter,
+        value: item.idMatter,
+      });
+    });
+  }
+
+  /** Catch Btn Action Util */
+  btnActionUtil(event: string | number): void {
+    if (event === 'next') {
+      this.moveDate(5);
+      this.getTimesheetByDate(this.startDateForm.value, this.endDateForm.value);
+    }
+    if (event === 'prev') {
+      this.moveDate(-5);
+      this.getTimesheetByDate(this.startDateForm.value, this.endDateForm.value);
+    }
+    if (event === 'filter') {
+      this.closeOutFilter(true);
+    }
+    if (event === 'add') {
+      this.isOpenCreateFlyout = true;
+    }
+  }
+
+  /** Move Date Next/Prev */
+  moveDate(day: number): void {
+    const newDate = new Date(this.endDate);
+    newDate.setDate(newDate.getDate() + day);
+    this.endDate = newDate;
+    this.startDate = new Date(this.endDate);
+    this.startDate.setDate(this.endDate.getDate() - 5);
+    const startDate = this.formatDate(this.startDate);
+    const endDate = this.formatDate(this.endDate);
+
+    /** Set form start date - end date */
+    this.startDateForm.setValue(
+      this.datePipe.transform(startDate, 'dd-MM-yyyy')
+    );
+    this.endDateForm.setValue(this.datePipe.transform(endDate, 'dd-MM-yyyy'));
+  }
+
+  /** Grouping and get total hours */
+  groupingData(
+    data: MyTimesheetDTO[],
+    startDate: string,
+    endDate: string
+  ): void {
+    this.hourMinute = this.calculateTotalDuration(data);
+    /** Grrouping process */
+    this.dateTimesheetByDate = this.groupingTimesheetByRangeDate(
+      data,
+      startDate,
+      endDate
+    );
+  }
+
+  /** Catch changes from Create Timesheet Component */
+  closeOutCreate(event: boolean): void {
     this.isOpenCreateFlyout = event;
+  }
+  /** Toggle Open/Close Flyout Filter */
+  closeOutFilter(event: boolean): void {
+    this.openFlyoutFilter = event;
+  }
+
+  /** Observe for startDate changes */
+  changeDateForm(event: string, param: 'start' | 'end'): void {
+    if (param === 'start') {
+      this.startDateForm.setValue(event);
+    }
+    if (param === 'end') {
+      this.endDateForm.setValue(event);
+    }
+  }
+
+  /** Invalid if start date less last date */
+  invalidStartEndDate(): boolean {
+    const [startDay, startMonth, startYear] =
+      this.startDateForm.value.split('-');
+    const [endDay, endMonth, endYear] = this.endDateForm.value.split('-');
+    const startDate = new Date(+startYear, +startMonth - 1, +startDay);
+    const endDate = new Date(+endYear, +endMonth - 1, +endDay);
+    return startDate >= endDate;
+  }
+
+  /** Matter Selection */
+  selectionMatter(event: { name: string; value: any }[]): void {
+    this.selectedMatter = event;
+  }
+
+  /** Action for move timesheet */
+  actionMoveTimesheet(event: MyTimesheetDTO[]): void {
+    this.timesheetSelected = event;
+  }
+
+  /** Catch action from table */
+  actionTableFilter(event: {
+    action: string;
+    flyout: boolean;
+    data: MyTimesheetDTO;
+  }): void {
+    this.timesheetEditSelected = event.data;
+    if (event.action === 'edit') {
+      this.isOpenEditFlyout = event.flyout;
+    }
+    if (event.action === 'edit-tag') {
+      this.isOpenEditTagFlyout = event.flyout;
+    }
+    if (event.action === 'delete') {
+      this.isModalDelete = event.flyout;
+    }
   }
 
   /** Catch data from table without filter component for get data timesheet selected
@@ -207,48 +394,33 @@ export class HistoryActivityComponent extends BaseController {
     this.timesheetSelected = event;
   }
 
-  /** Clear timesheet selected */
-  clearSelectionOut(event: MyTimesheetDTO[]): void {
-    this.timesheetSelected = event;
-  }
-
-  /** Catch data from table without filter component for open edit flyout */
-  clickOpenEdit(event: { flyout: boolean; data: MyTimesheetDTO }): void {
-    this.isOpenEditFlyout = event.flyout;
-  }
-
-  /** Catch data from table without filter component for open edit tag flyout */
-  clickOpenEditTag(event: { flyout: boolean; data: MyTimesheetDTO }): void {
-    this.isOpenEditTagFlyout = event.flyout;
-  }
-
-  /** Catch data from table without filter component for open modal delete */
-  clickOpenModalDelete(event: { modal: boolean; uuid: string }): void {
-    this.openModalDelete = event.modal;
-  }
-
-  /** Catch changes from Create Timesheet Component */
-  closeOutCreate(event: boolean): void {
-    this.isOpenCreateFlyout = event;
-  }
-
   /** Catch changes from edit timesheet flyout component */
   closeOutEdit(event: boolean): void {
-    this.isOpenEditFlyout = event;
+    this.isOpenEditFlyout = false;
   }
+  /** Catch changes from edit tag timesheet flyout component */
 
-  /** Catch changes from edit tag timesheet flyout component*/
   closeOutEditTag(event: boolean): void {
     this.isOpenEditTagFlyout = event;
   }
 
-  /** Catch changes from modal delete component */
-  cancelOutDelete(event: boolean): void {
-    this.openModalDelete = event;
+  /** Clear all filter */
+  clearAllFilterOut(event: FilterAppliedDTO[]): void {
+    this.filterApplied = event;
   }
 
-  /** Catch changes from modal delete component */
-  deleteActionOutDelete(event: boolean): void {
-    this.openModalDelete = event;
+  /** Checking filter is on or not */
+  checkFilter(): boolean {
+    return this.filterApplied.some((item) => item.status == true);
+  }
+
+  /** Catch action from modal delete */
+  actionModal(event: { name: string; status: boolean }): void {
+    if (event.name === 'cancel') {
+      this.isModalDelete = event.status;
+    }
+    if (event.name === 'delete') {
+      this.isModalDelete = event.status;
+    }
   }
 }

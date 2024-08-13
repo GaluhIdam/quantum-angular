@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormControl,
   FormsModule,
@@ -17,14 +24,19 @@ import {
   FormControlLayoutComponent,
   IconsComponent,
   InputFieldComponent,
+  LoadingComponent,
   TextComponent,
   TimeSelectionComponent,
   TooltipComponent,
   ValidatorFieldComponent,
 } from '@quantum/fui';
+import {
+  ActivityDTO,
+  MatterDTO,
+} from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
 
 @Component({
-  selector: 'app-create-timesheet-flyout',
+  selector: 'shared-create-timesheet-flyout',
   standalone: true,
   imports: [
     CommonModule,
@@ -44,12 +56,13 @@ import {
     TimeSelectionComponent,
     ButtonIconComponent,
     TooltipComponent,
+    LoadingComponent,
   ],
   templateUrl: './create-timesheet-flyout.component.html',
   styleUrl: './create-timesheet-flyout.component.scss',
 })
 export class CreateTimesheetFlyoutComponent {
-  @Input() isOpenFlyout: boolean = false;
+  @Input({ required: true }) isOpenFlyout: boolean = false;
   @Input() title: string = 'Add Timesheet';
   @Input() note: string = '';
   @Output() closeOut: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -63,6 +76,10 @@ export class CreateTimesheetFlyoutComponent {
   @Input() enableMatterSearchForm: boolean = true;
   @Input() enableDateForm: boolean = true;
   @Input() enableDurationForm: boolean = true;
+
+  /** Required data */
+  @Input() listMatters: MatterDTO[] = [];
+  @Input() listActivities: ActivityDTO[] = [];
 
   /** Activity Form */
   activitySearch: FormControl = new FormControl('', Validators.required);
@@ -127,10 +144,60 @@ export class CreateTimesheetFlyoutComponent {
     }
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['listMatters']) {
+      this.dataTransformMatter();
+    }
+    if (changes['listActivities']) {
+      this.dataTransformActivity();
+    }
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent) {
+    this.toggleCloseFlyout();
+  }
+
+  /** Transform data matters to be options */
+  dataTransformMatter(): void {
+    if (this.listMatters.length > 0) {
+      this.listMatters.forEach((item) => {
+        this.optionMatter.push({
+          name: item.matter,
+          value: item.idMatter,
+        });
+      });
+    }
+  }
+
+  /** Transform data activity to be options */
+  dataTransformActivity(): void {
+    if (this.listActivities.length > 0) {
+      this.listActivities.forEach((item) => {
+        this.optionActivity.push({
+          name: item.activity,
+          value: item.idActivity,
+        });
+      });
+    }
+  }
+
   /** Toggle for open flyout */
   toggleCloseFlyout(): void {
     this.isOpenFlyout = false;
     this.closeOut.emit(this.isOpenFlyout);
+
+    this.activityForm.reset();
+    this.activitySearch.reset();
+
+    this.matterSearch.reset();
+    this.matterForm.reset();
+
+    this.objectEventForm.reset();
+
+    this.dateFormControl.reset();
+
+    this.durationForm.reset();
   }
 
   /** Selector for fee earner */
@@ -150,9 +217,11 @@ export class CreateTimesheetFlyoutComponent {
   }
 
   /** Selector for Matter */
-  selectionMatter(event: any): void {
+  selectionMatter(event: { name: string; value: any }[]): void {
     this.selectedOptionMatter = event;
-    this.matterForm.setValue(event[0].value);
+    if (event.length > 0) {
+      this.matterForm.setValue(event[0].value);
+    }
   }
 
   /** Lock Matter */

@@ -5,19 +5,43 @@
   padding: 10px;
   display: flex;
   align-items: center;
+  justify-items: center;
   h3 {
-    color: var(--fuiColorDanger, $fuiColorDanger);
+    color: var(--fuiDangerSecondary, $fuiColorDanger);
   }
 }
-.title-modal.foot {
+.foot {
   display: flex;
   padding: 10px;
-  justify-content: end;
+  margin-top: 10px;
+  justify-content: center;
   fui-button-icon {
-    margin-left: 10px;
+    &:first-child {
+      margin-right: 10px;
+    }
   }
 }
 .modal {
-  padding: 10px;
+  padding: 0px 10px;
   width: 350px;
+  text-align: center;
+}
+
+.container-title {
+  justify-content: center;
+  display: grid;
+  justify-items: center;
+}
+
+.bg-icon {
+  margin-top: 10px;
+  background-color: var(--fuiDangerSecondary, $fuiDangerSecondary);
+  border-radius: 100%;
+  padding: 10px;
+}
+
+@media (max-width: 1000px) {
+  .modal {
+    width: 280px;
+  }
 }

@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="flex-between">
+    <!-- LEFT CONTENT  -->
+    <div class="flex">
+      <fui-button-icon *ngIf="nextPrevBtn"
+        [option]="'icon'"
+        [type]="'button'"
+        [icon]="'arrowLeft'"
+        [color]="'text'"
+        [style]="'secondary'"
+        (onClick)="toggleBtn('prev')"
+      />
+      <fui-text class="desktop" [weight]="'semibold'">
+        {{ startDate | date : "d MMMM yyyy" }} -
+        {{ endDate | date : "d MMMM yyyy" }}</fui-text
+      >
+      <fui-text class="mobile" [size]="'sizes'" [weight]="'semibold'">
+        {{ startDate | date : "d MMMM yyyy" }} -
+        {{ endDate | date : "d MMMM yyyy" }}</fui-text
+      >
+      <fui-button-icon *ngIf="nextPrevBtn"
+        [option]="'icon'"
+        [type]="'button'"
+        [icon]="'arrowRight'"
+        [color]="'text'"
+        [style]="'secondary'"
+        (onClick)="toggleBtn('next')"
+      />
+
+      <fui-tooltip
+        class="badge desktop"
+        [position]="'top'"
+        [title]="'Total Hours'"
+      >
+        <fui-badge
+          [color]="'ghost'"
+          [icon]="'clock'"
+          [isBadgeIcon]="true"
+          [iconPosition]="'start'"
+          [size]="'sizel'"
+        >
+          {{ duration }}
+        </fui-badge>
+      </fui-tooltip>
+    </div>
+    <!-- LEFT CONTENT  -->
+
+    <!-- -------------------------------------------- -->
+
+    <!-- RIGHT CONTENT  -->
+    <div class="flex">
+      <fui-tooltip
+        class="badge mobile"
+        [position]="'top'"
+        [title]="'Total Hours'"
+      >
+        <fui-badge
+          [color]="'ghost'"
+          [icon]="'clock'"
+          [isBadgeIcon]="true"
+          [iconPosition]="'start'"
+          [size]="'sizel'"
+        >
+          {{ duration }}
+        </fui-badge>
+      </fui-tooltip>
+
+      <div class="group">
+        <fui-button-icon
+          class="filter"
+          [option]="'iconText'"
+          [type]="'button'"
+          [icon]="'filter'"
+          [color]="'text'"
+          [text]="'Filter'"
+          [style]="'secondary'"
+          (onClick)="toggleBtn('filter')"
+          [size]="'m'"
+        />
+        <fui-button-icon
+          [option]="'icon'"
+          [type]="'button'"
+          [icon]="'plusInCircle'"
+          [color]="'primary'"
+          [style]="'filled'"
+          [size]="'m'"
+          (onClick)="toggleBtn('add')"
+        />
+      </div>
+    </div>
+    <!-- RIGHT CONTENT  -->
+  </div>
+</div>

@@ -17,7 +17,7 @@
         [isBadgeIcon]="true"
         [icon]="'node'"
         [sizeIcon]="'sizes'"
-        [size]="'sizel'"
+        [size]="'sizem'"
       >
         <p class="desc">Ministry of Republic Indonesia</p>
       </fui-badge>
@@ -50,8 +50,8 @@
           type === 1 || type === 2 || type === 3 ? 'visible' : 'hidden'
       }"
     >
-      <p>Partner in Charge</p>
-      <p>(BS) Brooklyn Simmons</p>
+      <p class="detail left">Partner in Charge</p>
+      <p class="detail right">(BS) Brooklyn Simmons</p>
     </div>
     <div
       class="billble"
@@ -59,8 +59,8 @@
         visibility: type === 1 || type === 2 ? 'visible' : 'hidden'
       }"
     >
-      <p>Unbilled</p>
-      <p>USD 25,500.00</p>
+      <p class="detail left">Unbilled</p>
+      <p class="detail right">USD 25,500.00</p>
     </div>
     <div
       class="billble"
@@ -68,20 +68,14 @@
         visibility: type === 1 || type === 2 ? 'visible' : 'hidden'
       }"
     >
-      <p>Uncollected</p>
-      <p>USD 3,500.00</p>
+      <p class="detail left">Uncollected</p>
+      <p class="detail right">USD 3,500.00</p>
     </div>
     <div
       class="billble"
       [ngStyle]="{ visibility: type === 1 ? 'visible' : 'hidden' }"
     >
-      <fui-progress
-        [value]="50"
-        [max]="100"
-        [color]="'primary'"
-        [size]="'sizedefault'"
-        [label]="'Budget'"
-      ></fui-progress>
+
     </div>
   </div>
 

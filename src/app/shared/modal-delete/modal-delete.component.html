@@ -1,7 +1,18 @@
 <fui-modal [open]="openModalDelete">
-  <fui-modal-header (onCloseModal)="closelModalDelete()">
-    <div class="title-modal">
-      <h3>{{ title }}</h3>
+  <fui-modal-header [iconCloseShow]="false" (onCloseModal)="closelModalDelete()">
+    <div class="container-title">
+      <div class="bg-icon">
+        <fui-icons
+          [color]="'danger'"
+          [size]="'sizexxl'"
+          [icon]="'questionInCircle'"
+        />
+      </div>
+      <div class="title-modal">
+        <fui-text [color]="'text'" [weight]="'bold'" [size]="'sizel'">
+          {{ title }}
+        </fui-text>
+      </div>
     </div>
   </fui-modal-header>
   <fui-modal-body>
@@ -10,25 +21,26 @@
     </div>
   </fui-modal-body>
   <fui-modal-footer [isCustomModalFooter]="true">
-    <div class="title-modal foot">
+    <div class="foot">
       <fui-button-icon
         (onClick)="closelModalDelete()"
         [size]="'m'"
         [type]="'button'"
         [option]="'text'"
-        [text]="'Cancel'"
+        [text]="btnCancel"
         [style]="'secondary'"
         [color]="'text'"
+        [shadow]="true"
       />
       <fui-button-icon
         (onClick)="deleteAction()"
         [size]="'m'"
         [type]="'button'"
-        [option]="option"
+        [option]="'text'"
         [text]="btnContinue"
         [style]="'filled'"
         [color]="'danger'"
-        [icon]="icon"
+        [shadow]="true"
       />
     </div>
   </fui-modal-footer>

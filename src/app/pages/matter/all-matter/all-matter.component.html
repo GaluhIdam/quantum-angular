@@ -1,33 +1,71 @@
-<h1>All Matter</h1>
-
-<!-- FORM SEARCH SECTION -->
-<div class="flex">
-  <app-form-search />
-  <fui-button-icon
-    [size]="'m'"
-    [type]="'button'"
-    [icon]="'plusInCircleFilled'"
-    [option]="'iconText'"
-    [text]="'Add Matter'"
-  />
+<div class="title">
+  <fui-text [color]="'text'" [size]="'sizexl'" [weight]="'bold'"
+    >All Matters</fui-text
+  >
 </div>
-<!-- FORM SEARCH SECTION  -->
+
+<!-- FORM SEARCH & FILTER BUTTON  -->
+<div class="container">
+  <!-- FORM SEARCH -->
+  <fui-form-control-layout>
+    <fui-input-field
+      [type]="'text'"
+      [borderRadius]="['6px', '6px', '6px', '6px']"
+      [invalid]="false"
+      [size]="'m'"
+      [placeholder]="'Search by Number or Project Name'"
+    >
+      <fui-icons
+        left-icon
+        [color]="'text'"
+        [icon]="'search'"
+        [size]="'sizem'"
+      />
+    </fui-input-field>
+  </fui-form-control-layout>
+  <!-- FORM SEARCH  -->
+
+  <div class="group-btn">
+    <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+    <fui-button-icon
+      [color]="'text'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'filter'"
+      [style]="'secondary'"
+      [size]="'m'"
+      [text]="'Filter'"
+      (onClick)="actionBtnUtil('filter')"
+    />
+    <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+
+    <!-- ADD EXPENSE MATTER -->
+    <fui-button-icon
+      [color]="'primary'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'plusInCircle'"
+      [style]="'filled'"
+      [size]="'m'"
+      [text]="'Add Mater'"
+      (onClick)="actionBtnUtil('create')"
+    />
+    <!-- ADD EXPENSE MATTER -->
+  </div>
+</div>
+<!-- FORM SEARCH & FILTER BUTTON  -->
 
 <!-- FILTER APPLIED SECTION  -->
-<app-filter-applied
-  class="app-filter-applied"
-  [filterApllied]="filterApllied"
-  (clearAllFilterOut)="clearAllFilterOut($event)"
-  (clearFilterPerItemOut)="clearFilterPerItemOut($event)"
+<shared-filter-applied
+  [filterApplied]="filterApplied"
+  (action)="clearAllFilterOut($event)"
 />
 <!-- FILTER APPLIED SECTION  -->
 
 <!-- CARD MATTER -->
-<div class="container">
-  <app-card-all-matter></app-card-all-matter>
-</div>
-<div class="container">
-  <app-card-all-matter></app-card-all-matter>
+<div class="content-wrapper">
+  <app-card-all-matter />
+  <app-card-all-matter />
 </div>
 <!-- CARD MATTER -->
 
@@ -42,3 +80,10 @@
   />
 </div>
 <!-- LOAD BUTTON  -->
+
+<!-- FILTER FLYOUT  -->
+<shared-filter-matter-flyout
+  [isOpenFlyout]="isOpenFlyoutFilter"
+  (action)="closeOut($event, 'filter')"
+/>
+<!-- FILTER FLYOUT  -->
