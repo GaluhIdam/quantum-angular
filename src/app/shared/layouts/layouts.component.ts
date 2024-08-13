@@ -31,7 +31,6 @@ import {
   tap,
 } from 'rxjs';
 import { DataSideBar } from './data-sidebar';
-import { CreateTimesheetFlyoutComponent } from '../create-timesheet-flyout/create-timesheet-flyout.component';
 import { keycloak } from '../../environment/env';
 import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
 import { UserKeycloak } from '../../core/guard/keycloak/keycloak.dto';
@@ -40,6 +39,7 @@ import {
   MatterDTO,
 } from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
 import { MyTimesheetService } from '../../pages/matter/my-timesheet/services/my-timesheet.service';
+import { FlyoutTimesheetComponent } from '../flyout-timesheet/flyout-timesheet.component';
 
 @Component({
   selector: 'app-layouts',
@@ -60,9 +60,9 @@ import { MyTimesheetService } from '../../pages/matter/my-timesheet/services/my-
     LoadingComponent,
     PopoverComponent,
     TextComponent,
-    CreateTimesheetFlyoutComponent,
     AvatarComponent,
     ModalDeleteComponent,
+    FlyoutTimesheetComponent,
   ],
   templateUrl: './layouts.component.html',
   styleUrl: './layouts.component.scss',

@@ -232,12 +232,7 @@
     </div>
   </div>
 </div>
-<shared-create-timesheet-flyout
-  [listActivities]="activitesData"
-  [listMatters]="mattersData"
-  [isOpenFlyout]="isOpenFlyout"
-  (closeOut)="closeOut($event)"
-/>
+
 <!-- </fui-page> -->
 <shared-modal-delete
   [openModalDelete]="logoutModal"
@@ -245,4 +240,11 @@
   [title]="'Are you sure want to sign out?'"
   [desc]="''"
   [btnContinue]="'Sign Out'"
+/>
+
+<shared-flyout-timesheet
+  [title]="'Add Timesheet'"
+  [showFeeEarnerForm]="false"
+  [isOpenFlyout]="isOpenFlyout"
+  (closeOut)="closeOut($event)"
 />

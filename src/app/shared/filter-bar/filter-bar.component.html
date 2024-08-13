@@ -1,0 +1,76 @@
+<div class="container-filter-bar">
+  <fui-button-icon
+    [size]="'s'"
+    [type]="'button'"
+    [option]="'icon'"
+    [icon]="'filter'"
+    [style]="'filled'"
+    [color]="'text'"
+    [shadow]="true"
+    (onClick)="isOpenModal = true"
+  />
+  <div class="flex" *ngFor="let item of filterData">
+    <fui-combo-box
+      [placeholder]="item.label"
+      [comboxForm]="item.formControl"
+      [size]="'m'"
+      [optionValue]="item.options"
+      [selectedValue]="item.selected"
+    />
+    <fui-button-icon
+      [option]="'icon'"
+      [color]="'text'"
+      [type]="'button'"
+      [icon]="'cross'"
+      [size]="'s'"
+    />
+  </div>
+</div>
+
+<fui-modal [open]="isOpenModal">
+  <fui-modal-header [iconCloseShow]="false" (onCloseModal)="closelModal()">
+    <div class="container-title">
+      <div class="title-modal">
+        <fui-text [color]="'text'" [weight]="'bold'" [size]="'sizel'">
+          Select Filter
+        </fui-text>
+      </div>
+    </div>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="modal">
+      <fui-badge
+        *ngFor="let item of filterData"
+        [color]="'primary'"
+        [size]="'sizedefault'"
+        [isBadgeIcon]="true"
+        [icon]="'plusInCircle'"
+        [iconPosition]="'start'"
+      >
+        {{ item.label }}
+      </fui-badge>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer [isCustomModalFooter]="true">
+    <div class="foot">
+      <fui-button-icon
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [style]="'secondary'"
+        [color]="'text'"
+        [shadow]="true"
+      />
+      <fui-button-icon
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Filter'"
+        [style]="'filled'"
+        [color]="'danger'"
+        [shadow]="true"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>
