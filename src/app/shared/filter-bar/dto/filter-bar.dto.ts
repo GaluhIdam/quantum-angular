@@ -1,8 +1,10 @@
 import { FormControl } from '@angular/forms';
+import { SelectableDTO } from '@quantum/fui';
 
 export interface FilterBarDTO {
   label: string;
+  status: boolean;
   formControl: FormControl;
-  options: { name: string; value: any }[];
-  selected: { name: string; value: any }[];
+  options: SelectableDTO[];
+  selected: SelectableDTO[];
 }

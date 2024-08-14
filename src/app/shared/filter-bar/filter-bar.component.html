@@ -1,30 +1,68 @@
-<div class="container-filter-bar">
+<div class="flex">
   <fui-button-icon
-    [size]="'s'"
+    class="toggle-filter"
+    [size]="'m'"
     [type]="'button'"
-    [option]="'icon'"
+    [option]="'iconText'"
+    [text]="'Filter'"
     [icon]="'filter'"
-    [style]="'filled'"
+    [style]="'secondary'"
     [color]="'text'"
     [shadow]="true"
     (onClick)="isOpenModal = true"
   />
-  <div class="flex" *ngFor="let item of filterData">
-    <fui-combo-box
-      [placeholder]="item.label"
-      [comboxForm]="item.formControl"
-      [size]="'m'"
-      [optionValue]="item.options"
-      [selectedValue]="item.selected"
-    />
-    <fui-button-icon
-      [option]="'icon'"
+  @for (item of filterData; track $index) {
+  <fui-popover
+    [position]="'bottom'"
+    [align]="'start'"
+    *ngIf="item.status === true"
+  >
+    <fui-badge
       [color]="'text'"
-      [type]="'button'"
-      [icon]="'cross'"
-      [size]="'s'"
-    />
-  </div>
+      [size]="'sizem'"
+      [isBadgeIcon]="true"
+      [icon]="'arrowDown'"
+      [sizeIcon]="'sizes'"
+      [iconPosition]="'end'"
+    >
+      <div class="title-badge">
+        <div class="total-selected">{{ counterSelected(item.options) }}</div>
+        {{ item.label }}
+      </div>
+    </fui-badge>
+    <div popover-body>
+      <div class="body-popover">
+        <fui-form-control-layout class="form">
+          <fui-input-field
+            [formControlField]="item.formControl"
+            [type]="'text'"
+            [size]="'m'"
+            [placeholder]="'Search ' + item.label"
+            [invalid]="false"
+          >
+            <fui-icons
+              left-icon
+              [label]="'left'"
+              [icon]="'search'"
+              [size]="'sizes'"
+              [color]="'text'"
+            />
+          </fui-input-field>
+        </fui-form-control-layout>
+        <fui-selectable
+          *ngIf="item.options.length > 0"
+          [options]="item.options"
+          [singleSelection]="false"
+          [allowExclusions]="false"
+          (selectClick)="clickHandle($event)"
+        />
+        <div *ngIf="item.options.length === 0" class="no-option">
+          No Options!
+        </div>
+      </div>
+    </div>
+  </fui-popover>
+  }
 </div>
 
 <fui-modal [open]="isOpenModal">
@@ -41,11 +79,13 @@
     <div class="modal">
       <fui-badge
         *ngFor="let item of filterData"
-        [color]="'primary'"
-        [size]="'sizedefault'"
+        [color]="item.status ? 'success' : 'text'"
+        [size]="'sizes'"
         [isBadgeIcon]="true"
-        [icon]="'plusInCircle'"
+        [icon]="item.status ? 'check' : 'cross'"
+        [sizeIcon]="'sizes'"
         [iconPosition]="'start'"
+        (onClickBadge)="selectFilter(item)"
       >
         {{ item.label }}
       </fui-badge>
@@ -61,15 +101,27 @@
         [style]="'secondary'"
         [color]="'text'"
         [shadow]="true"
+        (onClick)="pickUpFilter(false)"
       />
       <fui-button-icon
         [size]="'m'"
         [type]="'button'"
         [option]="'text'"
-        [text]="'Filter'"
-        [style]="'filled'"
-        [color]="'danger'"
+        [text]="'Clear All'"
+        [style]="'secondary'"
+        [color]="'text'"
         [shadow]="true"
+        (onClick)="pickUpFilter(false)"
+      />
+      <fui-button-icon
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Take it'"
+        [style]="'filled'"
+        [color]="'primary'"
+        [shadow]="true"
+        (onClick)="pickUpFilter(true)"
       />
     </div>
   </fui-modal-footer>
