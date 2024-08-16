@@ -76,11 +76,10 @@
 }
 
 .body-popover {
-  width: 200px;
-}
-
-fui-combo-box {
-  width: 150px;
+  display: flex;
+  fui-button-icon {
+    margin-left: 10px;
+  }
 }
 
 @media (max-width: 1000px) {

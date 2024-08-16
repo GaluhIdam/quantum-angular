@@ -57,8 +57,6 @@ import { FilterBarComponent } from '../../../../shared/filter-bar/filter-bar.com
     SkeletonComponent,
     ToastComponent,
     FlyoutTimesheetComponent,
-
-    FilterBarComponent
   ],
   providers: [DatePipe],
 })
