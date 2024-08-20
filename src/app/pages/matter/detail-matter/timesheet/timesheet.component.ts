@@ -6,7 +6,6 @@ import { TableAutoGenerateComponent } from '../../../../shared/table-auto-genera
 import { ActionBtn } from '../../../../shared/table-auto-generate/table-type';
 import { TimesheetDetailDTO } from './dto/timesheet.dto';
 import { MoveMatterComponent } from '../../../../shared/move-matter/move-matter.component';
-import { CreateTimesheetFlyoutComponent } from '../../../../shared/create-timesheet-flyout/create-timesheet-flyout.component';
 import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-simple.component';
 import {
   ButtonIconComponent,
@@ -21,7 +20,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
 import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
-import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
+import { FlyoutTimesheetComponent } from '../../../../shared/flyout-timesheet/flyout-timesheet.component';
 
 @Component({
   selector: 'app-timesheet',
@@ -33,7 +32,6 @@ import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-
     ButtonGroupComponent,
     TableAutoGenerateComponent,
     MoveMatterComponent,
-    CreateTimesheetFlyoutComponent,
     FlyoutSimpleComponent,
     TextComponent,
     DateRangeComponent,
@@ -44,7 +42,7 @@ import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-
     InputFieldComponent,
     FilterAppliedComponent,
     ModalDeleteComponent,
-    EditTimesheetFlyoutComponent,
+    FlyoutTimesheetComponent,
   ],
   templateUrl: './timesheet.component.html',
   styleUrl: './timesheet.component.scss',

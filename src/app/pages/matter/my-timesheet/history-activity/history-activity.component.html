@@ -55,30 +55,40 @@
 </shared-skeleton>
 
 <!-- FLYOUT CREATE TIMESHEET -->
-<shared-create-timesheet-flyout
-  [listMatters]="listMatters"
-  [listActivities]="listActivities"
+<shared-flyout-timesheet
+  [showFeeEarnerForm]="false"
+  [title]="'Add Timesheet'"
   [isOpenFlyout]="isOpenCreateFlyout"
   (closeOut)="closeOutCreate($event)"
 />
 <!-- FLYOUT CREATE TIMESHEET -->
 
 <!-- EDIT TIMESHEET FLYOUT -->
-<shared-edit-timesheet-flyout
-  [listActivities]="listActivities"
+<shared-flyout-timesheet
+  [showFeeEarnerForm]="false"
+  [enableMatterForm]="false"
   [timesheet]="timesheetEditSelected"
-  [enableMatterSearchForm]="false"
+  [title]="'Update Timesheet'"
   [isOpenFlyout]="isOpenEditFlyout"
+  [actionButton]="'update'"
+  [showCheckLockMatter]="false"
+  [showCheckLockDate]="false"
+  [note]="'* Conduct desk research & prepare summary on licensing regulation.'"
   (closeOut)="closeOutEdit($event)"
 />
 <!-- EDIT TIMESHEET FLYOUT -->
 
 <!-- EDIT TAG FLYOUT -->
-<app-edit-tag-timesheet-flyout
-  [listActivities]="listActivities"
+<shared-flyout-timesheet
+  [showFeeEarnerForm]="false"
+  [enableMatterForm]="false"
   [timesheet]="timesheetEditSelected"
-  [enableMatterSearchForm]="false"
+  [title]="'Update Timesheet'"
   [isOpenFlyout]="isOpenEditTagFlyout"
+  [actionButton]="'updateTag'"
+  [showCheckLockMatter]="false"
+  [showCheckLockDate]="false"
+  [note]="'* Conduct desk research on licensing agreement with JJ.'"
   (closeOut)="closeOutEditTag($event)"
 />
 <!-- EDIT TAG FLYOUT -->

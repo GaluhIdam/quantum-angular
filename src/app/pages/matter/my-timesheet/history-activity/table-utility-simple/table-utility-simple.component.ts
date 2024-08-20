@@ -4,7 +4,6 @@ import {
   EventEmitter,
   Input,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import {
   BadgeComponent,

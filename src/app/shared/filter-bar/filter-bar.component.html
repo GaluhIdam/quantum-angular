@@ -1,0 +1,161 @@
+<div class="flex">
+  <fui-button-icon
+    class="toggle-filter"
+    [size]="'m'"
+    [type]="'button'"
+    [option]="'iconText'"
+    [text]="'Filter'"
+    [icon]="'filter'"
+    [style]="'secondary'"
+    [color]="'text'"
+    (onClick)="isOpenModal = true"
+  />
+  @for (item of filterData; track $index) {
+  <fui-popover
+    [isTour]="true"
+    [displayPopover]="showHide[$index]"
+    [preventClose]="showHide[$index]"
+    [position]="'bottom'"
+    [align]="'start'"
+    *ngIf="item.status === true"
+  >
+    <fui-badge
+      [color]="showHide[$index] ? 'primary' : 'text'"
+      [size]="'sizem'"
+      [isBadgeIcon]="true"
+      [icon]="showHide[$index] ? 'arrowUp' : 'arrowDown'"
+      [sizeIcon]="'sizes'"
+      [iconPosition]="'end'"
+      (onClickBadge)="
+        showHide[$index]
+          ? openClosePopover($index, false)
+          : openClosePopover($index, true)
+      "
+    >
+      <div class="title-badge">
+        {{ item.label }}
+      </div>
+    </fui-badge>
+    <div popover-body>
+      <div class="body-popover">
+        <!-- COMBO BOX  -->
+        <fui-combo-box
+          style="width: 200px"
+          *ngIf="item.status === true && item.type === 'combo-box'"
+          [comboxForm]="item.formControl"
+          [placeholder]="item.placeholder ?? 'Please select item'"
+          [selectedValue]="[]"
+          [optionValue]="[]"
+        />
+        <!-- COMBO BOX  -->
+
+        <!-- TEXT INPUT  -->
+        <fui-form-control-layout
+          style="width: 200px"
+          class="form"
+          *ngIf="item.status === true && item.type === 'text'"
+        >
+          <fui-input-field
+            [formControlField]="item.formControl"
+            [type]="'text'"
+            [size]="'m'"
+            [placeholder]="item.placeholder ?? 'Please type something'"
+            [invalid]="false"
+          >
+          </fui-input-field>
+        </fui-form-control-layout>
+        <!-- TEXT INPUT  -->
+
+        <!-- DATE PICKER  -->
+        <fui-date-picker
+          style="width: 200px"
+          [dateFormat]="'DD-MM-YYYY'"
+          *ngIf="item.status === true && item.type === 'datePicker'"
+        />
+        <!-- DATE PICKER  -->
+
+        <!-- DATE RANGE  -->
+        <fui-date-range
+          style="width: 300px; display: flex"
+          *ngIf="item.status === true && item.type === 'dateRange'"
+        />
+        <!-- DATE RANGE  -->
+
+        <!-- TIME SELECTION  -->
+        <fui-time-selection
+          style="width: 120px"
+          *ngIf="item.status === true && item.type === 'time-selection'"
+        />
+        <!-- TIME SELECTION  -->
+
+        <fui-button-icon
+          [option]="'icon'"
+          [icon]="'search'"
+          [type]="'button'"
+          (onClick)="openClosePopover($index, false)"
+        />
+      </div>
+    </div>
+  </fui-popover>
+  }
+</div>
+
+<fui-modal [open]="isOpenModal">
+  <fui-modal-header [iconCloseShow]="false" (onCloseModal)="closelModal()">
+    <div class="container-title">
+      <div class="title-modal">
+        <fui-text [color]="'text'" [weight]="'bold'" [size]="'sizel'">
+          Select Filter
+        </fui-text>
+      </div>
+    </div>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="modal">
+      <fui-badge
+        *ngFor="let item of filterData"
+        [color]="item.status ? 'success' : 'text'"
+        [size]="'sizem'"
+        [isBadgeIcon]="true"
+        [icon]="item.status ? 'check' : 'cross'"
+        [sizeIcon]="'sizem'"
+        [iconPosition]="'start'"
+        (onClickBadge)="selectFilter(item)"
+      >
+        {{ item.label }}
+      </fui-badge>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer [isCustomModalFooter]="true">
+    <div class="foot">
+      <fui-button-icon
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [style]="'secondary'"
+        [color]="'text'"
+        (onClick)="closelModal()"
+      />
+      <fui-button-icon
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Clear All'"
+        [style]="'secondary'"
+        [color]="'text'"
+        (onClick)="clearAll()"
+      />
+      <fui-button-icon
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [text]="'Filter'"
+        [icon]="'filter'"
+        [style]="'filled'"
+        [color]="'primary'"
+        (onClick)="pickUpFilter()"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>

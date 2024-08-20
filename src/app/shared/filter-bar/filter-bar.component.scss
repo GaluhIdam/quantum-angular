@@ -1,0 +1,89 @@
+@import "../../app.component.scss";
+
+.toggle-filter {
+  margin-right: 10px;
+}
+.title-badge {
+  display: flex;
+  align-items: center;
+  .total-selected {
+    background-color: var(--fuiBtnAccentText, $fuiBtnAccentText);
+    color: var(--fuiColorGhost, $fuiColorGhost);
+    width: 20px;
+    padding: 2px 0px;
+    font-size: 10px;
+    border-radius: 3px;
+    margin-right: 4px;
+  }
+}
+/** Modal Config */
+.title-modal {
+  padding: 10px;
+  display: flex;
+  align-items: left;
+  justify-items: center;
+  margin-bottom: 10px;
+  h3 {
+    color: var(--fuiDangerSecondary, $fuiColorDanger);
+  }
+}
+.foot {
+  display: flex;
+  padding: 10px;
+  margin-top: 10px;
+  justify-content: end;
+  fui-button-icon {
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+}
+.modal {
+  padding: 0px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  width: 400px;
+  text-align: center;
+  justify-content: flex-start;
+}
+
+.container-title {
+  justify-content: start;
+  display: grid;
+  justify-items: start;
+}
+
+.bg-icon {
+  margin-top: 10px;
+  background-color: var(--fuiDangerSecondary, $fuiDangerSecondary);
+  border-radius: 100%;
+  padding: 10px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px 8px;
+}
+
+.no-option {
+  text-align: center;
+  font-size: small;
+  margin: 15px 0px 8px 0px;
+}
+
+.body-popover {
+  display: flex;
+  fui-button-icon {
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .modal {
+    width: 280px;
+  }
+}

@@ -6,12 +6,13 @@
 >
   <fui-flyout-header (onCloseFlyout)="toggleCloseFlyout()">
     <div class="header-flyout">
-      <h2>Edit Tagged Timesheet</h2>
+      <h2>{{ title }}</h2>
     </div>
   </fui-flyout-header>
+
   <fui-flyout-body>
     <!-- MESSAGE INFO -->
-    <div class="msg-info">
+    <div class="msg-info" *ngIf="actionButton === 'updateTag'">
       <fui-text [color]="'primary'" [weight]="'semibold'"
         >Feel free to modify!</fui-text
       >
@@ -24,6 +25,7 @@
     <div class="flyout-body">
       <!-- TAG ENTRY -->
       <fui-badge
+        *ngIf="actionButton === 'updateTag'"
         class="tagged"
         [color]="'ghost'"
         [size]="'sizedefault'"
@@ -41,32 +43,35 @@
       </fui-badge>
       <!-- TAG ENTRY -->
 
-      <div class="form">
-        <!-- Fee Earner FORM  -->
-        <fui-text [size]="'sizes'" *ngIf="fee === true">Fee Earner</fui-text>
-        <div class="form-control" *ngIf="fee === true">
-          <fui-combo-box
-            [invalid]="feeEarnerForm.invalid && feeEarnerForm.dirty"
-            [message]="'Fee Earner is required!'"
-            (selection)="selectionActivity($event)"
-            [comboxForm]="feeEarnerForm"
-            [singleSelection]="true"
-            [size]="'m'"
-            [placeholder]="'Fee Earner'"
-            [optionValue]="optionActivity"
-            [selectedValue]="selectedActivity"
-          />
-        </div>
-        <!-- Fee Earner FORM  -->
-
-        <!-- ACTIVITY FORM  -->
-        <fui-text [size]="'sizes'">What did you do?</fui-text>
+      <!-- FEE EARNER FORM  -->
+      <div class="form" *ngIf="showFeeEarnerForm">
+        <fui-text [size]="'sizes'">Fee Earner</fui-text>
         <div class="form-control">
           <fui-combo-box
-            [invalid]="activitySearch.invalid && activitySearch.dirty"
+            [invalid]="feeEarnerForm.invalid && feeEarnerForm.dirty"
             [message]="'Activity is required!'"
-            (selection)="selectionActivity($event)"
-            [comboxForm]="activitySearch"
+            [comboxForm]="feeEarnerForm"
+            [singleSelection]="true"
+            [leftIcon]="'search'"
+            [size]="'m'"
+            [placeholder]="'Fee earner'"
+            [optionValue]="optionFeeEarner"
+            [selectedValue]="selectedFeeEarner"
+          />
+        </div>
+      </div>
+      <!-- FEE EARNER FORM  -->
+
+      <div class="form">
+        <!-- ACTIVITY FORM  -->
+        <fui-text [size]="'sizes'" *ngIf="showActivityForm"
+          >What did you do?</fui-text
+        >
+        <div class="form-control" *ngIf="showActivityForm">
+          <fui-combo-box
+            [invalid]="activityForm.invalid && activityForm.dirty"
+            [message]="'Activity is required!'"
+            [comboxForm]="activityForm"
             [singleSelection]="true"
             [size]="'m'"
             [placeholder]="'Activity/verb'"
@@ -77,7 +82,7 @@
         <!-- ACTIVITY FORM  -->
 
         <!-- OBJECT/EVENT FORM  -->
-        <div class="form-control">
+        <div class="form-control" *ngIf="showObjectEventForm">
           <fui-form-control-layout>
             <fui-input-field
               [formControlField]="objectEventForm"
@@ -103,7 +108,7 @@
         <!-- OBJECT/EVENT FORM  -->
 
         <!-- TOPICS FORM  -->
-        <div class="form-control">
+        <div class="form-control" *ngIf="showTopicForm">
           <fui-form-control-layout>
             <fui-input-field
               [formControlField]="topicForm"
@@ -126,7 +131,7 @@
         <!-- TOPICS FORM  -->
 
         <!-- ADD DESC FORM  -->
-        <div class="form-control">
+        <div class="form-control" *ngIf="showAddDescForm">
           <fui-form-control-layout>
             <fui-input-field
               [formControlField]="addDescForm"
@@ -148,25 +153,41 @@
               [message]="'Additional description is required!'"
             />
           </fui-form-control-layout>
-          <fui-text class="italic" [size]="'sizexs'" [color]="'disabled'"
-            >*Conduct desk research on licensing agreement with JJ.</fui-text
-          >
+          <fui-text class="italic" [size]="'sizexs'" [color]="'disabled'">{{
+            note
+          }}</fui-text>
         </div>
         <!-- ADD DESC FORM  -->
       </div>
 
       <!-- MATTER FORM  -->
-      <div class="form">
+      <div class="form" *ngIf="showMatterForm">
         <div class="flex-between">
           <fui-text [size]="'sizes'">Which matter?</fui-text>
+          <div class="checkbox" *ngIf="showCheckLockMatter">
+            <input
+              type="checkbox"
+              [disabled]="!enableMatterForm"
+              [(ngModel)]="lockMatter"
+              [checked]="lockMatter"
+            />
+            <fui-text [size]="'sizes'">Lock</fui-text>
+            <fui-tooltip
+              [position]="'top'"
+              [align]="'end'"
+              [content]="
+                'Allows you to keep using this value after adding new timesheet.'
+              "
+              ><fui-icons [icon]="'questionInCircle'"
+            /></fui-tooltip>
+          </div>
         </div>
         <div class="form-control">
           <fui-combo-box
             [leftIcon]="'search'"
-            (selection)="selectionMatter($event)"
-            [disabled]="true"
-            [comboxForm]="matterSearch"
-            [invalid]="matterSearch.invalid && matterSearch.dirty"
+            [comboxForm]="matterForm"
+            [disabled]="lockMatter || !enableMatterForm"
+            [invalid]="matterForm.invalid && matterForm.dirty"
             [message]="'Matter is required!'"
             [singleSelection]="true"
             [size]="'m'"
@@ -178,18 +199,40 @@
       </div>
       <!-- MATTER FORM  -->
 
-      <div class="form">
+      <div class="form" *ngIf="showDateForm || showDurationForm">
         <div class="flex-between">
           <!-- DATE FORM -->
-          <div class="sub-form">
+          <div class="sub-form" *ngIf="showDateForm">
             <div class="flex-between">
               <fui-text [size]="'sizes'">Date</fui-text>
+              <div class="checkbox" *ngIf="showCheckLockDate">
+                <input
+                  type="checkbox"
+                  [disabled]="
+                    !enableDateForm ||
+                    actionButton === 'update' ||
+                    actionButton === 'updateTag'
+                  "
+                  [(ngModel)]="lockDate"
+                  [checked]="lockDate"
+                />
+                <fui-text [size]="'sizes'">Lock</fui-text>
+                <fui-tooltip
+                  [position]="'top'"
+                  [align]="'center'"
+                  [content]="
+                    'Allows you to keep using this value after adding new timesheet.'
+                  "
+                  ><fui-icons [icon]="'questionInCircle'"
+                /></fui-tooltip>
+              </div>
             </div>
             <fui-date-picker
               class="form-control"
-              format="MM/DD/YYYY"
-              [position]="'top'"
+              [dateFormat]="'DD-MM-YYYY'"
               [dateFormControl]="dateFormControl"
+              [disabled]="lockDate || !enableDateForm"
+              [position]="'top'"
               [message]="'Date is required!'"
               [isInvalid]="dateFormControl.invalid && dateFormControl.dirty"
             />
@@ -197,13 +240,14 @@
           <!-- DATE FORM -->
 
           <!-- DURATION FORM -->
-          <div class="sub-form">
+          <div class="sub-form" *ngIf="showDurationForm">
             <fui-text [size]="'sizes'">Duration</fui-text>
             <fui-time-selection
               class="form-control"
-              [timeFormControl]="durationForm"
               [position]="'top'"
+              [timeFormControl]="durationForm"
               [isInvalid]="durationForm.invalid && durationForm.dirty"
+              [minuteInterval]="'15 minutes'"
               [message]="'Duration is required!'"
             />
           </div>
@@ -212,8 +256,50 @@
       </div>
     </div>
   </fui-flyout-body>
+
   <fui-flyout-footer [isFlyoutFooterCustom]="true">
-    <div class="footer-flyout flex-between">
+    <div class="footer-flyout flex-between" *ngIf="actionButton === 'create'">
+      <fui-button-icon
+        (onClick)="toggleCloseFlyout()"
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'secondary'"
+        [text]="'Cancel'"
+      />
+      <div class="flex-between">
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'text'"
+          [style]="'secondary'"
+          [text]="'Save & Close'"
+        />
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'text'"
+          [style]="'filled'"
+          [text]="'Save'"
+        />
+      </div>
+    </div>
+    <div class="footer-flyout flex-between" *ngIf="actionButton === 'update'">
+      <fui-button-icon
+        (onClick)="toggleCloseFlyout()"
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'secondary'"
+        [text]="'Cancel'"
+      />
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'filled'"
+        [text]="'Update Timesheet'"
+      />
+    </div>
+    <div
+      class="footer-flyout flex-between"
+      *ngIf="actionButton === 'updateTag'"
+    >
       <fui-button-icon
         (onClick)="toggleCloseFlyout()"
         [type]="'button'"

@@ -25,13 +25,12 @@ import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.componen
 import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
 import { MoveMatterComponent } from '../../../../shared/move-matter/move-matter.component';
-import { CreateTimesheetFlyoutComponent } from '../../../../shared/create-timesheet-flyout/create-timesheet-flyout.component';
-import { EditTimesheetFlyoutComponent } from '../../../../shared/edit-timesheet-flyout/edit-timesheet-flyout.component';
-import { EditTagTimesheetFlyoutComponent } from '../../../../shared/edit-tag-timesheet-flyout/edit-tag-timesheet-flyout.component';
 import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
-import { TableUtilitySimpleComponent } from '../../../../shared/table-utility-simple/table-utility-simple.component';
+import { TableUtilitySimpleComponent } from './table-utility-simple/table-utility-simple.component';
 import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-simple.component';
 import { map } from 'rxjs';
+import { FlyoutTimesheetComponent } from '../../../../shared/flyout-timesheet/flyout-timesheet.component';
+import { FilterBarComponent } from '../../../../shared/filter-bar/filter-bar.component';
 
 @Component({
   selector: 'app-history-activity',
@@ -56,10 +55,8 @@ import { map } from 'rxjs';
     TableWithoutFilterComponent,
     TableFilterComponent,
     SkeletonComponent,
-    CreateTimesheetFlyoutComponent,
-    EditTimesheetFlyoutComponent,
-    EditTagTimesheetFlyoutComponent,
     ToastComponent,
+    FlyoutTimesheetComponent,
   ],
   providers: [DatePipe],
 })
@@ -182,19 +179,18 @@ export class HistoryActivityComponent extends BaseController {
         status: true,
       });
     }
-    if (matters !== '') {
+    if (matters !== '' && matters !== null) {
       this.filterApplied.push({
         name: 'Matter',
         status: true,
       });
     }
-    if (addDescription !== '') {
+    if (addDescription !== '' && addDescription !== null) {
       this.filterApplied.push({
         name: 'Time Description',
         status: true,
       });
     }
-
     this.mytimesheetService
       .getFilterTimesheet(
         startDate === ''
@@ -268,6 +264,7 @@ export class HistoryActivityComponent extends BaseController {
       this.page,
       this.limit
     );
+    console.log(this.descriptionForm.value);
     this.openFlyoutFilter = false;
   }
 

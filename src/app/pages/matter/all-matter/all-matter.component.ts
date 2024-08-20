@@ -10,7 +10,7 @@ import {
 import { FilterAppliedComponent } from '../../../shared/filter-applied/filter-applied.component';
 import { FilterAppliedDTO } from '../../../shared/filter-applied/filter-apllied.dto';
 import { CardAllMatterComponent } from './card-all-matter/card-all-matter.component';
-import { FilterMatterFlyoutComponent } from '../../../shared/filter-matter-flyout/filter-matter-flyout.component';
+import { FlyoutFilterMatterComponent } from '../../../shared/flyout-filter-matter/flyout-filter-matter.component';
 
 @Component({
   selector: 'app-all-matter',
@@ -24,7 +24,7 @@ import { FilterMatterFlyoutComponent } from '../../../shared/filter-matter-flyou
     InputFieldComponent,
     IconsComponent,
     TextComponent,
-    FilterMatterFlyoutComponent,
+    FlyoutFilterMatterComponent,
   ],
   templateUrl: './all-matter.component.html',
   styleUrl: './all-matter.component.scss',

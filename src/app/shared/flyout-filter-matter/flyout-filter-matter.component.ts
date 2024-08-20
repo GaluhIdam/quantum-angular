@@ -25,7 +25,7 @@ import {
 import { OptionDTO } from '../../core/dtos/response.dto';
 import { Subscription, tap } from 'rxjs';
 @Component({
-  selector: 'shared-filter-matter-flyout',
+  selector: 'shared-flyout-filter-matter',
   standalone: true,
   imports: [
     CommonModule,
@@ -45,10 +45,10 @@ import { Subscription, tap } from 'rxjs';
     SelectFieldComponent,
   ],
   providers: [DecimalPipe],
-  templateUrl: './filter-matter-flyout.component.html',
-  styleUrl: './filter-matter-flyout.component.scss',
+  templateUrl: './flyout-filter-matter.component.html',
+  styleUrl: './flyout-filter-matter.component.scss',
 })
-export class FilterMatterFlyoutComponent {
+export class FlyoutFilterMatterComponent {
   @Input({ required: true }) isOpenFlyout: boolean = false;
   @Input() selectOption: { label: string; value: any }[] = [
     {
