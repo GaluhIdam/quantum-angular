@@ -11,7 +11,7 @@ import {
 } from '@quantum/fui';
 import { RouterModule } from '@angular/router';
 import { ButtonGroupComponent } from '../../../shared/button-group/button-group.component';
-import { FilterMatterFlyoutComponent } from '../../../shared/filter-matter-flyout/filter-matter-flyout.component';
+import { FlyoutFilterMatterComponent } from '../../../shared/flyout-filter-matter/flyout-filter-matter.component';
 import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
 
 @Component({
@@ -26,7 +26,7 @@ import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
     InputFieldComponent,
     IconsComponent,
     ButtonGroupComponent,
-    FilterMatterFlyoutComponent,
+    FlyoutFilterMatterComponent,
     SkeletonComponent,
   ],
   templateUrl: './my-matter.component.html',

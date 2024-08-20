@@ -1,4 +1,4 @@
-@import "../layouts/layouts.component.scss";
+@import "../../app.component.scss";
 
 /** Message Information */
 .msg-info {
@@ -79,4 +79,15 @@
   font-style: italic;
   margin-top: 3px;
   display: block;
+}
+
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  fui-button-icon {
+    &:last-child {
+      margin-left: 10px;
+    }
+  }
 }

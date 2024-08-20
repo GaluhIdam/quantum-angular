@@ -41,11 +41,12 @@
 <!-- TABLE  -->
 
 <!-- CREATE FLYOUT  -->
-<shared-create-timesheet-flyout
+<shared-flyout-timesheet
   [title]="'Add Timesheet to 5889-1'"
+  [note]="'* Conduct desk research & prepare summary on licensing regulation'"
   [isOpenFlyout]="isOpenFlyoutCreate"
-  [feeEarner]="true"
-  [enableMatterSearchForm]="false"
+  [enableMatterForm]="false"
+  [showCheckLockMatter]="false"
   (closeOut)="closeOut($event, 'create')"
 />
 <!-- CREATE FLYOUT  -->
@@ -191,18 +192,22 @@
 </shared-flyout-simple>
 <!-- FILTER FLYOUT  -->
 
+<!-- EDIT FLYOUT  -->
+<shared-flyout-timesheet
+  [title]="'Update Timesheet'"
+  [note]="'* Conduct desk research & prepare summary on licensing regulation'"
+  [isOpenFlyout]="isOpenFlyoutEdit"
+  [enableMatterForm]="false"
+  [showCheckLockMatter]="false"
+  [showCheckLockDate]="false"
+  [actionButton]="'update'"
+  (closeOut)="closeOut($event, 'edit')"
+/>
+<!-- EDIT FLYOUT  -->
+
 <!-- MODEL DELETE  -->
 <shared-modal-delete
   [openModalDelete]="openModalDelete"
   (action)="actionModal($event)"
 />
 <!-- MODEL DELETE  -->
-
-<!-- EDIT FLYOUT  -->
-<shared-edit-timesheet-flyout
-  [feeEarner]="true"
-  [enableMatterSearchForm]="false"
-  [isOpenFlyout]="isOpenFlyoutEdit"
-  (closeOut)="closeOut($event, 'edit')"
-/>
-<!-- EDIT FLYOUT  -->

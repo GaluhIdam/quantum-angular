@@ -70,7 +70,7 @@
         >
           <div class="table-cell">
             <div>
-              <input
+              <input [disabled]="item.tagEntityList.length > 0"
                 type="checkbox"
                 [checked]="isItemChecked(i, item)"
                 (click)="checkItem(i, item)"
