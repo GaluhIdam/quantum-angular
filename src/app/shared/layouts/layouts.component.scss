@@ -4,8 +4,10 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 }
 .fui-sidenav {
+  overflow-y: auto;
   padding: 0px 20px;
   flex: 1;
 }
