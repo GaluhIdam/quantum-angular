@@ -3,8 +3,7 @@
 .h-screen {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  height: -webkit-fill-available;
 }
 .fui-sidenav {
   overflow-y: auto;
@@ -14,8 +13,7 @@
 
 /** Container Page */
 .container {
-  height: -webkit-fill-available;
-  overflow: hidden;
+  height: 100vh;
   display: flex;
 }
 
