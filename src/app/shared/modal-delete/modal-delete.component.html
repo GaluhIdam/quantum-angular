@@ -1,5 +1,8 @@
 <fui-modal [open]="openModalDelete">
-  <fui-modal-header [iconCloseShow]="false" (onCloseModal)="closelModalDelete()">
+  <fui-modal-header
+    [iconCloseShow]="false"
+    (onCloseModal)="closelModalDelete()"
+  >
     <div class="container-title">
       <div class="bg-icon">
         <fui-icons
@@ -30,7 +33,6 @@
         [text]="btnCancel"
         [style]="'secondary'"
         [color]="'text'"
-        [shadow]="true"
       />
       <fui-button-icon
         (onClick)="deleteAction()"
@@ -40,7 +42,6 @@
         [text]="btnContinue"
         [style]="'filled'"
         [color]="'danger'"
-        [shadow]="true"
       />
     </div>
   </fui-modal-footer>
