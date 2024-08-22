@@ -22,7 +22,6 @@
   display: flex;
   align-items: left;
   justify-items: center;
-  margin-bottom: 10px;
   h3 {
     color: var(--fuiDangerSecondary, $fuiColorDanger);
   }
@@ -30,8 +29,7 @@
 .foot {
   display: flex;
   padding: 10px;
-  margin-top: 10px;
-  justify-content: end;
+  justify-content: space-between;
   fui-button-icon {
     margin-right: 10px;
     &:last-child {
@@ -40,19 +38,16 @@
   }
 }
 .modal {
-  padding: 0px 10px;
+  padding: 25px 10px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 10px;
-  width: 400px;
-  text-align: center;
-  justify-content: flex-start;
+  flex-direction: column;
+  gap: 10px;
 }
-
-.container-title {
-  justify-content: start;
-  display: grid;
-  justify-items: start;
+.form-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px 10px;
+  width: 745px;
 }
 
 .bg-icon {
@@ -82,8 +77,18 @@
   }
 }
 
+.w-100 {
+  width: 100%;
+}
+
+.flex-badge {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
 @media (max-width: 1000px) {
-  .modal {
-    width: 280px;
+  .form-filter {
+    width: 300px;
   }
 }
