@@ -1,26 +1,23 @@
-<div class="title">
-  <fui-text [color]="'text'" [size]="'sizexl'" [weight]="'bold'"
-    >My Timesheet</fui-text
-  >
-</div>
-<div class="section-two-card">
-  <!-- Productivity -->
-  <div class="card-productivity">
-    <app-productivity />
-  </div>
-  <!-- Productivity -->
+<shared-page-empty [titlePage]="'My Timesheet'">
+  <div class="section-two-card">
+    <!-- Productivity -->
+    <div class="card-productivity">
+      <app-productivity />
+    </div>
+    <!-- Productivity -->
 
-  <!-- YTD -->
-  <div class="card-ytd">
-    <app-ytd-productivity />
+    <!-- YTD -->
+    <div class="card-ytd">
+      <app-ytd-productivity />
+    </div>
+    <!-- YTD -->
   </div>
-  <!-- YTD -->
-</div>
-<!-- History Activity -->
-<div class="card-create-activity">
-  <app-history-activity
-    [listMatters]="mattersData"
-    [listActivities]="activitesData"
-  />
-</div>
-<!-- History Activity -->
+  <!-- History Activity -->
+  <div class="card-create-activity">
+    <app-history-activity
+      [listMatters]="mattersData"
+      [listActivities]="activitesData"
+    />
+  </div>
+  <!-- History Activity -->
+</shared-page-empty>

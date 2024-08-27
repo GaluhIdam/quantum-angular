@@ -1,0 +1,11 @@
+<a *ngIf="backLink" [routerLink]="backLink" class="back-link">
+  <fui-icons [icon]="'arrowLeft'" [size]="'sizes'" [color]="'primary'" />
+  <span>Return</span>
+</a>
+<fui-text [color]="'text'" [size]="'sizexl'" [weight]="'bold'">{{
+  titlePage
+}}</fui-text>
+<fui-text *ngIf="descriptionPage" [color]="'text'">{{
+  descriptionPage
+}}</fui-text>
+<ng-content />

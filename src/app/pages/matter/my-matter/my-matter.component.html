@@ -1,107 +1,107 @@
-<h1 class="title-page">My Matter</h1>
+<shared-page-empty [titlePage]="'My Matter'">
+  <!-- FORM SEARCH & FILTER BUTTON  -->
+  <div class="container">
+    <!-- FORM SEARCH -->
+    <fui-form-control-layout>
+      <fui-input-field
+        [type]="'text'"
+        [borderRadius]="['6px', '6px', '6px', '6px']"
+        [invalid]="false"
+        [size]="'m'"
+        [placeholder]="'Search by Number or Project Name'"
+      >
+        <fui-icons
+          left-icon
+          [color]="'text'"
+          [icon]="'search'"
+          [size]="'sizem'"
+        />
+      </fui-input-field>
+    </fui-form-control-layout>
+    <!-- FORM SEARCH  -->
 
-<!-- FORM SEARCH & FILTER BUTTON  -->
-<div class="container">
-  <!-- FORM SEARCH -->
-  <fui-form-control-layout>
-    <fui-input-field
-      [type]="'text'"
-      [borderRadius]="['6px', '6px', '6px', '6px']"
-      [invalid]="false"
+    <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+    <fui-button-icon
+      [color]="'text'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'filter'"
+      [style]="'secondary'"
       [size]="'m'"
-      [placeholder]="'Search by Number or Project Name'"
-    >
-      <fui-icons
-        left-icon
-        [color]="'text'"
-        [icon]="'search'"
-        [size]="'sizem'"
+      [text]="'Filter'"
+      (onClick)="openFilterFlyout()"
+    />
+    <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+  </div>
+  <!-- FORM SEARCH & FILTER BUTTON  -->
+
+  <!-- FILTER FLYOUT  -->
+  <shared-flyout-filter-matter
+    [isOpenFlyout]="isOpenFlyoutFilter"
+    (action)="actionFilter($event)"
+  />
+  <!-- FILTER FLYOUT  -->
+
+  <!-- FILTER SECTION  -->
+  <div class="filter-applied">
+    <!-- FILTER TAB SECTION  -->
+    <div class="overflow">
+      <shared-button-group
+        [btnList]="btnFilterList"
+        (action)="actionFilterBtn($event)"
       />
-    </fui-input-field>
-  </fui-form-control-layout>
-  <!-- FORM SEARCH  -->
+    </div>
+    <!-- FILTER TAB SECTION  -->
 
-  <!-- BUTTON FILTER FOR OPEN FLYOUT -->
-  <fui-button-icon
-    [color]="'text'"
-    [type]="'button'"
-    [option]="'iconText'"
-    [icon]="'filter'"
-    [style]="'secondary'"
-    [size]="'m'"
-    [text]="'Filter'"
-    (onClick)="openFilterFlyout()"
-  />
-  <!-- BUTTON FILTER FOR OPEN FLYOUT -->
-</div>
-<!-- FORM SEARCH & FILTER BUTTON  -->
+    <!-- FILTER APPLIED SECTION  -->
+    <div class="overflow filter">
+      <shared-filter-applied
+        [filterApplied]="filterApplied"
+        (action)="actionFilterApplied($event)"
+      />
+    </div>
+    <!-- FILTER APPLIED SECTION  -->
+  </div>
 
-<!-- FILTER FLYOUT  -->
-<shared-flyout-filter-matter
-  [isOpenFlyout]="isOpenFlyoutFilter"
-  (action)="actionFilter($event)"
-/>
-<!-- FILTER FLYOUT  -->
+  <!-- CONTENT CARD LOOP  -->
+  <div class="card-container">
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="1" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="2" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="3" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="4" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="1" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="2" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="3" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="4" />
+    </shared-skeleton>
+  </div>
+  <!-- CONTENT CARD LOOP  -->
 
-<!-- FILTER SECTION  -->
-<div class="filter-applied">
-  <!-- FILTER TAB SECTION  -->
-  <div class="overflow">
-    <shared-button-group
-      [btnList]="btnFilterList"
-      (action)="actionFilterBtn($event)"
+  <!-- LOAD BUTTON  -->
+  <div class="loader">
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'refresh'"
+      [color]="'text'"
+      [style]="'secondary'"
+      [text]="'Load more results'"
     />
   </div>
-  <!-- FILTER TAB SECTION  -->
-
-  <!-- FILTER APPLIED SECTION  -->
-  <div class="overflow filter">
-    <shared-filter-applied
-      [filterApplied]="filterApplied"
-      (action)="actionFilterApplied($event)"
-    />
-  </div>
-  <!-- FILTER APPLIED SECTION  -->
-</div>
-
-<!-- CONTENT CARD LOOP  -->
-<div class="card-container">
-  <shared-skeleton [active]="loading">
-    <app-content-card [type]="1" />
-  </shared-skeleton>
-  <shared-skeleton [active]="loading">
-    <app-content-card [type]="2" />
-  </shared-skeleton>
-  <shared-skeleton [active]="loading">
-    <app-content-card [type]="3" />
-  </shared-skeleton>
-  <shared-skeleton [active]="loading">
-    <app-content-card [type]="4" />
-  </shared-skeleton>
-  <shared-skeleton [active]="loading">
-    <app-content-card [type]="1" />
-  </shared-skeleton>
-  <shared-skeleton [active]="loading">
-    <app-content-card [type]="2" />
-  </shared-skeleton>
-  <shared-skeleton [active]="loading">
-    <app-content-card [type]="3" />
-  </shared-skeleton>
-  <shared-skeleton [active]="loading">
-    <app-content-card [type]="4" />
-  </shared-skeleton>
-</div>
-<!-- CONTENT CARD LOOP  -->
-
-<!-- LOAD BUTTON  -->
-<div class="loader">
-  <fui-button-icon
-    [type]="'button'"
-    [option]="'iconText'"
-    [icon]="'refresh'"
-    [color]="'text'"
-    [style]="'secondary'"
-    [text]="'Load more results'"
-  />
-</div>
-<!-- LOAD BUTTON  -->
+  <!-- LOAD BUTTON  -->
+</shared-page-empty>

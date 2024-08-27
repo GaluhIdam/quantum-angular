@@ -7,6 +7,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DetailMatterComponent } from './pages/matter/detail-matter/detail-matter.component';
+import { MatterFormComponent } from './pages/matter/matter-form/matter-form.component';
 
 export const routes: Routes = [
   /** Home Modules */
@@ -61,6 +62,12 @@ export const routes: Routes = [
         title: 'All Matter',
         path: 'all-matter',
         component: AllMatterComponent,
+        // canActivate: mapToCanActivate([AuthGuard]),
+      },
+      {
+        title: 'Matter Form',
+        path: 'matter-form',
+        component: MatterFormComponent,
         // canActivate: mapToCanActivate([AuthGuard]),
       },
     ],

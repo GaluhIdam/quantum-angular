@@ -1,0 +1,285 @@
+<div class="card">
+  <fui-text class="head-label" [weight]="'semibold'"
+    >Payer Information</fui-text
+  >
+  <div class="grid gap-5">
+    <!-- 2 FORM CONTROL  -->
+    <div class="col">
+      <!-- Paying Entity Name  -->
+      <div class="form-control">
+        <div class="flex-between">
+          <div class="flex-start">
+            <fui-text class="label">Paying Entity Name</fui-text>
+            <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+          </div>
+          <div class="checkbox">
+            <input type="checkbox" name="" id="" />
+            <fui-text [size]="'sizes'">Same as Client</fui-text>
+          </div>
+        </div>
+        <fui-form-control-layout>
+          <fui-input-field
+            [formControlField]="matterNumberForm"
+            [placeholder]="'object/event'"
+            [type]="'text'"
+            [size]="'m'"
+            [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
+          >
+            <fui-icons
+              *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
+              right-icon
+              [label]="'right'"
+              [icon]="'alert'"
+              [size]="'sizem'"
+              [color]="'danger'"
+          /></fui-input-field>
+          <fui-validator-field
+            validator
+            [message]="'Object/Event is required!'"
+          />
+        </fui-form-control-layout>
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'iconText'"
+          [icon]="'plusInCircle'"
+          [text]="'Add new payer'"
+          [color]="'ghost'"
+          [style]="'secondary'"
+        />
+      </div>
+      <!-- Paying Entity Name  -->
+
+      <!-- Paying Entity Contact Person  -->
+      <div class="form-control">
+        <fui-text class="label">Paying Entity Contact Person</fui-text>
+        <fui-form-control-layout>
+          <fui-input-field
+            [formControlField]="matterNumberForm"
+            [placeholder]="'object/event'"
+            [type]="'text'"
+            [size]="'m'"
+            [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
+          >
+            <fui-icons
+              *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
+              right-icon
+              [label]="'right'"
+              [icon]="'alert'"
+              [size]="'sizem'"
+              [color]="'danger'"
+          /></fui-input-field>
+          <fui-validator-field
+            validator
+            [message]="'Object/Event is required!'"
+          />
+        </fui-form-control-layout>
+        <fui-button-icon
+          class="flex mt-5"
+          [type]="'button'"
+          [option]="'iconText'"
+          [icon]="'plusInCircle'"
+          [text]="'Add new contact person'"
+          [color]="'ghost'"
+          [style]="'secondary'"
+        />
+      </div>
+      <!-- Paying Entity Contact Person  -->
+    </div>
+    <!-- 2 FORM CONTROL  -->
+    <div class="col">
+      <!-- SLIDER  -->
+      <shared-slider-card
+        [dataSlider]="dataSlider"
+        [currentSlideIndex]="currentSlideIndex"
+        (slideOut)="slideOut($event)"
+      >
+        <shared-slider-card-body
+          *ngFor="let item of clientData; let i = index"
+          [id]="i + 1"
+          [current]="currentSlideIndex + 1"
+        >
+          <div class="card-blue">
+            <div class="grid-2">
+              <fui-text>Parent/Group Company</fui-text>
+              <fui-text>Company's Origin Country</fui-text>
+            </div>
+            <div class="mt-5 grid-2">
+              <fui-text [weight]="'semibold'">{{ item.parent }}</fui-text>
+              <fui-text [weight]="'semibold'">{{
+                item.companyOrigin
+              }}</fui-text>
+            </div>
+            <div class="mt-20 grid">
+              <fui-text>Address</fui-text>
+              <fui-text [weight]="'semibold'" class="mt-5">{{
+                item.address
+              }}</fui-text>
+            </div>
+            <fui-link
+              class="mt-20"
+              [colorLink]="'primary'"
+              [urlLink]="'#'"
+              [typeLink]="'coloring'"
+              >Change address</fui-link
+            >
+            <div class="mt-20 grid">
+              <fui-text>Entity Type</fui-text>
+              <fui-text [weight]="'semibold'" class="mt-5">{{
+                item.entityType
+              }}</fui-text>
+            </div>
+            <div class="mt-20 grid">
+              <fui-text>Industry/Business Sector</fui-text>
+              <fui-text [weight]="'semibold'" class="mt-5">{{
+                item.industry
+              }}</fui-text>
+            </div>
+          </div>
+        </shared-slider-card-body>
+      </shared-slider-card>
+      <!-- SLIDER  -->
+    </div>
+  </div>
+
+  <fui-text class="head-label mt-20" [weight]="'semibold'"
+    >Fee Arrangement</fui-text
+  >
+
+  <!-- Fee Structure & Currency  -->
+  <div class="grid-2">
+    <div class="form-control">
+      <div class="flex-start">
+        <fui-text class="label">Fee Structure</fui-text>
+        <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+      </div>
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="matterNumberForm"
+          [placeholder]="'object/event'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
+        >
+          <fui-icons
+            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
+            right-icon
+            [label]="'right'"
+            [icon]="'alert'"
+            [size]="'sizem'"
+            [color]="'danger'"
+        /></fui-input-field>
+        <fui-validator-field
+          validator
+          [message]="'Object/Event is required!'"
+        />
+      </fui-form-control-layout>
+    </div>
+    <div class="form-control">
+      <fui-text class="label">Currency</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="matterNumberForm"
+          [placeholder]="'object/event'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
+        >
+          <fui-icons
+            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
+            right-icon
+            [label]="'right'"
+            [icon]="'alert'"
+            [size]="'sizem'"
+            [color]="'danger'"
+        /></fui-input-field>
+        <fui-validator-field
+          validator
+          [message]="'Object/Event is required!'"
+        />
+      </fui-form-control-layout>
+    </div>
+  </div>
+  <!-- PRACTICE AREA & MATTER TYPE  -->
+
+  <!-- Billing Notes  -->
+  <div class="grid">
+    <fui-text class="mt-20" [weight]="'semibold'">Billing Notes</fui-text>
+    <fui-text class="mt-10" [weight]="'light'"
+      >Add detailed information regarding the fee arrangement for this matter,
+      including any special terms, discounts, or additional charges.</fui-text
+    >
+  </div>
+  <!-- Billing Notes  -->
+
+  <!-- Proof of Engagement  -->
+  <div class="grid">
+    <fui-text class="mt-20" [weight]="'semibold'">Proof of Engagement</fui-text>
+    <fui-text class="mt-10" [weight]="'light'"
+      >Represents binding work contracts related to this matter. You have the
+      option to add multiple proofs of engagement.</fui-text
+    >
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'plusInCircle'"
+      [text]="'Add Proof of Engagement'"
+      [color]="'ghost'"
+      [style]="'secondary'"
+    />
+  </div>
+  <!-- Proof of Engagement  -->
+</div>
+
+<!-- Special Rates  -->
+<div class="card mt-20">
+  <div class="grid">
+    <fui-text [weight]="'semibold'">Special Rates</fui-text>
+    <fui-text class="mt-10" [weight]="'light'"
+      >Establish a unique rate arrangement tailored exclusively to this matter.
+      It allows for the setting of different rates across various periods based
+      on your specific arrangements.</fui-text
+    >
+
+    <!-- COLLABSIBLE  -->
+    <fui-collapsible-nav-group class="mt-20" [isCollapsed]="isCollapsed">
+      <div header>
+        <div class="flex-between">
+          <div class="grid">
+            <fui-text>Ralph Edwards (RE)</fui-text>
+            <fui-text class="italic">Senior Associates</fui-text>
+          </div>
+          <div class="flex">
+            <fui-text [textWrap]="'nowrap'">USD 250.00 ~ USD 300.00</fui-text>
+            <fui-button-icon
+              [size]="'s'"
+              (onClick)="toggleCollapse()"
+              [type]="'button'"
+              [option]="'icon'"
+              [icon]="isCollapsed ? 'arrowDown' : 'arrowRight'"
+              [color]="'text'"
+              [style]="'secondary'"
+            />
+          </div>
+        </div>
+      </div>
+      <div body class="mt-5">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita optio
+        quod nobis eligendi suscipit, nisi accusantium placeat doloribus ipsa
+        explicabo aut minus laudantium ab pariatur animi nihil reiciendis, earum
+        quo.
+      </div>
+    </fui-collapsible-nav-group>
+    <!-- COLLABSIBLE  -->
+
+    <fui-button-icon
+      class="mt-20"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'plusInCircle'"
+      [text]="'Set up special rate'"
+      [color]="'primary'"
+      [style]="'secondary'"
+    />
+  </div>
+</div>
+<!-- Special Rates  -->

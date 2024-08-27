@@ -1,0 +1,113 @@
+@import "../../../app.component.scss";
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  width: 100%;
+  &-1 {
+    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  &-2 {
+    width: 100%;
+    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  &-3 {
+    width: 100%;
+    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.align {
+  &-start {
+    align-items: start;
+  }
+  &-center {
+    align-items: center;
+  }
+  &-end {
+    align-items: end;
+  }
+}
+
+.col-span-2 {
+  grid-column: span 2; /* Spans across two columns */
+}
+
+.mt-5 {
+  margin-top: 5px;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+
+.card {
+  padding: 20px;
+  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+  position: relative;
+  border-radius: 5px;
+  height: fit-content;
+}
+
+.head-label {
+  margin-bottom: 20px;
+  display: flex;
+}
+.form-control {
+  margin-bottom: 25px;
+}
+.flex {
+  display: flex;
+  gap: 10px;
+  &-start {
+    display: flex;
+    justify-content: start;
+  }
+  &-between {
+    display: flex;
+    justify-content: space-between;
+  }
+  &.gap-5 {
+    gap: 5px;
+  }
+  fui-form-control-layout {
+    width: -webkit-fill-available;
+  }
+}
+.label {
+  margin-bottom: 5px;
+  display: flex;
+  margin-right: 5px;
+}
+.checkbox {
+  display: flex;
+  align-items: center;
+  input {
+    margin-right: 5px;
+    display: flex;
+  }
+}
+
+.w-257 {
+  width: 257px;
+}
+
+.card-blue {
+  padding: 20px;
+  border-radius: 6px;
+  background-color: var(--fuiPrimarySecondary, $fuiPrimarySecondary);
+}
+
+.italic {
+  font-style: italic;
+}
+.soft-text {
+  color: var(--fuiColorDarkShade, $fuiColorDarkShade);
+}
