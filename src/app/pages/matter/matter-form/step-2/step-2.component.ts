@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   AppendComponent,
   BadgeComponent,
@@ -13,11 +13,14 @@ import {
   InputFieldComponent,
   LinkComponent,
   PrependComponent,
+  TextareaComponent,
   TextComponent,
+  TooltipComponent,
   ValidatorFieldComponent,
 } from '@quantum/fui';
 import { SliderCardComponent } from '../../../../shared/slider-card/slider-card.component';
 import { SliderCardBodyComponent } from '../../../../shared/slider-card/slider-card-body/slider-card-body.component';
+import { FormControlComponent } from '../../../../shared/form-control/form-control.component';
 
 @Component({
   selector: 'step-2',
@@ -39,12 +42,15 @@ import { SliderCardBodyComponent } from '../../../../shared/slider-card/slider-c
     SliderCardBodyComponent,
     LinkComponent,
     CollapsibleNavGroupComponent,
+    TextareaComponent,
+    TooltipComponent,
+    FormControlComponent,
   ],
   templateUrl: './step-2.component.html',
   styleUrl: './step-2.component.scss',
 })
 export class Step2Component {
-  matterNumberForm: FormControl = new FormControl('');
+  matterNumberForm: FormControl = new FormControl('', Validators.required);
   dataSlider: {
     id: number;
     title: string;

@@ -5,395 +5,127 @@
 
   <!-- 3 FORM CONTROL  -->
   <div class="grid-3">
-    <div class="form-control">
-      <fui-text class="label">Matter Number</fui-text>
-      <fui-form-control-layout>
-        <fui-input-field
-          [formControlField]="matterNumberForm"
-          [placeholder]="'object/event'"
-          [type]="'text'"
-          [size]="'m'"
-          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-        >
-          <fui-icons
-            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-        /></fui-input-field>
-        <fui-validator-field
-          validator
-          [message]="'Object/Event is required!'"
-        />
-        <fui-append>
-          <fui-icons [icon]="'refresh'" />
-        </fui-append>
-      </fui-form-control-layout>
-    </div>
-    <div class="form-control">
-      <div class="flex-between">
-        <fui-text class="label">Parent Matter</fui-text>
-        <div class="checkbox">
-          <input type="checkbox" name="" id="" />
-          <fui-text [size]="'sizes'">N/A</fui-text>
-        </div>
-      </div>
-      <fui-form-control-layout>
-        <fui-input-field
-          [formControlField]="matterNumberForm"
-          [placeholder]="'object/event'"
-          [type]="'text'"
-          [size]="'m'"
-          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-        >
-          <fui-icons
-            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-        /></fui-input-field>
-        <fui-validator-field
-          validator
-          [message]="'Object/Event is required!'"
-        />
-      </fui-form-control-layout>
-    </div>
-    <div class="form-control">
-      <div class="flex-between">
-        <fui-text class="label">Conflict Search ID</fui-text>
-        <div class="checkbox">
-          <input type="checkbox" name="" id="" />
-          <fui-text [size]="'sizes'">N/A</fui-text>
-        </div>
-      </div>
-      <fui-form-control-layout>
-        <fui-input-field
-          [formControlField]="matterNumberForm"
-          [placeholder]="'object/event'"
-          [type]="'text'"
-          [size]="'m'"
-          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-        >
-          <fui-icons
-            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-        /></fui-input-field>
-        <fui-validator-field
-          validator
-          [message]="'Object/Event is required!'"
-        />
-      </fui-form-control-layout>
-    </div>
+    <shared-form-control
+      [label]="'Matter Number'"
+      [type]="'text'"
+      [append]="{ type: 'icon', icon: 'refresh', color: 'primary' }"
+    />
+    <shared-form-control
+      [leftIcon]="'search'"
+      [label]="'Parent Matter'"
+      [type]="'search'"
+      [checkbox]="{
+        label: 'N/A',
+        model: false,
+      }"
+    />
+    <shared-form-control
+      [label]="'Conflict Search ID'"
+      [type]="'text'"
+      [checkbox]="{
+        label: 'N/A',
+        model: false,
+      }"
+    />
   </div>
   <!-- 3 FORM CONTROL  -->
 
   <!-- PROJECT NAME  -->
-  <div class="form-control">
-    <div class="flex-between">
-      <div class="flex-start">
-        <fui-text class="label">Project Name</fui-text>
-        <fui-icons [icon]="'questionInCircle'" [size]="'sizexs'" />
-      </div>
-      <div class="checkbox">
-        <input type="checkbox" name="" id="" />
-        <fui-text [size]="'sizes'">N/A</fui-text>
-      </div>
-    </div>
-    <fui-form-control-layout>
-      <fui-input-field
-        [formControlField]="matterNumberForm"
-        [placeholder]="'object/event'"
-        [type]="'text'"
-        [size]="'m'"
-        [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-      >
-        <fui-icons
-          *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-          right-icon
-          [label]="'right'"
-          [icon]="'alert'"
-          [size]="'sizem'"
-          [color]="'danger'"
-      /></fui-input-field>
-      <fui-validator-field validator [message]="'Object/Event is required!'" />
-    </fui-form-control-layout>
-  </div>
+  <shared-form-control
+    class="mt-15"
+    [label]="'Project Name'"
+    [labelTooltip]="'label'"
+    [type]="'text'"
+    [checkbox]="{
+    label: 'N/A',
+    model: false,
+  }"
+  />
   <!-- PROJECT NAME  -->
 
   <!-- Matter Short Description  -->
-  <div class="form-control">
-    <div class="flex-between">
-      <fui-text class="label">Matter Short Description</fui-text>
-      <div class="checkbox">
-        <input type="checkbox" name="" id="" />
-        <fui-text [size]="'sizes'">N/A</fui-text>
-      </div>
-    </div>
-    <fui-form-control-layout>
-      <fui-input-field
-        [formControlField]="matterNumberForm"
-        [placeholder]="'object/event'"
-        [type]="'text'"
-        [size]="'m'"
-        [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-      >
-        <fui-icons
-          *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-          right-icon
-          [label]="'right'"
-          [icon]="'alert'"
-          [size]="'sizem'"
-          [color]="'danger'"
-      /></fui-input-field>
-      <fui-validator-field validator [message]="'Object/Event is required!'" />
-    </fui-form-control-layout>
-  </div>
+  <shared-form-control
+    class="mt-15"
+    [label]="'Matter Short Description'"
+    [type]="'textarea'"
+    [checkbox]="{
+    label: 'N/A',
+    model: false,
+  }"
+  />
   <!-- Matter Short Description  -->
 
   <!-- BILLABILITY & MATTER FORM  -->
-  <div class="grid-2">
-    <div class="form-control">
-      <fui-text class="label">Billability</fui-text>
-      <fui-form-control-layout>
-        <fui-input-field
-          [formControlField]="matterNumberForm"
-          [placeholder]="'object/event'"
-          [type]="'text'"
-          [size]="'m'"
-          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-        >
-          <fui-icons
-            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-        /></fui-input-field>
-        <fui-validator-field
-          validator
-          [message]="'Object/Event is required!'"
-        />
-      </fui-form-control-layout>
-    </div>
-    <div class="form-control">
-      <fui-text class="label">Matter Form</fui-text>
-      <div class="flex gap-5">
-        <fui-form-control-layout>
-          <fui-input-field
-            [disabled]="true"
-            [placeholder]="'object/event'"
-            [type]="'text'"
-            [size]="'m'"
-            [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-          >
-            <fui-icons
-              *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-              right-icon
-              [label]="'right'"
-              [icon]="'alert'"
-              [size]="'sizem'"
-              [color]="'danger'"
-          /></fui-input-field>
-          <fui-validator-field
-            validator
-            [message]="'Object/Event is required!'"
-          />
-        </fui-form-control-layout>
-        <fui-button-icon
-          [type]="'button'"
-          [option]="'icon'"
-          [icon]="'search'"
-          [style]="'secondary'"
-        />
-        <fui-button-icon
-          [type]="'button'"
-          [option]="'icon'"
-          [icon]="'export'"
-          [style]="'secondary'"
-        />
-      </div>
+  <div class="grid-2 mt-15">
+    <shared-form-control
+      [label]="'Billability'"
+      [type]="'combo-box'"
+      [rightIcon]="'arrowDown'"
+    />
+    <div class="flex gap-5 align-end">
+      <shared-form-control
+        [label]="'Matter Form'"
+        [type]="'text'"
+        [disabled]="true"
+      />
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'icon'"
+        [icon]="'export'"
+        [style]="'secondary'"
+      />
     </div>
   </div>
   <!-- BILLABILITY & MATTER FORM  -->
 
   <!-- PRACTICE AREA & MATTER TYPE  -->
-  <div class="grid-2">
-    <div class="form-control">
-      <fui-text class="label">Practice Area</fui-text>
-      <fui-form-control-layout>
-        <fui-input-field
-          [formControlField]="matterNumberForm"
-          [placeholder]="'object/event'"
-          [type]="'text'"
-          [size]="'m'"
-          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-        >
-          <fui-icons
-            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-        /></fui-input-field>
-        <fui-validator-field
-          validator
-          [message]="'Object/Event is required!'"
-        />
-      </fui-form-control-layout>
-    </div>
-    <div class="form-control">
-      <fui-text class="label">Matter Type</fui-text>
-      <fui-form-control-layout>
-        <fui-input-field
-          [formControlField]="matterNumberForm"
-          [placeholder]="'object/event'"
-          [type]="'text'"
-          [size]="'m'"
-          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-        >
-          <fui-icons
-            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-        /></fui-input-field>
-        <fui-validator-field
-          validator
-          [message]="'Object/Event is required!'"
-        />
-      </fui-form-control-layout>
-    </div>
+  <div class="grid-2 mt-15">
+    <shared-form-control
+      [label]="'Practice Area'"
+      [type]="'combo-box'"
+      [rightIcon]="'arrowDown'"
+    />
+    <shared-form-control
+      [label]="'Matter Type'"
+      [type]="'combo-box'"
+      [rightIcon]="'arrowDown'"
+    />
   </div>
   <!-- PRACTICE AREA & MATTER TYPE  -->
 
   <!-- PIC & PRM  -->
-  <div class="grid-2">
-    <div class="form-control">
-      <div class="flex-start">
-        <fui-text class="label">Partner in Charge (PIC)</fui-text>
-        <fui-icons [icon]="'questionInCircle'" [size]="'sizexs'" />
-      </div>
-      <fui-form-control-layout>
-        <fui-input-field
-          [formControlField]="matterNumberForm"
-          [placeholder]="'object/event'"
-          [type]="'text'"
-          [size]="'m'"
-          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-        >
-          <fui-icons
-            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-        /></fui-input-field>
-        <fui-validator-field
-          validator
-          [message]="'Object/Event is required!'"
-        />
-      </fui-form-control-layout>
-    </div>
-    <div class="form-control">
-      <div class="flex-start">
-        <fui-text class="label">Partner Referral Marketing (PRM)</fui-text>
-        <fui-icons [icon]="'questionInCircle'" [size]="'sizexs'" />
-      </div>
-      <fui-form-control-layout>
-        <fui-input-field
-          [formControlField]="matterNumberForm"
-          [placeholder]="'object/event'"
-          [type]="'text'"
-          [size]="'m'"
-          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-        >
-          <fui-icons
-            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-        /></fui-input-field>
-        <fui-validator-field
-          validator
-          [message]="'Object/Event is required!'"
-        />
-      </fui-form-control-layout>
-    </div>
+  <div class="grid-2 mt-15">
+    <shared-form-control
+      [label]="'Partner in Charge (PIC)'"
+      [labelTooltip]="'label'"
+      [type]="'text'"
+      [append]="{ type: 'icon', icon: 'search', color: 'primary' }"
+    />
+    <shared-form-control
+      [label]="'Partner Referral Marketing (PRM)'"
+      [labelTooltip]="'label'"
+      [type]="'text'"
+      [append]="{ type: 'icon', icon: 'search', color: 'primary' }"
+    />
   </div>
   <!-- PIC & PRM  -->
 
   <!-- BUSINESS SOURCE  -->
-  <div class="grid-2 align-end">
-    <div class="form-control">
-      <div class="flex-start">
-        <fui-text class="label">Business Source</fui-text>
-        <fui-icons [icon]="'questionInCircle'" [size]="'sizexs'" />
-      </div>
-      <fui-form-control-layout>
-        <fui-input-field
-          [formControlField]="matterNumberForm"
-          [placeholder]="'object/event'"
-          [type]="'text'"
-          [size]="'m'"
-          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-        >
-          <fui-icons
-            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-        /></fui-input-field>
-        <fui-validator-field
-          validator
-          [message]="'Object/Event is required!'"
-        />
-      </fui-form-control-layout>
-    </div>
-    <div class="form-control">
-      <fui-form-control-layout>
-        <fui-input-field
-          [formControlField]="matterNumberForm"
-          [placeholder]="'object/event'"
-          [type]="'text'"
-          [size]="'m'"
-          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-        >
-          <fui-icons
-            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-        /></fui-input-field>
-        <fui-validator-field
-          validator
-          [message]="'Object/Event is required!'"
-        />
-      </fui-form-control-layout>
-    </div>
+  <div class="grid-2 align-end mt-15">
+    <shared-form-control
+      [label]="'Business Source'"
+      [type]="'combo-box'"
+      [rightIcon]="'arrowDown'"
+    />
+    <shared-form-control
+      [type]="'text'"
+      [disabled]="true"
+    />
   </div>
   <!-- BUSINESS SOURCE  -->
 
   <!-- MATTER MEMBER  -->
-  <div class="grid-2 flex-between">
+  <div class="grid-2 mt-15 flex-between">
     <fui-text class="label">Matter Members (5)</fui-text>
     <fui-text class="label" [color]="'primary'">Manage Members</fui-text>
   </div>
