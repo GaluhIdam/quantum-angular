@@ -2,242 +2,515 @@
   <fui-text class="head-label" [weight]="'semibold'"
     >Payer Information</fui-text
   >
-  <div class="grid gap-5">
-    <!-- 2 FORM CONTROL  -->
-    <div class="col">
-      <!-- Paying Entity Name  -->
-      <div class="form-control">
-        <div class="flex-between">
-          <div class="flex-start">
-            <fui-text class="label">Paying Entity Name</fui-text>
-            <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
-          </div>
-          <div class="checkbox">
-            <input type="checkbox" name="" id="" />
-            <fui-text [size]="'sizes'">Same as Client</fui-text>
-          </div>
-        </div>
-        <fui-form-control-layout>
-          <fui-input-field
-            [formControlField]="matterNumberForm"
-            [placeholder]="'object/event'"
-            [type]="'text'"
-            [size]="'m'"
-            [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-          >
-            <fui-icons
-              *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-              right-icon
-              [label]="'right'"
-              [icon]="'alert'"
-              [size]="'sizem'"
-              [color]="'danger'"
-          /></fui-input-field>
-          <fui-validator-field
-            validator
-            [message]="'Object/Event is required!'"
-          />
-        </fui-form-control-layout>
-        <fui-button-icon
-          [type]="'button'"
-          [option]="'iconText'"
-          [icon]="'plusInCircle'"
-          [text]="'Add new payer'"
-          [color]="'ghost'"
-          [style]="'secondary'"
-        />
-      </div>
-      <!-- Paying Entity Name  -->
 
-      <!-- Paying Entity Contact Person  -->
-      <div class="form-control">
-        <fui-text class="label">Paying Entity Contact Person</fui-text>
-        <fui-form-control-layout>
-          <fui-input-field
-            [formControlField]="matterNumberForm"
-            [placeholder]="'object/event'"
-            [type]="'text'"
-            [size]="'m'"
-            [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
-          >
-            <fui-icons
-              *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-              right-icon
-              [label]="'right'"
-              [icon]="'alert'"
-              [size]="'sizem'"
-              [color]="'danger'"
-          /></fui-input-field>
-          <fui-validator-field
-            validator
-            [message]="'Object/Event is required!'"
+  <div class="grid-2">
+    <!-- PAYING ENTITY  -->
+    <div class="form-control">
+      <div class="flex-between">
+        <fui-text class="label">Paying Entity</fui-text>
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            [checked]="isPayingEntity"
+            [(ngModel)]="isPayingEntity"
           />
-        </fui-form-control-layout>
-        <fui-button-icon
-          class="flex mt-5"
-          [type]="'button'"
-          [option]="'iconText'"
-          [icon]="'plusInCircle'"
-          [text]="'Add new contact person'"
-          [color]="'ghost'"
-          [style]="'secondary'"
-        />
+          <fui-text [size]="'sizes'">Same as Client</fui-text>
+        </div>
       </div>
-      <!-- Paying Entity Contact Person  -->
+      <fui-combo-box
+        [singleSelection]="true"
+        [placeholder]="'Search paying entity'"
+        [invalid]="false"
+        [message]="''"
+        [disabled]="isPayingEntity"
+        [leftIcon]="'search'"
+        [optionValue]="[]"
+        [selectedValue]="[]"
+      />
+      <fui-button-icon
+        class="flex mt-15"
+        [style]="'secondary'"
+        [color]="'primary'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircle'"
+        [text]="'Add new paying entity'"
+      />
     </div>
-    <!-- 2 FORM CONTROL  -->
-    <div class="col">
-      <!-- SLIDER  -->
-      <shared-slider-card
-        [dataSlider]="dataSlider"
-        [currentSlideIndex]="currentSlideIndex"
-        (slideOut)="slideOut($event)"
-      >
-        <shared-slider-card-body
-          *ngFor="let item of clientData; let i = index"
-          [id]="i + 1"
-          [current]="currentSlideIndex + 1"
+    <!-- PAYING ENTITY  -->
+
+    <!-- CONTACT PERSON  -->
+    <div class="form-control">
+      <fui-text class="label">Contact Person</fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [placeholder]="'Please select contact person'"
+          [invalid]="false"
+          [selectOptions]="[]"
         >
-          <div class="card-blue">
-            <div class="grid-2">
-              <fui-text>Parent/Group Company</fui-text>
-              <fui-text>Company's Origin Country</fui-text>
-            </div>
-            <div class="mt-5 grid-2">
-              <fui-text [weight]="'semibold'">{{ item.parent }}</fui-text>
-              <fui-text [weight]="'semibold'">{{
-                item.companyOrigin
-              }}</fui-text>
-            </div>
-            <div class="mt-20 grid">
-              <fui-text>Address</fui-text>
-              <fui-text [weight]="'semibold'" class="mt-5">{{
-                item.address
-              }}</fui-text>
-            </div>
-            <fui-link
-              class="mt-20"
-              [colorLink]="'primary'"
-              [urlLink]="'#'"
-              [typeLink]="'coloring'"
-              >Change address</fui-link
-            >
-            <div class="mt-20 grid">
-              <fui-text>Entity Type</fui-text>
-              <fui-text [weight]="'semibold'" class="mt-5">{{
-                item.entityType
-              }}</fui-text>
-            </div>
-            <div class="mt-20 grid">
-              <fui-text>Industry/Business Sector</fui-text>
-              <fui-text [weight]="'semibold'" class="mt-5">{{
-                item.industry
-              }}</fui-text>
-            </div>
-          </div>
-        </shared-slider-card-body>
-      </shared-slider-card>
-      <!-- SLIDER  -->
+        </fui-select-field>
+      </fui-form-control-layout>
+      <fui-button-icon
+        *ngIf="isPayingEntity"
+        (onClick)="openFlyouContactPerson()"
+        class="flex mt-15"
+        [style]="'secondary'"
+        [color]="'primary'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircle'"
+        [text]="'Add new contact person'"
+      />
     </div>
+    <!-- CONTACT PERSON  -->
   </div>
 
-  <fui-text class="head-label mt-20" [weight]="'semibold'"
+  <!-- SLIDER  -->
+  <shared-slider-card
+    [dataSlider]="dataSlider"
+    [currentSlideIndex]="currentSlideIndex"
+    (slideOut)="slideOut($event)"
+  >
+    <shared-slider-card-body
+      *ngFor="let item of clientData; let i = index"
+      [id]="i + 1"
+      [current]="currentSlideIndex + 1"
+    >
+      <div class="card-blue">
+        <div class="grid-2">
+          <fui-text>Parent/Group Company</fui-text>
+          <fui-text>Company's Origin Country</fui-text>
+        </div>
+        <div class="mt-5 grid-2">
+          <fui-text [weight]="'semibold'">{{ item.parent }}</fui-text>
+          <fui-text [weight]="'semibold'">{{ item.companyOrigin }}</fui-text>
+        </div>
+        <div class="mt-20 grid">
+          <fui-text>Address</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.address
+          }}</fui-text>
+        </div>
+        <fui-link
+          class="mt-20"
+          [colorLink]="'primary'"
+          [urlLink]="'#'"
+          [typeLink]="'coloring'"
+          >Change address</fui-link
+        >
+        <div class="mt-20 grid">
+          <fui-text>Entity Type</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.entityType
+          }}</fui-text>
+        </div>
+        <div class="mt-20 grid">
+          <fui-text>Industry/Business Sector</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.industry
+          }}</fui-text>
+        </div>
+      </div>
+    </shared-slider-card-body>
+  </shared-slider-card>
+  <!-- SLIDER  -->
+
+  <fui-text class="head-label flex mt-30" [weight]="'semibold'"
     >Fee Arrangement</fui-text
   >
 
-  <!-- Fee Structure & Currency  -->
-  <div class="grid-2">
+  <div
+    [ngClass]="{
+    'grid-2': pricingTypeForm.value === 'Lumpsum' || pricingTypeForm.value === 'Retainer',
+    'grid-3': pricingTypeForm.value === 'Hourly' || pricingTypeForm.value  === 'Cap',
+  }"
+  >
+    <!-- PRICING TYPE  -->
     <div class="form-control">
       <div class="flex-start">
-        <fui-text class="label">Fee Structure</fui-text>
-        <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+        <fui-text class="label">Pricing Type</fui-text>
+        <fui-tooltip [position]="'top'" [content]="'Label tooltip'">
+          <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+        </fui-tooltip>
       </div>
       <fui-form-control-layout>
-        <fui-input-field
-          [formControlField]="matterNumberForm"
-          [placeholder]="'object/event'"
-          [type]="'text'"
+        <fui-select-field
           [size]="'m'"
-          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
+          [placeholder]="'Please select priciing type'"
+          [formControlField]="pricingTypeForm"
+          [invalid]="false"
+          [selectOptions]="pricingTypeOption"
         >
-          <fui-icons
-            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-        /></fui-input-field>
-        <fui-validator-field
-          validator
-          [message]="'Object/Event is required!'"
-        />
+        </fui-select-field>
       </fui-form-control-layout>
     </div>
+    <!-- PRICING TYPE  -->
+
+    <!-- CURRENCY  -->
     <div class="form-control">
       <fui-text class="label">Currency</fui-text>
       <fui-form-control-layout>
-        <fui-input-field
-          [formControlField]="matterNumberForm"
-          [placeholder]="'object/event'"
-          [type]="'text'"
+        <fui-select-field
           [size]="'m'"
-          [invalid]="matterNumberForm.invalid && matterNumberForm.dirty"
+          [formControlField]="currencyForm"
+          [placeholder]="'Please select contact person'"
+          [invalid]="false"
+          [selectOptions]="currencyOption"
         >
-          <fui-icons
-            *ngIf="matterNumberForm.invalid && matterNumberForm.dirty"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-        /></fui-input-field>
-        <fui-validator-field
-          validator
-          [message]="'Object/Event is required!'"
-        />
+        </fui-select-field>
       </fui-form-control-layout>
     </div>
+    <!-- CURRENCY  -->
+
+    <!-- ESTIMATED FEE  -->
+    <div class="form-control" *ngIf="pricingTypeForm.value === 'Hourly'">
+      <div class="flex-between">
+        <fui-text class="label">Estimated Fee</fui-text>
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            [checked]="isPayingEntity"
+            [(ngModel)]="isPayingEntity"
+          />
+          <fui-text [size]="'sizes'">N/A</fui-text>
+        </div>
+      </div>
+      <fui-form-control-layout>
+        <fui-prepend>
+          <fui-text [size]="'sizes'" [weight]="'semibold'">USD</fui-text>
+        </fui-prepend>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Type amount'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- ESTIMATED FEE  -->
+
+    <!-- CAP FEE  -->
+    <div class="form-control" *ngIf="pricingTypeForm.value === 'Cap'">
+      <fui-text class="label">Cap Fee</fui-text>
+      <fui-form-control-layout>
+        <fui-prepend>
+          <fui-text [size]="'sizes'" [weight]="'semibold'">USD</fui-text>
+        </fui-prepend>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Type amount'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- CAP FEE  -->
   </div>
-  <!-- PRACTICE AREA & MATTER TYPE  -->
+
+  <div class="grid-2" *ngIf="pricingTypeForm.value === 'Retainer'">
+    <!-- RETAINER PERIOD START  -->
+    <div class="form-control">
+      <fui-text class="label">Retainer Period Start</fui-text>
+      <fui-date-picker />
+    </div>
+    <!-- RETAINER PERIOD START  -->
+
+    <!-- RETAINER PERIOD END  -->
+    <div class="form-control">
+      <fui-text class="label">Retainer Period End</fui-text>
+      <fui-date-picker />
+    </div>
+    <!-- RETAINER PERIOD END  -->
+  </div>
+
+  <!-- TABLE LUMPSUM -->
+  <div *ngIf="pricingTypeForm.value === 'Lumpsum'">
+    <fui-text>Lumpsum Term</fui-text>
+    <fui-table
+      class="flex mt-5"
+      [limit]="5"
+      [totalItems]="1"
+      [showInfo]="false"
+    >
+      <fui-table-head *ngFor="let header of title">
+        {{ header }}
+      </fui-table-head>
+      <fui-table-body>
+        <fui-table-body-row>
+          <fui-table-body-data style="min-width: 20px; width: 20px">
+            1
+          </fui-table-body-data>
+          <fui-table-body-data>
+            <fui-text>Billed upon completion of first phase</fui-text>
+          </fui-table-body-data>
+          <fui-table-body-data>
+            <fui-text>USD 5,000.00</fui-text>
+          </fui-table-body-data>
+          <fui-table-body-data style="min-width: 20px; width: 20px">
+            <div class="flex">
+              <fui-button-icon
+                [type]="'button'"
+                [color]="'primary'"
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'pencil'"
+              />
+              <fui-button-icon
+                [type]="'button'"
+                [color]="'danger'"
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'stopSlash'"
+              />
+              <fui-button-icon
+                [type]="'button'"
+                [color]="'danger'"
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'trash'"
+              />
+            </div>
+          </fui-table-body-data>
+        </fui-table-body-row>
+      </fui-table-body>
+    </fui-table>
+    <fui-button-icon
+      (onClick)="openFlyouLumpsumTerm()"
+      class="flex mt-15"
+      [style]="'secondary'"
+      [color]="'primary'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'plusInCircle'"
+      [text]="'Add Lumpsum Term'"
+    />
+  </div>
+  <!-- TABLE LUMPSUM -->
+
+  <!-- TABLE RETAINER -->
+  <div *ngIf="pricingTypeForm.value === 'Retainer'">
+    <fui-text>Retainer Term</fui-text>
+    <fui-table
+      class="flex mt-5"
+      [limit]="5"
+      [totalItems]="1"
+      [showInfo]="false"
+    >
+      <fui-table-head *ngFor="let header of titleRetainer">
+        {{ header }}
+      </fui-table-head>
+      <fui-table-body>
+        <fui-table-body-row>
+          <fui-table-body-data style="min-width: 20px; width: 20px">
+            1
+          </fui-table-body-data>
+          <fui-table-body-data>
+            <fui-text>Jan 24</fui-text>
+            <fui-badge
+              class="flex mt-5"
+              [color]="'success'"
+              [isBadgeIcon]="true"
+              [icon]="'tag'"
+              [sizeIcon]="'sizes'"
+              [size]="'sizem'"
+              >Collected</fui-badge
+            >
+            <fui-badge
+              class="flex mt-5"
+              [color]="'ghost'"
+              [isBadgeIcon]="true"
+              [sizeIcon]="'sizes'"
+              [icon]="'document'"
+              [size]="'sizem'"
+              >1140/24</fui-badge
+            >
+          </fui-table-body-data>
+          <fui-table-body-data>
+            <div class="grid-1 gap-5">
+              <fui-text [textWrap]="'nowrap'">USD 5,000.00</fui-text>
+              <fui-text>10 Hours</fui-text>
+            </div>
+          </fui-table-body-data>
+          <fui-table-body-data>
+            <fui-text
+              >USD 3.000/month with time allocation no more than 10
+              hours</fui-text
+            >
+          </fui-table-body-data>
+          <fui-table-body-data style="min-width: 20px; width: 20px">
+            <div class="flex">
+              <fui-button-icon
+                [type]="'button'"
+                [color]="'primary'"
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'pencil'"
+              />
+              <fui-button-icon
+                [type]="'button'"
+                [color]="'danger'"
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'stopSlash'"
+              />
+              <fui-button-icon
+                [type]="'button'"
+                [color]="'danger'"
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'trash'"
+              />
+            </div>
+          </fui-table-body-data>
+        </fui-table-body-row>
+      </fui-table-body>
+    </fui-table>
+    <fui-button-icon
+      (onClick)="openFlyouRetainerTerm()"
+      class="flex mt-15"
+      [style]="'secondary'"
+      [color]="'primary'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'plusInCircle'"
+      [text]="'Add Retainer Term'"
+    />
+  </div>
+  <!-- TABLE RETAINER -->
 
   <!-- Billing Notes  -->
-  <div class="grid">
-    <fui-text class="mt-20" [weight]="'semibold'">Billing Notes</fui-text>
-    <fui-text class="mt-10" [weight]="'light'"
+  <div
+    [ngClass]="{
+    'grid mt-20': pricingTypeForm.value === 'Lumpsum' || pricingTypeForm.value === 'Retainer',
+    'grid': pricingTypeForm.value === 'Hourly' || pricingTypeForm.value  === 'Cap',
+  }"
+  >
+    <div class="flex-between">
+      <fui-text class="mt-20">Billing Notes</fui-text>
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          [checked]="isBillingNote"
+          [(ngModel)]="isBillingNote"
+        />
+        <fui-text [size]="'sizes'">N/A</fui-text>
+      </div>
+    </div>
+    <fui-text class="flex mt-10" [color]="'disabled'"
       >Add detailed information regarding the fee arrangement for this matter,
       including any special terms, discounts, or additional charges.</fui-text
     >
   </div>
+  <div class="form-control mt-10" *ngIf="!isBillingNote">
+    <fui-form-control-layout>
+      <fui-textarea
+        [placeholder]="'Type billing notes'"
+        [size]="'m'"
+        [invalid]="false"
+      >
+      </fui-textarea>
+    </fui-form-control-layout>
+  </div>
+  <fui-text
+    class="fs-italic flex mt-10"
+    [color]="'disabled'"
+    *ngIf="isBillingNote"
+    >Not Applicable</fui-text
+  >
   <!-- Billing Notes  -->
+</div>
 
-  <!-- Proof of Engagement  -->
+<!-- Proof of Engagement  -->
+<div class="card mt-20">
   <div class="grid">
-    <fui-text class="mt-20" [weight]="'semibold'">Proof of Engagement</fui-text>
-    <fui-text class="mt-10" [weight]="'light'"
+    <fui-text>Proof of Engagement</fui-text>
+    <fui-text class="flex mt-10" [color]="'disabled'"
       >Represents binding work contracts related to this matter. You have the
       option to add multiple proofs of engagement.</fui-text
     >
-    <fui-button-icon
-      [type]="'button'"
-      [option]="'iconText'"
-      [icon]="'plusInCircle'"
-      [text]="'Add Proof of Engagement'"
-      [color]="'ghost'"
-      [style]="'secondary'"
-    />
+
+    <!-- TABLE PROOF -->
+    <div>
+      <fui-table
+        class="flex mt-15"
+        [limit]="5"
+        [totalItems]="1"
+        [showInfo]="false"
+      >
+        <fui-table-head *ngFor="let header of titleProof">
+          {{ header }}
+        </fui-table-head>
+        <fui-table-body>
+          <fui-table-body-row>
+            <fui-table-body-data>
+              <div class="flex align-center">
+                <fui-icons [icon]="'document'" />
+                <fui-text
+                  >20240812 - Tripatra - Proposal Jasa Hukum - KIP [signed
+                  RNR].pdf
+                  <fui-badge class="flex mt-5" [size]="'sizem'" [color]="'text'"
+                    >EL AHP Signed</fui-badge
+                  ></fui-text
+                >
+              </div>
+            </fui-table-body-data>
+            <fui-table-body-data>
+              <fui-text>1570/02/56/07/2024</fui-text>
+            </fui-table-body-data>
+            <fui-table-body-data>
+              <fui-text>12 August 2024</fui-text>
+            </fui-table-body-data>
+            <fui-table-body-data style="min-width: 20px; width: 20px">
+              <div class="flex">
+                <fui-button-icon
+                  [type]="'button'"
+                  [color]="'primary'"
+                  [style]="'secondary'"
+                  [option]="'icon'"
+                  [icon]="'search'"
+                />
+                <fui-button-icon
+                  [type]="'button'"
+                  [color]="'primary'"
+                  [style]="'secondary'"
+                  [option]="'icon'"
+                  [icon]="'download'"
+                />
+                <fui-button-icon
+                  [type]="'button'"
+                  [color]="'danger'"
+                  [style]="'secondary'"
+                  [option]="'icon'"
+                  [icon]="'trash'"
+                />
+              </div>
+            </fui-table-body-data>
+          </fui-table-body-row>
+        </fui-table-body>
+      </fui-table>
+      <fui-button-icon
+        class="flex mt-15"
+        [style]="'secondary'"
+        [color]="'primary'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircle'"
+        [text]="'Add Proof of Engagement'"
+      />
+    </div>
+    <!-- TABLE PROOF -->
   </div>
-  <!-- Proof of Engagement  -->
 </div>
+<!-- Proof of Engagement  -->
 
 <!-- Special Rates  -->
 <div class="card mt-20">
   <div class="grid">
     <fui-text [weight]="'semibold'">Special Rates</fui-text>
-    <fui-text class="mt-10" [weight]="'light'"
-      >Establish a unique rate arrangement tailored exclusively to this matter.
-      It allows for the setting of different rates across various periods based
-      on your specific arrangements.</fui-text
+    <fui-text class="flex mt-10" [color]="'disabled'"
+      >Represents binding work contracts related to this matter. You have the
+      option to add multiple proofs of engagement.</fui-text
     >
 
     <!-- COLLABSIBLE  -->
@@ -249,7 +522,11 @@
             <fui-text class="italic">Senior Associates</fui-text>
           </div>
           <div class="flex">
-            <fui-text [textWrap]="'nowrap'">USD 250.00 ~ USD 300.00</fui-text>
+            <fui-text
+              [textWrap]="'nowrap'"
+              style="width: -webkit-fill-available; text-align: end"
+              >USD 250.00 ~ USD 300.00</fui-text
+            >
             <fui-button-icon
               [size]="'s'"
               (onClick)="toggleCollapse()"
@@ -263,15 +540,48 @@
         </div>
       </div>
       <div body class="mt-5">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita optio
-        quod nobis eligendi suscipit, nisi accusantium placeat doloribus ipsa
-        explicabo aut minus laudantium ab pariatur animi nihil reiciendis, earum
-        quo.
+        <fui-table
+          class="flex mt-15"
+          [limit]="5"
+          [totalItems]="1"
+          [showInfo]="false"
+        >
+          <fui-table-body>
+            <fui-table-body-row>
+              <fui-table-body-data>
+                <fui-text>1 Feb, 2024 - 28 Feb, 2024</fui-text>
+              </fui-table-body-data>
+              <fui-table-body-data>
+                <fui-text>USD 250.00</fui-text>
+              </fui-table-body-data>
+              <fui-table-body-data style="min-width: 20px; width: 20px">
+                <div class="flex">
+                  <fui-button-icon
+                    (onClick)="openFlyouSpecialRates()"
+                    [type]="'button'"
+                    [color]="'primary'"
+                    [style]="'secondary'"
+                    [option]="'icon'"
+                    [icon]="'pencil'"
+                  />
+                  <fui-button-icon
+                    [type]="'button'"
+                    [color]="'danger'"
+                    [style]="'secondary'"
+                    [option]="'icon'"
+                    [icon]="'trash'"
+                  />
+                </div>
+              </fui-table-body-data>
+            </fui-table-body-row>
+          </fui-table-body>
+        </fui-table>
       </div>
     </fui-collapsible-nav-group>
     <!-- COLLABSIBLE  -->
 
     <fui-button-icon
+      (onClick)="openFlyouSpecialRates()"
       class="mt-20"
       [type]="'button'"
       [option]="'iconText'"
@@ -283,3 +593,377 @@
   </div>
 </div>
 <!-- Special Rates  -->
+
+<!-- CONTACT PERSON FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="isFlyoutContactPerson"
+  [titleFlyout]="'Add Contact'"
+  (closeOut)="openFlyouContactPerson()"
+>
+  <div body>
+    <!-- STACKHOLDER  -->
+    <div class="form-control">
+      <fui-text class="label"> Stackholder </fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [placeholder]="'Please select stackholder'"
+          [invalid]="false"
+          [selectOptions]="[]"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- STACKHOLDER  -->
+
+    <!-- NAME  -->
+    <div class="form-control">
+      <fui-text class="label"> Name </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Contact Name'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- NAME  -->
+
+    <!-- EMAIL  -->
+    <div class="form-control">
+      <fui-text class="label"> Email </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'e.g example@mail.com'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- EMAIL  -->
+
+    <!-- PHONE NUMBER  -->
+    <div class="form-control">
+      <fui-text class="label"> Phone Number </fui-text>
+      <fui-form-control-layout>
+        <fui-prepend> FLAG </fui-prepend>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'+62'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- PHONE NUMBER  -->
+
+    <hr />
+
+    <!-- POSITION TYPE  -->
+    <div class="form-control mt-20">
+      <fui-text class="label"> Position Type </fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [placeholder]="'Please position type'"
+          [invalid]="false"
+          [selectOptions]="[]"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- POSITION TYPE  -->
+
+    <!-- POSITION TITLE  -->
+    <div class="form-control">
+      <fui-text class="label"> Position Title </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Person position title'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- POSITION TITLE  -->
+
+    <!-- DEPARTMENT  -->
+    <div class="form-control">
+      <fui-text class="label"> Departement </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Person departement'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- DEPARTMENT  -->
+  </div>
+  <div footer class="flex-between footer-fly">
+    <fui-button-icon
+      (onClick)="openFlyouContactPerson()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'secondary'"
+      [option]="'text'"
+      [text]="'Cancel'"
+    />
+    <fui-button-icon
+      (onClick)="openFlyouContactPerson()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'filled'"
+      [option]="'text'"
+      [text]="'Add Other Stackholder'"
+    />
+  </div>
+</shared-flyout-simple>
+<!-- CONTACT PERSON FLYOUT  -->
+
+<!-- LUMPSUM TERM FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="isFlyoutLumpsumTerm"
+  [titleFlyout]="'Add Lumpsum Term'"
+  (closeOut)="openFlyouLumpsumTerm()"
+>
+  <div body>
+    <!-- NAME  -->
+    <div class="form-control">
+      <fui-text class="label"> Payment Order </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'number'"
+          [invalid]="false"
+          [placeholder]="'Type payment order'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- NAME  -->
+
+    <!-- AMOUNT  -->
+    <div class="form-control">
+      <fui-text class="label"> Amount </fui-text>
+      <fui-form-control-layout>
+        <fui-prepend> USD </fui-prepend>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Type amount'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- AMOUNT  -->
+
+    <!-- DESC  -->
+    <div class="form-control">
+      <fui-text class="label"> Description </fui-text>
+      <fui-form-control-layout>
+        <fui-textarea
+          [placeholder]="'Type retianer description'"
+          [size]="'m'"
+          [invalid]="false"
+        >
+        </fui-textarea>
+      </fui-form-control-layout>
+    </div>
+    <!-- DESC  -->
+  </div>
+  <div footer class="flex-between footer-fly">
+    <fui-button-icon
+      (onClick)="openFlyouLumpsumTerm()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'secondary'"
+      [option]="'text'"
+      [text]="'Cancel'"
+    />
+    <fui-button-icon
+      (onClick)="openFlyouLumpsumTerm()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'filled'"
+      [option]="'text'"
+      [text]="'Add Lumpsum Term'"
+    />
+  </div>
+</shared-flyout-simple>
+<!-- LUMPSUM TERM FLYOUT  -->
+
+<!-- RETAIINER TERM FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="isFlyoutRetainerTerm"
+  [titleFlyout]="'Add Retainer Term'"
+  (closeOut)="openFlyouRetainerTerm()"
+>
+  <div body class="overflow-hidden">
+    <div class="grid-2">
+      <!-- PAYMENT ORDER  -->
+      <div class="form-control">
+        <fui-text class="label"> Payment Order </fui-text>
+        <fui-form-control-layout>
+          <fui-input-field
+            [type]="'number'"
+            [invalid]="false"
+            [placeholder]="'Type payment order'"
+            [size]="'m'"
+          ></fui-input-field>
+        </fui-form-control-layout>
+      </div>
+      <!-- PAYMENT ORDER  -->
+
+      <!-- PERIOD  -->
+      <div class="form-control">
+        <fui-text class="label"> Period </fui-text>
+        <fui-date-picker />
+      </div>
+      <!-- PERIOD  -->
+    </div>
+
+    <div class="grid-2">
+      <!-- AMOUNT  -->
+      <div class="form-control">
+        <fui-text class="label"> Amount </fui-text>
+        <fui-form-control-layout>
+          <fui-prepend> USD </fui-prepend>
+          <fui-input-field
+            [type]="'text'"
+            [invalid]="false"
+            [placeholder]="'Type amount'"
+            [size]="'m'"
+          ></fui-input-field>
+        </fui-form-control-layout>
+      </div>
+      <!-- AMOUNT  -->
+
+      <!-- DURATION  -->
+      <div class="form-control">
+        <fui-text class="label"> Duration </fui-text>
+        <fui-form-control-layout>
+          <fui-input-field
+            [type]="'number'"
+            [invalid]="false"
+            [placeholder]="'Type duration'"
+            [size]="'m'"
+          ></fui-input-field>
+        </fui-form-control-layout>
+      </div>
+      <!-- DURATION  -->
+    </div>
+
+    <!-- DESC  -->
+    <div class="form-control">
+      <fui-text class="label"> Description </fui-text>
+      <fui-form-control-layout>
+        <fui-textarea
+          [placeholder]="'Type retianer description'"
+          [size]="'m'"
+          [invalid]="false"
+        >
+        </fui-textarea>
+      </fui-form-control-layout>
+    </div>
+    <!-- DESC  -->
+  </div>
+  <div footer class="flex-between footer-fly">
+    <fui-button-icon
+      (onClick)="openFlyouRetainerTerm()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'secondary'"
+      [option]="'text'"
+      [text]="'Cancel'"
+    />
+    <fui-button-icon
+      (onClick)="openFlyouRetainerTerm()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'filled'"
+      [option]="'text'"
+      [text]="'Add Retainer Term'"
+    />
+  </div>
+</shared-flyout-simple>
+<!-- RETAIINER TERM FLYOUT  -->
+
+<!-- SPECIAL RATE FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="isFlyoutSpecialRates"
+  [titleFlyout]="'Add Special Rates'"
+  (closeOut)="openFlyouSpecialRates()"
+>
+  <div body class="overflow-hidden">
+    <!-- MEMBER NAME  -->
+    <div class="form-control">
+      <fui-text class="label"> Member Name </fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [placeholder]="'Please select member name'"
+          [invalid]="false"
+          [selectOptions]="[]"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- MEMBER NAME  -->
+
+    <!-- RATE  -->
+    <div class="form-control">
+      <fui-text class="label"> Rate </fui-text>
+      <fui-form-control-layout>
+        <fui-prepend>
+          <fui-text [size]="'sizes'" [weight]="'semibold'">USD</fui-text>
+        </fui-prepend>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Type rate'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- RATE  -->
+
+    <div class="grid-2">
+      <!--  PERIOD START  -->
+      <div class="form-control">
+        <fui-text class="label"> Period Start</fui-text>
+        <fui-date-picker />
+      </div>
+      <!--  PERIOD START  -->
+
+      <!--  PERIOD END  -->
+      <div class="form-control">
+        <fui-text class="label"> Period End</fui-text>
+        <fui-date-picker />
+      </div>
+      <!--  PERIOD END  -->
+    </div>
+  </div>
+  <div footer class="flex-between footer-fly">
+    <fui-button-icon
+      (onClick)="openFlyouSpecialRates()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'secondary'"
+      [option]="'text'"
+      [text]="'Cancel'"
+    />
+    <fui-button-icon
+      (onClick)="openFlyouSpecialRates()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'filled'"
+      [option]="'text'"
+      [text]="'Add Special Rate'"
+    />
+  </div>
+</shared-flyout-simple>
+<!-- SPECIAL RATE FLYOUT  -->

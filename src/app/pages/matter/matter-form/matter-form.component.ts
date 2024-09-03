@@ -76,6 +76,7 @@ export class MatterFormComponent {
   ];
 
   matterNumberForm: FormControl = new FormControl('');
+  billStatus: boolean = false;
 
   /** Toggle move step */
   toggleMoveStep(param: 'previous' | 'next'): void {
@@ -95,6 +96,14 @@ export class MatterFormComponent {
 
       this.steps[currentIndex + 1].stepStatus = StepStatus.CURRENT;
       this.steps[currentIndex + 1].stepType = 'number';
+    }
+  }
+
+  billCheck(event: string): void {
+    if (event === 'Nonbillable') {
+      this.billStatus = true;
+    } else {
+      this.billStatus = false;
     }
   }
 }

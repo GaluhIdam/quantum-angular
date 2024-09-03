@@ -15,6 +15,7 @@
         type="checkbox"
         [(ngModel)]="checkbox.model"
         [checked]="checkbox.model"
+        (change)="checkboxAct()"
       />
       <fui-text [size]="'sizes'">{{ checkbox.label }}</fui-text>
       @if (checkbox.tooltip) {
@@ -25,7 +26,8 @@
     </div>
     }
   </div>
-  @if (type === 'text' || type === 'select' || type ==='textarea') {
+
+  @if (type === 'text' || type === 'select' || type ==='textarea' && !checkbox) {
   <fui-form-control-layout>
     @if (prepend) {
     <fui-prepend>

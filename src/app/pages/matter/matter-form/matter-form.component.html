@@ -1,8 +1,11 @@
-<shared-page-empty [backLink]="'/matter/detail-matter'" [titlePage]="'Edit Matter Form'">
+<shared-page-empty
+  [backLink]="'/matter/detail-matter'"
+  [titlePage]="'Edit Matter Form'"
+>
   <div class="grid-3">
     <div class="card">
       <!-- STEP CARD  -->
-      <fui-steps [steps]="steps">
+      <fui-steps [steps]="steps" class="step-card">
         <!-- STEP 1  -->
         <fui-step-content [id]="'step-1'">
           <div class="w-257">
@@ -35,7 +38,11 @@
               [size]="'sizem'"
               [sizeIcon]="'sizes'"
               [isBadgeIcon]="true"
-              [icon]="'crossInACircleFilled'"
+              [icon]="
+                steps[2].stepStatus === 'complete'
+                  ? 'checkInCircleFilled'
+                  : 'crossInACircleFilled'
+              "
               [iconPosition]="'start'"
             >
               Ready to bill
@@ -56,7 +63,11 @@
               [size]="'sizem'"
               [sizeIcon]="'sizes'"
               [isBadgeIcon]="true"
-              [icon]="'crossInACircleFilled'"
+              [icon]="
+                steps[3].stepStatus === 'complete'
+                  ? 'checkInCircleFilled'
+                  : 'crossInACircleFilled'
+              "
               [iconPosition]="'start'"
             >
               Ready to Close
@@ -69,20 +80,37 @@
     </div>
     <div class="col-span-2">
       <step-1 *ngIf="steps[0].stepStatus === 'current'" />
-      <step-2 *ngIf="steps[1].stepStatus === 'current'" />
+      <step-2
+        *ngIf="steps[1].stepStatus === 'current'"
+        (bill)="billCheck($event)"
+      />
       <step-3 *ngIf="steps[2].stepStatus === 'current'" />
       <step-4 *ngIf="steps[3].stepStatus === 'current'" />
       <!-- BUTTON ACTION  -->
       <div class="card mt-20 flex-between">
-        <fui-button-icon
-          [type]="'button'"
-          [color]="'primary'"
-          [style]="'secondary'"
-          [option]="'iconText'"
-          [icon]="'save'"
-          [text]="'Open Matter'"
-        />
-        <div class="flex">
+        <div
+          [ngClass]="{
+          'flex': !billStatus,
+          'flex-between': billStatus,
+        }"
+        >
+          <fui-button-icon
+            [type]="'button'"
+            [color]="'primary'"
+            [style]="'secondary'"
+            [option]="'text'"
+            [text]="'Cancel'"
+          />
+          <fui-button-icon
+            [type]="'button'"
+            [color]="'primary'"
+            [style]="'filled'"
+            [option]="'iconText'"
+            [icon]="'save'"
+            [text]="'Save & Close'"
+          />
+        </div>
+        <div class="flex justify-end" *ngIf="!billStatus">
           <fui-button-icon
             (onClick)="toggleMoveStep('previous')"
             [type]="'button'"
@@ -94,6 +122,7 @@
             [text]="'Previous'"
           />
           <fui-button-icon
+            *ngIf="this.steps[3].stepStatus !== 'current'"
             (onClick)="toggleMoveStep('next')"
             [type]="'button'"
             [color]="'primary'"

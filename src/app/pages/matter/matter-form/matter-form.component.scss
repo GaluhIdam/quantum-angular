@@ -1,5 +1,9 @@
 @import "../../../app.component.scss";
 
+.step-card {
+  z-index: 1;
+  position: relative;
+}
 .grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -21,6 +25,12 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
+  &-5 {
+    width: 100%;
+    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 .align {
   &-start {
@@ -34,8 +44,13 @@
   }
 }
 
-.col-span-2 {
-  grid-column: span 2; /* Spans across two columns */
+.col-span {
+  &-2 {
+    grid-column: span 2;
+  }
+  &-3 {
+    grid-column: span 3;
+  }
 }
 
 .mt-5 {
@@ -46,6 +61,9 @@
 }
 .mt-20 {
   margin-top: 20px;
+}
+.mt-30 {
+  margin-top: 30px;
 }
 
 .card {
@@ -66,19 +84,33 @@
 .flex {
   display: flex;
   gap: 10px;
+  width: -webkit-fill-available;
   &-start {
     display: flex;
     justify-content: start;
+    width: -webkit-fill-available;
   }
   &-between {
     display: flex;
     justify-content: space-between;
-  }
-  &.gap-5 {
-    gap: 5px;
+    width: -webkit-fill-available;
   }
   fui-form-control-layout {
     width: -webkit-fill-available;
+  }
+}
+.gap {
+  &-5 {
+    gap: 5px;
+  }
+  &-10 {
+    gap: 10px;
+  }
+  &-15 {
+    gap: 15px;
+  }
+  &-20 {
+    gap: 20px;
   }
 }
 .label {
@@ -89,9 +121,19 @@
 .checkbox {
   display: flex;
   align-items: center;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  &:hover {
+    cursor: pointer;
+  }
   input {
     margin-right: 5px;
     display: flex;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
@@ -113,4 +155,68 @@
 }
 .mt-15 {
   margin-top: 15px;
+}
+.mr-5 {
+  margin-right: 5px;
+}
+.fs-italic {
+  font-style: italic;
+}
+.block {
+  display: block;
+  text-wrap: nowrap;
+  width: -webkit-fill-available;
+}
+.mb {
+  &-10 {
+    margin-bottom: 10px;
+  }
+  &-30 {
+    margin-bottom: 30px;
+  }
+}
+.text {
+  &-left {
+    text-align: left;
+  }
+  &-center {
+    text-align: center;
+  }
+}
+
+.p {
+  &-5 {
+    padding: 5px;
+  }
+  &-8 {
+    padding: 8px;
+  }
+  &-15 {
+    padding: 15px;
+  }
+}
+
+.footer-fly {
+  padding: 5px 15px;
+}
+.overflow {
+  &-hidden {
+    overflow: hidden;
+  }
+}
+.selected-fly {
+  padding: 20px;
+  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+  border-radius: 6px;
+}
+.justify-end {
+  justify-content: end;
+}
+
+.border-badge {
+  border-width: 1px;
+  border-style: solid;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border-color: var(--fuiColorMediumShade, $fuiColorMediumShade);
 }

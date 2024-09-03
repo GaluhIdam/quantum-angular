@@ -14,7 +14,7 @@
 </div>
 <div class="empty" *ngIf="optionBar.series.length === 0">
   <shared-skeleton [active]="loading">
-    <app-empty-data
+    <shared-empty-data
       [title]="'N/A'"
       [subTitle]="'You don’t have any target data for productivity'"
       [dataLength]="optionBar.series.length"

@@ -1,23 +1,33 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AppendComponent,
   BadgeComponent,
   ButtonIconComponent,
   CollapsibleNavGroupComponent,
   ComboBoxComponent,
+  DatePickerComponent,
   FormControlLayoutComponent,
   Icon,
   IconsComponent,
   InputFieldComponent,
   LinkComponent,
   PrependComponent,
+  SelectFieldComponent,
+  TableBodyComponent,
+  TableBodyDataComponent,
+  TableBodyRowComponent,
+  TableComponent,
+  TableHeadComponent,
+  TextareaComponent,
   TextComponent,
+  TooltipComponent,
   ValidatorFieldComponent,
 } from '@quantum/fui';
 import { SliderCardComponent } from '../../../../shared/slider-card/slider-card.component';
 import { SliderCardBodyComponent } from '../../../../shared/slider-card/slider-card-body/slider-card-body.component';
+import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-simple.component';
 
 @Component({
   selector: 'step-3',
@@ -25,6 +35,7 @@ import { SliderCardBodyComponent } from '../../../../shared/slider-card/slider-c
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     IconsComponent,
     TextComponent,
     FormControlLayoutComponent,
@@ -39,11 +50,61 @@ import { SliderCardBodyComponent } from '../../../../shared/slider-card/slider-c
     SliderCardBodyComponent,
     LinkComponent,
     CollapsibleNavGroupComponent,
+    SelectFieldComponent,
+    TooltipComponent,
+    TableBodyComponent,
+    TableBodyDataComponent,
+    TableBodyRowComponent,
+    TableComponent,
+    TableHeadComponent,
+    FlyoutSimpleComponent,
+    PrependComponent,
+    TextareaComponent,
+    DatePickerComponent,
   ],
   templateUrl: './step-3.component.html',
   styleUrl: './step-3.component.scss',
 })
 export class Step3Component {
+  isPayingEntity: boolean = false;
+  isBillingNote: boolean = false;
+
+  pricingTypeForm: FormControl = new FormControl('Lumpsum');
+  pricingTypeOption: { label: string; value: string }[] = [
+    {
+      label: 'Lumpsum',
+      value: 'Lumpsum',
+    },
+    {
+      label: 'Retainer',
+      value: 'Retainer',
+    },
+    {
+      label: 'Hourly',
+      value: 'Hourly',
+    },
+    {
+      label: 'Cap',
+      value: 'Cap',
+    },
+  ];
+
+  currencyForm: FormControl = new FormControl('USD');
+  currencyOption: { label: string; value: string }[] = [
+    {
+      label: 'IDR',
+      value: 'IDR',
+    },
+    {
+      label: 'USD',
+      value: 'USD',
+    },
+    {
+      label: 'EUR',
+      value: 'EUR',
+    },
+  ];
+
   matterNumberForm: FormControl = new FormControl('');
   dataSlider: {
     id: number;
@@ -108,10 +169,33 @@ export class Step3Component {
     },
   ];
 
+  title: string[] = ['#', 'Description', 'Amount', ''];
+  titleRetainer: string[] = ['#', 'Period', 'Term', 'Description', ''];
+  titleProof: string[] = ['Name', 'EL Number', 'EL Date', ''];
+
   isCollapsed: boolean = false;
+  isFlyoutContactPerson: boolean = false;
+  isFlyoutLumpsumTerm: boolean = false;
+  isFlyoutRetainerTerm: boolean = false;
+  isFlyoutSpecialRates: boolean = false;
 
   slideOut(event: number): void {
     this.currentSlideIndex = event;
+  }
+
+  openFlyouContactPerson(): void {
+    this.isFlyoutContactPerson = !this.isFlyoutContactPerson;
+  }
+
+  openFlyouLumpsumTerm(): void {
+    this.isFlyoutLumpsumTerm = !this.isFlyoutLumpsumTerm;
+  }
+
+  openFlyouRetainerTerm(): void {
+    this.isFlyoutRetainerTerm = !this.isFlyoutRetainerTerm;
+  }
+  openFlyouSpecialRates(): void {
+    this.isFlyoutSpecialRates = !this.isFlyoutSpecialRates;
   }
 
   toggleCollapse(): void {

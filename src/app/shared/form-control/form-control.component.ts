@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AppendComponent,
@@ -58,7 +58,7 @@ export class FormControlComponent {
   @Input() checkbox?: {
     label: string;
     model: boolean;
-    disabled?: boolean;
+    action?: 'disabled' | 'hidden';
     tooltip?: string;
   };
   @Input() prepend?: {
@@ -75,4 +75,26 @@ export class FormControlComponent {
   };
   @Input() leftIcon: Icon | null = null;
   @Input() rightIcon: Icon | null = null;
+
+  @Output() checkboxOut: EventEmitter<{
+    label: string;
+    model: boolean;
+    disabled?: boolean;
+    tooltip?: string;
+  }> = new EventEmitter<{
+    label: string;
+    model: boolean;
+    disabled?: boolean;
+    tooltip?: string;
+  }>();
+
+  checkboxAct(): void {
+    if (this.checkbox) {
+      this.checkbox.model = !this.checkbox.model;
+      if (this.checkbox.model && this.checkbox.action === 'disabled') {
+        this.formControl.disabled;
+      }
+      this.checkboxOut.emit(this.checkbox);
+    }
+  }
 }

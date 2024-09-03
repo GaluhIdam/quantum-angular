@@ -25,6 +25,7 @@ import {
 export class FlyoutSimpleComponent {
   @Input() isOpenFlyout: boolean = false;
   @Input() titleFlyout: string = 'Title Flyout';
+  @Input() size: 's' | 'm' | 'l' = 's';
   @Output() closeOut: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   /** Toggle for close flyout */
