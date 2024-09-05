@@ -9,7 +9,6 @@ import {
   StepStatus,
   TextComponent,
 } from '@quantum/fui';
-import { FormControl } from '@angular/forms';
 import { Step1Component } from './step-1/step-1.component';
 import { CommonModule } from '@angular/common';
 import { Step2Component } from './step-2/step-2.component';
@@ -49,7 +48,7 @@ export class MatterFormComponent {
     {
       id: 'step-2',
       stepType: 'number',
-      stepStatus: StepStatus.CURRENT,
+      stepStatus: StepStatus.COMPLETE,
       title: 'Opening Section',
       stepIcon: {
         complete: 'check',
@@ -58,7 +57,7 @@ export class MatterFormComponent {
     {
       id: 'step-3',
       stepType: 'number',
-      stepStatus: StepStatus.INCOMPLETE,
+      stepStatus: StepStatus.COMPLETE,
       title: 'Midpoint Section',
       stepIcon: {
         complete: 'check',
@@ -67,7 +66,7 @@ export class MatterFormComponent {
     {
       id: 'step-4',
       stepType: 'number',
-      stepStatus: StepStatus.INCOMPLETE,
+      stepStatus: StepStatus.CURRENT,
       title: 'Closing Section',
       stepIcon: {
         complete: 'check',
@@ -75,8 +74,7 @@ export class MatterFormComponent {
     },
   ];
 
-  matterNumberForm: FormControl = new FormControl('');
-  billStatus: boolean = false;
+  billabilityForm: string = '';
 
   /** Toggle move step */
   toggleMoveStep(param: 'previous' | 'next'): void {
@@ -99,11 +97,8 @@ export class MatterFormComponent {
     }
   }
 
-  billCheck(event: string): void {
-    if (event === 'Nonbillable') {
-      this.billStatus = true;
-    } else {
-      this.billStatus = false;
-    }
+  /** Billability selection */
+  billabilitySelected(event: string): void {
+    this.billabilityForm = event;
   }
 }

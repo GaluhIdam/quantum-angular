@@ -82,16 +82,19 @@
       <step-1 *ngIf="steps[0].stepStatus === 'current'" />
       <step-2
         *ngIf="steps[1].stepStatus === 'current'"
-        (bill)="billCheck($event)"
+        (billabilitySelected)="billabilitySelected($event)"
       />
-      <step-3 *ngIf="steps[2].stepStatus === 'current'" />
+      <step-3
+        *ngIf="steps[2].stepStatus === 'current'"
+        [billabiltiySelection]="billabilityForm"
+      />
       <step-4 *ngIf="steps[3].stepStatus === 'current'" />
       <!-- BUTTON ACTION  -->
       <div class="card mt-20 flex-between">
         <div
           [ngClass]="{
-          'flex': !billStatus,
-          'flex-between': billStatus,
+          'flex': billabilityForm !== 'Nonbillable',
+          'flex-between': billabilityForm === 'Nonbillable',
         }"
         >
           <fui-button-icon
@@ -102,6 +105,7 @@
             [text]="'Cancel'"
           />
           <fui-button-icon
+            *ngIf="this.steps[3].stepStatus !== 'current'"
             [type]="'button'"
             [color]="'primary'"
             [style]="'filled'"
@@ -110,7 +114,7 @@
             [text]="'Save & Close'"
           />
         </div>
-        <div class="flex justify-end" *ngIf="!billStatus">
+        <div class="flex justify-end" *ngIf="billabilityForm !== 'Nonbillable'">
           <fui-button-icon
             (onClick)="toggleMoveStep('previous')"
             [type]="'button'"
@@ -131,6 +135,15 @@
             [icon]="'arrowRight'"
             [text]="'Next'"
             [iconSide]="'right'"
+          />
+          <fui-button-icon
+            *ngIf="this.steps[3].stepStatus === 'current'"
+            [type]="'button'"
+            [color]="'primary'"
+            [style]="'filled'"
+            [option]="'iconText'"
+            [icon]="'save'"
+            [text]="'Save & Close'"
           />
         </div>
       </div>

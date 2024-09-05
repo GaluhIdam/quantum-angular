@@ -216,21 +216,21 @@
   </div>
 
   <div class="grid-2" *ngIf="billabilityForm.value !== 'Nonbillable'">
-    <!-- PRACTICE AREA  -->
+    <!-- PRACTICE MATTER  -->
     <div class="form-control">
       <fui-text class="label"> Practice Matter </fui-text>
       <fui-form-control-layout>
         <fui-select-field
           [size]="'m'"
           [formControlField]="practiceMatterForm"
-          [placeholder]="'Please select practice area'"
+          [placeholder]="'Please select practice matter'"
           [invalid]="false"
           [selectOptions]="practiceMatterOption"
         >
         </fui-select-field>
       </fui-form-control-layout>
     </div>
-    <!-- PRACTICE AREA  -->
+    <!-- PRACTICE MATTER  -->
 
     <!-- MATTER TYPE  -->
     <div class="form-control">
@@ -427,6 +427,7 @@
       <fui-combo-box
         [comboxForm]="clientNameForm"
         [placeholder]="'Search client name'"
+        (selection)="selectionClientName($event)"
         [invalid]="false"
         [message]="''"
         [leftIcon]="'search'"
@@ -493,14 +494,15 @@
 
   <!-- SLIDER  -->
   <shared-slider-card
-    [dataSlider]="dataSlider"
-    [currentSlideIndex]="currentSlideIndex"
-    (slideOut)="slideOut($event)"
+    *ngIf="clientNameSlider.length > 0"
+    [dataSlider]="clientNameSlider"
+    [currentSlideIndex]="currentSlideIndexClientName"
+    (slideOut)="slideOutClientName($event)"
   >
     <shared-slider-card-body
-      *ngFor="let item of clientData; let i = index"
+      *ngFor="let item of clientNameSelected; let i = index"
       [id]="i + 1"
-      [current]="currentSlideIndex + 1"
+      [current]="currentSlideIndexClientName + 1"
     >
       <div class="card-blue">
         <div class="grid-2">
@@ -508,13 +510,15 @@
           <fui-text>Company's Origin Country</fui-text>
         </div>
         <div class="mt-5 grid-2">
-          <fui-text [weight]="'semibold'">{{ item.parent }}</fui-text>
-          <fui-text [weight]="'semibold'">{{ item.companyOrigin }}</fui-text>
+          <fui-text [weight]="'semibold'">{{ item.value.parent }}</fui-text>
+          <fui-text [weight]="'semibold'">{{
+            item.value.companyOrigin
+          }}</fui-text>
         </div>
         <div class="mt-20 grid">
           <fui-text>Address</fui-text>
           <fui-text [weight]="'semibold'" class="mt-5">{{
-            item.address
+            item.value.address
           }}</fui-text>
         </div>
         <fui-link
@@ -527,13 +531,13 @@
         <div class="mt-20 grid">
           <fui-text>Entity Type</fui-text>
           <fui-text [weight]="'semibold'" class="mt-5">{{
-            item.entityType
+            item.value.entityType
           }}</fui-text>
         </div>
         <div class="mt-20 grid">
           <fui-text>Industry/Business Sector</fui-text>
           <fui-text [weight]="'semibold'" class="mt-5">{{
-            item.industry
+            item.value.industry
           }}</fui-text>
         </div>
       </div>
@@ -555,15 +559,15 @@
       </div>
     </div>
     <fui-combo-box
+      [comboxForm]="instructingPartyForm"
       *ngIf="!isInstructingParty"
-      [singleSelection]="true"
-      [comboxForm]="parentMatterForm"
-      [placeholder]="'Type parent matter'"
+      [placeholder]="'Search instructing party'"
+      (selection)="selectionInstructingParty($event)"
       [invalid]="false"
       [message]="''"
       [leftIcon]="'search'"
-      [optionValue]="[]"
-      [selectedValue]="[]"
+      [optionValue]="instructingPartyOption"
+      [selectedValue]="instructingPartySelected"
     />
     <fui-text
       class="fs-italic mt-10"
@@ -572,6 +576,7 @@
       >Not Applicable</fui-text
     >
     <fui-button-icon
+      *ngIf="!isInstructingParty"
       (onClick)="openFlyoutStakeholder()"
       class="flex mt-15"
       [style]="'secondary'"
@@ -585,15 +590,15 @@
   <!-- INSTRUCTING PARTY  -->
 
   <!-- SLIDER  -->
-  <shared-slider-card
-    [dataSlider]="dataSlider"
-    [currentSlideIndex]="currentSlideIndex"
-    (slideOut)="slideOut($event)"
+  <shared-slider-card *ngIf="instructingPartySlider.length > 0"
+    [dataSlider]="instructingPartySlider"
+    [currentSlideIndex]="currentSlideIndexInstructingParty"
+    (slideOut)="slideOutInstructingParty($event)"
   >
     <shared-slider-card-body
-      *ngFor="let item of clientData; let i = index"
+      *ngFor="let item of instructingPartySelected; let i = index"
       [id]="i + 1"
-      [current]="currentSlideIndex + 1"
+      [current]="currentSlideIndexInstructingParty + 1"
     >
       <div class="card-blue">
         <div class="grid-2">
@@ -601,13 +606,15 @@
           <fui-text>Company's Origin Country</fui-text>
         </div>
         <div class="mt-5 grid-2">
-          <fui-text [weight]="'semibold'">{{ item.parent }}</fui-text>
-          <fui-text [weight]="'semibold'">{{ item.companyOrigin }}</fui-text>
+          <fui-text [weight]="'semibold'">{{ item.value.parent }}</fui-text>
+          <fui-text [weight]="'semibold'">{{
+            item.value.companyOrigin
+          }}</fui-text>
         </div>
         <div class="mt-20 grid">
           <fui-text>Address</fui-text>
           <fui-text [weight]="'semibold'" class="mt-5">{{
-            item.address
+            item.value.address
           }}</fui-text>
         </div>
         <fui-link
@@ -620,13 +627,13 @@
         <div class="mt-20 grid">
           <fui-text>Entity Type</fui-text>
           <fui-text [weight]="'semibold'" class="mt-5">{{
-            item.entityType
+            item.value.entityType
           }}</fui-text>
         </div>
         <div class="mt-20 grid">
           <fui-text>Industry/Business Sector</fui-text>
           <fui-text [weight]="'semibold'" class="mt-5">{{
-            item.industry
+            item.value.industry
           }}</fui-text>
         </div>
       </div>

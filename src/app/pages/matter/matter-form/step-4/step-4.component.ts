@@ -64,7 +64,10 @@ import { CommonModule } from '@angular/common';
 })
 export class Step4Component {
   isCounterparty: boolean = false;
-  isOtherStackholder: boolean = false;
+  isOtherStakeholder: boolean = false;
+  isTransaction: boolean = false;
+  isJurisdiction: boolean = false;
+  isAddTranc: boolean = false;
 
   dataSlider: {
     id: number;

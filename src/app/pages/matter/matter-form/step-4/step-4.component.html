@@ -60,7 +60,9 @@
           [checked]="isCounterparty"
           [(ngModel)]="isCounterparty"
         />
-        <fui-text [size]="'sizes'">N/A</fui-text>
+        <fui-text [size]="'sizes'" (click)="isCounterparty = !isCounterparty"
+          >N/A</fui-text
+        >
       </div>
     </div>
     <fui-combo-box
@@ -80,6 +82,7 @@
       >Not Applicable</fui-text
     >
     <fui-button-icon
+      *ngIf="!isCounterparty"
       class="flex mt-15"
       [style]="'secondary'"
       [color]="'primary'"
@@ -93,6 +96,7 @@
 
   <!-- SLIDER  -->
   <shared-slider-card
+    *ngIf="!isCounterparty"
     [dataSlider]="dataSlider"
     [currentSlideIndex]="currentSlideIndex"
     (slideOut)="slideOut($event)"
@@ -145,27 +149,35 @@
   <div class="flex-between mb-10">
     <div class="block mt-20">
       <div class="flex-start">
-        <fui-text class="label">
-          Other Stackholder
-        </fui-text>
+        <fui-text class="label"> Other Stakeholder </fui-text>
         <fui-tooltip [position]="'top'" [content]="'Label tooltip'">
           <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
         </fui-tooltip>
       </div>
-      <fui-text class="mt-10" [color]="'disabled'"> Advisor, counsel to related party </fui-text>
+      <fui-text class="mt-10" [color]="'disabled'">
+        Advisor, counsel to related party
+      </fui-text>
     </div>
     <div class="checkbox">
       <input
         type="checkbox"
-        [checked]="isOtherStackholder"
-        [(ngModel)]="isOtherStackholder"
+        [checked]="isOtherStakeholder"
+        [(ngModel)]="isOtherStakeholder"
       />
-      <fui-text [size]="'sizes'">N/A</fui-text>
+      <fui-text
+        [size]="'sizes'"
+        (click)="isOtherStakeholder = !isOtherStakeholder"
+        >N/A</fui-text
+      >
     </div>
   </div>
 
   <!-- LIST  -->
-  <fui-badge [color]="'ghost'" [size]="'sizedefault'" *ngIf="!isOtherStackholder">
+  <fui-badge
+    [color]="'ghost'"
+    [size]="'sizedefault'"
+    *ngIf="!isOtherStakeholder"
+  >
     <div class="flex p-5 border-rounded align-center">
       <fui-icons [icon]="'node'" />
       <div class="grid-1 gap-5 text-left">
@@ -190,10 +202,13 @@
       />
     </div>
   </fui-badge>
-  <fui-text class="fs-italic" *ngIf="isOtherStackholder">Not Applicable</fui-text>
+  <fui-text class="fs-italic" [color]="'disabled'" *ngIf="isOtherStakeholder"
+    >Not Applicable</fui-text
+  >
   <!-- LIST  -->
 
   <fui-button-icon
+    *ngIf="!isOtherStakeholder"
     (onClick)="openFlyoutOtherStackholder()"
     class="flex mt-15"
     [style]="'secondary'"
@@ -208,41 +223,48 @@
   <hr width="250" class="mt-20" />
 
   <!-- Transaction/Case Value  -->
-  <div class="flex-between">
-    <fui-text class="label"> Transaction/Case Value </fui-text>
-    <div class="checkbox">
-      <input
-        type="checkbox"
-        [checked]="isOtherStackholder"
-        [(ngModel)]="isOtherStackholder"
-      />
-      <fui-text [size]="'sizes'">N/A</fui-text>
-    </div>
-  </div>
-  <div class="grid-2 align-start">
-    <div class="form-control">
-      <fui-form-control-layout>
-        <fui-select-field
-          [size]="'m'"
-          [placeholder]="'Please select billability'"
-          [invalid]="false"
-          [selectOptions]="[]"
+  <div class="form-control">
+    <div class="flex-between">
+      <fui-text class="label"> Transaction/Case Value </fui-text>
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          [checked]="isTransaction"
+          [(ngModel)]="isTransaction"
+        />
+        <fui-text [size]="'sizes'" (click)="isTransaction = !isTransaction"
+          >N/A</fui-text
         >
-        </fui-select-field>
-      </fui-form-control-layout>
+      </div>
     </div>
+    <div class="grid-2 align-start" *ngIf="!isTransaction">
+      <div class="">
+        <fui-form-control-layout>
+          <fui-select-field
+            [size]="'m'"
+            [placeholder]="'Please select billability'"
+            [invalid]="false"
+            [selectOptions]="[]"
+          >
+          </fui-select-field>
+        </fui-form-control-layout>
+      </div>
 
-    <div class="form-control">
-      <fui-form-control-layout>
-        <fui-input-field
-          [type]="'text'"
-          [placeholder]="'Transaction Value'"
-          [invalid]="false"
-          [size]="'m'"
-        >
-        </fui-input-field>
-      </fui-form-control-layout>
+      <div class="">
+        <fui-form-control-layout>
+          <fui-input-field
+            [type]="'text'"
+            [placeholder]="'Transaction Value'"
+            [invalid]="false"
+            [size]="'m'"
+          >
+          </fui-input-field>
+        </fui-form-control-layout>
+      </div>
     </div>
+    <fui-text class="fs-italic" *ngIf="isTransaction" [color]="'disabled'"
+      >Not Applicable</fui-text
+    >
   </div>
   <!-- Transaction/Case Value  -->
 
@@ -285,13 +307,15 @@
       <div class="checkbox">
         <input
           type="checkbox"
-          [checked]="isOtherStackholder"
-          [(ngModel)]="isOtherStackholder"
+          [checked]="isJurisdiction"
+          [(ngModel)]="isJurisdiction"
         />
-        <fui-text [size]="'sizes'">N/A</fui-text>
+        <fui-text [size]="'sizes'" (click)="isJurisdiction = !isJurisdiction"
+          >N/A</fui-text
+        >
       </div>
     </div>
-    <fui-form-control-layout>
+    <fui-form-control-layout *ngIf="!isJurisdiction">
       <fui-input-field
         [type]="'text'"
         [placeholder]="'Indonesia'"
@@ -300,6 +324,9 @@
       >
       </fui-input-field>
     </fui-form-control-layout>
+    <fui-text class="fs-italic" *ngIf="isJurisdiction" [color]="'disabled'"
+      >Not Applicable</fui-text
+    >
   </div>
   <!-- Governing Law(s)  -->
 
@@ -347,13 +374,23 @@
 
   <!-- Additional Transaction Information  -->
   <div class="grid-1 gap-10 mt-20">
-    <fui-text
-      >Additional Transaction Information</fui-text
-    >
+    <div class="flex-between">
+      <fui-text>Additional Transaction Information</fui-text>
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          [checked]="isAddTranc"
+          [(ngModel)]="isAddTranc"
+        />
+        <fui-text [size]="'sizes'" (click)="isAddTranc = !isAddTranc"
+          >N/A</fui-text
+        >
+      </div>
+    </div>
     <fui-text [color]="'disabled'"
       >Such as links to press release, media coverage or awards won
     </fui-text>
-    <fui-form-control-layout>
+    <fui-form-control-layout *ngIf="!isAddTranc">
       <fui-textarea
         [placeholder]="'Add additional information'"
         [size]="'m'"
@@ -367,8 +404,8 @@
   <div class="checkbox mt-20">
     <input
       type="checkbox"
-      [checked]="isOtherStackholder"
-      [(ngModel)]="isOtherStackholder"
+      [checked]="isOtherStakeholder"
+      [(ngModel)]="isOtherStakeholder"
     />
     <fui-text [size]="'sizes'">Include in Ranking Submissions</fui-text>
   </div>

@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" *ngIf="billabiltiySelection !== 'Probono'">
   <fui-text class="head-label" [weight]="'semibold'"
     >Payer Information</fui-text
   >
@@ -14,18 +14,22 @@
             [checked]="isPayingEntity"
             [(ngModel)]="isPayingEntity"
           />
-          <fui-text [size]="'sizes'">Same as Client</fui-text>
+          <fui-text [size]="'sizes'" (click)="isPayingEntity = !isPayingEntity"
+            >Same as Client</fui-text
+          >
         </div>
       </div>
       <fui-combo-box
-        [singleSelection]="true"
+        [singleSelection]="false"
+        [comboxForm]="payingEntityForm"
+        (selection)="selectionPayingEntity($event)"
         [placeholder]="'Search paying entity'"
+        [disabled]="isPayingEntity"
         [invalid]="false"
         [message]="''"
-        [disabled]="isPayingEntity"
         [leftIcon]="'search'"
-        [optionValue]="[]"
-        [selectedValue]="[]"
+        [optionValue]="payingEntityOption"
+        [selectedValue]="payingEntitySelected"
       />
       <fui-button-icon
         class="flex mt-15"
@@ -44,15 +48,17 @@
       <fui-text class="label">Contact Person</fui-text>
       <fui-form-control-layout>
         <fui-select-field
+          [formControlField]="contactPersonForm"
+          [disabled]="payingEntitySelected.length === 0"
           [size]="'m'"
           [placeholder]="'Please select contact person'"
           [invalid]="false"
-          [selectOptions]="[]"
+          [selectOptions]="contactPersonOption"
         >
         </fui-select-field>
       </fui-form-control-layout>
       <fui-button-icon
-        *ngIf="isPayingEntity"
+        *ngIf="payingEntitySelected.length > 0"
         (onClick)="openFlyouContactPerson()"
         class="flex mt-15"
         [style]="'secondary'"
@@ -68,12 +74,13 @@
 
   <!-- SLIDER  -->
   <shared-slider-card
-    [dataSlider]="dataSlider"
-    [currentSlideIndex]="currentSlideIndex"
+    *ngIf="payingEntitySlider.length > 0"
+    [dataSlider]="payingEntitySlider"
+    [currentSlideIndex]="currentSlideIndexPayingEntity"
     (slideOut)="slideOut($event)"
   >
     <shared-slider-card-body
-      *ngFor="let item of clientData; let i = index"
+      *ngFor="let item of payingEntitySelected; let i = index"
       [id]="i + 1"
       [current]="currentSlideIndex + 1"
     >
@@ -83,13 +90,15 @@
           <fui-text>Company's Origin Country</fui-text>
         </div>
         <div class="mt-5 grid-2">
-          <fui-text [weight]="'semibold'">{{ item.parent }}</fui-text>
-          <fui-text [weight]="'semibold'">{{ item.companyOrigin }}</fui-text>
+          <fui-text [weight]="'semibold'">{{ item.value.parent }}</fui-text>
+          <fui-text [weight]="'semibold'">{{
+            item.value.companyOrigin
+          }}</fui-text>
         </div>
         <div class="mt-20 grid">
           <fui-text>Address</fui-text>
           <fui-text [weight]="'semibold'" class="mt-5">{{
-            item.address
+            item.value.address
           }}</fui-text>
         </div>
         <fui-link
@@ -102,13 +111,13 @@
         <div class="mt-20 grid">
           <fui-text>Entity Type</fui-text>
           <fui-text [weight]="'semibold'" class="mt-5">{{
-            item.entityType
+            item.value.entityType
           }}</fui-text>
         </div>
         <div class="mt-20 grid">
           <fui-text>Industry/Business Sector</fui-text>
           <fui-text [weight]="'semibold'" class="mt-5">{{
-            item.industry
+            item.value.industry
           }}</fui-text>
         </div>
       </div>
@@ -137,6 +146,8 @@
       <fui-form-control-layout>
         <fui-select-field
           [size]="'m'"
+          [disabled]="isPricingTypeForm"
+          [disabled]="billabiltiySelection === 'Potential Matter'"
           [placeholder]="'Please select priciing type'"
           [formControlField]="pricingTypeForm"
           [invalid]="false"
@@ -170,23 +181,34 @@
         <div class="checkbox">
           <input
             type="checkbox"
-            [checked]="isPayingEntity"
-            [(ngModel)]="isPayingEntity"
+            [checked]="isEstimatedFee"
+            [(ngModel)]="isEstimatedFee"
           />
-          <fui-text [size]="'sizes'">N/A</fui-text>
+          <fui-text [size]="'sizes'" (click)="isEstimatedFee = !isEstimatedFee"
+            >N/A</fui-text
+          >
         </div>
       </div>
-      <fui-form-control-layout>
+      <fui-form-control-layout *ngIf="!isEstimatedFee">
         <fui-prepend>
-          <fui-text [size]="'sizes'" [weight]="'semibold'">USD</fui-text>
+          <fui-text [size]="'sizexs'" [weight]="'semibold'">{{
+            currencyForm.value
+          }}</fui-text>
         </fui-prepend>
         <fui-input-field
-          [type]="'text'"
+          [formControlField]="estimatedFeeForm"
+          [type]="'number'"
           [invalid]="false"
           [placeholder]="'Type amount'"
           [size]="'m'"
         ></fui-input-field>
       </fui-form-control-layout>
+      <fui-text
+        class="fs-italic mt-10"
+        [color]="'disabled'"
+        *ngIf="isEstimatedFee"
+        >Not Applicable</fui-text
+      >
     </div>
     <!-- ESTIMATED FEE  -->
 
@@ -195,9 +217,12 @@
       <fui-text class="label">Cap Fee</fui-text>
       <fui-form-control-layout>
         <fui-prepend>
-          <fui-text [size]="'sizes'" [weight]="'semibold'">USD</fui-text>
+          <fui-text [size]="'sizexs'" [weight]="'semibold'">{{
+            currencyForm.value
+          }}</fui-text>
         </fui-prepend>
         <fui-input-field
+          [formControlField]="capFeeForm"
           [type]="'text'"
           [invalid]="false"
           [placeholder]="'Type amount'"
@@ -212,14 +237,20 @@
     <!-- RETAINER PERIOD START  -->
     <div class="form-control">
       <fui-text class="label">Retainer Period Start</fui-text>
-      <fui-date-picker />
+      <fui-date-picker
+        [dateFormControl]="startPeriodForm"
+        [dateFormat]="'DD-MM-YYYY'"
+      />
     </div>
     <!-- RETAINER PERIOD START  -->
 
     <!-- RETAINER PERIOD END  -->
     <div class="form-control">
       <fui-text class="label">Retainer Period End</fui-text>
-      <fui-date-picker />
+      <fui-date-picker
+        [dateFormControl]="endPeriodForm"
+        [dateFormat]="'DD-MM-YYYY'"
+      />
     </div>
     <!-- RETAINER PERIOD END  -->
   </div>
@@ -228,44 +259,104 @@
   <div *ngIf="pricingTypeForm.value === 'Lumpsum'">
     <fui-text>Lumpsum Term</fui-text>
     <fui-table
+      *ngIf="dataLumpsum.length > 0"
+      [pagination]="false"
       class="flex mt-5"
       [limit]="5"
       [totalItems]="1"
       [showInfo]="false"
     >
       <fui-table-head *ngFor="let header of title">
-        {{ header }}
+        <div [ngClass]="{ 'text-right': header === 'Amount' }">
+          {{ header }}
+        </div>
       </fui-table-head>
       <fui-table-body>
-        <fui-table-body-row>
+        <fui-table-body-row *ngFor="let item of dataLumpsum">
           <fui-table-body-data style="min-width: 20px; width: 20px">
-            1
+            {{ item.paymentOrder }}
           </fui-table-body-data>
           <fui-table-body-data>
-            <fui-text>Billed upon completion of first phase</fui-text>
+            <div>
+              <fui-text>{{ item.desc }}</fui-text>
+              <div class="flex mt-5">
+                <fui-badge
+                  [isBadgeIcon]="true"
+                  [iconPosition]="'start'"
+                  [sizeIcon]="'sizexs'"
+                  *ngIf="item.status"
+                  [color]="item.status === 'Collected' ? 'success' : 'warning'"
+                  [size]="'sizexs'"
+                  [icon]="item.status === 'Collected' ? 'tag' : 'stopSlash'"
+                  ><fui-text [size]="'sizexs'">{{
+                    item.status
+                  }}</fui-text></fui-badge
+                >
+                <fui-badge
+                  [isBadgeIcon]="true"
+                  [iconPosition]="'start'"
+                  [sizeIcon]="'sizexs'"
+                  *ngIf="item.addOn"
+                  [color]="'ghost'"
+                  [size]="'sizexs'"
+                  [icon]="'document'"
+                  ><fui-text [size]="'sizexs'">{{
+                    item.addOn
+                  }}</fui-text></fui-badge
+                >
+              </div>
+            </div>
           </fui-table-body-data>
           <fui-table-body-data>
-            <fui-text>USD 5,000.00</fui-text>
+            <div class="text-right">
+              <fui-text>{{ currencyForm.value }} {{ item.amount }}</fui-text>
+            </div>
           </fui-table-body-data>
           <fui-table-body-data style="min-width: 20px; width: 20px">
             <div class="flex">
               <fui-button-icon
+                [disabled]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                "
+                (onClick)="addEditRemoveLumpsumTerm('edit', item)"
                 [type]="'button'"
-                [color]="'primary'"
+                [size]="'m'"
+                [color]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                    ? 'disabled'
+                    : 'primary'
+                "
                 [style]="'secondary'"
                 [option]="'icon'"
                 [icon]="'pencil'"
               />
               <fui-button-icon
+                [disabled]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                "
                 [type]="'button'"
-                [color]="'danger'"
+                [size]="'m'"
+                [color]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                    ? 'disabled'
+                    : 'danger'
+                "
                 [style]="'secondary'"
                 [option]="'icon'"
                 [icon]="'stopSlash'"
               />
               <fui-button-icon
+                [disabled]="
+                  item.status && item.status !== 'Written-off' ? true : false
+                "
+                (onClick)="addEditRemoveLumpsumTerm('remove', item)"
                 [type]="'button'"
-                [color]="'danger'"
+                [size]="'m'"
+                [color]="
+                  item.status && item.status !== 'Written-off'
+                    ? 'disabled'
+                    : 'danger'
+                "
                 [style]="'secondary'"
                 [option]="'icon'"
                 [icon]="'trash'"
@@ -292,71 +383,107 @@
   <div *ngIf="pricingTypeForm.value === 'Retainer'">
     <fui-text>Retainer Term</fui-text>
     <fui-table
+      [pagination]="false"
       class="flex mt-5"
       [limit]="5"
       [totalItems]="1"
       [showInfo]="false"
     >
       <fui-table-head *ngFor="let header of titleRetainer">
-        {{ header }}
+        <div [ngClass]="{ 'text-right': header === 'Term' }">
+          {{ header }}
+        </div>
       </fui-table-head>
       <fui-table-body>
-        <fui-table-body-row>
+        <fui-table-body-row *ngFor="let item of dataRetainer">
           <fui-table-body-data style="min-width: 20px; width: 20px">
             1
           </fui-table-body-data>
           <fui-table-body-data>
-            <fui-text>Jan 24</fui-text>
+            <fui-text>{{ item.period }}</fui-text>
             <fui-badge
               class="flex mt-5"
-              [color]="'success'"
               [isBadgeIcon]="true"
-              [icon]="'tag'"
-              [sizeIcon]="'sizes'"
-              [size]="'sizem'"
-              >Collected</fui-badge
+              [iconPosition]="'start'"
+              [sizeIcon]="'sizexs'"
+              *ngIf="item.status"
+              [color]="item.status === 'Collected' ? 'success' : 'warning'"
+              [size]="'sizexs'"
+              [icon]="item.status === 'Collected' ? 'tag' : 'stopSlash'"
+              ><fui-text [size]="'sizexs'">{{
+                item.status
+              }}</fui-text></fui-badge
             >
             <fui-badge
               class="flex mt-5"
-              [color]="'ghost'"
               [isBadgeIcon]="true"
-              [sizeIcon]="'sizes'"
+              [iconPosition]="'start'"
+              [sizeIcon]="'sizexs'"
+              *ngIf="item.addOn"
+              [color]="'ghost'"
+              [size]="'sizexs'"
               [icon]="'document'"
-              [size]="'sizem'"
-              >1140/24</fui-badge
+              ><fui-text [size]="'sizexs'">{{
+                item.addOn
+              }}</fui-text></fui-badge
             >
           </fui-table-body-data>
           <fui-table-body-data>
-            <div class="grid-1 gap-5">
-              <fui-text [textWrap]="'nowrap'">USD 5,000.00</fui-text>
-              <fui-text>10 Hours</fui-text>
+            <div class="grid-1 gap-5 text-right">
+              <fui-text [textWrap]="'nowrap'"
+                >{{ currencyForm.value }} {{ item.amount }}</fui-text
+              >
+              <fui-text>{{ item.hours }} Hours</fui-text>
             </div>
           </fui-table-body-data>
           <fui-table-body-data>
-            <fui-text
-              >USD 3.000/month with time allocation no more than 10
-              hours</fui-text
-            >
+            <fui-text>{{ item.desc }}</fui-text>
           </fui-table-body-data>
           <fui-table-body-data style="min-width: 20px; width: 20px">
             <div class="flex">
               <fui-button-icon
+                (onClick)="addEditRemoveRetianerForm('edit', item)"
+                [disabled]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                "
                 [type]="'button'"
-                [color]="'primary'"
+                [size]="'m'"
+                [color]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                    ? 'disabled'
+                    : 'primary'
+                "
                 [style]="'secondary'"
                 [option]="'icon'"
                 [icon]="'pencil'"
               />
               <fui-button-icon
+                [disabled]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                "
                 [type]="'button'"
-                [color]="'danger'"
+                [size]="'m'"
+                [color]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                    ? 'disabled'
+                    : 'danger'
+                "
                 [style]="'secondary'"
                 [option]="'icon'"
                 [icon]="'stopSlash'"
               />
               <fui-button-icon
+                (onClick)="addEditRemoveRetianerForm('remove', item)"
+                [disabled]="
+                  item.status && item.status !== 'Written-off' ? true : false
+                "
                 [type]="'button'"
-                [color]="'danger'"
+                [size]="'m'"
+                [color]="
+                  item.status && item.status !== 'Written-off'
+                    ? 'disabled'
+                    : 'danger'
+                "
                 [style]="'secondary'"
                 [option]="'icon'"
                 [icon]="'trash'"
@@ -405,6 +532,7 @@
   <div class="form-control mt-10" *ngIf="!isBillingNote">
     <fui-form-control-layout>
       <fui-textarea
+        [formControlField]="billingNoteForm"
         [placeholder]="'Type billing notes'"
         [size]="'m'"
         [invalid]="false"
@@ -424,7 +552,7 @@
 <!-- Proof of Engagement  -->
 <div class="card mt-20">
   <div class="grid">
-    <fui-text>Proof of Engagement</fui-text>
+    <fui-text [weight]="'semibold'">Proof of Engagement</fui-text>
     <fui-text class="flex mt-10" [color]="'disabled'"
       >Represents binding work contracts related to this matter. You have the
       option to add multiple proofs of engagement.</fui-text
@@ -433,6 +561,7 @@
     <!-- TABLE PROOF -->
     <div>
       <fui-table
+        [pagination]="false"
         class="flex mt-15"
         [limit]="5"
         [totalItems]="1"
@@ -514,18 +643,24 @@
     >
 
     <!-- COLLABSIBLE  -->
-    <fui-collapsible-nav-group class="mt-20" [isCollapsed]="isCollapsed">
+    <fui-collapsible-nav-group
+      *ngFor="let item of dataSpecialRate"
+      class="mt-20"
+      [isCollapsed]="isCollapsed"
+    >
       <div header>
         <div class="flex-between">
           <div class="grid">
-            <fui-text>Ralph Edwards (RE)</fui-text>
-            <fui-text class="italic">Senior Associates</fui-text>
+            <fui-text>{{ item.member }}</fui-text>
+            <fui-text class="italic">{{ item.position }}</fui-text>
           </div>
           <div class="flex">
             <fui-text
               [textWrap]="'nowrap'"
               style="width: -webkit-fill-available; text-align: end"
-              >USD 250.00 ~ USD 300.00</fui-text
+              >{{ currencyForm.value }} {{ getMinMaxRates().minRate }}.00 ~
+              {{ currencyForm.value }}
+              {{ getMinMaxRates().maxRate }}.00</fui-text
             >
             <fui-button-icon
               [size]="'s'"
@@ -541,23 +676,28 @@
       </div>
       <div body class="mt-5">
         <fui-table
+          [pagination]="false"
           class="flex mt-15"
           [limit]="5"
           [totalItems]="1"
           [showInfo]="false"
         >
           <fui-table-body>
-            <fui-table-body-row>
+            <fui-table-body-row *ngFor="let subitem of item.rates">
               <fui-table-body-data>
-                <fui-text>1 Feb, 2024 - 28 Feb, 2024</fui-text>
+                <fui-text>{{ subitem.start }} - {{ subitem.end }}</fui-text>
               </fui-table-body-data>
               <fui-table-body-data>
-                <fui-text>USD 250.00</fui-text>
+                <fui-text
+                  >{{ currencyForm.value }} {{ subitem.rate }}.00</fui-text
+                >
               </fui-table-body-data>
               <fui-table-body-data style="min-width: 20px; width: 20px">
                 <div class="flex">
                   <fui-button-icon
-                    (onClick)="openFlyouSpecialRates()"
+                    (onClick)="
+                      addEditRemoveSpecialRate('edit', item.member, subitem)
+                    "
                     [type]="'button'"
                     [color]="'primary'"
                     [style]="'secondary'"
@@ -581,7 +721,7 @@
     <!-- COLLABSIBLE  -->
 
     <fui-button-icon
-      (onClick)="openFlyouSpecialRates()"
+      (onClick)="addEditRemoveSpecialRate('add')"
       class="mt-20"
       [type]="'button'"
       [option]="'iconText'"
@@ -728,7 +868,7 @@
 <!-- LUMPSUM TERM FLYOUT  -->
 <shared-flyout-simple
   [isOpenFlyout]="isFlyoutLumpsumTerm"
-  [titleFlyout]="'Add Lumpsum Term'"
+  [titleFlyout]="addEditLumpsum ? 'Add Lumpsum Term' : 'Edit Lumpsum Term'"
   (closeOut)="openFlyouLumpsumTerm()"
 >
   <div body>
@@ -738,10 +878,29 @@
       <fui-form-control-layout>
         <fui-input-field
           [type]="'number'"
+          [formControlField]="lumpsumPaymentOrderForm"
           [invalid]="false"
           [placeholder]="'Type payment order'"
           [size]="'m'"
-        ></fui-input-field>
+          [invalid]="
+            lumpsumPaymentOrderForm.invalid && lumpsumPaymentOrderForm.dirty
+          "
+        >
+          <fui-icons
+            *ngIf="
+              lumpsumPaymentOrderForm.invalid && lumpsumPaymentOrderForm.dirty
+            "
+            right-icon
+            [label]="'right'"
+            [icon]="'alert'"
+            [size]="'sizem'"
+            [color]="'danger'"
+          />
+        </fui-input-field>
+        <fui-validator-field
+          validator
+          [message]="'Payment order is required!'"
+        />
       </fui-form-control-layout>
     </div>
     <!-- NAME  -->
@@ -750,13 +909,29 @@
     <div class="form-control">
       <fui-text class="label"> Amount </fui-text>
       <fui-form-control-layout>
-        <fui-prepend> USD </fui-prepend>
+        <fui-prepend>
+          <fui-text [size]="'sizexs'" [weight]="'semibold'">{{
+            currencyForm.value
+          }}</fui-text>
+        </fui-prepend>
         <fui-input-field
+          [formControlField]="lumpsumAmountForm"
           [type]="'text'"
           [invalid]="false"
           [placeholder]="'Type amount'"
           [size]="'m'"
-        ></fui-input-field>
+          [invalid]="lumpsumAmountForm.invalid && lumpsumAmountForm.dirty"
+        >
+          <fui-icons
+            *ngIf="lumpsumAmountForm.invalid && lumpsumAmountForm.dirty"
+            right-icon
+            [label]="'right'"
+            [icon]="'alert'"
+            [size]="'sizem'"
+            [color]="'danger'"
+          />
+        </fui-input-field>
+        <fui-validator-field validator [message]="'Amount is required!'" />
       </fui-form-control-layout>
     </div>
     <!-- AMOUNT  -->
@@ -766,11 +941,21 @@
       <fui-text class="label"> Description </fui-text>
       <fui-form-control-layout>
         <fui-textarea
-          [placeholder]="'Type retianer description'"
+          [formControlField]="lumpsumdescForm"
+          [placeholder]="'Type lumpsum description'"
           [size]="'m'"
           [invalid]="false"
         >
+          <fui-icons
+            *ngIf="lumpsumdescForm.invalid && lumpsumdescForm.dirty"
+            right-icon
+            [label]="'right'"
+            [icon]="'alert'"
+            [size]="'sizem'"
+            [color]="'danger'"
+          />
         </fui-textarea>
+        <fui-validator-field validator [message]="'Description is required!'" />
       </fui-form-control-layout>
     </div>
     <!-- DESC  -->
@@ -790,7 +975,7 @@
       [color]="'primary'"
       [style]="'filled'"
       [option]="'text'"
-      [text]="'Add Lumpsum Term'"
+      [text]="addEditLumpsum ? 'Add Lumpsum Term' : 'Edit Lumpsum Term'"
     />
   </div>
 </shared-flyout-simple>
@@ -799,7 +984,7 @@
 <!-- RETAIINER TERM FLYOUT  -->
 <shared-flyout-simple
   [isOpenFlyout]="isFlyoutRetainerTerm"
-  [titleFlyout]="'Add Retainer Term'"
+  [titleFlyout]="addEditRetainer ? 'Add Retainer Term' : 'Edit Retainer Term'"
   (closeOut)="openFlyouRetainerTerm()"
 >
   <div body class="overflow-hidden">
@@ -809,6 +994,7 @@
         <fui-text class="label"> Payment Order </fui-text>
         <fui-form-control-layout>
           <fui-input-field
+            [formControlField]="retainerPaymentOrderForm"
             [type]="'number'"
             [invalid]="false"
             [placeholder]="'Type payment order'"
@@ -821,7 +1007,10 @@
       <!-- PERIOD  -->
       <div class="form-control">
         <fui-text class="label"> Period </fui-text>
-        <fui-date-picker />
+        <fui-date-picker
+          [dateFormControl]="retainerPeriodForm"
+          [dateFormat]="'DD-MM-YYYY'"
+        />
       </div>
       <!-- PERIOD  -->
     </div>
@@ -831,8 +1020,13 @@
       <div class="form-control">
         <fui-text class="label"> Amount </fui-text>
         <fui-form-control-layout>
-          <fui-prepend> USD </fui-prepend>
+          <fui-prepend>
+            <fui-text [size]="'sizexs'" [weight]="'semibold'">{{
+              currencyForm.value
+            }}</fui-text>
+          </fui-prepend>
           <fui-input-field
+            [formControlField]="retainerAmountForm"
             [type]="'text'"
             [invalid]="false"
             [placeholder]="'Type amount'"
@@ -847,6 +1041,7 @@
         <fui-text class="label"> Duration </fui-text>
         <fui-form-control-layout>
           <fui-input-field
+            [formControlField]="retainerDurationForm"
             [type]="'number'"
             [invalid]="false"
             [placeholder]="'Type duration'"
@@ -862,6 +1057,7 @@
       <fui-text class="label"> Description </fui-text>
       <fui-form-control-layout>
         <fui-textarea
+          [formControlField]="retainerDescForm"
           [placeholder]="'Type retianer description'"
           [size]="'m'"
           [invalid]="false"
@@ -886,7 +1082,7 @@
       [color]="'primary'"
       [style]="'filled'"
       [option]="'text'"
-      [text]="'Add Retainer Term'"
+      [text]="addEditRetainer ? 'Add Retainer Term' : 'Edit Retainer Term'"
     />
   </div>
 </shared-flyout-simple>
@@ -895,19 +1091,23 @@
 <!-- SPECIAL RATE FLYOUT  -->
 <shared-flyout-simple
   [isOpenFlyout]="isFlyoutSpecialRates"
-  [titleFlyout]="'Add Special Rates'"
+  [titleFlyout]="
+    addEditSpecialRate ? 'Add Special Rates' : 'Edit Special Rates'
+  "
   (closeOut)="openFlyouSpecialRates()"
 >
-  <div body class="overflow-hidden">
+  <div body>
     <!-- MEMBER NAME  -->
     <div class="form-control">
       <fui-text class="label"> Member Name </fui-text>
       <fui-form-control-layout>
         <fui-select-field
+          [disabled]="!addEditSpecialRate"
           [size]="'m'"
           [placeholder]="'Please select member name'"
           [invalid]="false"
-          [selectOptions]="[]"
+          [formControlField]="matterNumberForm"
+          [selectOptions]="matterNumberOption"
         >
         </fui-select-field>
       </fui-form-control-layout>
@@ -919,9 +1119,12 @@
       <fui-text class="label"> Rate </fui-text>
       <fui-form-control-layout>
         <fui-prepend>
-          <fui-text [size]="'sizes'" [weight]="'semibold'">USD</fui-text>
+          <fui-text [size]="'sizexs'" [weight]="'semibold'">{{
+            currencyForm.value
+          }}</fui-text>
         </fui-prepend>
         <fui-input-field
+          [formControlField]="rateForm"
           [type]="'text'"
           [invalid]="false"
           [placeholder]="'Type rate'"
@@ -935,14 +1138,21 @@
       <!--  PERIOD START  -->
       <div class="form-control">
         <fui-text class="label"> Period Start</fui-text>
-        <fui-date-picker />
+        <fui-date-picker
+          [dateFormControl]="startPeriodRateForm"
+          [dateFormat]="'DD-MM-YYYY'"
+        />
       </div>
       <!--  PERIOD START  -->
 
       <!--  PERIOD END  -->
       <div class="form-control">
         <fui-text class="label"> Period End</fui-text>
-        <fui-date-picker />
+        <fui-date-picker
+          [align]="'end'"
+          [dateFormControl]="endPeriodRateForm"
+          [dateFormat]="'DD-MM-YYYY'"
+        />
       </div>
       <!--  PERIOD END  -->
     </div>
@@ -957,13 +1167,15 @@
       [text]="'Cancel'"
     />
     <fui-button-icon
-      (onClick)="openFlyouSpecialRates()"
+      (onClick)="addEditRemoveSpecialRate('add')"
       [type]="'button'"
       [color]="'primary'"
       [style]="'filled'"
       [option]="'text'"
-      [text]="'Add Special Rate'"
+      [text]="addEditSpecialRate ? 'Add Special Rates' : 'Edit Special Rates'"
     />
   </div>
 </shared-flyout-simple>
 <!-- SPECIAL RATE FLYOUT  -->
+
+<fui-toast />

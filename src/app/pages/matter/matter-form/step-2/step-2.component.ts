@@ -73,7 +73,8 @@ import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.com
   styleUrl: './step-2.component.scss',
 })
 export class Step2Component {
-  @Output() bill: EventEmitter<string> = new EventEmitter<string>();
+  @Output() billabilitySelected: EventEmitter<string> =
+    new EventEmitter<string>();
 
   /** Matter Number Form */
   matterNumberForm: FormControl = new FormControl('', Validators.required);
@@ -177,21 +178,77 @@ export class Step2Component {
   }[] = [
     {
       name: 'Acme Corporation',
-      value: 'ACME_CORP_001',
+      value: {
+        parent: 'Acme Corporation',
+        companyOrigin: 'USA',
+        address: '123 Elm Street, Suite 400, San Francisco, CA 94107',
+        entityType: 'Private',
+        industry: 'Technology',
+      },
     },
     {
       name: 'Globex Corporation',
-      value: 'GLOBEX_CORP_002',
+      value: {
+        parent: 'Global Industries Ltd.',
+        companyOrigin: 'UK',
+        address: '456 Oxford Road, Building A, London, W1D 1AN',
+        entityType: 'Public',
+        industry: 'Manufacturing',
+      },
     },
     {
       name: 'Initech LLC',
-      value: 'INITECH_LLC_003',
+      value: {
+        parent: 'Initech Holdings',
+        companyOrigin: 'USA',
+        address: '789 Innovation Drive, Suite 300, Austin, TX 73301',
+        entityType: 'Private',
+        industry: 'Software Development',
+      },
+    },
+    {
+      name: 'Soylent Corporation',
+      value: {
+        parent: 'Soylent Group',
+        companyOrigin: 'Germany',
+        address: '12 Factory Lane, Berlin, 10178',
+        entityType: 'Public',
+        industry: 'Food & Beverage',
+      },
+    },
+    {
+      name: 'Umbrella Corporation',
+      value: {
+        parent: 'Umbrella Group',
+        companyOrigin: 'Switzerland',
+        address: '16 Alpine Road, Zurich, 8001',
+        entityType: 'Private',
+        industry: 'Pharmaceuticals',
+      },
+    },
+    {
+      name: 'Stark Industries',
+      value: {
+        parent: 'Stark Enterprises',
+        companyOrigin: 'USA',
+        address: '10880 Malibu Point, Malibu, CA 90265',
+        entityType: 'Private',
+        industry: 'Defense',
+      },
     },
   ];
   clientNameSelected: {
     name: string;
     value: any;
   }[] = [];
+  clientNameSlider: {
+    id: number;
+    title: string;
+    status: boolean;
+    icon: Icon;
+    link: string;
+  }[] = [];
+  currentSlideIndexClientName: number = 0;
 
   /** Client Contact Person Form */
   isClientContactPerson: boolean = false;
@@ -213,6 +270,87 @@ export class Step2Component {
       value: 'RF',
     },
   ];
+
+  /** Instructint Party Form */
+  isInstructingParty: boolean = false;
+  instructingPartyForm: FormControl = new FormControl('');
+  instructingPartyOption: {
+    name: string;
+    value: any;
+  }[] = [
+    {
+      name: 'Acme Corporation',
+      value: {
+        parent: 'Acme Corporation',
+        companyOrigin: 'USA',
+        address: '123 Elm Street, Suite 400, San Francisco, CA 94107',
+        entityType: 'Private',
+        industry: 'Technology',
+      },
+    },
+    {
+      name: 'Globex Corporation',
+      value: {
+        parent: 'Global Industries Ltd.',
+        companyOrigin: 'UK',
+        address: '456 Oxford Road, Building A, London, W1D 1AN',
+        entityType: 'Public',
+        industry: 'Manufacturing',
+      },
+    },
+    {
+      name: 'Initech LLC',
+      value: {
+        parent: 'Initech Holdings',
+        companyOrigin: 'USA',
+        address: '789 Innovation Drive, Suite 300, Austin, TX 73301',
+        entityType: 'Private',
+        industry: 'Software Development',
+      },
+    },
+    {
+      name: 'Soylent Corporation',
+      value: {
+        parent: 'Soylent Group',
+        companyOrigin: 'Germany',
+        address: '12 Factory Lane, Berlin, 10178',
+        entityType: 'Public',
+        industry: 'Food & Beverage',
+      },
+    },
+    {
+      name: 'Umbrella Corporation',
+      value: {
+        parent: 'Umbrella Group',
+        companyOrigin: 'Switzerland',
+        address: '16 Alpine Road, Zurich, 8001',
+        entityType: 'Private',
+        industry: 'Pharmaceuticals',
+      },
+    },
+    {
+      name: 'Stark Industries',
+      value: {
+        parent: 'Stark Enterprises',
+        companyOrigin: 'USA',
+        address: '10880 Malibu Point, Malibu, CA 90265',
+        entityType: 'Private',
+        industry: 'Defense',
+      },
+    },
+  ];
+  instructingPartySelected: {
+    name: string;
+    value: any;
+  }[] = [];
+  instructingPartySlider: {
+    id: number;
+    title: string;
+    status: boolean;
+    icon: Icon;
+    link: string;
+  }[] = [];
+  currentSlideIndexInstructingParty: number = 0;
 
   /** Flyout Upload Matter Form */
   languageForm: FormControl = new FormControl('');
@@ -264,70 +402,13 @@ export class Step2Component {
   billingAddressForm: FormControl = new FormControl('');
   locationBillingForm: FormControl = new FormControl('');
 
-  isInstructingParty: boolean = false;
-
-  dataSlider: {
-    id: number;
-    title: string;
-    status: boolean;
-    icon: Icon;
-    link: string;
-  }[] = [
-    {
-      id: 1,
-      title: 'Big Kahuna Burger Ltd.',
-      link: '',
-      status: true,
-      icon: 'node',
-    },
-    {
-      id: 2,
-      title: 'Miniso Lifestyle Trading Indonesia',
-      link: '',
-      status: false,
-      icon: 'node',
-    },
-    {
-      id: 3,
-      title: 'Global Industries Ltd',
-      link: '',
-      status: false,
-      icon: 'node',
-    },
-  ];
-
-  currentSlideIndex: number = 0;
-
   clientData: {
     parent: string;
     companyOrigin: string;
     address: string;
     entityType: string;
     industry: string;
-  }[] = [
-    {
-      parent: 'N/A',
-      companyOrigin: 'N/A',
-      address:
-        'Puri Imperium Office Plaza, G-7 Jl. Kuningan Madya Kav 5-6, Kuningan',
-      entityType: 'MNC Regional',
-      industry: 'General Retail',
-    },
-    {
-      parent: 'Acme Corporation',
-      companyOrigin: 'USA',
-      address: '123 Elm Street, Suite 400, San Francisco, CA 94107',
-      entityType: 'Private',
-      industry: 'Technology',
-    },
-    {
-      parent: 'Global Industries Ltd.',
-      companyOrigin: 'UK',
-      address: '456 Oxford Road, Building A, London, W1D 1AN',
-      entityType: 'Public',
-      industry: 'Manufacturing',
-    },
-  ];
+  }[] = [];
 
   title: string[] = ['Name', 'Position', ''];
   dataContent: { name: string; position: string }[] = [
@@ -346,7 +427,7 @@ export class Step2Component {
   ngOnInit(): void {
     this.obs = [
       this.billabilityForm.valueChanges.subscribe((value) => {
-        this.bill.emit(value);
+        this.billabilitySelected.emit(value);
       }),
     ];
   }
@@ -401,7 +482,47 @@ export class Step2Component {
     }
   }
 
-  slideOut(event: number): void {
-    this.currentSlideIndex = event;
+  /** Selection Client Form */
+  selectionClientName(event: any): void {
+    this.clientNameSelected = event;
+    this.clientNameSlider = [];
+    if (this.clientNameSelected.length > 0) {
+      this.clientNameSelected.forEach((item, i) => {
+        this.clientNameSlider.push({
+          id: i,
+          title: item.name,
+          status: i === 0 ? true : false,
+          icon: 'node',
+          link: '#',
+        });
+      });
+    }
+  }
+
+  /** Selection Instructing Party Form */
+  selectionInstructingParty(event: any): void {
+    this.instructingPartySelected = event;
+    this.instructingPartySlider = [];
+    if (this.instructingPartySelected.length > 0) {
+      this.instructingPartySelected.forEach((item, i) => {
+        this.instructingPartySlider.push({
+          id: i,
+          title: item.name,
+          status: i === 0 ? true : false,
+          icon: 'node',
+          link: '#',
+        });
+      });
+    }
+  }
+
+  /** Update index slider client name */
+  slideOutClientName(event: number): void {
+    this.currentSlideIndexClientName = event;
+  }
+
+  /** Update index slider instructing party */
+  slideOutInstructingParty(event: number): void {
+    this.currentSlideIndexInstructingParty = event;
   }
 }

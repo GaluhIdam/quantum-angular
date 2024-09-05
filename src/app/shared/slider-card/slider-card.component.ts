@@ -36,22 +36,7 @@ export class SliderCardComponent {
     status: boolean;
     icon: Icon;
     link: string;
-  }[] = [
-    {
-      id: 1,
-      title: 'Big Kahuna Burger Ltd.',
-      link: '',
-      status: true,
-      icon: 'node',
-    },
-    {
-      id: 2,
-      title: 'Miniso Lifestyle Trading Indonesia',
-      link: '',
-      status: false,
-      icon: 'node',
-    },
-  ];
+  }[] = [];
   @Input() currentSlideIndex: number = 0;
   @Output() slideOut: EventEmitter<number> = new EventEmitter<number>();
 
