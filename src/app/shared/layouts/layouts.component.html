@@ -123,7 +123,7 @@
           <fui-header-panel class="header">
             <fui-button-icon
               class="icon-mode"
-              *ngIf="themeService.getTheme() === 'light'"
+              *ngIf="themeService.getTheme() === 'ahp-light'"
               [type]="'button'"
               [size]="'m'"
               [option]="'icon'"
@@ -131,11 +131,11 @@
               [color]="'text'"
               [icon]="'moon'"
               [iconSide]="'left'"
-              (onClick)="toggleMode('dark')"
+              (onClick)="toggleMode('ahp-dark')"
             />
             <fui-button-icon
               class="icon-mode"
-              *ngIf="themeService.getTheme() === 'dark'"
+              *ngIf="themeService.getTheme() === 'ahp-dark'"
               [type]="'button'"
               [size]="'m'"
               [option]="'icon'"
@@ -143,7 +143,7 @@
               [color]="'text'"
               [icon]="'sun'"
               [iconSide]="'left'"
-              (onClick)="toggleMode('light')"
+              (onClick)="toggleMode('ahp-light')"
             />
             <fui-button-icon
               [type]="'button'"

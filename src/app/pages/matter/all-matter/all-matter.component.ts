@@ -11,6 +11,7 @@ import { FilterAppliedComponent } from '../../../shared/filter-applied/filter-ap
 import { FilterAppliedDTO } from '../../../shared/filter-applied/filter-apllied.dto';
 import { CardAllMatterComponent } from './card-all-matter/card-all-matter.component';
 import { FlyoutFilterMatterComponent } from '../../../shared/flyout-filter-matter/flyout-filter-matter.component';
+import { PageEmptyComponent } from '../../../shared/page-empty/page-empty.component';
 
 @Component({
   selector: 'app-all-matter',
@@ -25,6 +26,7 @@ import { FlyoutFilterMatterComponent } from '../../../shared/flyout-filter-matte
     IconsComponent,
     TextComponent,
     FlyoutFilterMatterComponent,
+    PageEmptyComponent,
   ],
   templateUrl: './all-matter.component.html',
   styleUrl: './all-matter.component.scss',
