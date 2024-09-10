@@ -48,7 +48,7 @@ export class MatterFormComponent {
     {
       id: 'step-2',
       stepType: 'number',
-      stepStatus: StepStatus.COMPLETE,
+      stepStatus: StepStatus.CURRENT,
       title: 'Opening Section',
       stepIcon: {
         complete: 'check',
@@ -57,7 +57,7 @@ export class MatterFormComponent {
     {
       id: 'step-3',
       stepType: 'number',
-      stepStatus: StepStatus.CURRENT,
+      stepStatus: StepStatus.INCOMPLETE,
       title: 'Midpoint Section',
       stepIcon: {
         complete: 'check',
