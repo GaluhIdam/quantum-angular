@@ -105,7 +105,14 @@ export class LayoutsComponent {
     this.getMatterData('');
     this.getActivityData();
     this.themeService.currentTheme$.subscribe((data) => {
-      this.theme = data;
+      if (data === 'light') {
+        this.theme = 'ahp-light';
+        this.themeService.setTheme('ahp-light');
+      }
+      if (data === 'dark') {
+        this.theme = 'ahp-dark';
+        this.themeService.setTheme('ahp-dark');
+      }
     });
     this.obs = this.searchForm.valueChanges
       .pipe(

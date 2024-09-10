@@ -1,0 +1,245 @@
+<div class="card mt-20">
+  <fui-text class="head-label" [weight]="'semibold'"
+    >Client Information</fui-text
+  >
+  <div class="grid-2">
+    <!-- CLIENT NAME  -->
+    <div class="form-control">
+      <div class="flex-start">
+        <fui-text class="label"> Client Name </fui-text>
+        <fui-tooltip [position]="'top'" [content]="'Label tooltip'">
+          <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+        </fui-tooltip>
+      </div>
+      <fui-combo-box
+        [comboxForm]="clientNameForm"
+        [placeholder]="'Search client name'"
+        (selection)="selectionCombox($event, 'CN')"
+        [invalid]="false"
+        [message]="''"
+        [leftIcon]="'search'"
+        [optionValue]="clientNameOption"
+        [selectedValue]="clientNameSelected"
+      />
+      <fui-button-icon
+        (onClick)="openCloseFlyout('SH')"
+        class="flex mt-15"
+        [style]="'secondary'"
+        [color]="'primary'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircle'"
+        [text]="'Add new client'"
+      />
+    </div>
+    <!-- CLIENT NAME  -->
+
+    <!-- CLIENT CONTACT PERSON  -->
+    <div class="form-control">
+      <div class="flex-between">
+        <fui-text class="label"> Client Contact Person </fui-text>
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            [checked]="isClientContactPerson"
+            [(ngModel)]="isClientContactPerson"
+          />
+          <fui-text [size]="'sizes'">N/A</fui-text>
+        </div>
+      </div>
+      <fui-form-control-layout *ngIf="!isClientContactPerson">
+        <fui-select-field
+          [size]="'m'"
+          [formControlField]="clientContactPersonForm"
+          [disabled]="clientNameSelected.length === 0"
+          [placeholder]="'Select contact person'"
+          [invalid]="false"
+          [selectOptions]="clientContactPersonOption"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+      <fui-text
+        class="fs-italic mt-10"
+        [color]="'disabled'"
+        *ngIf="isClientContactPerson"
+        >Not Applicable</fui-text
+      >
+      <fui-button-icon
+        *ngIf="!isClientContactPerson && clientNameSelected.length > 0"
+        (onClick)="openCloseFlyout('CP')"
+        class="flex mt-15"
+        [style]="'secondary'"
+        [color]="'primary'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircle'"
+        [text]="'Add new contact person'"
+      />
+    </div>
+    <!-- CLIENT CONTACT PERSON  -->
+  </div>
+
+  <!-- SLIDER  -->
+  <shared-slider-card
+    *ngIf="clientNameSlider.length > 0"
+    [dataSlider]="clientNameSlider"
+    [currentSlideIndex]="currentSlideIndexClientName"
+    (slideOut)="slideOut($event, 'CN')"
+  >
+    <shared-slider-card-body
+      *ngFor="let item of clientNameSelected; let i = index"
+      [id]="i + 1"
+      [current]="currentSlideIndexClientName + 1"
+    >
+      <div class="card-blue">
+        <div class="grid-2">
+          <fui-text>Parent/Group Company</fui-text>
+          <fui-text>Company's Origin Country</fui-text>
+        </div>
+        <div class="mt-5 grid-2">
+          <fui-text [weight]="'semibold'">{{ item.value.parent }}</fui-text>
+          <fui-text [weight]="'semibold'">{{
+            item.value.companyOrigin
+          }}</fui-text>
+        </div>
+        <div class="mt-20 grid">
+          <fui-text>Address</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.value.address
+          }}</fui-text>
+        </div>
+        <fui-link
+          class="mt-20"
+          [colorLink]="'primary'"
+          [urlLink]="'#'"
+          [typeLink]="'coloring'"
+          >Change address</fui-link
+        >
+        <div class="mt-20 grid">
+          <fui-text>Entity Type</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.value.entityType
+          }}</fui-text>
+        </div>
+        <div class="mt-20 grid">
+          <fui-text>Industry/Business Sector</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.value.industry
+          }}</fui-text>
+        </div>
+      </div>
+    </shared-slider-card-body>
+  </shared-slider-card>
+  <!-- SLIDER  -->
+
+  <!-- INSTRUCTING PARTY  -->
+  <div class="form-control mt-20">
+    <div class="flex-between">
+      <fui-text class="label"> Instructing Party </fui-text>
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          [checked]="isInstructingParty"
+          [(ngModel)]="isInstructingParty"
+        />
+        <fui-text [size]="'sizes'">N/A</fui-text>
+      </div>
+    </div>
+    <fui-combo-box
+      [comboxForm]="instructingPartyForm"
+      *ngIf="!isInstructingParty"
+      [placeholder]="'Search instructing party'"
+      (selection)="selectionCombox($event, 'IP')"
+      [invalid]="false"
+      [message]="''"
+      [leftIcon]="'search'"
+      [optionValue]="instructingPartyOption"
+      [selectedValue]="instructingPartySelected"
+    />
+    <fui-text
+      class="fs-italic mt-10"
+      [color]="'disabled'"
+      *ngIf="isInstructingParty"
+      >Not Applicable</fui-text
+    >
+    <fui-button-icon
+      *ngIf="!isInstructingParty"
+      (onClick)="openCloseFlyout('SH')"
+      class="flex mt-15"
+      [style]="'secondary'"
+      [color]="'primary'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'plusInCircle'"
+      [text]="'Add new instructing party'"
+    />
+  </div>
+  <!-- INSTRUCTING PARTY  -->
+
+  <!-- SLIDER  -->
+  <shared-slider-card
+    *ngIf="instructingPartySlider.length > 0"
+    [dataSlider]="instructingPartySlider"
+    [currentSlideIndex]="currentSlideIndexInstructingParty"
+    (slideOut)="slideOut($event, 'IP')"
+  >
+    <shared-slider-card-body
+      *ngFor="let item of instructingPartySelected; let i = index"
+      [id]="i + 1"
+      [current]="currentSlideIndexInstructingParty + 1"
+    >
+      <div class="card-blue">
+        <div class="grid-2">
+          <fui-text>Parent/Group Company</fui-text>
+          <fui-text>Company's Origin Country</fui-text>
+        </div>
+        <div class="mt-5 grid-2">
+          <fui-text [weight]="'semibold'">{{ item.value.parent }}</fui-text>
+          <fui-text [weight]="'semibold'">{{
+            item.value.companyOrigin
+          }}</fui-text>
+        </div>
+        <div class="mt-20 grid">
+          <fui-text>Address</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.value.address
+          }}</fui-text>
+        </div>
+        <fui-link
+          class="mt-20"
+          [colorLink]="'primary'"
+          [urlLink]="'#'"
+          [typeLink]="'coloring'"
+          >Change address</fui-link
+        >
+        <div class="mt-20 grid">
+          <fui-text>Entity Type</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.value.entityType
+          }}</fui-text>
+        </div>
+        <div class="mt-20 grid">
+          <fui-text>Industry/Business Sector</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.value.industry
+          }}</fui-text>
+        </div>
+      </div>
+    </shared-slider-card-body>
+  </shared-slider-card>
+  <!-- SLIDER  -->
+</div>
+
+<!-- CONTACT PERSON FLYOUT  -->
+<app-flyout-contact-person
+  [isOpenFlyoutContactPerson]="isOpenFlyoutContactPerson"
+  (closeOut)="openCloseFlyout('CP')"
+/>
+<!-- CONTACT PERSON FLYOUT  -->
+
+<!-- STAKEHOLDER FLYOUT  -->
+<app-flyout-stakeholder
+  [isOpenFlyoutStakeHolder]="isOpenFlyoutStakeHolder"
+  (closeOut)="openCloseFlyout('SH')"
+/>
+<!-- STAKEHOLDER FLYOUT  -->

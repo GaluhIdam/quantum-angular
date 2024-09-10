@@ -1,0 +1,50 @@
+<div class="card mt-20">
+  <fui-text class="head-label" [weight]="'semibold'"
+    >Other Information</fui-text
+  >
+  <div class="flex align-center">
+    <fui-text>Matter Controllers</fui-text>
+    <fui-text [size]="'sizes'" class="border-badge">{{
+      selectedEmployeMatterMember.length
+    }}</fui-text>
+  </div>
+
+  <!-- BADGE MEMBER  -->
+  <div class="grid-3 mt-10">
+    <div class="border-badge" *ngFor="let item of selectedEmployeMatterMember">
+      <div class="p-8">
+        <fui-text>{{ item.name }}</fui-text>
+        <fui-text class="flex mt-5">{{ item.position }}</fui-text>
+      </div>
+    </div>
+  </div>
+  <fui-text
+    class="fs-italic"
+    [color]="'disabled'"
+    *ngIf="selectedEmployeMatterMember.length === 0"
+    >No Available</fui-text
+  >
+  <!-- BADGE MEMBER  -->
+
+  <fui-button-icon
+    (onClick)="openFlyoutManageController()"
+    class="flex mt-15"
+    [style]="'secondary'"
+    [color]="'primary'"
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'users'"
+    [text]="'Manage Controller'"
+  />
+</div>
+
+<!-- MANAGE CONTROLLER FLYOUT  -->
+<app-flyout-matter-members
+  [title]="'Manage Controller'"
+  [isOpenFlyoutManageMember]="isOpenFlyoutManageController"
+  [allEmployeList]="allEmployeList"
+  [selectedEmployeMatterMember]="selectedEmployeMatterMember"
+  (closeOut)="openFlyoutManageController()"
+  (selectionOut)="selectionOut($event)"
+/>
+<!-- MANAGE CONTROLLER FLYOUT  -->
