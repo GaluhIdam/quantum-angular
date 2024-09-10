@@ -1,0 +1,571 @@
+<div class="card">
+  <fui-text class="head-label" [weight]="'semibold'"
+    >Payer Information</fui-text
+  >
+
+  <div class="grid-2">
+    <!-- PAYING ENTITY  -->
+    <div class="form-control">
+      <div class="flex-between">
+        <fui-text class="label">Paying Entity</fui-text>
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            [checked]="isPayingEntity"
+            [(ngModel)]="isPayingEntity"
+          />
+          <fui-text [size]="'sizes'" (click)="isPayingEntity = !isPayingEntity"
+            >Same as Client</fui-text
+          >
+        </div>
+      </div>
+      <fui-combo-box
+        [singleSelection]="false"
+        [comboxForm]="payingEntityForm"
+        (selection)="selectionPayingEntity($event)"
+        [placeholder]="'Search paying entity'"
+        [disabled]="isPayingEntity"
+        [invalid]="false"
+        [message]="''"
+        [leftIcon]="'search'"
+        [optionValue]="payingEntityOption"
+        [selectedValue]="payingEntitySelected"
+      />
+      <fui-button-icon
+        class="flex mt-15"
+        [style]="'secondary'"
+        [color]="'primary'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircle'"
+        [text]="'Add new paying entity'"
+      />
+    </div>
+    <!-- PAYING ENTITY  -->
+
+    <!-- CONTACT PERSON  -->
+    <div class="form-control">
+      <fui-text class="label">Contact Person</fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [formControlField]="contactPersonForm"
+          [disabled]="payingEntitySelected.length === 0"
+          [size]="'m'"
+          [placeholder]="'Please select contact person'"
+          [invalid]="false"
+          [selectOptions]="contactPersonOption"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+      <fui-button-icon
+        *ngIf="payingEntitySelected.length > 0"
+        (onClick)="openCloseFlyout('CP')"
+        class="flex mt-15"
+        [style]="'secondary'"
+        [color]="'primary'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircle'"
+        [text]="'Add new contact person'"
+      />
+    </div>
+    <!-- CONTACT PERSON  -->
+  </div>
+
+  <!-- SLIDER  -->
+  <shared-slider-card
+    *ngIf="payingEntitySlider.length > 0"
+    [dataSlider]="payingEntitySlider"
+    [currentSlideIndex]="currentSlideIndexPayingEntity"
+    (slideOut)="slideOut($event)"
+  >
+    <shared-slider-card-body
+      *ngFor="let item of payingEntitySelected; let i = index"
+      [id]="i + 1"
+      [current]="currentSlideIndex + 1"
+    >
+      <div class="card-blue">
+        <div class="grid-2">
+          <fui-text>Parent/Group Company</fui-text>
+          <fui-text>Company's Origin Country</fui-text>
+        </div>
+        <div class="mt-5 grid-2">
+          <fui-text [weight]="'semibold'">{{ item.value.parent }}</fui-text>
+          <fui-text [weight]="'semibold'">{{
+            item.value.companyOrigin
+          }}</fui-text>
+        </div>
+        <div class="mt-20 grid">
+          <fui-text>Address</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.value.address
+          }}</fui-text>
+        </div>
+        <fui-link
+          class="mt-20"
+          [colorLink]="'primary'"
+          [urlLink]="'#'"
+          [typeLink]="'coloring'"
+          >Change address</fui-link
+        >
+        <div class="mt-20 grid">
+          <fui-text>Entity Type</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.value.entityType
+          }}</fui-text>
+        </div>
+        <div class="mt-20 grid">
+          <fui-text>Industry/Business Sector</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.value.industry
+          }}</fui-text>
+        </div>
+      </div>
+    </shared-slider-card-body>
+  </shared-slider-card>
+  <!-- SLIDER  -->
+
+  <fui-text class="head-label flex mt-30" [weight]="'semibold'"
+    >Fee Arrangement</fui-text
+  >
+
+  <div
+    [ngClass]="{
+    'grid-2': pricingTypeForm.value === 'Lumpsum' || pricingTypeForm.value === 'Retainer',
+    'grid-3': pricingTypeForm.value === 'Hourly' || pricingTypeForm.value  === 'Cap',
+  }"
+  >
+    <!-- PRICING TYPE  -->
+    <div class="form-control">
+      <div class="flex-start">
+        <fui-text class="label">Pricing Type</fui-text>
+        <fui-tooltip [position]="'top'" [content]="'Label tooltip'">
+          <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+        </fui-tooltip>
+      </div>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [disabled]="isPricingTypeForm"
+          [disabled]="billabiltiySelection === 'Potential Matter'"
+          [placeholder]="'Please select priciing type'"
+          [formControlField]="pricingTypeForm"
+          [invalid]="false"
+          [selectOptions]="pricingTypeOption"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- PRICING TYPE  -->
+
+    <!-- CURRENCY  -->
+    <div class="form-control">
+      <fui-text class="label">Currency</fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [formControlField]="currencyForm"
+          [placeholder]="'Please select contact person'"
+          [invalid]="false"
+          [selectOptions]="currencyOption"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- CURRENCY  -->
+
+    <!-- ESTIMATED FEE  -->
+    <div class="form-control" *ngIf="pricingTypeForm.value === 'Hourly'">
+      <div class="flex-between">
+        <fui-text class="label">Estimated Fee</fui-text>
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            [checked]="isEstimatedFee"
+            [(ngModel)]="isEstimatedFee"
+          />
+          <fui-text [size]="'sizes'" (click)="isEstimatedFee = !isEstimatedFee"
+            >N/A</fui-text
+          >
+        </div>
+      </div>
+      <fui-form-control-layout *ngIf="!isEstimatedFee">
+        <fui-prepend>
+          <fui-text [size]="'sizexs'" [weight]="'semibold'">{{
+            currencyForm.value
+          }}</fui-text>
+        </fui-prepend>
+        <fui-input-field
+          [formControlField]="estimatedFeeForm"
+          [type]="'number'"
+          [invalid]="false"
+          [placeholder]="'Type amount'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+      <fui-text
+        class="fs-italic mt-10"
+        [color]="'disabled'"
+        *ngIf="isEstimatedFee"
+        >Not Applicable</fui-text
+      >
+    </div>
+    <!-- ESTIMATED FEE  -->
+
+    <!-- CAP FEE  -->
+    <div class="form-control" *ngIf="pricingTypeForm.value === 'Cap'">
+      <fui-text class="label">Cap Fee</fui-text>
+      <fui-form-control-layout>
+        <fui-prepend>
+          <fui-text [size]="'sizexs'" [weight]="'semibold'">{{
+            currencyForm.value
+          }}</fui-text>
+        </fui-prepend>
+        <fui-input-field
+          [formControlField]="capFeeForm"
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Type amount'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- CAP FEE  -->
+  </div>
+
+  <div class="grid-2" *ngIf="pricingTypeForm.value === 'Retainer'">
+    <!-- RETAINER PERIOD START  -->
+    <div class="form-control">
+      <fui-text class="label">Retainer Period Start</fui-text>
+      <fui-date-picker
+        [dateFormControl]="startPeriodForm"
+        [dateFormat]="'DD-MM-YYYY'"
+      />
+    </div>
+    <!-- RETAINER PERIOD START  -->
+
+    <!-- RETAINER PERIOD END  -->
+    <div class="form-control">
+      <fui-text class="label">Retainer Period End</fui-text>
+      <fui-date-picker
+        [dateFormControl]="endPeriodForm"
+        [dateFormat]="'DD-MM-YYYY'"
+      />
+    </div>
+    <!-- RETAINER PERIOD END  -->
+  </div>
+
+  <!-- TABLE LUMPSUM -->
+  <div *ngIf="pricingTypeForm.value === 'Lumpsum'">
+    <fui-text>Lumpsum Term</fui-text>
+    <fui-table
+      *ngIf="dataLumpsum.length > 0"
+      [pagination]="false"
+      class="flex mt-5"
+      [limit]="5"
+      [totalItems]="1"
+      [showInfo]="false"
+    >
+      <fui-table-head *ngFor="let header of title">
+        <div [ngClass]="{ 'text-right': header === 'Amount' }">
+          {{ header }}
+        </div>
+      </fui-table-head>
+      <fui-table-body>
+        <fui-table-body-row *ngFor="let item of dataLumpsum">
+          <fui-table-body-data style="min-width: 20px; width: 20px">
+            {{ item.paymentOrder }}
+          </fui-table-body-data>
+          <fui-table-body-data>
+            <div>
+              <fui-text>{{ item.desc }}</fui-text>
+              <div class="flex mt-5">
+                <fui-badge
+                  [isBadgeIcon]="true"
+                  [iconPosition]="'start'"
+                  [sizeIcon]="'sizexs'"
+                  *ngIf="item.status"
+                  [color]="item.status === 'Collected' ? 'success' : 'warning'"
+                  [size]="'sizexs'"
+                  [icon]="item.status === 'Collected' ? 'tag' : 'stopSlash'"
+                  ><fui-text [size]="'sizexs'">{{
+                    item.status
+                  }}</fui-text></fui-badge
+                >
+                <fui-badge
+                  [isBadgeIcon]="true"
+                  [iconPosition]="'start'"
+                  [sizeIcon]="'sizexs'"
+                  *ngIf="item.addOn"
+                  [color]="'ghost'"
+                  [size]="'sizexs'"
+                  [icon]="'document'"
+                  ><fui-text [size]="'sizexs'">{{
+                    item.addOn
+                  }}</fui-text></fui-badge
+                >
+              </div>
+            </div>
+          </fui-table-body-data>
+          <fui-table-body-data>
+            <div class="text-right">
+              <fui-text>{{ currencyForm.value }} {{ item.amount }}</fui-text>
+            </div>
+          </fui-table-body-data>
+          <fui-table-body-data style="min-width: 20px; width: 20px">
+            <div class="flex">
+              <fui-button-icon
+                [disabled]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                "
+                (onClick)="openCloseFlyout('LT', 'Edit Lumpsum Term')"
+                [type]="'button'"
+                [size]="'m'"
+                [color]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                    ? 'disabled'
+                    : 'primary'
+                "
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'pencil'"
+              />
+              <fui-button-icon
+                [disabled]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                "
+                [type]="'button'"
+                [size]="'m'"
+                [color]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                    ? 'disabled'
+                    : 'danger'
+                "
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'stopSlash'"
+              />
+              <fui-button-icon
+                [disabled]="
+                  item.status && item.status !== 'Written-off' ? true : false
+                "
+                [type]="'button'"
+                [size]="'m'"
+                [color]="
+                  item.status && item.status !== 'Written-off'
+                    ? 'disabled'
+                    : 'danger'
+                "
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'trash'"
+              />
+            </div>
+          </fui-table-body-data>
+        </fui-table-body-row>
+      </fui-table-body>
+    </fui-table>
+    <fui-button-icon
+      (onClick)="openCloseFlyout('LT', 'Add Lumpsum Term')"
+      class="flex mt-15"
+      [style]="'secondary'"
+      [color]="'primary'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'plusInCircle'"
+      [text]="'Add Lumpsum Term'"
+    />
+  </div>
+  <!-- TABLE LUMPSUM -->
+
+  <!-- TABLE RETAINER -->
+  <div *ngIf="pricingTypeForm.value === 'Retainer'">
+    <fui-text>Retainer Term</fui-text>
+    <fui-table
+      [pagination]="false"
+      class="flex mt-5"
+      [limit]="5"
+      [totalItems]="1"
+      [showInfo]="false"
+    >
+      <fui-table-head *ngFor="let header of titleRetainer">
+        <div [ngClass]="{ 'text-right': header === 'Term' }">
+          {{ header }}
+        </div>
+      </fui-table-head>
+      <fui-table-body>
+        <fui-table-body-row *ngFor="let item of dataRetainer">
+          <fui-table-body-data style="min-width: 20px; width: 20px">
+            1
+          </fui-table-body-data>
+          <fui-table-body-data>
+            <fui-text>{{ item.period }}</fui-text>
+            <fui-badge
+              class="flex mt-5"
+              [isBadgeIcon]="true"
+              [iconPosition]="'start'"
+              [sizeIcon]="'sizexs'"
+              *ngIf="item.status"
+              [color]="item.status === 'Collected' ? 'success' : 'warning'"
+              [size]="'sizexs'"
+              [icon]="item.status === 'Collected' ? 'tag' : 'stopSlash'"
+              ><fui-text [size]="'sizexs'">{{
+                item.status
+              }}</fui-text></fui-badge
+            >
+            <fui-badge
+              class="flex mt-5"
+              [isBadgeIcon]="true"
+              [iconPosition]="'start'"
+              [sizeIcon]="'sizexs'"
+              *ngIf="item.addOn"
+              [color]="'ghost'"
+              [size]="'sizexs'"
+              [icon]="'document'"
+              ><fui-text [size]="'sizexs'">{{
+                item.addOn
+              }}</fui-text></fui-badge
+            >
+          </fui-table-body-data>
+          <fui-table-body-data>
+            <div class="grid-1 gap-5 text-right">
+              <fui-text [textWrap]="'nowrap'"
+                >{{ currencyForm.value }} {{ item.amount }}</fui-text
+              >
+              <fui-text>{{ item.hours }} Hours</fui-text>
+            </div>
+          </fui-table-body-data>
+          <fui-table-body-data>
+            <fui-text>{{ item.desc }}</fui-text>
+          </fui-table-body-data>
+          <fui-table-body-data style="min-width: 20px; width: 20px">
+            <div class="flex">
+              <fui-button-icon
+                (onClick)="openCloseFlyout('RL', 'Edit Retainer Term')"
+                [disabled]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                "
+                [type]="'button'"
+                [size]="'m'"
+                [color]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                    ? 'disabled'
+                    : 'primary'
+                "
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'pencil'"
+              />
+              <fui-button-icon
+                [disabled]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                "
+                [type]="'button'"
+                [size]="'m'"
+                [color]="
+                  item.status === 'Collected' || item.status === 'Written-off'
+                    ? 'disabled'
+                    : 'danger'
+                "
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'stopSlash'"
+              />
+              <fui-button-icon
+                [disabled]="
+                  item.status && item.status !== 'Written-off' ? true : false
+                "
+                [type]="'button'"
+                [size]="'m'"
+                [color]="
+                  item.status && item.status !== 'Written-off'
+                    ? 'disabled'
+                    : 'danger'
+                "
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'trash'"
+              />
+            </div>
+          </fui-table-body-data>
+        </fui-table-body-row>
+      </fui-table-body>
+    </fui-table>
+    <fui-button-icon
+      (onClick)="openCloseFlyout('RL', 'Add Retainer Term')"
+      class="flex mt-15"
+      [style]="'secondary'"
+      [color]="'primary'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'plusInCircle'"
+      [text]="'Add Retainer Term'"
+    />
+  </div>
+  <!-- TABLE RETAINER -->
+
+  <!-- Billing Notes  -->
+  <div
+    [ngClass]="{
+    'grid mt-20': pricingTypeForm.value === 'Lumpsum' || pricingTypeForm.value === 'Retainer',
+    'grid': pricingTypeForm.value === 'Hourly' || pricingTypeForm.value  === 'Cap',
+  }"
+  >
+    <div class="flex-between">
+      <fui-text class="mt-20">Billing Notes</fui-text>
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          [checked]="isBillingNote"
+          [(ngModel)]="isBillingNote"
+        />
+        <fui-text [size]="'sizes'">N/A</fui-text>
+      </div>
+    </div>
+    <fui-text class="flex mt-10" [color]="'disabled'"
+      >Add detailed information regarding the fee arrangement for this matter,
+      including any special terms, discounts, or additional charges.</fui-text
+    >
+  </div>
+  <div class="form-control mt-10" *ngIf="!isBillingNote">
+    <fui-form-control-layout>
+      <fui-textarea
+        [formControlField]="billingNoteForm"
+        [placeholder]="'Type billing notes'"
+        [size]="'m'"
+        [invalid]="false"
+      >
+      </fui-textarea>
+    </fui-form-control-layout>
+  </div>
+  <fui-text
+    class="fs-italic flex mt-10"
+    [color]="'disabled'"
+    *ngIf="isBillingNote"
+    >Not Applicable</fui-text
+  >
+  <!-- Billing Notes  -->
+</div>
+
+<!-- FLYOUT CONTACT PERSON  -->
+<app-flyout-contact-person
+  [isOpenFlyoutContactPerson]="isFlyoutContactPerson"
+  (closeOut)="openCloseFlyout('CP')"
+/>
+<!-- FLYOUT CONTACT PERSON  -->
+
+<!-- FLYOUT LUMPSUM TERM  -->
+<app-flyout-lumpsum-term
+  [isFlyoutLumpsumTerm]="isFlyoutLumpsumTerm"
+  [title]="titleFlyout"
+  (closeOut)="openCloseFlyout('LT', 'Lumpsum Term')"
+/>
+<!-- FLYOUT LUMPSUM TERM  -->
+
+<!-- FLYOUT RETAINER TERM  -->
+<app-flyout-retainer-term
+  [isFlyoutRetainerTerm]="isFlyoutRetainerTerm"
+  [title]="titleFlyout"
+  (closeOut)="openCloseFlyout('RL', 'Retainer Term')"
+/>
+<!-- FLYOUT RETAINER TERM  -->

@@ -1,0 +1,102 @@
+<div class="card mt-20">
+  <div class="grid">
+    <fui-text [weight]="'semibold'">Special Rates</fui-text>
+    <fui-text class="flex mt-10" [color]="'disabled'"
+      >Represents binding work contracts related to this matter. You have the
+      option to add multiple proofs of engagement.</fui-text
+    >
+
+    <!-- COLLABSIBLE  -->
+    <fui-collapsible-nav-group
+      *ngFor="let item of dataSpecialRate"
+      class="mt-20"
+      [isCollapsed]="isCollapsed"
+    >
+      <div header>
+        <div class="flex-between">
+          <div class="grid">
+            <fui-text>{{ item.member }}</fui-text>
+            <fui-text class="italic">{{ item.position }}</fui-text>
+          </div>
+          <div class="flex">
+            <fui-text
+              [textWrap]="'nowrap'"
+              style="width: -webkit-fill-available; text-align: end"
+              >{{ currencyForm.value }} {{ getMinMaxRates().minRate }}.00 ~
+              {{ currencyForm.value }}
+              {{ getMinMaxRates().maxRate }}.00</fui-text
+            >
+            <fui-button-icon
+              [size]="'s'"
+              (onClick)="toggleCollapse()"
+              [type]="'button'"
+              [option]="'icon'"
+              [icon]="isCollapsed ? 'arrowDown' : 'arrowRight'"
+              [color]="'text'"
+              [style]="'secondary'"
+            />
+          </div>
+        </div>
+      </div>
+      <div body class="mt-5">
+        <fui-table
+          [pagination]="false"
+          class="flex mt-15"
+          [limit]="5"
+          [totalItems]="1"
+          [showInfo]="false"
+        >
+          <fui-table-body>
+            <fui-table-body-row *ngFor="let subitem of item.rates">
+              <fui-table-body-data>
+                <fui-text>{{ subitem.start }} - {{ subitem.end }}</fui-text>
+              </fui-table-body-data>
+              <fui-table-body-data>
+                <fui-text
+                  >{{ currencyForm.value }} {{ subitem.rate }}.00</fui-text
+                >
+              </fui-table-body-data>
+              <fui-table-body-data style="min-width: 20px; width: 20px">
+                <div class="flex">
+                  <fui-button-icon
+                    (onClick)="openCloseFlyout('Edit Sepcial Rates')"
+                    [type]="'button'"
+                    [color]="'primary'"
+                    [style]="'secondary'"
+                    [option]="'icon'"
+                    [icon]="'pencil'"
+                  />
+                  <fui-button-icon
+                    [type]="'button'"
+                    [color]="'danger'"
+                    [style]="'secondary'"
+                    [option]="'icon'"
+                    [icon]="'trash'"
+                  />
+                </div>
+              </fui-table-body-data>
+            </fui-table-body-row>
+          </fui-table-body>
+        </fui-table>
+      </div>
+    </fui-collapsible-nav-group>
+    <!-- COLLABSIBLE  -->
+
+    <fui-button-icon
+      (onClick)="openCloseFlyout('Add Sepcial Rates')"
+      class="mt-20"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'plusInCircle'"
+      [text]="'Set up special rate'"
+      [color]="'primary'"
+      [style]="'secondary'"
+    />
+  </div>
+</div>
+
+<app-flyout-special-rates
+  [isFlyoutSpecialRates]="isFlyoutSpecialRates"
+  [isMatterMemberForm]="isMatterMemberForm"
+  (closeOut)="openCloseFlyout('Sepcial Rates')"
+/>
