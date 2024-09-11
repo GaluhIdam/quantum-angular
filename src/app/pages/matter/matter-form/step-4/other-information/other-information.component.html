@@ -1,0 +1,78 @@
+<div class="card mt-20">
+  <fui-text [weight]="'semibold'">Other Information</fui-text>
+
+  <!-- Default Payment Bank Account -->
+  <div class="form-control mt-20">
+    <fui-text class="flex mb-10">Default Payment Bank Account</fui-text>
+    <fui-form-control-layout>
+      <fui-select-field
+        [size]="'m'"
+        [placeholder]="'Please select default account'"
+        [invalid]="false"
+        [selectOptions]="[]"
+      >
+      </fui-select-field>
+    </fui-form-control-layout>
+  </div>
+  <!-- Default Payment Bank Account -->
+
+  <!-- BD Matter Description  -->
+  <div class="form-control">
+    <fui-text class="flex mb-10">BD Matter Description</fui-text>
+    <fui-form-control-layout>
+      <fui-textarea
+        [placeholder]="'BD Matter Description'"
+        [size]="'m'"
+        [invalid]="false"
+      >
+      </fui-textarea>
+    </fui-form-control-layout>
+  </div>
+  <!-- BD Matter Description  -->
+
+  <div class="flex align-center">
+    <fui-text>Matter Controllers</fui-text>
+    <fui-text [size]="'sizes'" class="border-badge">{{
+      selectedEmployeMatterMember.length
+    }}</fui-text>
+  </div>
+
+  <!-- BADGE MEMBER  -->
+  <div class="grid-3 mt-10">
+    <div class="border-badge" *ngFor="let item of selectedEmployeMatterMember">
+      <div class="p-8">
+        <fui-text>{{ item.name }}</fui-text>
+        <fui-text class="flex mt-5">{{ item.position }}</fui-text>
+      </div>
+    </div>
+  </div>
+  <fui-text
+    class="fs-italic"
+    [color]="'disabled'"
+    *ngIf="selectedEmployeMatterMember.length === 0"
+    >No Available</fui-text
+  >
+  <!-- BADGE MEMBER  -->
+
+  <fui-button-icon
+    (onClick)="openFlyoutManageController()"
+    class="flex mt-15"
+    [style]="'secondary'"
+    [color]="'primary'"
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'users'"
+    [text]="'Manage Controller'"
+  />
+</div>
+
+<!-- MANAGE CONTROLLER FLYOUT  -->
+<app-flyout-matter-members
+  [title]="'Manage Controller'"
+  [isOpenFlyoutManageMember]="isOpenFlyoutManageController"
+  [allEmployeList]="allEmployeList"
+  [selectedEmployeMatterMember]="selectedEmployeMatterMember"
+  (closeOut)="openFlyoutManageController()"
+  (selectionOut)="selectionOut($event)"
+/>
+<!-- MANAGE CONTROLLER FLYOUT  -->
