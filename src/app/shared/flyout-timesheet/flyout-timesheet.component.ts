@@ -26,6 +26,7 @@ import {
   IconsComponent,
   InputFieldComponent,
   SelectFieldComponent,
+  TextareaComponent,
   TextComponent,
   TimeSelectionComponent,
   TooltipComponent,
@@ -57,6 +58,7 @@ import { MyTimesheetDTO } from '../../pages/matter/my-timesheet/dtos/my-timeshee
     DateRangeComponent,
     TimeSelectionComponent,
     BadgeComponent,
+    TextareaComponent,
   ],
   templateUrl: './flyout-timesheet.component.html',
   styleUrl: './flyout-timesheet.component.scss',
@@ -191,6 +193,13 @@ export class FlyoutTimesheetComponent {
   /** Close flyout */
   toggleCloseFlyout(): void {
     this.isOpenFlyout = false;
+    this.feeEarnerForm.setValue('');
+    this.activityForm.setValue('');
+    this.objectEventForm.setValue('');
+    this.topicForm.setValue('');
+    this.addDescForm.setValue('');
+    this.dateFormControl.setValue('');
+    this.durationForm.setValue('');
     this.closeOut.emit(false);
   }
 }

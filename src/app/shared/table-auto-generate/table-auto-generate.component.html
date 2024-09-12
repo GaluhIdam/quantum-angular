@@ -4,7 +4,7 @@
   (onPageChanges)="onPageChanges($event)"
   [showInfo]="showInfo"
 >
-  <fui-table-head style="width: 20px;">
+  <fui-table-head style="width: 20px;" *ngIf="checkbox">
     <input
       type="checkbox"
       [checked]="isAllSelected()"
@@ -21,7 +21,7 @@
   @if (data.length > 0) {
     <fui-table-body *ngFor="let item of data; let index = index">
       <fui-table-body-row>
-        <fui-table-body-data style="min-width: 20px;">
+        <fui-table-body-data style="min-width: 20px;" *ngIf="checkbox">
           <!-- Checkbox for each row -->
           <input
             type="checkbox"
