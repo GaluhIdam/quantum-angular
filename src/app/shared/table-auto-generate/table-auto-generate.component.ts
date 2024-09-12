@@ -45,6 +45,7 @@ export class TableAutoGenerateComponent implements OnChanges {
   @Input({ required: true }) totalItems: number = 100;
   @Input() action: ActionBtn[] = ['create', 'edit', 'delete'];
   @Input() showInfo: boolean = false;
+  @Input() checkbox: boolean = true;
 
   // New input to trigger selection clearing
   @Input() clearSelection: boolean = false;

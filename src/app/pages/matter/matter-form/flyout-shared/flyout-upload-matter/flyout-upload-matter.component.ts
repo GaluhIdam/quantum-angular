@@ -39,8 +39,8 @@ export class FlyoutUploadMatterComponent {
   languageForm: FormControl = new FormControl('');
   languageOption: { label: string; value: any }[] = [
     {
-      label: 'Bahasa',
-      value: 'Bahasa',
+      label: 'Indonesian',
+      value: 'Indonesian',
     },
     {
       label: 'English',

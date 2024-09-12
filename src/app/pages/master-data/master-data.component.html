@@ -1,0 +1,99 @@
+<shared-page-empty [titlePage]="'Template Master Data'"></shared-page-empty>
+<div class="card">
+  <fui-button-icon
+    (onClick)="openCloseFlyout()"
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'filter'"
+    [text]="'Filter'"
+    [color]="'text'"
+    [style]="'secondary'"
+  />
+  <div class="mt-20">
+    <shared-table-auto-generate
+      [action]="['edit', 'delete']"
+      [title]="headerTable"
+      [data]="data"
+      [property]="property"
+      [limit]="10"
+      [totalItems]="100"
+      [checkbox]="false"
+      (actionOut)="openCloseFlyout()"
+    />
+  </div>
+</div>
+
+<!-- FILTER FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="filterFlyout"
+  [titleFlyout]="'Filter Master Data'"
+  (closeOut)="openCloseFlyout()"
+>
+  <div body>
+    <div class="form-control">
+      <fui-text class="label" [size]="'sizes'">Label Form</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field [type]="'text'" [size]="'m'" [invalid]="false">
+          <fui-icons
+            *ngIf="false"
+            right-icon
+            [label]="'right'"
+            [icon]="'alert'"
+            [size]="'sizem'"
+            [color]="'danger'"
+          />
+        </fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <div class="form-control">
+      <fui-text class="label" [size]="'sizes'">Label Form</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field [type]="'text'" [size]="'m'" [invalid]="false">
+          <fui-icons
+            *ngIf="false"
+            right-icon
+            [label]="'right'"
+            [icon]="'alert'"
+            [size]="'sizem'"
+            [color]="'danger'"
+          />
+        </fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <div class="form-control">
+      <fui-text class="label" [size]="'sizes'">Label Form</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field [type]="'text'" [size]="'m'" [invalid]="false">
+          <fui-icons
+            *ngIf="false"
+            right-icon
+            [label]="'right'"
+            [icon]="'alert'"
+            [size]="'sizem'"
+            [color]="'danger'"
+          />
+        </fui-input-field>
+      </fui-form-control-layout>
+    </div>
+  </div>
+
+  <div footer class="flex-between">
+    <fui-button-icon
+      (onClick)="openCloseFlyout()"
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Cancel'"
+      [color]="'text'"
+      [style]="'secondary'"
+    />
+    <fui-button-icon
+      (onClick)="openCloseFlyout()"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'filter'"
+      [text]="'Filter'"
+      [color]="'primary'"
+    />
+  </div>
+</shared-flyout-simple>
+<!-- FILTER FLYOUT  -->

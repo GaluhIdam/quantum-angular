@@ -40,6 +40,7 @@ import {
 } from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
 import { MyTimesheetService } from '../../pages/matter/my-timesheet/services/my-timesheet.service';
 import { FlyoutTimesheetComponent } from '../flyout-timesheet/flyout-timesheet.component';
+import { MiniSidebarComponent } from '../mini-sidebar/mini-sidebar.component';
 
 @Component({
   selector: 'app-layouts',
@@ -63,6 +64,7 @@ import { FlyoutTimesheetComponent } from '../flyout-timesheet/flyout-timesheet.c
     AvatarComponent,
     ModalDeleteComponent,
     FlyoutTimesheetComponent,
+    MiniSidebarComponent
   ],
   templateUrl: './layouts.component.html',
   styleUrl: './layouts.component.scss',

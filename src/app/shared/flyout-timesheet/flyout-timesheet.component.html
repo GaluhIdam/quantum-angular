@@ -84,11 +84,11 @@
         <!-- OBJECT/EVENT FORM  -->
         <div class="form-control" *ngIf="showObjectEventForm">
           <fui-form-control-layout>
-            <fui-input-field
-              [formControlField]="objectEventForm"
-              [placeholder]="'object/event'"
-              [type]="'text'"
+            <fui-textarea
               [size]="'m'"
+              [formControlField]="objectEventForm"
+              [rows]="1"
+              [placeholder]="'Object/Event'"
               [invalid]="objectEventForm.invalid && objectEventForm.dirty"
             >
               <fui-icons
@@ -98,7 +98,8 @@
                 [icon]="'alert'"
                 [size]="'sizem'"
                 [color]="'danger'"
-            /></fui-input-field>
+              />
+            </fui-textarea>
             <fui-validator-field
               validator
               [message]="'Object/Event is required!'"
@@ -110,11 +111,11 @@
         <!-- TOPICS FORM  -->
         <div class="form-control" *ngIf="showTopicForm">
           <fui-form-control-layout>
-            <fui-input-field
-              [formControlField]="topicForm"
-              [placeholder]="'topics'"
-              [type]="'text'"
+            <fui-textarea
               [size]="'m'"
+              [formControlField]="topicForm"
+              [rows]="1"
+              [placeholder]="'Topics'"
               [invalid]="topicForm.invalid && topicForm.dirty"
             >
               <fui-icons
@@ -124,7 +125,8 @@
                 [icon]="'alert'"
                 [size]="'sizem'"
                 [color]="'danger'"
-            /></fui-input-field>
+              />
+            </fui-textarea>
             <fui-validator-field validator [message]="'Topics is required!'" />
           </fui-form-control-layout>
         </div>
@@ -133,11 +135,11 @@
         <!-- ADD DESC FORM  -->
         <div class="form-control" *ngIf="showAddDescForm">
           <fui-form-control-layout>
-            <fui-input-field
-              [formControlField]="addDescForm"
-              [placeholder]="'Additional description'"
-              [type]="'text'"
+            <fui-textarea
               [size]="'m'"
+              [formControlField]="addDescForm"
+              [rows]="1"
+              [placeholder]="'Additional description'"
               [invalid]="addDescForm.invalid && addDescForm.dirty"
             >
               <fui-icons
@@ -147,7 +149,8 @@
                 [icon]="'alert'"
                 [size]="'sizem'"
                 [color]="'danger'"
-            /></fui-input-field>
+              />
+            </fui-textarea>
             <fui-validator-field
               validator
               [message]="'Additional description is required!'"
