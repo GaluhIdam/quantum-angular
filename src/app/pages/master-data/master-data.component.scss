@@ -24,3 +24,14 @@
     display: flex;
   }
 }
+.flex {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.flex-between-f {
+  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}

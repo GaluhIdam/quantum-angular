@@ -1,85 +1,161 @@
-<shared-page-empty [titlePage]="'Template Master Data'"></shared-page-empty>
-<div class="card">
-  <fui-button-icon
-    (onClick)="openCloseFlyout()"
-    [type]="'button'"
-    [option]="'iconText'"
-    [icon]="'filter'"
-    [text]="'Filter'"
-    [color]="'text'"
-    [style]="'secondary'"
-  />
-  <div class="mt-20">
-    <shared-table-auto-generate
-      [action]="['edit', 'delete']"
-      [title]="headerTable"
-      [data]="data"
-      [property]="property"
-      [limit]="10"
-      [totalItems]="100"
-      [checkbox]="false"
-      (actionOut)="openCloseFlyout()"
-    />
+<shared-page-empty [titlePage]="'Matter Type'">
+  <div class="card">
+    <div class="flex-between-f">
+      <div class="flex">
+        <fui-form-control-layout>
+          <fui-input-field
+            [placeholder]="'Search...'"
+            [invalid]="false"
+            [type]="'text'"
+            [size]="'m'"
+          ></fui-input-field>
+        </fui-form-control-layout>
+
+        <fui-button-icon
+          (onClick)="openCloseFlyout('filter')"
+          [type]="'button'"
+          [option]="'iconText'"
+          [icon]="'filter'"
+          [text]="'Filter'"
+          [color]="'text'"
+          [style]="'secondary'"
+        />
+      </div>
+      <fui-button-icon
+        (onClick)="openCloseFlyout('create')"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircle'"
+        [text]="'Create'"
+        [color]="'primary'"
+        [style]="'secondary'"
+      />
+    </div>
+    <div class="mt-20">
+      <fui-table [limit]="10" [totalItems]="1" [showInfo]="false">
+        <fui-table-head *ngFor="let item of headerTable">
+          <fui-text [weight]="'semibold'">{{ item }}</fui-text>
+        </fui-table-head>
+        <fui-table-body>
+          <fui-table-body-row *ngFor="let item of data">
+            <fui-table-body-data>
+              {{ item.pg }}
+            </fui-table-body-data>
+            <fui-table-body-data>
+              {{ item.pa }}
+            </fui-table-body-data>
+            <fui-table-body-data>
+              {{ item.name }}
+            </fui-table-body-data>
+            <fui-table-body-data>
+              {{ item.code }}
+            </fui-table-body-data>
+            <fui-table-body-data style="text-align: center">
+              <fui-icons
+                [color]="item.status ? 'success' : 'danger'"
+                [icon]="
+                  item.status ? 'checkInCircleFilled' : 'crossInACircleFilled'
+                "
+              />
+            </fui-table-body-data>
+            <fui-table-body-data>
+              <div class="flex">
+                <fui-button-icon
+                  (onClick)="openCloseFlyout('edit')"
+                  [size]="'s'"
+                  [type]="'button'"
+                  [option]="'icon'"
+                  [icon]="'pencil'"
+                />
+                <fui-button-icon
+                  (onClick)="openCloseFlyout('delete')"
+                  [size]="'s'"
+                  [type]="'button'"
+                  [option]="'icon'"
+                  [color]="'danger'"
+                  [icon]="'trash'"
+                />
+              </div>
+            </fui-table-body-data>
+          </fui-table-body-row>
+        </fui-table-body>
+      </fui-table>
+    </div>
   </div>
-</div>
+</shared-page-empty>
 
 <!-- FILTER FLYOUT  -->
 <shared-flyout-simple
   [isOpenFlyout]="filterFlyout"
-  [titleFlyout]="'Filter Master Data'"
-  (closeOut)="openCloseFlyout()"
+  [titleFlyout]="'Filter Matter Type'"
+  (closeOut)="openCloseFlyout('filter')"
 >
   <div body>
     <div class="form-control">
-      <fui-text class="label" [size]="'sizes'">Label Form</fui-text>
+      <fui-text class="label" [size]="'sizes'">Practice Group</fui-text>
+      <fui-combo-box
+        [leftIcon]="'search'"
+        [selectedValue]="[]"
+        [optionValue]="[]"
+      />
+    </div>
+
+    <div class="form-control">
+      <fui-text class="label" [size]="'sizes'">Active</fui-text>
       <fui-form-control-layout>
-        <fui-input-field [type]="'text'" [size]="'m'" [invalid]="false">
-          <fui-icons
-            *ngIf="false"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-          />
-        </fui-input-field>
+        <fui-select-field
+          [placeholder]="'Please select one'"
+          [selectOptions]="[
+            {
+              label: 'All',
+              value: 'all'
+            },
+            {
+              label: 'Yes',
+              value: 'yes'
+            },
+            {
+              label: 'No',
+              value: 'no'
+            }
+          ]"
+          [size]="'m'"
+          [invalid]="false"
+        >
+        </fui-select-field>
       </fui-form-control-layout>
     </div>
+
     <div class="form-control">
-      <fui-text class="label" [size]="'sizes'">Label Form</fui-text>
+      <fui-text class="label" [size]="'sizes'">In Appraisal</fui-text>
       <fui-form-control-layout>
-        <fui-input-field [type]="'text'" [size]="'m'" [invalid]="false">
-          <fui-icons
-            *ngIf="false"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-          />
-        </fui-input-field>
-      </fui-form-control-layout>
-    </div>
-    <div class="form-control">
-      <fui-text class="label" [size]="'sizes'">Label Form</fui-text>
-      <fui-form-control-layout>
-        <fui-input-field [type]="'text'" [size]="'m'" [invalid]="false">
-          <fui-icons
-            *ngIf="false"
-            right-icon
-            [label]="'right'"
-            [icon]="'alert'"
-            [size]="'sizem'"
-            [color]="'danger'"
-          />
-        </fui-input-field>
+        <fui-select-field
+          [placeholder]="'Please select one'"
+          [selectOptions]="[
+            {
+              label: 'All',
+              value: 'all'
+            },
+            {
+              label: 'Yes',
+              value: 'yes'
+            },
+            {
+              label: 'No',
+              value: 'no'
+            }
+          ]"
+          [size]="'m'"
+          [invalid]="false"
+        >
+        </fui-select-field>
       </fui-form-control-layout>
     </div>
   </div>
 
   <div footer class="flex-between">
     <fui-button-icon
-      (onClick)="openCloseFlyout()"
+      (onClick)="openCloseFlyout('filter')"
       [type]="'button'"
       [option]="'text'"
       [text]="'Cancel'"
@@ -87,7 +163,7 @@
       [style]="'secondary'"
     />
     <fui-button-icon
-      (onClick)="openCloseFlyout()"
+      (onClick)="openCloseFlyout('filter')"
       [type]="'button'"
       [option]="'iconText'"
       [icon]="'filter'"
@@ -97,3 +173,109 @@
   </div>
 </shared-flyout-simple>
 <!-- FILTER FLYOUT  -->
+
+<!-- CREATE FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="createFlyout"
+  [titleFlyout]="titleFlyout"
+  (closeOut)="openCloseFlyout('create')"
+>
+  <div body>
+    <div class="form-control">
+      <fui-text class="label" [size]="'sizes'">Name</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field [type]="'text'" [size]="'m'" [invalid]="false">
+          <fui-icons
+            *ngIf="false"
+            right-icon
+            [label]="'right'"
+            [icon]="'alert'"
+            [size]="'sizem'"
+            [color]="'danger'"
+          />
+        </fui-input-field>
+      </fui-form-control-layout>
+    </div>
+
+    <div class="form-control">
+      <fui-text class="label" [size]="'sizes'">Code</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field [type]="'text'" [size]="'m'" [invalid]="false">
+          <fui-icons
+            *ngIf="false"
+            right-icon
+            [label]="'right'"
+            [icon]="'alert'"
+            [size]="'sizem'"
+            [color]="'danger'"
+          />
+        </fui-input-field>
+      </fui-form-control-layout>
+    </div>
+
+    <div class="form-control">
+      <fui-text class="label" [size]="'sizes'">Practice Group</fui-text>
+      <fui-combo-box
+        [leftIcon]="'search'"
+        [selectedValue]="[]"
+        [optionValue]="[]"
+      />
+    </div>
+
+    <div class="form-control">
+      <fui-text class="label" [size]="'sizes'">Practice Area</fui-text>
+      <fui-combo-box
+        [leftIcon]="'search'"
+        [selectedValue]="[]"
+        [optionValue]="[]"
+      />
+    </div>
+
+    <div class="form-control">
+      <div class="flex">
+        <input type="checkbox" name="" id="" />
+        <fui-text class="label" [size]="'sizes'">Show in Appraisal </fui-text>
+      </div>
+      <div class="flex">
+        <input type="checkbox" name="" id="" />
+        <fui-text class="label" [size]="'sizes'">Active </fui-text>
+      </div>
+    </div>
+
+    <div class="form-control">
+      <fui-text class="label" [size]="'sizes'">Skillss</fui-text>
+      <fui-combo-box
+        [leftIcon]="'search'"
+        [selectedValue]="[]"
+        [optionValue]="[]"
+      />
+    </div>
+  </div>
+
+  <div footer class="flex-between">
+    <fui-button-icon
+      (onClick)="openCloseFlyout('create')"
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Cancel'"
+      [color]="'text'"
+      [style]="'secondary'"
+    />
+    <fui-button-icon
+      (onClick)="openCloseFlyout('create')"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'save'"
+      [text]="'Save'"
+      [color]="'primary'"
+    />
+  </div>
+</shared-flyout-simple>
+<!-- CREATE FLYOUT  -->
+
+<!-- MODAL DELETE  -->
+<shared-modal-delete
+  [openModalDelete]="openModalDelete"
+  (action)="openCloseFlyout('delete')"
+/>
+<!-- MODAL DELETE  -->
