@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { ButtonGroupComponent } from '../../../shared/button-group/button-group.component';
 import { FlyoutFilterMatterComponent } from '../../../shared/flyout-filter-matter/flyout-filter-matter.component';
 import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
+import { PageEmptyComponent } from '../../../shared/page-empty/page-empty.component';
 
 @Component({
   selector: 'app-my-matter',
@@ -28,6 +29,7 @@ import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
     ButtonGroupComponent,
     FlyoutFilterMatterComponent,
     SkeletonComponent,
+    PageEmptyComponent,
   ],
   templateUrl: './my-matter.component.html',
   styleUrl: './my-matter.component.scss',

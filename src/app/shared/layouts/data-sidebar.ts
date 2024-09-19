@@ -121,5 +121,83 @@ export class DataSideBar {
         },
       ],
     },
+    {
+      size: this.size,
+      icon: 'document',
+      title: 'Example',
+      active: false,
+      children: [
+        {
+          title: 'Master Data',
+          active: false,
+          link: '/master-data',
+          size: this.size,
+        },
+        {
+          title: 'Document 2',
+          active: false,
+          link: '',
+          size: this.size,
+        },
+        {
+          title: 'Document 3',
+          active: false,
+          link: '',
+          size: this.size,
+        },
+      ],
+    },
+    {
+      size: this.size,
+      icon: 'users',
+      title: 'Example',
+      active: false,
+      children: [
+        {
+          title: 'User 1',
+          active: false,
+          link: '',
+          size: this.size,
+        },
+        {
+          title: 'User 2',
+          active: false,
+          link: '',
+          size: this.size,
+        },
+      ],
+    },
+    {
+      size: this.size,
+      icon: 'email',
+      title: 'Example',
+      active: false,
+      children: [
+        {
+          title: 'Email 1',
+          active: false,
+          link: '',
+          size: this.size,
+        },
+        {
+          title: 'Email 2',
+          active: false,
+          link: '',
+          size: this.size,
+        },
+        {
+          title: 'Email 3',
+          active: false,
+          link: '',
+          size: this.size,
+        },
+        {
+          title: 'Email 4',
+          active: false,
+          link: '',
+          size: this.size,
+        },
+      ],
+    },
   ];
 }

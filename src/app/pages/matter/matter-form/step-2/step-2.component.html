@@ -1,0 +1,13 @@
+<!-- GENERAL INFORMATION  -->
+<app-general-information
+  (billabilitySelected)="catchBillabilitySelected($event)"
+/>
+<!-- GENERAL INFORMATION  -->
+
+<!-- CLIENT INFORMATION  -->
+<app-client-information *ngIf="billabilityForm !== 'Nonbillable'" />
+<!-- CLIENT INFORMATION  -->
+
+<!-- OTHER INFORMATION  -->
+<app-other-information *ngIf="billabilityForm === 'Nonbillable'" />
+<!-- OTHER INFORMATION  -->

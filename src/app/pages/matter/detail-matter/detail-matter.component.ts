@@ -11,6 +11,7 @@ import {
 } from '@quantum/fui';
 import { TimesheetComponent } from './timesheet/timesheet.component';
 import { ExpensesComponent } from './expenses/expenses.component';
+import { InformationComponent } from './information/information.component';
 
 @Component({
   selector: 'app-detail-matter',
@@ -24,6 +25,7 @@ import { ExpensesComponent } from './expenses/expenses.component';
     IconsComponent,
     TimesheetComponent,
     ExpensesComponent,
+    InformationComponent,
   ],
   templateUrl: './detail-matter.component.html',
   styleUrl: './detail-matter.component.scss',
@@ -48,7 +50,7 @@ export class DetailMatterComponent {
       title: 'Overview',
     },
     {
-      active: 'disabled',
+      active: false,
       icon: 'document',
       sideIcon: 'left',
       sizeIcon: 'sizem',

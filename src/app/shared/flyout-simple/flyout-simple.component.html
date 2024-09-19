@@ -1,12 +1,12 @@
 <fui-flyout
   [zIndex]="2"
   [open]="isOpenFlyout"
-  [flyoutSize]="'s'"
+  [flyoutSize]="size"
   [flyoutPadding]="'s'"
 >
   <fui-flyout-header (onCloseFlyout)="toggleCloseFlyout()">
     <div class="header-flyout">
-      <fui-text [size]="'sizexl'" [weight]="'semibold'">{{ titleFlyout }}</fui-text>
+      <fui-text [size]="'sizel'" [weight]="'semibold'">{{ titleFlyout }}</fui-text>
     </div>
   </fui-flyout-header>
   <fui-flyout-body>

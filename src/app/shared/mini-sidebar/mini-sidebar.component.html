@@ -1,0 +1,82 @@
+<div class="wraper-sidebar">
+  <div class="logo-bg">
+    <img
+      *ngIf="themeService.getTheme() === 'ahp-light'"
+      src="../../../assets/Logo.svg"
+      class="img-logo"
+      alt="logo"
+    />
+    <img
+      *ngIf="themeService.getTheme() === 'ahp-dark'"
+      src="../../../assets/logo-white.svg"
+      class="img-logo"
+      alt="logo"
+    />
+  </div>
+
+  <div class="center">
+    <div class="mini-sidebar">
+      <div
+        [ngClass]="{ active: item.active }"
+        class="btn-circle"
+        *ngFor="let item of dataSidebar"
+        (click)="selectMenu(item)"
+      >
+        <fui-icons
+          [icon]="item.icon!"
+          [size]="'sizem'"
+          [color]="item.active ? 'ghost' : 'primary'"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="menuSeleted && menuSeleted.children" class="sub-menu">
+    <div class="form-control">
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [formControlField]="searchForm"
+          [placeholder]="'Search...'"
+          [invalid]="false"
+          [size]="'s'"
+        >
+          <fui-icons left-icon [icon]="'search'" />
+          <fui-loading
+            *ngIf="loading"
+            class="mx-5"
+            right-icon
+            [type]="'spinner'"
+            [isLoading]="true"
+            [size]="'sizel'"
+          ></fui-loading>
+        </fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <div class="body-search-sub">
+      <fui-sidenav
+        [highlightText]="searchForm.value"
+        [dataSide]="menuSeleted.children"
+      ></fui-sidenav>
+    </div>
+  </div>
+
+  <div class="logo-bg">
+    <fui-avatar
+      [shape]="'user'"
+      [type]="'initial'"
+      [name]="'User'"
+      [size]="'sizes'"
+      [color]="'primary'"
+    />
+    <fui-button-icon
+      class="mt-10"
+      [type]="'button'"
+      [option]="'icon'"
+      [icon]="'continuityBelow'"
+      [size]="'s'"
+      [color]="'danger'"
+      [style]="'secondary'"
+    />
+  </div>
+</div>

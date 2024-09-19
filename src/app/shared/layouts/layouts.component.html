@@ -1,22 +1,18 @@
 <!-- <fui-page [isGrow]="true" [isRestrictWidth]="false" [direction]="'horizontal'"> -->
 <div class="container">
-  <fui-page-sidebar
-    [show]="showSidebar"
-    [zIndex]="2"
-    (showEvent)="showEvent($event)"
-  >
+  <fui-page-sidebar [show]="showSidebar" (showEvent)="showEvent($event)">
     <div class="h-screen">
       <div class="sidebar-container">
         <div class="logo">
           <div class="title">
             <img
-              *ngIf="theme === 'light'"
+              *ngIf="themeService.getTheme() === 'ahp-light'"
               src="../../../assets/Logo.svg"
               class="img-logo"
               alt="logo"
             />
             <img
-              *ngIf="theme === 'dark'"
+              *ngIf="themeService.getTheme() === 'ahp-dark'"
               src="../../../assets/logo-white.svg"
               class="img-logo"
               alt="logo"
@@ -106,6 +102,7 @@
       </div>
     </div>
   </fui-page-sidebar>
+  <shared-mini-sidebar *ngIf="!showSidebar" [dataSidebar]="dataSide" />
   <div class="wrap-body">
     <div class="page-body">
       <fui-header [display]="'flex'" [position]="'fixed-top'" [shadow]="true">
@@ -124,7 +121,7 @@
         <fui-header-panel class="header">
           <fui-button-icon
             class="icon-mode"
-            *ngIf="themeService.getTheme() === 'light'"
+            *ngIf="themeService.getTheme() === 'ahp-light'"
             [type]="'button'"
             [size]="'m'"
             [option]="'icon'"
@@ -132,11 +129,11 @@
             [color]="'text'"
             [icon]="'moon'"
             [iconSide]="'left'"
-            (onClick)="toggleMode('dark')"
+            (onClick)="toggleMode('ahp-dark')"
           />
           <fui-button-icon
             class="icon-mode"
-            *ngIf="themeService.getTheme() === 'dark'"
+            *ngIf="themeService.getTheme() === 'ahp-dark'"
             [type]="'button'"
             [size]="'m'"
             [option]="'icon'"
@@ -144,7 +141,7 @@
             [color]="'text'"
             [icon]="'sun'"
             [iconSide]="'left'"
-            (onClick)="toggleMode('light')"
+            (onClick)="toggleMode('ahp-light')"
           />
           <fui-button-icon
             [type]="'button'"

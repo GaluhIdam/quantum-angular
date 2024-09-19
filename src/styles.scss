@@ -18,9 +18,7 @@ code {
 }
 
 /** Custom Theme */
-.dark {
-  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
-  color: #fff;
+.ahp-dark {
   :host {
     --fuiColorGhost: #000;
     --fuiColorInk: #fff;
@@ -68,11 +66,11 @@ code {
     --fuiBtnAccentText: rgb(246, 143, 190);
     --fuiBtnDisabledText: rgb(81, 87, 97);
   }
+  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+  color: #fff;
 }
 
-.light {
-  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
-  color: #000;
+.ahp-light {
   :host {
     --fuiColorGhost: #fff;
     --fuiColorInk: #000;
@@ -120,4 +118,6 @@ code {
     $fuiBtnAccentText: rgb(160, 52, 101);
     $fuiBtnDisabledText: rgb(162, 171, 186);
   }
+  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+  color: #000;
 }

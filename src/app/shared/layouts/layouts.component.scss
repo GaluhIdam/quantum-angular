@@ -3,19 +3,33 @@
 .h-screen {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  height: -webkit-fill-available;
+  /** Add On*/
+  ::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--fuiColorMediumShade, $fuiColorMediumShade);
+    border-radius: 25px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--fuiColorDarkShade, $fuiColorDarkShade);
+  }
 }
 .fui-sidenav {
   overflow-y: auto;
   padding: 0px 20px;
   flex: 1;
+
 }
 
 /** Container Page */
 .container {
   height: 100vh;
-  overflow: hidden;
   display: flex;
 }
 
@@ -168,7 +182,6 @@
     }
   }
 }
-
 
 .flex-signout {
   display: flex;

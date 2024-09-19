@@ -1,0 +1,127 @@
+<shared-flyout-simple
+  [titleFlyout]="title"
+  [size]="'m'"
+  [isOpenFlyout]="isOpenFlyoutManageMember"
+  (closeOut)="openFlyoutManageMember()"
+>
+  <div body>
+    <div class="selected-fly">
+      <div class="flex align-center">
+        <fui-text [weight]="'semibold'">Selected</fui-text>
+        <fui-text [size]="'sizes'" class="border-badge">{{
+          selectedEmployeMatterMember.length
+        }}</fui-text>
+      </div>
+
+      <!-- BADGE SELECTED  -->
+      <div class="grid-3 mt-10">
+        <div
+          class="border-badge"
+          *ngFor="let item of selectedEmployeMatterMember"
+        >
+          <div class="flex p-8 align-center">
+            <div class="">
+              <fui-text>{{ item.name }}</fui-text>
+              <fui-text class="flex mt-5">{{ item.position }}</fui-text>
+            </div>
+            <fui-button-icon
+              (onClick)="addRemoveMatterMember(item, 'remove')"
+              [size]="'s'"
+              [type]="'button'"
+              [option]="'icon'"
+              [icon]="'cross'"
+              [style]="'secondary'"
+              [color]="'danger'"
+            />
+          </div>
+        </div>
+      </div>
+      <shared-empty-data
+        [title]="'No Employee Selected'"
+        [subTitle]="'Please select employee first.'"
+        [dataLength]="selectedEmployeMatterMember.length"
+      />
+      <!-- BADGE SELECTED  -->
+    </div>
+
+    <!-- LABEL  -->
+    <div class="flex-between mt-20">
+      <fui-text [weight]="'semibold'">All Employee</fui-text>
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          [checked]="isProjectName"
+          [(ngModel)]="isProjectName"
+        />
+        <fui-text [size]="'sizes'" (click)="isProjectName = !isProjectName"
+          >Include inactive employee</fui-text
+        >
+      </div>
+    </div>
+    <!-- LABEL  -->
+
+    <!-- SEARCH FORM  -->
+    <fui-form-control-layout class="flex mt-30">
+      <fui-input-field
+        [type]="'text'"
+        [placeholder]="'Search by name or initials'"
+        [invalid]="false"
+        [size]="'m'"
+      >
+        <fui-icons left-icon [icon]="'search'" />
+      </fui-input-field>
+    </fui-form-control-layout>
+    <!-- SEARCH FORM  -->
+
+    <!-- TABLE  -->
+    <fui-table
+      class="flex mt-20"
+      [limit]="10"
+      [totalItems]="allEmployeList.length"
+      [showInfo]="false"
+    >
+      <fui-table-head *ngFor="let header of headerTable">
+        {{ header }}
+      </fui-table-head>
+      <fui-table-body *ngFor="let data of allEmployeList">
+        <fui-table-body-row *ngIf="!selectedEmployeMatterMember.includes(data)">
+          <fui-table-body-data>
+            {{ data.name }}
+          </fui-table-body-data>
+          <fui-table-body-data>
+            {{ data.position }}
+          </fui-table-body-data>
+          <fui-table-body-data style="min-width: 20px; width: 20px">
+            <fui-button-icon
+              (onClick)="addRemoveMatterMember(data, 'add')"
+              [type]="'button'"
+              [color]="'primary'"
+              [style]="'secondary'"
+              [option]="'icon'"
+              [icon]="'plusInCircle'"
+            ></fui-button-icon>
+          </fui-table-body-data>
+        </fui-table-body-row>
+      </fui-table-body>
+    </fui-table>
+    <!-- TABLE  -->
+  </div>
+  <div footer class="flex-between footer-fly">
+    <fui-button-icon
+      (onClick)="openFlyoutManageMember()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'secondary'"
+      [option]="'text'"
+      [text]="'Cancel'"
+    />
+    <fui-button-icon
+      (onClick)="openFlyoutManageMember()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'filled'"
+      [option]="'text'"
+      [text]="'Add Member'"
+    />
+  </div>
+</shared-flyout-simple>

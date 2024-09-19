@@ -1,0 +1,150 @@
+<div class="form-control">
+  <div class="flex-between">
+    <div class="flex-start">
+      @if (label) {
+      <fui-text class="label">{{ label }}</fui-text>
+      } @if (labelTooltip) {
+      <fui-tooltip [position]="'top'" [content]="labelTooltip">
+        <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+      </fui-tooltip>
+      }
+    </div>
+    @if (checkbox) {
+    <div class="checkbox">
+      <input
+        type="checkbox"
+        [(ngModel)]="checkbox.model"
+        [checked]="checkbox.model"
+        (change)="checkboxAct()"
+      />
+      <fui-text [size]="'sizes'">{{ checkbox.label }}</fui-text>
+      @if (checkbox.tooltip) {
+      <fui-tooltip [position]="'top'" [content]="checkbox.tooltip">
+        <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+      </fui-tooltip>
+      }
+    </div>
+    }
+  </div>
+
+  @if (type === 'text' || type === 'select' || type ==='textarea' && !checkbox) {
+  <fui-form-control-layout>
+    @if (prepend) {
+    <fui-prepend>
+      @if (prepend.type === 'icon') {
+      <fui-icons [icon]="prepend.icon!" [color]="prepend.color" />
+      } @else {
+      <fui-text [color]="prepend.color">{{ prepend.text }}</fui-text>
+      }
+    </fui-prepend>
+    } @if (type === 'text') {
+    <fui-input-field
+      [formControlField]="formControl"
+      [placeholder]="placeholder"
+      [type]="'text'"
+      [size]="'m'"
+      [disabled]="disabled"
+      [invalid]="invalid"
+    >
+      @if (leftIcon) {
+      <fui-icons
+        left-icon
+        [label]="'left'"
+        [icon]="leftIcon"
+        [size]="'sizem'"
+        [color]="'text'"
+      />
+      } @if (rightIcon) {
+      <fui-icons
+        right-icon
+        [label]="'right'"
+        [icon]="rightIcon"
+        [size]="'sizem'"
+        [color]="'text'"
+      />
+      } @if (invalid) {
+      <fui-icons
+        right-icon
+        [label]="'right'"
+        [icon]="'alert'"
+        [size]="'sizem'"
+        [color]="'danger'"
+      />
+      }
+    </fui-input-field>
+    } @if (type === 'select') {
+    <fui-select-field
+      [placeholder]="placeholder"
+      [formControlField]="formControl"
+      [size]="'m'"
+      [disabled]="disabled"
+      [invalid]="invalid"
+      [selectOptions]="selectOptions"
+    >
+      <fui-icons
+        *ngIf="invalid"
+        right-icon
+        [label]="'right'"
+        [icon]="'alert'"
+        [size]="'sizem'"
+        [color]="'danger'"
+      />
+    </fui-select-field>
+    } @if (type === 'textarea') {
+    <fui-textarea
+      [formControlField]="formControl"
+      [placeholder]="placeholder"
+      [size]="'m'"
+      [disabled]="disabled"
+      [invalid]="invalid"
+    >
+      <fui-icons
+        *ngIf="invalid"
+        right-icon
+        [label]="'right'"
+        [icon]="'alert'"
+        [size]="'sizem'"
+        [color]="'danger'"
+      />
+    </fui-textarea>
+    }
+
+    <fui-validator-field validator [message]="'This form is required!'" />
+
+    @if (append) {
+    <fui-append>
+      @if (append.type === 'icon') {
+      <fui-icons [icon]="append.icon!" [color]="append.color" />
+      } @else {
+      <fui-text [color]="append.color">{{ append.text }}</fui-text>
+      }
+    </fui-append>
+    }
+  </fui-form-control-layout>
+  } @if (type === 'search') {
+  <fui-combo-box
+    [singleSelection]="true"
+    [comboxForm]="formControl"
+    [placeholder]="placeholder"
+    [invalid]="invalid"
+    [message]="validationMsg"
+    [disabled]="disabled"
+    [leftIcon]="leftIcon"
+    [rightIcon]="rightIcon"
+    [optionValue]="optionValue"
+    [selectedValue]="selectedValue"
+  ></fui-combo-box>
+  } @if (type === 'combo-box') {
+  <fui-combo-box
+    [comboxForm]="formControl"
+    [placeholder]="placeholder"
+    [invalid]="invalid"
+    [message]="validationMsg"
+    [disabled]="disabled"
+    [leftIcon]="leftIcon"
+    [rightIcon]="rightIcon"
+    [optionValue]="optionValue"
+    [selectedValue]="selectedValue"
+  ></fui-combo-box>
+  }
+</div>

@@ -1,0 +1,154 @@
+<shared-page-empty
+  [backLink]="'/matter/detail-matter'"
+  [titlePage]="'Edit Matter Form'"
+  [backTop]="backTop"
+>
+  <div class="grid-3">
+    <div class="card">
+      <!-- STEP CARD  -->
+      <fui-steps [steps]="steps" class="step-card">
+        <!-- STEP 1  -->
+        <fui-step-content [id]="'step-1'">
+          <div class="w-257">
+            <fui-text>Matter clients and associated matter</fui-text>
+          </div>
+        </fui-step-content>
+        <!-- STEP 1  -->
+
+        <!-- STEP 2  -->
+        <fui-step-content [id]="'step-2'">
+          <div class="w-257">
+            <fui-text
+              >General information, member of the matter and matter instructing
+              party</fui-text
+            >
+          </div>
+        </fui-step-content>
+        <!-- STEP 2  -->
+
+        <!-- STEP 3  -->
+        <fui-step-content [id]="'step-3'">
+          <div class="w-257">
+            <fui-text
+              >General information, member of the matter and matter instructing
+              party</fui-text
+            >
+            <fui-badge
+              class="mt-10 flex"
+              [color]="'ghost'"
+              [size]="'sizem'"
+              [sizeIcon]="'sizes'"
+              [isBadgeIcon]="true"
+              [icon]="
+                steps[2].stepStatus === 'complete'
+                  ? 'checkInCircleFilled'
+                  : 'crossInACircleFilled'
+              "
+              [iconPosition]="'start'"
+            >
+              Ready to bill
+            </fui-badge>
+          </div>
+        </fui-step-content>
+        <!-- STEP 3  -->
+
+        <!-- STEP 4  -->
+        <fui-step-content [id]="'step-4'">
+          <div class="w-257">
+            <fui-text
+              >Detailed information related to the project, etc</fui-text
+            >
+            <fui-badge
+              class="mt-10 flex"
+              [color]="'ghost'"
+              [size]="'sizem'"
+              [sizeIcon]="'sizes'"
+              [isBadgeIcon]="true"
+              [icon]="
+                steps[3].stepStatus === 'complete'
+                  ? 'checkInCircleFilled'
+                  : 'crossInACircleFilled'
+              "
+              [iconPosition]="'start'"
+            >
+              Ready to Close
+            </fui-badge>
+          </div>
+        </fui-step-content>
+        <!-- STEP 4  -->
+      </fui-steps>
+      <!-- STEP CARD  -->
+    </div>
+    <div class="col-span-2">
+      <step-1 *ngIf="steps[0].stepStatus === 'current'" />
+      <step-2
+        *ngIf="steps[1].stepStatus === 'current'"
+        (billabilitySelected)="billabilitySelected($event)"
+      />
+      <step-3
+        *ngIf="steps[2].stepStatus === 'current'"
+        [billabiltiySelection]="billabilityForm"
+      />
+      <step-4 *ngIf="steps[3].stepStatus === 'current'" />
+      <!-- BUTTON ACTION  -->
+      <div class="card mt-20 flex-between">
+        <div
+          [ngClass]="{
+          'flex': billabilityForm !== 'Nonbillable',
+          'flex-between': billabilityForm === 'Nonbillable',
+        }"
+        >
+          <fui-button-icon
+            [type]="'button'"
+            [color]="'primary'"
+            [style]="'secondary'"
+            [option]="'text'"
+            [text]="'Cancel'"
+          />
+          <fui-button-icon
+            *ngIf="this.steps[3].stepStatus !== 'current'"
+            [type]="'button'"
+            [color]="'primary'"
+            [style]="'filled'"
+            [option]="'iconText'"
+            [icon]="'save'"
+            [text]="'Save & Close'"
+          />
+        </div>
+        <div class="flex justify-end" *ngIf="billabilityForm !== 'Nonbillable'">
+          <fui-button-icon
+            (onClick)="toggleMoveStep('previous')"
+            [type]="'button'"
+            [disabled]="steps[1].stepStatus === 'current' ? true : false"
+            [color]="steps[1].stepStatus === 'current' ? 'disabled' : 'ghost'"
+            [style]="'secondary'"
+            [option]="'iconText'"
+            [icon]="'arrowLeft'"
+            [text]="'Previous'"
+          />
+          <fui-button-icon
+            *ngIf="this.steps[3].stepStatus !== 'current'"
+            (onClick)="toggleMoveStep('next')"
+            [type]="'button'"
+            [color]="'primary'"
+            [style]="'filled'"
+            [option]="'iconText'"
+            [icon]="'arrowRight'"
+            [text]="'Next'"
+            [iconSide]="'right'"
+          />
+          <fui-button-icon
+            *ngIf="this.steps[3].stepStatus === 'current'"
+            [type]="'button'"
+            [color]="'primary'"
+            [style]="'filled'"
+            [option]="'iconText'"
+            [icon]="'save'"
+            [text]="'Save & Close'"
+          />
+        </div>
+      </div>
+      <!-- BUTTON ACTION  -->
+    </div>
+  </div>
+</shared-page-empty>
