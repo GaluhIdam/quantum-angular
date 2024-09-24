@@ -2,7 +2,8 @@
   <div class="flex-between">
     <!-- LEFT CONTENT  -->
     <div class="flex">
-      <fui-button-icon *ngIf="nextPrevBtn"
+      <fui-button-icon
+        *ngIf="nextPrevBtn"
         [option]="'icon'"
         [type]="'button'"
         [icon]="'arrowLeft'"
@@ -10,15 +11,25 @@
         [style]="'secondary'"
         (onClick)="toggleBtn('prev')"
       />
-      <fui-text class="desktop" [weight]="'semibold'">
-        {{ startDate | date : "d MMMM yyyy" }} -
-        {{ endDate | date : "d MMMM yyyy" }}</fui-text
+      <fui-text
+        class="desktop"
+        [weight]="'semibold'"
+        style="margin: 0px 10px; width: 220px; text-align: center"
       >
-      <fui-text class="mobile" [size]="'sizes'" [weight]="'semibold'">
-        {{ startDate | date : "d MMMM yyyy" }} -
-        {{ endDate | date : "d MMMM yyyy" }}</fui-text
+        {{ startDate | date : "dd MMM yyyy" }} -
+        {{ endDate | date : "dd MMM yyyy" }}</fui-text
       >
-      <fui-button-icon *ngIf="nextPrevBtn"
+      <fui-text
+        class="mobile"
+        [size]="'sizes'"
+        [weight]="'semibold'"
+        style="margin: 0px 10px; width: 200px; text-align: center"
+      >
+        {{ startDate | date : "dd MMM yyyy" }} -
+        {{ endDate | date : "dd MMM yyyy" }}</fui-text
+      >
+      <fui-button-icon
+        *ngIf="nextPrevBtn"
         [option]="'icon'"
         [type]="'button'"
         [icon]="'arrowRight'"

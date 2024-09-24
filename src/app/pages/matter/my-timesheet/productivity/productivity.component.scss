@@ -6,7 +6,14 @@
   font-weight: normal;
   display: flex;
 }
-
+.grid-1 {
+  display: grid;
+  .subtitle {
+    font-style: italic;
+    color: var(--fuiColorMediumShade, $fuiColorMediumShade);
+    margin-top: 3px;
+  }
+}
 .select {
   display: flex;
   align-items: center;

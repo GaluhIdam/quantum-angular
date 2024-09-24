@@ -21,3 +21,12 @@
   margin-bottom: 5px;
   min-width: 1000px;
 }
+
+.grid-1 {
+  display: grid;
+  .subtitle {
+    font-style: italic;
+    color: var(--fuiColorMediumShade, $fuiColorMediumShade);
+    margin-top: 3px;
+  }
+}
