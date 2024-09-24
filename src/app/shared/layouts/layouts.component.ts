@@ -100,7 +100,7 @@ export class LayoutsComponent {
     private readonly myTimesheetService: MyTimesheetService
   ) {
     this.dataSide = DataSideBar.dataSideBar;
-    this.getUser();
+    // this.getUser();
   }
 
   ngOnInit(): void {

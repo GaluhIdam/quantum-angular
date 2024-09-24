@@ -5,6 +5,7 @@ import {
   TimesheetByDateDTO,
 } from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
 import { FormControl } from '@angular/forms';
+import { Observable, of, throwError } from 'rxjs';
 
 export class BaseController {
   /** Injector */
@@ -239,5 +240,15 @@ export class BaseController {
    */
   getNamesAsString(arr: { name: string; value: number }[]): string {
     return arr.map((item) => item.name).join(',');
+  }
+
+  /** Centralized error handling method */
+  errorHandlerService(error: any, res: 'object' | 'array'): Observable<any> {
+    console.log('Error occurred:', error);
+    if (res === 'array') {
+      return of([]);
+    } else {
+      return of({});
+    }
   }
 }
