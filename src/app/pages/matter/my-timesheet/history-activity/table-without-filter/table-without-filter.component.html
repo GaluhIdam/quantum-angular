@@ -10,7 +10,12 @@
           {{ date.date | date : "EEE" }}, {{ date.date | date : "d MMMM yy" }}
         </span>
       </div>
-      <fui-horizontal-stack [showPercentage]="false" [progress]="progress[i]" />
+      <div *ngIf="date.data.length === 0" class="full-width"></div>
+      <fui-horizontal-stack
+        [showPercentage]="false"
+        *ngIf="date.data.length > 0"
+        [progress]="progress[i]"
+      />
       <div class="right-tb">
         <div class="duration">
           <fui-badge [color]="'ghost'" [size]="'sizem'" [isBadgeIcon]="false">
@@ -70,7 +75,8 @@
         >
           <div class="table-cell">
             <div>
-              <input [disabled]="item.tagEntityList.length > 0"
+              <input
+                [disabled]="item.tagEntityList.length > 0"
                 type="checkbox"
                 [checked]="isItemChecked(i, item)"
                 (click)="checkItem(i, item)"
