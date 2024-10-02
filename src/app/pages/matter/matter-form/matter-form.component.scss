@@ -223,3 +223,39 @@
 .text-right {
   text-align: right;
 }
+
+
+@media (max-width: 1000px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    width: 100%;
+    &-1 {
+      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+    }
+    &-2 {
+      width: 100%;
+      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+    }
+    &-3 {
+      width: 100%;
+      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+    }
+    &-5 {
+      width: 100%;
+      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  .flex-between {
+    display: block;
+  }
+}

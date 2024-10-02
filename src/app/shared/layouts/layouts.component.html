@@ -31,7 +31,7 @@
             (onClick)="toggleSidebar()"
           />
         </div>
-        <div class="side-nav">
+        <!-- <div class="side-nav">
           <div class="search-form">
             <fui-form-control-layout>
               <fui-input-field
@@ -72,7 +72,7 @@
               </fui-input-field>
             </fui-form-control-layout>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="fui-sidenav">
         <fui-sidenav
@@ -119,6 +119,14 @@
           />
         </fui-header-panel>
         <fui-header-panel class="header">
+          <fui-sitewide-search
+            style="margin-right: 15px"
+            (onClick)="goTo($event)"
+            [placeholder]="'Search for menu...'"
+            [size]="'s'"
+            [data]="filteredData"
+            [searchForm]="searchForms"
+          />
           <fui-button-icon
             class="icon-mode"
             *ngIf="themeService.getTheme() === 'ahp-light'"
@@ -143,16 +151,6 @@
             [iconSide]="'left'"
             (onClick)="toggleMode('ahp-light')"
           />
-          <fui-button-icon
-            [type]="'button'"
-            [size]="'m'"
-            [option]="'icon'"
-            [style]="'secondary'"
-            [color]="'text'"
-            [icon]="'bell'"
-            [iconSide]="'left'"
-          />
-          <span class="count-notif">{{ notifyCount }}</span>
           <fui-button-icon
             [type]="'button'"
             [size]="'m'"
