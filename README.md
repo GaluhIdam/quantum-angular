@@ -2,6 +2,9 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.0.
 
+## Install Fundamentum UI
+Run `npm install @quantum/fui --registry https://quantum-dev.ahp.id/nexus/repository/npm-local/ --legacy-peer-deps`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
