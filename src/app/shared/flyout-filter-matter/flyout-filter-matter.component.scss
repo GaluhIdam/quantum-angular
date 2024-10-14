@@ -51,9 +51,10 @@
 .footer-flyout {
   width: 100%;
   display: flex;
-  padding: 15px;
+  padding: 5px;
   justify-content: space-between;
   .sub-button {
+    gap: 10px;
     display: flex;
     fui-button-icon {
       margin-right: 8px;
@@ -72,7 +73,7 @@
 
 /** Collabsible Config */
 .collapsible {
-  width: -webkit-fill-available;
+  width: 100%;
   .header-collapsible {
     display: flex;
     justify-content: space-between;
@@ -98,5 +99,5 @@
 
 /** Wraper */
 .standard-filter {
-  width: -webkit-fill-available;
+  width: 100%;
 }

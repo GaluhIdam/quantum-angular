@@ -84,19 +84,18 @@
 .flex {
   display: flex;
   gap: 10px;
-  width: -webkit-fill-available;
+  width: 100%;
   &-start {
     display: flex;
     justify-content: start;
-    width: -webkit-fill-available;
+    width: 100%;
   }
   &-between {
     display: flex;
     justify-content: space-between;
-    width: -webkit-fill-available;
   }
   fui-form-control-layout {
-    width: -webkit-fill-available;
+    width: 100%;
   }
 }
 .gap {
@@ -165,7 +164,7 @@
 .block {
   display: block;
   text-wrap: nowrap;
-  width: -webkit-fill-available;
+  width: 100%;
 }
 .mb {
   &-10 {

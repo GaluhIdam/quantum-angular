@@ -284,10 +284,12 @@ export class LayoutsComponent {
   }
 
   filterData(): void {
-    const searchTerm = this.searchForms.value.toLowerCase();
-    this.filteredData = this.data.filter((item) =>
-      item.title.toLowerCase().includes(searchTerm)
-    );
+    if (this.searchForm.value) {
+      const searchTerm = this.searchForms.value.toLowerCase();
+      this.filteredData = this.data.filter((item) =>
+        item.title.toLowerCase().includes(searchTerm)
+      );
+    }
   }
 
   goTo(event: any): void {

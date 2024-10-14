@@ -1,7 +1,9 @@
 <div class="header productivity">
   <div class="grid-1">
-    <fui-text [weight]="'semibold'" [size]="'sizem'">Productivity</fui-text>
-    <p class="subtitle">Refreshed daily</p>
+    <fui-text [weight]="'semibold'" [size]="'m'">Productivity</fui-text>
+    <fui-text [color]="'text'" [fwStyle]="'italic'" [size]="'s'"
+      >Refreshed daily</fui-text
+    >
   </div>
   <fui-popover [position]="'bottom'">
     <div class="select">
@@ -60,16 +62,16 @@
   <div class="legend">
     <span class="legend-title">
       <div class="color-square primary"></div>
-      Billable
+      <fui-text [textWrap]="'nowrap'"   [size]="'s'">Billable</fui-text>
     </span>
     <span class="legend-title"
       ><div class="color-square text"></div>
-      Non-Billable</span
-    >
+      <fui-text [textWrap]="'nowrap'"   [size]="'s'">Non-Billable</fui-text>
+    </span>
     <span class="legend-title"
       ><div class="color-square disabled"></div>
-      Untracked</span
-    >
+      <fui-text [textWrap]="'nowrap'"   [size]="'s'">Untracked</fui-text>
+    </span>
   </div>
 </div>
 <shared-skeleton [active]="loading">

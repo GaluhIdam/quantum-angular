@@ -74,7 +74,7 @@
 .container-option {
   min-width: 300px;
   border-radius: 8px;
-  width: -webkit-fill-available;
+  width: 100%;
   background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
   height: fit-content;
   max-height: 250px;

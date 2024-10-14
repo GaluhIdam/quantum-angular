@@ -3,7 +3,7 @@
 .layout {
   display: flex;
   .header {
-    width: -webkit-fill-available;
+    width: 100%;
     .body {
       padding: 20px;
       box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
@@ -20,19 +20,7 @@
   }
 }
 
-
 /** Add On*/
-::-webkit-scrollbar {
-  height: 5px;
-  width: 5px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--fuiColorMediumShade, $fuiColorMediumShade);
-  border-radius: 25px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--fuiColorDarkShade, $fuiColorDarkShade);
+* {
+  scrollbar-width: thin;
 }

@@ -267,15 +267,19 @@
   <fui-flyout-footer [isFlyoutFooterCustom]="true">
     <div class="footer-flyout">
       <fui-button-icon
+        [fullWidth]="'fit'"
         [type]="'button'"
         [option]="'text'"
         [text]="'Cancel'"
         [style]="'secondary'"
         [color]="'text'"
+        [size]="'s'"
         (onClick)="toggleCloseFlyout()"
       />
       <div class="sub-button">
         <fui-button-icon
+          [fullWidth]="'fit'"
+          [size]="'s'"
           [type]="'button'"
           [option]="'text'"
           [text]="'Clear Filter'"
@@ -284,6 +288,8 @@
           (onClick)="toggleCloseFlyout()"
         />
         <fui-button-icon
+          [fullWidth]="'fit'"
+          [size]="'s'"
           [type]="'button'"
           [icon]="'filter'"
           [option]="'iconText'"

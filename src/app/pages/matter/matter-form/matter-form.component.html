@@ -35,19 +35,18 @@
             >
             <fui-badge
               class="mt-10 flex"
-              [color]="'ghost'"
-              [size]="'sizem'"
-              [sizeIcon]="'sizes'"
-              [isBadgeIcon]="true"
+              [color]="'hollow'"
+              [size]="'s'"
+              [iconSize]="'sizexs'"
+              [iconShow]="true"
               [icon]="
                 steps[2].stepStatus === 'complete'
                   ? 'checkInCircleFilled'
                   : 'crossInACircleFilled'
               "
               [iconPosition]="'start'"
-            >
-              Ready to bill
-            </fui-badge>
+              [text]="'Ready to bill'"
+            />
           </div>
         </fui-step-content>
         <!-- STEP 3  -->
@@ -60,19 +59,18 @@
             >
             <fui-badge
               class="mt-10 flex"
-              [color]="'ghost'"
-              [size]="'sizem'"
-              [sizeIcon]="'sizes'"
-              [isBadgeIcon]="true"
+              [color]="'hollow'"
+              [size]="'s'"
+              [iconSize]="'sizexs'"
+              [iconShow]="true"
               [icon]="
                 steps[3].stepStatus === 'complete'
                   ? 'checkInCircleFilled'
                   : 'crossInACircleFilled'
               "
               [iconPosition]="'start'"
-            >
-              Ready to Close
-            </fui-badge>
+              [text]="'Ready to Close'"
+            />
           </div>
         </fui-step-content>
         <!-- STEP 4  -->
@@ -99,6 +97,7 @@
         }"
         >
           <fui-button-icon
+            [fullWidth]="'fit'"
             [type]="'button'"
             [color]="'primary'"
             [style]="'secondary'"
@@ -106,6 +105,7 @@
             [text]="'Cancel'"
           />
           <fui-button-icon
+            [fullWidth]="'fit'"
             *ngIf="this.steps[3].stepStatus !== 'current'"
             [type]="'button'"
             [color]="'primary'"
@@ -117,6 +117,7 @@
         </div>
         <div class="flex justify-end" *ngIf="billabilityForm !== 'Nonbillable'">
           <fui-button-icon
+            [fullWidth]="'fit'"
             (onClick)="toggleMoveStep('previous')"
             [type]="'button'"
             [disabled]="steps[1].stepStatus === 'current' ? true : false"
@@ -127,6 +128,7 @@
             [text]="'Previous'"
           />
           <fui-button-icon
+            [fullWidth]="'fit'"
             *ngIf="this.steps[3].stepStatus !== 'current'"
             (onClick)="toggleMoveStep('next')"
             [type]="'button'"
@@ -138,6 +140,7 @@
             [iconSide]="'right'"
           />
           <fui-button-icon
+            [fullWidth]="'fit'"
             *ngIf="this.steps[3].stepStatus === 'current'"
             [type]="'button'"
             [color]="'primary'"

@@ -19,7 +19,7 @@
             />
             <h3 class="title">Quantum</h3>
           </div>
-          <fui-button-icon
+          <fui-button-icon [fullWidth]="'fit'"
             class="close-btn"
             [type]="'button'"
             [size]="'m'"
@@ -31,48 +31,6 @@
             (onClick)="toggleSidebar()"
           />
         </div>
-        <!-- <div class="side-nav">
-          <div class="search-form">
-            <fui-form-control-layout>
-              <fui-input-field
-                [formControlField]="searchForm"
-                [placeholder]="'Search menu name'"
-                [type]="'text'"
-                [size]="'m'"
-                [invalid]="false"
-              >
-                <fui-icons
-                  left-icon
-                  [label]="'left'"
-                  [icon]="'search'"
-                  [size]="'sizem'"
-                  [color]="'text'"
-                />
-                <fui-icons
-                  *ngIf="
-                    searchForm.value !== '' &&
-                    searchForm.value !== null &&
-                    loading === false
-                  "
-                  right-icon
-                  (click)="this.searchForm.setValue('')"
-                  [label]="'right'"
-                  [icon]="'cross'"
-                  [size]="'sizem'"
-                  [color]="'text'"
-                />
-                <fui-loading
-                  *ngIf="loading"
-                  class="mx-5"
-                  right-icon
-                  [type]="'spinner'"
-                  [isLoading]="true"
-                  [size]="'sizel'"
-                ></fui-loading>
-              </fui-input-field>
-            </fui-form-control-layout>
-          </div>
-        </div> -->
       </div>
       <div class="fui-sidenav">
         <fui-sidenav
@@ -107,7 +65,7 @@
     <div class="page-body">
       <fui-header [display]="'flex'" [position]="'fixed-top'" [shadow]="true">
         <fui-header-panel class="header">
-          <fui-button-icon
+          <fui-button-icon [fullWidth]="'fit'"
             [type]="'button'"
             [size]="'m'"
             [option]="'icon'"
@@ -127,42 +85,42 @@
             [data]="filteredData"
             [searchForm]="searchForms"
           />
-          <fui-button-icon
+          <fui-button-icon [fullWidth]="'fit'"
             class="icon-mode"
             *ngIf="themeService.getTheme() === 'ahp-light'"
             [type]="'button'"
             [size]="'m'"
             [option]="'icon'"
-            [style]="'secondary'"
+            [style]="'empty'"
             [color]="'text'"
             [icon]="'moon'"
             [iconSide]="'left'"
             (onClick)="toggleMode('ahp-dark')"
           />
-          <fui-button-icon
+          <fui-button-icon [fullWidth]="'fit'"
             class="icon-mode"
             *ngIf="themeService.getTheme() === 'ahp-dark'"
             [type]="'button'"
             [size]="'m'"
             [option]="'icon'"
-            [style]="'secondary'"
+            [style]="'empty'"
             [color]="'text'"
             [icon]="'sun'"
             [iconSide]="'left'"
             (onClick)="toggleMode('ahp-light')"
           />
-          <fui-button-icon
+          <fui-button-icon [fullWidth]="'fit'"
             [type]="'button'"
             [size]="'m'"
             [option]="'icon'"
-            [style]="'secondary'"
+            [style]="'empty'"
             [color]="'text'"
             [icon]="'email'"
             [iconSide]="'left'"
           />
           <span class="count-notif">{{ emailCount }}</span>
           <fui-popover class="create-new" [position]="'bottom'" [align]="'end'">
-            <fui-button-icon
+            <fui-button-icon [fullWidth]="'fit'"
               [type]="'button'"
               [size]="'m'"
               [option]="'iconText'"
@@ -178,7 +136,7 @@
                 class="tab-1"
                 [ngStyle]="{ display: tab !== 1 ? 'none' : 'block' }"
               >
-                <fui-text class="title" [size]="'sizem'"
+                <fui-text class="title" [size]="'m'"
                   ><b>Select Options</b></fui-text
                 >
                 <hr />
@@ -207,7 +165,7 @@
                     [color]="'text'"
                     (click)="clickTab(1)"
                   />
-                  <fui-text class="title" [size]="'sizem'"
+                  <fui-text class="title" [size]="'m'"
                     ><b>Payment Request</b></fui-text
                   >
                 </div>

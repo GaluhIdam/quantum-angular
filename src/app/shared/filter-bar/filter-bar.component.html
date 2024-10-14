@@ -1,5 +1,5 @@
 <div class="flex">
-  <fui-button-icon
+  <fui-button-icon [fullWidth]="'fit'"
     class="toggle-filter"
     [size]="'m'"
     [type]="'button'"
@@ -12,15 +12,15 @@
   />
   <fui-badge
     [color]="'primary'"
-    [size]="'sizem'"
+    [size]="'m'"
     [icon]="'cross'"
     [iconPosition]="'end'"
-    [isBadgeIcon]="true"
-    [sizeIcon]="'sizexs'"
+    [iconShow]="true"
+    [iconSize]="'sizexs'"
     *ngFor="let item of dataFilterOut"
   >
-    <fui-text [size]="'sizes'" [color]="'ghost'">{{ item.column }} : </fui-text>
-    <fui-text [size]="'sizes'" [color]="'ghost'" [weight]="'bold'"
+    <fui-text [size]="'s'" [color]="'ghost'">{{ item.column }} : </fui-text>
+    <fui-text [size]="'s'" [color]="'ghost'" [weight]="'bold'"
       >{{ item.value }}
     </fui-text>
   </fui-badge>
@@ -29,7 +29,7 @@
 <fui-modal [open]="isOpenModal">
   <fui-modal-header [iconCloseShow]="false" (onCloseModal)="closelModal()">
     <div class="title-modal">
-      <fui-text [color]="'text'" [weight]="'bold'" [size]="'sizel'">
+      <fui-text [color]="'text'" [weight]="'bold'" [size]="'l'">
         Advanced Filters
       </fui-text>
     </div>
@@ -176,7 +176,7 @@
         <!-- VALUE  -->
 
         <!-- CLOSE BTN  -->
-        <fui-button-icon
+        <fui-button-icon [fullWidth]="'fit'"
           [disabled]="i === 0"
           [size]="'m'"
           [type]="'button'"
@@ -191,7 +191,7 @@
       <!-- FORM FILTER  -->
 
       <!-- NEW FILTER  -->
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         [size]="'s'"
         [type]="'button'"
         [option]="'iconText'"
@@ -204,9 +204,9 @@
       <!-- NEW FILTER  -->
     </div>
   </fui-modal-body>
-  <fui-modal-footer [isCustomModalFooter]="true">
+  <fui-modal-footer >
     <div class="foot">
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         [size]="'m'"
         [type]="'button'"
         [option]="'text'"
@@ -216,7 +216,7 @@
         (onClick)="closelModal()"
       />
       <div class="flex">
-        <fui-button-icon
+        <fui-button-icon [fullWidth]="'fit'"
           [size]="'m'"
           [type]="'button'"
           [icon]="'refresh'"
@@ -226,7 +226,7 @@
           [color]="'text'"
           (onClick)="clearAll()"
         />
-        <fui-button-icon
+        <fui-button-icon [fullWidth]="'fit'"
           [size]="'m'"
           [type]="'button'"
           [option]="'iconText'"

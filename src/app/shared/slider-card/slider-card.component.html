@@ -16,7 +16,7 @@
       <fui-text class="mr-5">{{
         "(" + (currentSlideIndex + 1) + "/" + dataSlider.length + ")"
       }}</fui-text>
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         (onClick)="toggleMoveSlide('previous')"
         [type]="'button'"
         [size]="'s'"
@@ -25,7 +25,7 @@
         [option]="'icon'"
         [icon]="'arrowLeft'"
       />
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         (onClick)="toggleMoveSlide('next')"
         [type]="'button'"
         [size]="'s'"

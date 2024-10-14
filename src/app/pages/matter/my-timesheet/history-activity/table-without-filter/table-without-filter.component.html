@@ -12,35 +12,34 @@
       </div>
       <div *ngIf="date.data.length === 0" class="full-width"></div>
       <fui-horizontal-stack
-        [showPercentage]="false"
+        [showPercentage]="'none'"
         *ngIf="date.data.length > 0"
         [progress]="progress[i]"
       />
       <div class="right-tb">
         <div class="duration">
-          <fui-badge [color]="'ghost'" [size]="'sizem'" [isBadgeIcon]="false">
-            <div>
-              {{ calculateTotalDurationTag(date.data).untaggedDuration }}
-            </div>
-          </fui-badge>
           <fui-badge
-            [isBadgeIcon]="true"
+            [color]="'hollow'"
+            [size]="'s'"
+            [iconShow]="false"
+            [text]="calculateTotalDurationTag(date.data).untaggedDuration"
+          />
+          <fui-badge
+            [iconShow]="true"
             [iconPosition]="'start'"
-            [size]="'sizexs'"
+            [size]="'xs'"
             [icon]="'questionInCircle'"
             [color]="'warning'"
             *ngIf="
               calculateTotalDurationTag(date.data).taggedDuration !== '0h 0m'
             "
-            [size]="'sizem'"
-          >
-            <div>
-              {{ calculateTotalDurationTag(date.data).taggedDuration }}
-            </div>
-          </fui-badge>
+            [size]="'s'"
+            [text]="calculateTotalDurationTag(date.data).taggedDuration"
+          />
         </div>
         <div style="margin-left: 10px">
           <fui-button-icon
+            [fullWidth]="'fit'"
             [type]="'button'"
             [option]="'icon'"
             [style]="'secondary'"
@@ -104,6 +103,7 @@
           <div class="table-cell">
             <div class="wrap-action title-cell">
               <fui-button-icon
+                [fullWidth]="'fit'"
                 (onClick)="
                   item.tagEntityList.length > 0
                     ? actionBtn('edit-tag', item)
@@ -118,6 +118,7 @@
                 [iconSide]="'left'"
               />
               <fui-button-icon
+                [fullWidth]="'fit'"
                 *ngIf="item.tagEntityList.length === 0"
                 (onClick)="actionBtn('delete', item)"
                 [type]="'button'"

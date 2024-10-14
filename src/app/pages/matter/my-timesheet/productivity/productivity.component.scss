@@ -8,11 +8,7 @@
 }
 .grid-1 {
   display: grid;
-  .subtitle {
-    font-style: italic;
-    color: var(--fuiColorMediumShade, $fuiColorMediumShade);
-    margin-top: 3px;
-  }
+  gap: 5px;
 }
 .select {
   display: flex;
@@ -62,39 +58,26 @@
 .legend {
   display: flex;
   margin-top: 20px;
-  justify-content: space-between;
+  gap: 10px;
   .legend-title {
-    margin-right: 15px;
     display: flex;
-    align-items: center;
-    text-wrap: nowrap;
-    &:last-child {
-      margin-bottom: 0px;
-      margin-right: 0px;
-    }
-  }
-
-  margin-right: 0px;
-  .legend-title:last-child {
-    display: flex;
-    align-items: center;
-    text-wrap: nowrap;
+    gap: 5px;
+    flex-wrap: nowrap;
   }
 }
 @media (max-width: 400px) {
   .legend {
     align-items: baseline;
     .legend-title {
-      margin-bottom: 10px;
-      font-size: small;
+      display: flex;
+      flex-wrap: nowrap;
     }
   }
 }
 
 .color-square {
-  margin-right: 5px;
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
   border-radius: 5px;
 }
 .color-square.primary {

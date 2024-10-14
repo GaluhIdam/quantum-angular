@@ -1,8 +1,8 @@
 <div class="flex">
   <fui-badge
     [color]="'text'"
-    [size]="'sizedefault'"
-    [isBadgeIcon]="true"
+    [size]="'m'"
+    [iconShow]="true"
     [icon]="'cross'"
     [iconPosition]="'end'"
     (onClickBadge)="clearSelection()"
@@ -85,9 +85,9 @@
       </div>
     </div>
   </fui-modal-body>
-  <fui-modal-footer [isCustomModalFooter]="true">
+  <fui-modal-footer >
     <div class="footer-modal">
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         [type]="'button'"
         [option]="'text'"
         [text]="'Cancel'"
@@ -95,7 +95,7 @@
         [style]="'secondary'"
         (onClick)="handleCloseModal()"
       />
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         (onClick)="moveTimesheet()"
         [type]="'button'"
         [option]="'text'"

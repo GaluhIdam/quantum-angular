@@ -33,7 +33,7 @@
             [(ngModel)]="isParentGroupCompany"
           />
           <fui-text
-            [size]="'sizes'"
+            [size]="'s'"
             (click)="isParentGroupCompany = !isParentGroupCompany"
             >N/A</fui-text
           >
@@ -166,7 +166,7 @@
           [(ngModel)]="isBillingAddress"
         />
         <fui-text
-          [size]="'sizes'"
+          [size]="'s'"
           (click)="isBillingAddress = !isBillingAddress"
           >Same as Company Address</fui-text
         >
@@ -224,7 +224,7 @@
   </div>
 
   <div footer class="flex-between footer-fly">
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openFlyoutStakeholder()"
       [type]="'button'"
       [color]="'primary'"
@@ -232,7 +232,7 @@
       [option]="'text'"
       [text]="'Cancel'"
     />
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openFlyoutStakeholder()"
       [type]="'button'"
       [color]="'primary'"

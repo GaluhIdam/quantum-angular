@@ -50,7 +50,7 @@
 
       <div class="table-cell">
         <div class="wrap-action title-cell">
-          <fui-button-icon
+          <fui-button-icon [fullWidth]="'fit'"
             (onClick)="
               item.tagEntityList.length > 0
                 ? actionBtn('edit-tag', item)
@@ -64,7 +64,7 @@
             [icon]="'pencil'"
             [iconSide]="'left'"
           />
-          <fui-button-icon
+          <fui-button-icon [fullWidth]="'fit'"
             *ngIf="item.tagEntityList.length === 0"
             (onClick)="actionBtn('delete', item)"
             [type]="'button'"

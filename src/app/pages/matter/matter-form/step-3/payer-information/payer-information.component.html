@@ -14,7 +14,7 @@
             [checked]="isPayingEntity"
             [(ngModel)]="isPayingEntity"
           />
-          <fui-text [size]="'sizes'" (click)="isPayingEntity = !isPayingEntity"
+          <fui-text [size]="'s'" (click)="isPayingEntity = !isPayingEntity"
             >Same as Client</fui-text
           >
         </div>
@@ -31,7 +31,7 @@
         [optionValue]="payingEntityOption"
         [selectedValue]="payingEntitySelected"
       />
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         class="flex mt-15"
         [style]="'secondary'"
         [color]="'primary'"
@@ -57,7 +57,7 @@
         >
         </fui-select-field>
       </fui-form-control-layout>
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         *ngIf="payingEntitySelected.length > 0"
         (onClick)="openCloseFlyout('CP')"
         class="flex mt-15"
@@ -184,14 +184,14 @@
             [checked]="isEstimatedFee"
             [(ngModel)]="isEstimatedFee"
           />
-          <fui-text [size]="'sizes'" (click)="isEstimatedFee = !isEstimatedFee"
+          <fui-text [size]="'s'" (click)="isEstimatedFee = !isEstimatedFee"
             >N/A</fui-text
           >
         </div>
       </div>
       <fui-form-control-layout *ngIf="!isEstimatedFee">
         <fui-prepend>
-          <fui-text [size]="'sizexs'" [weight]="'semibold'">{{
+          <fui-text [size]="'xs'" [weight]="'semibold'">{{
             currencyForm.value
           }}</fui-text>
         </fui-prepend>
@@ -217,7 +217,7 @@
       <fui-text class="label">Cap Fee</fui-text>
       <fui-form-control-layout>
         <fui-prepend>
-          <fui-text [size]="'sizexs'" [weight]="'semibold'">{{
+          <fui-text [size]="'xs'" [weight]="'semibold'">{{
             currencyForm.value
           }}</fui-text>
         </fui-prepend>
@@ -281,26 +281,26 @@
               <fui-text>{{ item.desc }}</fui-text>
               <div class="flex mt-5">
                 <fui-badge
-                  [isBadgeIcon]="true"
+                  [iconShow]="true"
                   [iconPosition]="'start'"
-                  [sizeIcon]="'sizexs'"
+                  [iconSize]="'sizexs'"
                   *ngIf="item.status"
                   [color]="item.status === 'Collected' ? 'success' : 'warning'"
-                  [size]="'sizexs'"
+                  [size]="'xs'"
                   [icon]="item.status === 'Collected' ? 'tag' : 'stopSlash'"
-                  ><fui-text [size]="'sizexs'">{{
+                  ><fui-text [size]="'xs'">{{
                     item.status
                   }}</fui-text></fui-badge
                 >
                 <fui-badge
-                  [isBadgeIcon]="true"
+                  [iconShow]="true"
                   [iconPosition]="'start'"
-                  [sizeIcon]="'sizexs'"
+                  [iconSize]="'sizexs'"
                   *ngIf="item.addOn"
                   [color]="'ghost'"
-                  [size]="'sizexs'"
+                  [size]="'xs'"
                   [icon]="'document'"
-                  ><fui-text [size]="'sizexs'">{{
+                  ><fui-text [size]="'xs'">{{
                     item.addOn
                   }}</fui-text></fui-badge
                 >
@@ -314,7 +314,7 @@
           </fui-table-body-data>
           <fui-table-body-data style="min-width: 20px; width: 20px">
             <div class="flex">
-              <fui-button-icon
+              <fui-button-icon [fullWidth]="'fit'"
                 [disabled]="
                   item.status === 'Collected' || item.status === 'Written-off'
                 "
@@ -330,7 +330,7 @@
                 [option]="'icon'"
                 [icon]="'pencil'"
               />
-              <fui-button-icon
+              <fui-button-icon [fullWidth]="'fit'"
                 [disabled]="
                   item.status === 'Collected' || item.status === 'Written-off'
                 "
@@ -345,7 +345,7 @@
                 [option]="'icon'"
                 [icon]="'stopSlash'"
               />
-              <fui-button-icon
+              <fui-button-icon [fullWidth]="'fit'"
                 [disabled]="
                   item.status && item.status !== 'Written-off' ? true : false
                 "
@@ -365,7 +365,7 @@
         </fui-table-body-row>
       </fui-table-body>
     </fui-table>
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openCloseFlyout('LT', 'Add Lumpsum Term')"
       class="flex mt-15"
       [style]="'secondary'"
@@ -402,27 +402,27 @@
             <fui-text>{{ item.period }}</fui-text>
             <fui-badge
               class="flex mt-5"
-              [isBadgeIcon]="true"
+              [iconShow]="true"
               [iconPosition]="'start'"
-              [sizeIcon]="'sizexs'"
+              [iconSize]="'sizexs'"
               *ngIf="item.status"
               [color]="item.status === 'Collected' ? 'success' : 'warning'"
-              [size]="'sizexs'"
+              [size]="'xs'"
               [icon]="item.status === 'Collected' ? 'tag' : 'stopSlash'"
-              ><fui-text [size]="'sizexs'">{{
+              ><fui-text [size]="'xs'">{{
                 item.status
               }}</fui-text></fui-badge
             >
             <fui-badge
               class="flex mt-5"
-              [isBadgeIcon]="true"
+              [iconShow]="true"
               [iconPosition]="'start'"
-              [sizeIcon]="'sizexs'"
+              [iconSize]="'sizexs'"
               *ngIf="item.addOn"
               [color]="'ghost'"
-              [size]="'sizexs'"
+              [size]="'xs'"
               [icon]="'document'"
-              ><fui-text [size]="'sizexs'">{{
+              ><fui-text [size]="'xs'">{{
                 item.addOn
               }}</fui-text></fui-badge
             >
@@ -440,7 +440,7 @@
           </fui-table-body-data>
           <fui-table-body-data style="min-width: 20px; width: 20px">
             <div class="flex">
-              <fui-button-icon
+              <fui-button-icon [fullWidth]="'fit'"
                 (onClick)="openCloseFlyout('RL', 'Edit Retainer Term')"
                 [disabled]="
                   item.status === 'Collected' || item.status === 'Written-off'
@@ -456,7 +456,7 @@
                 [option]="'icon'"
                 [icon]="'pencil'"
               />
-              <fui-button-icon
+              <fui-button-icon [fullWidth]="'fit'"
                 [disabled]="
                   item.status === 'Collected' || item.status === 'Written-off'
                 "
@@ -471,7 +471,7 @@
                 [option]="'icon'"
                 [icon]="'stopSlash'"
               />
-              <fui-button-icon
+              <fui-button-icon [fullWidth]="'fit'"
                 [disabled]="
                   item.status && item.status !== 'Written-off' ? true : false
                 "
@@ -491,7 +491,7 @@
         </fui-table-body-row>
       </fui-table-body>
     </fui-table>
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openCloseFlyout('RL', 'Add Retainer Term')"
       class="flex mt-15"
       [style]="'secondary'"
@@ -519,7 +519,7 @@
           [checked]="isBillingNote"
           [(ngModel)]="isBillingNote"
         />
-        <fui-text [size]="'sizes'">N/A</fui-text>
+        <fui-text [size]="'s'">N/A</fui-text>
       </div>
     </div>
     <fui-text class="flex mt-10" [color]="'disabled'"

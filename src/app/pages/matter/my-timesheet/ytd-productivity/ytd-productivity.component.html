@@ -1,7 +1,11 @@
 <div class="header ytd">
   <div class="grid-1">
-    <fui-text [weight]="'semibold'" [size]="'sizem'">YTD Billable Productivity</fui-text>
-    <p class="subtitle">Refreshed daily</p>
+    <fui-text [weight]="'semibold'" [size]="'m'"
+      >YTD Billable Productivity</fui-text
+    >
+    <fui-text [color]="'text'" [fwStyle]="'italic'" [size]="'s'"
+      >Refreshed daily</fui-text
+    >
   </div>
 </div>
 <div class="body" *ngIf="optionBar.series.length > 0">

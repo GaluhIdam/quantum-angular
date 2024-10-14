@@ -7,15 +7,15 @@
     @for (item of filterApplied; track $index) {
     <fui-badge
       *ngIf="item.status"
-      [color]="'text'"
-      [size]="'sizem'"
-      [isBadgeIcon]="true"
+      [color]="'hollow'"
+      [size]="'s'"
+      [iconShow]="true"
       [iconPosition]="'end'"
       [icon]="'cross'"
-      [sizeIcon]="'sizes'"
-      (onClickBadge)="clearFilterPerItem(item)"
-      >{{ item.name }}</fui-badge
-    >
+      [iconSize]="'sizes'"
+      (iconOnClick)="clearFilterPerItem(item)"
+      [text]="item.name"
+    />
     }
   </div>
 </div>

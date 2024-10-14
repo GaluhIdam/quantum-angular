@@ -12,7 +12,7 @@
         />
       </div>
       <div class="title-modal">
-        <fui-text [color]="'text'" [weight]="'bold'" [size]="'sizel'">
+        <fui-text [color]="'text'" [weight]="'bold'" [size]="'l'">
           {{ title }}
         </fui-text>
       </div>
@@ -23,9 +23,9 @@
       <fui-text>{{ desc }}</fui-text>
     </div>
   </fui-modal-body>
-  <fui-modal-footer [isCustomModalFooter]="true">
+  <fui-modal-footer >
     <div class="foot">
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         (onClick)="closelModalDelete()"
         [size]="'m'"
         [type]="'button'"
@@ -34,7 +34,7 @@
         [style]="'secondary'"
         [color]="'text'"
       />
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         (onClick)="deleteAction()"
         [size]="'m'"
         [type]="'button'"

@@ -8,6 +8,7 @@
 .flex {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 .mobile {
   display: none;
@@ -19,12 +20,10 @@
 .filter {
   margin-right: 10px;
 }
-fui-text {
-  margin: 0px 10px;
-}
 
 .group {
   display: flex;
+  gap: 10px;
 }
 
 @media (max-width: 1000px) {

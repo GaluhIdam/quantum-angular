@@ -1,12 +1,11 @@
 @import "../../app.component.scss";
 .wraper-sidebar {
   z-index: 10;
-  padding: 5px 0px;
   justify-content: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: -webkit-fill-available;
+  height: 100%;
   background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
 
   .mini-sidebar {
@@ -45,14 +44,14 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: -webkit-fill-available;
+  height: 100%;
   overflow: hidden;
 }
 
 .logo-bg {
   background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   height: 50px;
   .img-logo {
     background-color: transparent;
@@ -96,7 +95,7 @@
 }
 
 fui-form-control-layout {
-  width: -webkit-fill-available;
+  width: 100%;
 }
 
 @media (max-width: 1000px) {

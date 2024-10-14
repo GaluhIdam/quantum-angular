@@ -3,38 +3,33 @@
     <!-- LEFT CONTENT  -->
     <div class="flex">
       <fui-button-icon
+        [fullWidth]="'fit'"
         *ngIf="nextPrevBtn"
         [option]="'icon'"
         [type]="'button'"
         [icon]="'arrowLeft'"
         [color]="'text'"
-        [style]="'secondary'"
+        [size]="'s'"
+        [style]="'empty'"
         (onClick)="toggleBtn('prev')"
       />
-      <fui-text
-        class="desktop"
-        [weight]="'semibold'"
-        style="margin: 0px 10px; width: 220px; text-align: center"
-      >
+      <fui-text class="desktop" [size]="'s'" [weight]="'semibold'">
         {{ startDate | date : "dd MMM yyyy" }} -
         {{ endDate | date : "dd MMM yyyy" }}</fui-text
       >
-      <fui-text
-        class="mobile"
-        [size]="'sizes'"
-        [weight]="'semibold'"
-        style="margin: 0px 10px; width: 200px; text-align: center"
-      >
+      <fui-text class="mobile" [size]="'s'" [weight]="'semibold'">
         {{ startDate | date : "dd MMM yyyy" }} -
         {{ endDate | date : "dd MMM yyyy" }}</fui-text
       >
       <fui-button-icon
+        [fullWidth]="'fit'"
         *ngIf="nextPrevBtn"
         [option]="'icon'"
         [type]="'button'"
         [icon]="'arrowRight'"
         [color]="'text'"
-        [style]="'secondary'"
+        [size]="'s'"
+        [style]="'empty'"
         (onClick)="toggleBtn('next')"
       />
 
@@ -44,14 +39,14 @@
         [title]="'Total Hours'"
       >
         <fui-badge
-          [color]="'ghost'"
+          [color]="'hollow'"
           [icon]="'clock'"
-          [isBadgeIcon]="true"
+          [iconShow]="true"
+          [iconSize]="'sizes'"
           [iconPosition]="'start'"
-          [size]="'sizel'"
-        >
-          {{ duration }}
-        </fui-badge>
+          [size]="'s'"
+          [text]="duration"
+        />
       </fui-tooltip>
     </div>
     <!-- LEFT CONTENT  -->
@@ -66,18 +61,19 @@
         [title]="'Total Hours'"
       >
         <fui-badge
-          [color]="'ghost'"
+          [color]="'hollow'"
           [icon]="'clock'"
-          [isBadgeIcon]="true"
+          [iconShow]="true"
+          [iconSize]="'sizem'"
           [iconPosition]="'start'"
-          [size]="'sizel'"
-        >
-          {{ duration }}
-        </fui-badge>
+          [size]="'m'"
+          [text]="duration"
+        />
       </fui-tooltip>
 
       <div class="group">
         <fui-button-icon
+          [fullWidth]="'fit'"
           class="filter"
           [option]="'iconText'"
           [type]="'button'"
@@ -89,6 +85,7 @@
           [size]="'m'"
         />
         <fui-button-icon
+          [fullWidth]="'fit'"
           [option]="'icon'"
           [type]="'button'"
           [icon]="'plusInCircle'"

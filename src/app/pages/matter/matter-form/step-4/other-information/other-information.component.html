@@ -32,7 +32,7 @@
 
   <div class="flex align-center">
     <fui-text>Matter Controllers</fui-text>
-    <fui-text [size]="'sizes'" class="border-badge">{{
+    <fui-text [size]="'s'" class="border-badge">{{
       selectedEmployeMatterMember.length
     }}</fui-text>
   </div>
@@ -54,7 +54,7 @@
   >
   <!-- BADGE MEMBER  -->
 
-  <fui-button-icon
+  <fui-button-icon [fullWidth]="'fit'"
     (onClick)="openFlyoutManageController()"
     class="flex mt-15"
     [style]="'secondary'"

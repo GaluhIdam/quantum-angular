@@ -1,0 +1,585 @@
+<!-- GENERAL & PERFORMANCE  -->
+<div class="grid-3 gap-10 mt-25">
+  <div class="col-1">
+    <!-- LABEL  -->
+    <fui-text [weight]="'semibold'">General</fui-text>
+    <div class="mt-5">
+      <fui-text [color]="'text'">Quick lookout to general information</fui-text>
+    </div>
+    <!-- LABEL  -->
+
+    <!-- STATUS BADGE  -->
+    <div class="card-content mt-20">
+      <div class="flex-badge-general">
+        <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Billable'" />
+        <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Hourly'" />
+        <fui-badge [color]="'success'" [size]="'s'" [text]="'Active'" />
+        <fui-badge
+          [color]="'hollow'"
+          [iconShow]="true"
+          [icon]="'timeRefresh'"
+          [iconSize]="'sizes'"
+          [size]="'s'"
+          [text]="'3 Jan 24'"
+        />
+      </div>
+    </div>
+    <!-- STATUS BADGE  -->
+
+    <!-- CLIENT & PAYER PIC  -->
+    <div class="card-content mt-10">
+      <!-- CLIENT PIC  -->
+      <div>
+        <fui-text [color]="'text'">Client PIC</fui-text>
+        <div class="card-pic">
+          <fui-text [weight]="'semibold'" [size]="'s'">Robert Fox</fui-text>
+          <div class="label-icon mt-10">
+            <fui-icons [size]="'sizes'" [icon]="'node'" />
+            <fui-text [size]="'s'">Big Kahuna Burger, PT</fui-text>
+          </div>
+          <div class="label-icon">
+            <fui-icons [size]="'sizes'" [icon]="'email'" />
+            <fui-text [size]="'s'">{{ "bill.sanders@example.com" }}</fui-text>
+          </div>
+          <div class="label-icon">
+            <fui-text [size]="'s'">#</fui-text>
+            <fui-text [size]="'s'" style="margin-left: 5px"
+              >(307) 555-0133</fui-text
+            >
+          </div>
+        </div>
+      </div>
+      <!-- CLIENT PIC  -->
+
+      <!-- PAYER PIC  -->
+      <div class="mt-25">
+        <fui-text [color]="'text'">Payer PIC</fui-text>
+        <div class="card-pic">
+          <fui-text [weight]="'semibold'" [size]="'s'">Cody Fisher</fui-text>
+          <div class="label-icon mt-10">
+            <fui-icons [size]="'sizes'" [icon]="'node'" />
+            <fui-text [size]="'s'">Big Kahuna Burger, PT</fui-text>
+          </div>
+          <div class="label-icon">
+            <fui-icons [size]="'sizes'" [icon]="'email'" />
+            <fui-text [size]="'s'">{{ "cody.fisher@example.com" }}</fui-text>
+          </div>
+          <div class="label-icon">
+            <fui-icons [size]="'sizes'" [icon]="'number'" />
+            <fui-text [size]="'s'">(307) 555-0133</fui-text>
+          </div>
+        </div>
+      </div>
+      <!-- PAYER PIC  -->
+    </div>
+    <!-- CLIENT & PAYER PIC  -->
+  </div>
+  <div class="col-span-2">
+    <!-- LABEL  -->
+    <fui-text [weight]="'semibold'">Performance</fui-text>
+    <div class="mt-5">
+      <fui-text [color]="'text'"
+        >You current matter performance which show cost, expenses and available
+        client deposit</fui-text
+      >
+    </div>
+    <!-- LABEL  -->
+
+    <div class="grid-2 gap-10 mt-20">
+      <!-- ESTIMATED FEE  -->
+      <div class="card-content">
+        <div class="flex-label mb-20">
+          <fui-text [color]="'text'">Estimated Fee</fui-text>
+          <fui-tooltip
+            [position]="'top'"
+            [content]="'Hey there, I m using whatsapp!'"
+          >
+            <fui-icons
+              [size]="'sizes'"
+              [color]="'disabled'"
+              [icon]="'questionInCircle'"
+            />
+          </fui-tooltip>
+        </div>
+        <div class="mb-10">
+          <fui-text [weight]="'semibold'">USD 15,500.00</fui-text>
+        </div>
+        <fui-horizontal-stack
+          [size]="'s'"
+          [showPercentage]="'none'"
+          [progress]="estimatedFee"
+        />
+        <div class="legend">
+          <span class="legend-title">
+            <div class="color-square primary"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Used</fui-text
+            >
+          </span>
+          <span class="legend-title"
+            ><div class="color-square disabled"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Remaining</fui-text
+            >
+          </span>
+          <span class="legend-title"
+            ><div class="color-square orange"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Overlimit</fui-text
+            >
+          </span>
+        </div>
+      </div>
+      <!-- ESTIMATED FEE  -->
+
+      <!-- LEGAL FEE  -->
+      <div class="card-content">
+        <div class="flex-label mb-20">
+          <fui-text [color]="'text'">Legal Fee</fui-text>
+          <fui-tooltip
+            [position]="'top'"
+            [content]="'Hey there, I m using whatsapp!'"
+          >
+            <fui-icons
+              [size]="'sizes'"
+              [color]="'disabled'"
+              [icon]="'questionInCircle'"
+            />
+          </fui-tooltip>
+        </div>
+        <div class="mb-10">
+          <fui-text [weight]="'semibold'">USD 15,500.00</fui-text>
+        </div>
+        <fui-horizontal-stack
+          [size]="'s'"
+          [showPercentage]="'none'"
+          [progress]="legalFee"
+        />
+        <div class="legend">
+          <span class="legend-title">
+            <div class="color-square primary"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Billed</fui-text
+            >
+          </span>
+          <span class="legend-title"
+            ><div class="color-square disabled"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Unbilled</fui-text
+            >
+          </span>
+        </div>
+      </div>
+      <!-- LEGAL FEE  -->
+
+      <!-- TOTAL TIMESHEET  -->
+      <div class="card-content">
+        <div class="flex-label mb-20">
+          <fui-text [color]="'text'">Total Timesheet</fui-text>
+          <fui-tooltip
+            [position]="'top'"
+            [content]="'Hey there, I m using whatsapp!'"
+          >
+            <fui-icons
+              [size]="'sizes'"
+              [color]="'disabled'"
+              [icon]="'questionInCircle'"
+            />
+          </fui-tooltip>
+        </div>
+        <div class="mb-10">
+          <fui-text [weight]="'semibold'">USD 14,000.00</fui-text>
+        </div>
+        <fui-horizontal-stack
+          [size]="'s'"
+          [showPercentage]="'none'"
+          [progress]="totalTimesheet"
+        />
+        <div class="legend">
+          <span class="legend-title">
+            <div class="color-square primary"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Billed</fui-text
+            >
+          </span>
+          <span class="legend-title"
+            ><div class="color-square disabled"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Unbilled</fui-text
+            >
+          </span>
+          <span class="legend-title"
+            ><div class="color-square orange"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Write-off</fui-text
+            >
+          </span>
+        </div>
+      </div>
+      <!-- TOTAL TIMESHEET  -->
+
+      <!-- TOTAL EXPENSES  -->
+      <div class="card-content">
+        <div class="flex-label mb-20">
+          <fui-text [color]="'text'">Total Expenses</fui-text>
+          <fui-tooltip
+            [position]="'top'"
+            [content]="'Hey there, I m using whatsapp!'"
+          >
+            <fui-icons
+              [size]="'sizes'"
+              [color]="'disabled'"
+              [icon]="'questionInCircle'"
+            />
+          </fui-tooltip>
+        </div>
+        <div class="mb-10">
+          <fui-text [weight]="'semibold'">USD 14,000.00</fui-text>
+        </div>
+        <fui-horizontal-stack
+          [size]="'s'"
+          [showPercentage]="'none'"
+          [progress]="totalExpenses"
+        />
+        <div class="legend">
+          <span class="legend-title">
+            <div class="color-square primary"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Billed</fui-text
+            >
+          </span>
+          <span class="legend-title"
+            ><div class="color-square disabled"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Unbilled</fui-text
+            >
+          </span>
+          <span class="legend-title"
+            ><div class="color-square orange"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Write-off</fui-text
+            >
+          </span>
+        </div>
+      </div>
+      <!-- TOTAL EXPENSES  -->
+
+      <!-- REMAINING DEPOSIT  -->
+      <div class="card-content">
+        <div class="flex-label mb-20">
+          <fui-text [color]="'text'">Remaining Deposit</fui-text>
+          <fui-tooltip
+            [position]="'top'"
+            [content]="'Hey there, I m using whatsapp!'"
+          >
+            <fui-icons
+              [size]="'sizes'"
+              [color]="'disabled'"
+              [icon]="'questionInCircle'"
+            />
+          </fui-tooltip>
+        </div>
+        <div class="mb-10">
+          <fui-text [weight]="'semibold'">USD 1,000.00</fui-text>
+        </div>
+        <fui-horizontal-stack
+          [size]="'s'"
+          [showPercentage]="'none'"
+          [progress]="remainingDeposit"
+        />
+        <div class="legend">
+          <span class="legend-title"
+            ><div class="color-square orange"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Used</fui-text
+            >
+          </span>
+          <span class="legend-title"
+            ><div class="color-square disabled"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+              >Remaining</fui-text
+            >
+          </span>
+        </div>
+      </div>
+      <!-- REMAINING DEPOSIT  -->
+    </div>
+  </div>
+</div>
+<!-- GENERAL & PERFORMANCE  -->
+
+<div class="mt-40"><hr /></div>
+
+<!-- COLLECTION  -->
+<div class="mt-40">
+  <!-- LABEL  -->
+  <fui-text [weight]="'semibold'">Collection</fui-text>
+  <div class="mt-5">
+    <fui-text [color]="'text'">Your overall billing of this matter</fui-text>
+  </div>
+  <!-- LABEL  -->
+
+  <!-- CARD GRID  -->
+  <div class="grid-4 gap-10 mt-20">
+    <!-- UNBILLED R3 -->
+    <div class="card-content flex-wrap">
+      <div class="flex-label justify-between mb-20">
+        <fui-text [color]="'text'">Unbilled (R3)</fui-text>
+        <fui-tooltip
+          [position]="'top'"
+          [content]="'Hey there, I m using whatsapp!'"
+        >
+          <fui-icons
+            [size]="'sizes'"
+            [color]="'disabled'"
+            [icon]="'questionInCircle'"
+          />
+        </fui-tooltip>
+
+        <fui-button-icon
+          [type]="'button'"
+          [style]="'empty'"
+          [option]="'text'"
+          [text]="'Create Prebill'"
+        />
+      </div>
+      <div class="mt-30">
+        <fui-text [weight]="'semibold'">USD 4,000.00</fui-text>
+      </div>
+    </div>
+    <!-- UNBILLED R3 -->
+
+    <!-- UNRECEIVED R2 -->
+    <div class="card-content flex-wrap">
+      <div class="flex-label mb-20">
+        <fui-text [color]="'text'">Unreceived (R2)</fui-text>
+        <fui-tooltip
+          [position]="'top'"
+          [content]="'Hey there, I m using whatsapp!'"
+        >
+          <fui-icons
+            [size]="'sizes'"
+            [color]="'disabled'"
+            [icon]="'questionInCircle'"
+          />
+        </fui-tooltip>
+      </div>
+      <div class="mt-30">
+        <fui-text [weight]="'semibold'">2 billing / USD 14,000.00</fui-text>
+      </div>
+    </div>
+    <!-- UNRECEIVED R2 -->
+
+    <!-- OVERDUE -->
+    <div class="card-content flex-wrap">
+      <div class="flex-label mb-20">
+        <fui-text [color]="'text'">Overdue</fui-text>
+        <fui-tooltip
+          [position]="'top'"
+          [content]="'Hey there, I m using whatsapp!'"
+        >
+          <fui-icons
+            [size]="'sizes'"
+            [color]="'disabled'"
+            [icon]="'questionInCircle'"
+          />
+        </fui-tooltip>
+      </div>
+      <div class="mt-30">
+        <fui-text [weight]="'semibold'">1 billing / USD 7,000.00</fui-text>
+      </div>
+    </div>
+    <!-- OVERDUE -->
+
+    <!-- OVERDUE AGE -->
+    <div class="card-content flex-wrap">
+      <div class="flex-label mb-20">
+        <fui-text [color]="'text'">Overdue Age</fui-text>
+        <fui-tooltip
+          [position]="'top'"
+          [content]="'Hey there, I m using whatsapp!'"
+        >
+          <fui-icons
+            [size]="'sizes'"
+            [color]="'disabled'"
+            [icon]="'questionInCircle'"
+          />
+        </fui-tooltip>
+      </div>
+      <div class="mt-30">
+        <fui-text [weight]="'semibold'">~3 days</fui-text>
+      </div>
+    </div>
+    <!-- OVERDUE AGE -->
+
+    <!-- RECEIVED R1 -->
+    <div class="card-content flex-wrap">
+      <div class="flex-label mb-20">
+        <fui-text [color]="'text'">Received (R1)</fui-text>
+        <fui-tooltip
+          [position]="'top'"
+          [content]="'Hey there, I m using whatsapp!'"
+        >
+          <fui-icons
+            [size]="'sizes'"
+            [color]="'disabled'"
+            [icon]="'questionInCircle'"
+          />
+        </fui-tooltip>
+      </div>
+      <div class="mt-30">
+        <fui-text [weight]="'semibold'">-</fui-text>
+      </div>
+    </div>
+    <!-- RECEIVED R1 -->
+
+    <!-- REVENUE -->
+    <div class="card-content flex-wrap">
+      <div class="flex-label mb-20">
+        <fui-text [color]="'text'">Revenue</fui-text>
+        <fui-tooltip
+          [position]="'top'"
+          [content]="'Hey there, I m using whatsapp!'"
+        >
+          <fui-icons
+            [size]="'sizes'"
+            [color]="'disabled'"
+            [icon]="'questionInCircle'"
+          />
+        </fui-tooltip>
+      </div>
+      <div class="mt-30">
+        <fui-text [weight]="'semibold'">USD 14,000.00</fui-text>
+      </div>
+    </div>
+    <!-- REVENUE -->
+
+    <!-- COLLECTION RATIO  -->
+    <div class="card-content col-span-2">
+      <div class="flex-label mb-20">
+        <fui-text [color]="'text'">Collection Ratio</fui-text>
+        <fui-tooltip
+          [position]="'top'"
+          [content]="'Hey there, I m using whatsapp!'"
+        >
+          <fui-icons
+            [size]="'sizes'"
+            [color]="'disabled'"
+            [icon]="'questionInCircle'"
+          />
+        </fui-tooltip>
+      </div>
+      <div class="mb-10">
+        <fui-text [weight]="'semibold'">80%</fui-text>
+      </div>
+      <fui-horizontal-stack
+        [size]="'s'"
+        [showPercentage]="'none'"
+        [progress]="collectionRatio"
+      />
+      <div class="legend">
+        <span class="legend-title">
+          <div class="color-square primary"></div>
+          <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+            >Received</fui-text
+          >
+        </span>
+        <span class="legend-title"
+          ><div class="color-square disabled"></div>
+          <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
+            >Unreceived</fui-text
+          >
+        </span>
+      </div>
+    </div>
+    <!-- COLLECTION RATIO  -->
+  </div>
+  <!-- CARD GRID  -->
+</div>
+<!-- COLLECTION  -->
+
+<div class="mt-40"><hr /></div>
+
+<!-- TIME SPENT  -->
+<div class="mt-40">
+  <!-- LABEL  -->
+  <fui-text [weight]="'semibold'">Time Spent</fui-text>
+  <div class="mt-5">
+    <fui-text [color]="'text'"
+      >Total hours spent of your team on this matter</fui-text
+    >
+  </div>
+  <!-- LABEL  -->
+
+  <!-- CARD GRID  -->
+  <div class="grid-4 gap-10 mt-20">
+    <!-- TOTAL HOURS -->
+    <div class="card-content flex-wrap">
+      <div class="flex-label mb-20">
+        <fui-text [color]="'text'">Total Hours</fui-text>
+        <fui-tooltip
+          [position]="'top'"
+          [content]="'Hey there, I m using whatsapp!'"
+        >
+          <fui-icons
+            [size]="'sizes'"
+            [color]="'disabled'"
+            [icon]="'questionInCircle'"
+          />
+        </fui-tooltip>
+      </div>
+      <div class="mt-30">
+        <fui-text [weight]="'semibold'">130h 40m</fui-text>
+      </div>
+    </div>
+    <!-- TOTAL HOURS -->
+  </div>
+  <!-- CARD GRID  -->
+
+  <div class="card-content mt-10">
+    <!-- BTN GROUP  -->
+    <fui-filter-group [fullWidth]="false">
+      <fui-filter-group-button
+        [active]="onlyNonMemberBtn"
+        (onClick)="onlyNonMemberBtn = true"
+      >
+        Only Members
+      </fui-filter-group-button>
+      <fui-filter-group-button
+        [active]="!onlyNonMemberBtn"
+        (onClick)="onlyNonMemberBtn = false"
+      >
+        Non-members
+      </fui-filter-group-button>
+    </fui-filter-group>
+    <!-- BTN GROUP  -->
+
+    <!-- TABLE  -->
+    <div class="mt-20">
+      <fui-table [limit]="5" [totalItems]="10" [showInfo]="false">
+        <fui-table-head *ngFor="let header of titleTable">
+          <div class="text-left" *ngIf="header === 'Name'">
+            <fui-text [weight]="'semibold'"> {{ header }}</fui-text>
+          </div>
+          <div class="text-right" *ngIf="header === 'Duration'">
+            <fui-text [weight]="'semibold'"> {{ header }}</fui-text>
+          </div>
+        </fui-table-head>
+        <fui-table-body *ngFor="let data of dataTable">
+          <fui-table-body-row>
+            <fui-table-body-data>
+              <fui-text>{{ data.name }}</fui-text>
+            </fui-table-body-data>
+            <fui-table-body-data>
+              <div class="text-right">
+                <fui-text>{{ data.duration }}</fui-text>
+              </div>
+            </fui-table-body-data>
+          </fui-table-body-row>
+        </fui-table-body>
+      </fui-table>
+    </div>
+    <!-- TABLE  -->
+  </div>
+</div>
+<!-- TIME SPENT  -->

@@ -22,7 +22,7 @@
 
     <div class="group-btn">
       <!-- BUTTON FILTER FOR OPEN FLYOUT -->
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         [color]="'text'"
         [type]="'button'"
         [option]="'iconText'"
@@ -35,7 +35,7 @@
       <!-- BUTTON FILTER FOR OPEN FLYOUT -->
 
       <!-- ADD EXPENSE MATTER -->
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         [color]="'primary'"
         [type]="'button'"
         [option]="'iconText'"
@@ -65,7 +65,7 @@
   <div body>
     <!-- REQUESTED FORM  -->
     <div class="form">
-      <fui-text [size]="'sizes'">Requested By</fui-text>
+      <fui-text [size]="'s'">Requested By</fui-text>
       <div class="time-description">
         <fui-combo-box
           (selection)="selectionCombox($event, 'requested')"
@@ -81,7 +81,7 @@
 
     <!-- ITEM CAT FORM  -->
     <div class="form">
-      <fui-text [size]="'sizes'">Item Category</fui-text>
+      <fui-text [size]="'s'">Item Category</fui-text>
       <div class="time-description">
         <fui-combo-box
           (selection)="selectionCombox($event, 'itemCat')"
@@ -97,7 +97,7 @@
 
     <!-- DATE FORM  -->
     <div class="form">
-      <fui-text [size]="'sizes'">Date</fui-text>
+      <fui-text [size]="'s'">Date</fui-text>
       <div class="time-description">
         <fui-date-range
           [dateFormat]="'DD-MM-YYYY'"
@@ -124,7 +124,7 @@
     <div class="group-form">
       <!-- VENDOR IN FORM  -->
       <div class="form">
-        <fui-text [size]="'sizes'">Vendor Invoice Number</fui-text>
+        <fui-text [size]="'s'">Vendor Invoice Number</fui-text>
         <div class="time-description">
           <fui-form-control-layout>
             <fui-input-field
@@ -141,7 +141,7 @@
 
       <!-- PAYMENT NUMBER FORM  -->
       <div class="form">
-        <fui-text [size]="'sizes'">Payment Number</fui-text>
+        <fui-text [size]="'s'">Payment Number</fui-text>
         <div class="time-description">
           <fui-form-control-layout>
             <fui-input-field
@@ -158,7 +158,7 @@
     </div>
 
     <div class="alone-t">
-      <fui-text [size]="'sizes'">Amount</fui-text>
+      <fui-text [size]="'s'">Amount</fui-text>
     </div>
     <div class="group-form">
       <!-- MIN AMOUNT FORM  -->
@@ -198,7 +198,7 @@
 
     <!-- COLLECTION STATUS FORM  -->
     <div class="form">
-      <fui-text [size]="'sizes'">Collection Status</fui-text>
+      <fui-text [size]="'s'">Collection Status</fui-text>
       <div class="time-description">
         <fui-combo-box
           (selection)="selectionCombox($event, 'collection')"
@@ -214,7 +214,7 @@
 
     <!-- COLLECTED IN FORM  -->
     <div class="form">
-      <fui-text [size]="'sizes'">Collected In</fui-text>
+      <fui-text [size]="'s'">Collected In</fui-text>
       <div class="time-description">
         <fui-combo-box
           (selection)="selectionCombox($event, 'collected')"
@@ -231,7 +231,7 @@
 
   <!-- FOOTER FLYOUT FILTER  -->
   <div class="footer-flyout" footer>
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       [type]="'button'"
       [option]="'text'"
       [style]="'secondary'"
@@ -241,7 +241,7 @@
       (onClick)="closeOut(false, 'filter')"
     />
     <div class="group-flex">
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         [type]="'button'"
         [option]="'text'"
         [style]="'secondary'"
@@ -250,7 +250,7 @@
         [color]="'text'"
         (onClick)="closeOut(false, 'filter')"
       />
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         [type]="'button'"
         [option]="'iconText'"
         [style]="'filled'"
