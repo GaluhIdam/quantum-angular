@@ -45,14 +45,14 @@ export class DetailMatterComponent {
     title: string;
   }[] = [
     {
-      active: false,
+      active: true,
       icon: 'visArea',
       sideIcon: 'left',
       sizeIcon: 'sizem',
       title: 'Overview',
     },
     {
-      active: true,
+      active: false,
       icon: 'document',
       sideIcon: 'left',
       sizeIcon: 'sizem',
