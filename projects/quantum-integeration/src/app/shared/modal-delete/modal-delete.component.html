@@ -1,0 +1,48 @@
+<fui-modal [open]="openModalDelete">
+  <fui-modal-header
+    [iconCloseShow]="false"
+    (onCloseModal)="closelModalDelete()"
+  >
+    <div class="container-title">
+      <div class="bg-icon">
+        <fui-icons
+          [color]="'danger'"
+          [size]="'sizexxl'"
+          [icon]="'questionInCircle'"
+        />
+      </div>
+      <div class="title-modal">
+        <fui-text [color]="'text'" [weight]="'bold'" [size]="'l'">
+          {{ title }}
+        </fui-text>
+      </div>
+    </div>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="modal">
+      <fui-text>{{ desc }}</fui-text>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer >
+    <div class="foot">
+      <fui-button-icon [fullWidth]="'fit'"
+        (onClick)="closelModalDelete()"
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="btnCancel"
+        [style]="'secondary'"
+        [color]="'text'"
+      />
+      <fui-button-icon [fullWidth]="'fit'"
+        (onClick)="deleteAction()"
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="btnContinue"
+        [style]="'filled'"
+        [color]="'danger'"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>

@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="flex-between">
+    <!-- LEFT CONTENT  -->
+    <div class="flex">
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        *ngIf="nextPrevBtn"
+        [option]="'icon'"
+        [type]="'button'"
+        [icon]="'arrowLeft'"
+        [color]="'text'"
+        [size]="'s'"
+        [style]="'empty'"
+        (onClick)="toggleBtn('prev')"
+      />
+      <fui-text class="desktop" [size]="'s'" [weight]="'semibold'">
+        {{ startDate | date : "dd MMM yyyy" }} -
+        {{ endDate | date : "dd MMM yyyy" }}</fui-text
+      >
+      <fui-text class="mobile" [size]="'s'" [weight]="'semibold'">
+        {{ startDate | date : "dd MMM yyyy" }} -
+        {{ endDate | date : "dd MMM yyyy" }}</fui-text
+      >
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        *ngIf="nextPrevBtn"
+        [option]="'icon'"
+        [type]="'button'"
+        [icon]="'arrowRight'"
+        [color]="'text'"
+        [size]="'s'"
+        [style]="'empty'"
+        (onClick)="toggleBtn('next')"
+      />
+
+      <fui-tooltip
+        class="badge desktop"
+        [position]="'top'"
+        [title]="'Total Hours'"
+      >
+        <fui-badge
+          [color]="'hollow'"
+          [icon]="'clock'"
+          [iconShow]="true"
+          [iconSize]="'sizes'"
+          [iconPosition]="'start'"
+          [size]="'s'"
+          [text]="duration"
+        />
+      </fui-tooltip>
+    </div>
+    <!-- LEFT CONTENT  -->
+
+    <!-- -------------------------------------------- -->
+
+    <!-- RIGHT CONTENT  -->
+    <div class="flex">
+      <fui-tooltip
+        class="badge mobile"
+        [position]="'top'"
+        [title]="'Total Hours'"
+      >
+        <fui-badge
+          [color]="'hollow'"
+          [icon]="'clock'"
+          [iconShow]="true"
+          [iconSize]="'sizem'"
+          [iconPosition]="'start'"
+          [size]="'m'"
+          [text]="duration"
+        />
+      </fui-tooltip>
+
+      <div class="group">
+        <fui-button-icon
+          [fullWidth]="'fit'"
+          class="filter"
+          [option]="'iconText'"
+          [type]="'button'"
+          [icon]="'filter'"
+          [color]="'text'"
+          [text]="'Filter'"
+          [style]="'secondary'"
+          (onClick)="toggleBtn('filter')"
+          [size]="'m'"
+        />
+        <fui-button-icon
+          [fullWidth]="'fit'"
+          [option]="'icon'"
+          [type]="'button'"
+          [icon]="'plusInCircle'"
+          [color]="'primary'"
+          [style]="'filled'"
+          [size]="'m'"
+          (onClick)="toggleBtn('add')"
+        />
+      </div>
+    </div>
+    <!-- RIGHT CONTENT  -->
+  </div>
+</div>

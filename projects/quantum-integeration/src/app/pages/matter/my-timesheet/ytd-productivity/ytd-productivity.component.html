@@ -1,0 +1,30 @@
+<div class="header ytd">
+  <div class="grid-1">
+    <fui-text [weight]="'semibold'" [size]="'m'"
+      >YTD Billable Productivity</fui-text
+    >
+    <fui-text [color]="'text'" [fwStyle]="'italic'" [size]="'s'"
+      >Refreshed daily</fui-text
+    >
+  </div>
+</div>
+<div class="body" *ngIf="optionBar.series.length > 0">
+  <div class="chart">
+    <shared-skeleton [active]="loading">
+      <fui-echarts
+        [height]="'160px'"
+        [chartOption]="optionBar"
+        [themeCustom]="true"
+      ></fui-echarts>
+    </shared-skeleton>
+  </div>
+</div>
+<div class="empty" *ngIf="optionBar.series.length === 0">
+  <shared-skeleton [active]="loading">
+    <shared-empty-data
+      [title]="'N/A'"
+      [subTitle]="'You don’t have any target data for productivity'"
+      [dataLength]="optionBar.series.length"
+    />
+  </shared-skeleton>
+</div>

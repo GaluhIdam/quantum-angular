@@ -1,0 +1,242 @@
+<div class="flex">
+  <fui-button-icon [fullWidth]="'fit'"
+    class="toggle-filter"
+    [size]="'m'"
+    [type]="'button'"
+    [option]="'iconText'"
+    [text]="'Filter'"
+    [icon]="'filter'"
+    [style]="'secondary'"
+    [color]="'text'"
+    (onClick)="isOpenModal = true"
+  />
+  <fui-badge
+    [color]="'primary'"
+    [size]="'m'"
+    [icon]="'cross'"
+    [iconPosition]="'end'"
+    [iconShow]="true"
+    [iconSize]="'sizexs'"
+    *ngFor="let item of dataFilterOut"
+  >
+    <fui-text [size]="'s'" [color]="'ghost'">{{ item.column }} : </fui-text>
+    <fui-text [size]="'s'" [color]="'ghost'" [weight]="'bold'"
+      >{{ item.value }}
+    </fui-text>
+  </fui-badge>
+</div>
+
+<fui-modal [open]="isOpenModal">
+  <fui-modal-header [iconCloseShow]="false" (onCloseModal)="closelModal()">
+    <div class="title-modal">
+      <fui-text [color]="'text'" [weight]="'bold'" [size]="'l'">
+        Advanced Filters
+      </fui-text>
+    </div>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="modal">
+      <!-- FORM FILTER  -->
+      <div class="form-filter" *ngFor="let item of filterData; let i = index">
+        <div *ngIf="i === 0">
+          <fui-text style="width: 130px; display: flex">Where</fui-text>
+        </div>
+        <div *ngIf="i > 0">
+          <fui-combo-box
+            style="width: 130px"
+            [comboxForm]="item.formControlWhere"
+            [singleSelection]="true"
+            [placeholder]="'AND'"
+            [selectedValue]="item.selectedWhere"
+            [optionValue]="item.optionsWhere"
+          />
+        </div>
+
+        <!-- COLUMN  -->
+        <div class="w-100">
+          <fui-combo-box
+            [comboxForm]="item.formControlColumn"
+            (selection)="selectColumn($event, item)"
+            [singleSelection]="true"
+            [placeholder]="'Column'"
+            [selectedValue]="item.selectedColumn"
+            [optionValue]="item.optionsColumn"
+          />
+        </div>
+        <!-- COLUMN  -->
+
+        <!-- CONDITION  -->
+        <div>
+          <fui-combo-box
+            style="width: 130px"
+            [comboxForm]="item.formControlCondition"
+            [singleSelection]="true"
+            (selection)="selectionCondition($event, item)"
+            [placeholder]="'Condition'"
+            [selectedValue]="item.selectedCondition"
+            [optionValue]="[
+              { name: 'Is', value: 'is' },
+              { name: 'Like', value: 'like' },
+              { name: 'Contains', value: 'contains' }
+            ]"
+          />
+        </div>
+        <!-- CONDITION  -->
+
+        <!-- VALUE  -->
+        <div class="w-100">
+          <fui-form-control-layout *ngIf="item.selectedColumn.length === 0">
+            <fui-input-field
+              [disabled]="true"
+              [formControlField]="item.formControlValue"
+              [placeholder]="'Value'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="
+                item.formControlValue.invalid && item.formControlValue.dirty
+              "
+            >
+              <fui-icons
+                *ngIf="
+                  item.formControlValue.invalid && item.formControlValue.dirty
+                "
+                right-icon
+                [label]="'right'"
+                [icon]="'alert'"
+                [size]="'sizem'"
+                [color]="'danger'"
+              ></fui-icons>
+            </fui-input-field>
+          </fui-form-control-layout>
+
+          <!-- TEXT FORM  -->
+          <fui-form-control-layout
+            *ngIf="item.selectedColumn[0]?.value.type === 'text'"
+          >
+            <fui-input-field
+              [formControlField]="item.formControlValue"
+              [placeholder]="'Value'"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="
+                item.formControlValue.invalid && item.formControlValue.dirty
+              "
+            >
+              <fui-icons
+                *ngIf="
+                  item.formControlValue.invalid && item.formControlValue.dirty
+                "
+                right-icon
+                [label]="'right'"
+                [icon]="'alert'"
+                [size]="'sizem'"
+                [color]="'danger'"
+              ></fui-icons>
+            </fui-input-field>
+          </fui-form-control-layout>
+          <!-- TEXT FORM  -->
+
+          <!-- COMBO BOX  -->
+          <fui-combo-box
+            *ngIf="item.selectedColumn[0]?.value.type === 'combo-box'"
+            [comboxForm]="item.formControlValue"
+            (selection)="selectionValue($event, item)"
+            [singleSelection]="true"
+            [placeholder]="'Value'"
+            [selectedValue]="item.selectedValue"
+            [optionValue]="item.optionsValue"
+          />
+          <!-- COMBO BOX  -->
+
+          <!-- DATE PICKER  -->
+          <fui-date-picker
+            *ngIf="item.selectedColumn[0]?.value.type === 'datePicker'"
+            [dateFormat]="'DD-MM-YYYY'"
+            [dateFormControl]="item.formControlValue"
+            [position]="'bottom'"
+            [isInvalid]="
+              item.formControlColumn.invalid && item.formControlColumn.dirty
+            "
+          />
+          <!-- DATE PICKER  -->
+
+          <!-- DATE DURATION  -->
+          <fui-time-selection
+            *ngIf="item.selectedColumn[0]?.value.type === 'time-selection'"
+            [position]="'bottom'"
+            [timeFormControl]="item.formControlValue"
+            [isInvalid]="
+              item.formControlValue.invalid && item.formControlValue.dirty
+            "
+            [minuteInterval]="'15 minutes'"
+            [message]="'Duration is required!'"
+          />
+          <!-- DATE DURATION  -->
+        </div>
+        <!-- VALUE  -->
+
+        <!-- CLOSE BTN  -->
+        <fui-button-icon [fullWidth]="'fit'"
+          [disabled]="i === 0"
+          [size]="'m'"
+          [type]="'button'"
+          [option]="'icon'"
+          [icon]="'cross'"
+          [style]="'secondary'"
+          [color]="i === 0 ? 'disabled' : 'text'"
+          (onClick)="removeFilterData(i)"
+        />
+        <!-- CLOSE BTN  -->
+      </div>
+      <!-- FORM FILTER  -->
+
+      <!-- NEW FILTER  -->
+      <fui-button-icon [fullWidth]="'fit'"
+        [size]="'s'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircleFilled'"
+        [text]="'New Filter'"
+        [style]="'filled'"
+        [color]="'text'"
+        (onClick)="addFilterForm()"
+      />
+      <!-- NEW FILTER  -->
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer >
+    <div class="foot">
+      <fui-button-icon [fullWidth]="'fit'"
+        [size]="'m'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [style]="'secondary'"
+        [color]="'text'"
+        (onClick)="closelModal()"
+      />
+      <div class="flex">
+        <fui-button-icon [fullWidth]="'fit'"
+          [size]="'m'"
+          [type]="'button'"
+          [icon]="'refresh'"
+          [option]="'iconText'"
+          [text]="'Clear All'"
+          [style]="'secondary'"
+          [color]="'text'"
+          (onClick)="clearAll()"
+        />
+        <fui-button-icon [fullWidth]="'fit'"
+          [size]="'m'"
+          [type]="'button'"
+          [option]="'iconText'"
+          [text]="'Filter'"
+          [icon]="'filter'"
+          [style]="'filled'"
+          [color]="'primary'"
+          (onClick)="pickUpFilter()"
+        />
+      </div>
+    </div>
+  </fui-modal-footer>
+</fui-modal>

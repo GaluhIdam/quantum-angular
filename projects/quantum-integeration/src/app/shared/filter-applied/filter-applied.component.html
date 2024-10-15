@@ -1,0 +1,21 @@
+<div class="container" *ngIf="checkFilter()">
+  <div class="group">
+    <p class="title">Applied Filters</p>
+    <p class="toggle-clear" (click)="clearAllFilter()">Clear All</p>
+  </div>
+  <div class="scroller">
+    @for (item of filterApplied; track $index) {
+    <fui-badge
+      *ngIf="item.status"
+      [color]="'hollow'"
+      [size]="'s'"
+      [iconShow]="true"
+      [iconPosition]="'end'"
+      [icon]="'cross'"
+      [iconSize]="'sizes'"
+      (iconOnClick)="clearFilterPerItem(item)"
+      [text]="item.name"
+    />
+    }
+  </div>
+</div>
