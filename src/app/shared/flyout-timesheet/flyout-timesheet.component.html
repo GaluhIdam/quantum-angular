@@ -1,9 +1,4 @@
-<fui-flyout
-  [zIndex]="2"
-  [open]="isOpenFlyout"
-  [flyoutSize]="'s'"
-  [flyoutPadding]="'s'"
->
+<fui-flyout [openFlyout]="isOpenFlyout" (overlayOut)="toggleCloseFlyout()">
   <fui-flyout-header (onCloseFlyout)="toggleCloseFlyout()">
     <div class="header-flyout">
       <h2>{{ title }}</h2>
@@ -260,9 +255,10 @@
     </div>
   </fui-flyout-body>
 
-  <fui-flyout-footer [isFlyoutFooterCustom]="true">
+  <fui-flyout-footer>
     <div class="footer-flyout flex-between" *ngIf="actionButton === 'create'">
-      <fui-button-icon [fullWidth]="'fit'"
+      <fui-button-icon
+        [fullWidth]="'fit'"
         (onClick)="toggleCloseFlyout()"
         [type]="'button'"
         [size]="'s'"
@@ -271,14 +267,16 @@
         [text]="'Cancel'"
       />
       <div class="flex-between">
-        <fui-button-icon [fullWidth]="'fit'"
+        <fui-button-icon
+          [fullWidth]="'fit'"
           [type]="'button'"
           [size]="'s'"
           [option]="'text'"
           [style]="'secondary'"
           [text]="'Save & Close'"
         />
-        <fui-button-icon [fullWidth]="'fit'"
+        <fui-button-icon
+          [fullWidth]="'fit'"
           [type]="'button'"
           [size]="'s'"
           [option]="'text'"
@@ -288,14 +286,16 @@
       </div>
     </div>
     <div class="footer-flyout flex-between" *ngIf="actionButton === 'update'">
-      <fui-button-icon [fullWidth]="'fit'"
+      <fui-button-icon
+        [fullWidth]="'fit'"
         (onClick)="toggleCloseFlyout()"
         [type]="'button'"
         [option]="'text'"
         [style]="'secondary'"
         [text]="'Cancel'"
       />
-      <fui-button-icon [fullWidth]="'fit'"
+      <fui-button-icon
+        [fullWidth]="'fit'"
         [type]="'button'"
         [option]="'text'"
         [style]="'filled'"
@@ -306,7 +306,8 @@
       class="footer-flyout flex-between"
       *ngIf="actionButton === 'updateTag'"
     >
-      <fui-button-icon [fullWidth]="'fit'"
+      <fui-button-icon
+        [fullWidth]="'fit'"
         (onClick)="toggleCloseFlyout()"
         [type]="'button'"
         [size]="'s'"
@@ -315,7 +316,8 @@
         [text]="'Cancel'"
       />
       <div class="flex-between">
-        <fui-button-icon [fullWidth]="'fit'"
+        <fui-button-icon
+          [fullWidth]="'fit'"
           [type]="'button'"
           [size]="'s'"
           [option]="'text'"
@@ -323,7 +325,8 @@
           [style]="'secondary'"
           [text]="'Reject & Remove'"
         />
-        <fui-button-icon [fullWidth]="'fit'"
+        <fui-button-icon
+          [fullWidth]="'fit'"
           [type]="'button'"
           [size]="'s'"
           [option]="'text'"

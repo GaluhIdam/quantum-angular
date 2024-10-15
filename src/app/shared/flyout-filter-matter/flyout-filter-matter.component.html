@@ -1,9 +1,4 @@
-<fui-flyout
-  [zIndex]="2"
-  [open]="isOpenFlyout"
-  [flyoutSize]="'s'"
-  [flyoutPadding]="'s'"
->
+<fui-flyout [openFlyout]="isOpenFlyout" (overlayOut)="toggleCloseFlyout()">
   <!-- HEADER FLYOUT -->
   <fui-flyout-header (onCloseFlyout)="toggleCloseFlyout()">
     <div class="header-flyout">
@@ -264,7 +259,7 @@
   <!-- BODY FLYOUT -->
 
   <!-- FOOTER FLYOUT -->
-  <fui-flyout-footer [isFlyoutFooterCustom]="true">
+  <fui-flyout-footer>
     <div class="footer-flyout">
       <fui-button-icon
         [fullWidth]="'fit'"
