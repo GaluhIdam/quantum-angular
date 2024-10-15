@@ -169,16 +169,22 @@ export class HistoryActivityComponent extends BaseController {
     limit: number
   ): void {
     this.filterApplied = [];
+
+    // Correctly parse the date strings from "DD-MM-YYYY" to "YYYY-MM-DD"
     const startDateObj = startDate.split('-').reverse().join('-');
     const endDateObj = endDate.split('-').reverse().join('-');
+
     this.startDate = new Date(startDateObj);
     this.endDate = new Date(endDateObj);
-    if (startDate !== '' && endDate !== '') {
+
+    // Check if dates are valid
+    if (!isNaN(this.startDate.getTime()) && !isNaN(this.endDate.getTime())) {
       this.filterApplied.push({
         name: 'Date',
         status: true,
       });
     }
+
     if (matters !== '' && matters !== null) {
       this.filterApplied.push({
         name: 'Matter',
@@ -191,14 +197,15 @@ export class HistoryActivityComponent extends BaseController {
         status: true,
       });
     }
+
     this.mytimesheetService
       .getFilterTimesheet(
         startDate === ''
           ? null
-          : this.datePipe.transform(startDate, 'yyyy-dd-MM')!.toString(),
+          : this.datePipe.transform(this.startDate, 'yyyy-MM-dd')!.toString(), // Adjust format to 'yyyy-MM-dd'
         endDate === ''
           ? null
-          : this.datePipe.transform(endDate, 'yyyy-dd-MM')!.toString(),
+          : this.datePipe.transform(this.endDate, 'yyyy-MM-dd')!.toString(), // Adjust format to 'yyyy-MM-dd'
         matters === '' ? null : matters,
         addDescription === '' ? null : addDescription,
         page,
