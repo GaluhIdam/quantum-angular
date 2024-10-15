@@ -121,6 +121,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": [
+              "dayjs",
+              "dayjs/plugin/customParseFormat"
+            ],
             "outputPath": "dist/quantum-integeration",
             "index": "projects/quantum-integeration/src/index.html",
             "browser": "projects/quantum-integeration/src/main.ts",
