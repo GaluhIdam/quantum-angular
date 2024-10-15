@@ -42,7 +42,7 @@
       <fui-text class="label"> Amount </fui-text>
       <fui-form-control-layout>
         <fui-prepend>
-          <fui-text [size]="'sizexs'" [weight]="'semibold'">{{
+          <fui-text [size]="'xs'" [weight]="'semibold'">{{
             currencyForm.value
           }}</fui-text>
         </fui-prepend>
@@ -93,7 +93,7 @@
     <!-- DESC  -->
   </div>
   <div footer class="flex-between footer-fly">
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openFlyouLumpsumTerm()"
       [type]="'button'"
       [color]="'primary'"
@@ -101,7 +101,7 @@
       [option]="'text'"
       [text]="'Cancel'"
     />
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openFlyouLumpsumTerm()"
       [type]="'button'"
       [color]="'primary'"

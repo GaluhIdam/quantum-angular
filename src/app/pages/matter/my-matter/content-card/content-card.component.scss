@@ -32,7 +32,7 @@
     .billble {
       display: flex;
       justify-content: space-between;
-      width: -webkit-fill-available;
+      width: 100%;
       margin: 10px 0px;
     }
   }
@@ -52,7 +52,7 @@
 }
 
 fui-progress {
-  width: -webkit-fill-available;
+  width: 100%;
 }
 
 fui-badge {

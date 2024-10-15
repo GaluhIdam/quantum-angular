@@ -1,6 +1,6 @@
 @import "../../app.component.scss";
 :host {
-  width: -webkit-fill-available;
+  width: 100%;
   display: block;
 }
 .mb-5 {
@@ -22,7 +22,7 @@
     gap: 5px;
   }
   fui-form-control-layout {
-    width: -webkit-fill-available;
+    width: 100%;
   }
 }
 .checkbox {

@@ -2,6 +2,7 @@
   <div class="row-head">
     <h1 class="title">5889-1 Matter Project Name</h1>
     <fui-button-icon
+      [fullWidth]="'fit'"
       (onClick)="gotoPage()"
       [type]="'button'"
       [option]="'icon'"
@@ -14,14 +15,14 @@
     <div class="badge-group">
       <fui-badge
         [color]="'ghost'"
-        [isBadgeIcon]="true"
+        [iconShow]="true"
         [icon]="'node'"
-        [sizeIcon]="'sizes'"
-        [size]="'sizem'"
+        [iconSize]="'sizes'"
+        [size]="'m'"
       >
         <p class="desc">Ministry of Republic Indonesia</p>
       </fui-badge>
-      <fui-badge [color]="'ghost'" [size]="'sizel'"> +2 others </fui-badge>
+      <fui-badge [color]="'ghost'" [size]="'l'"> +2 others </fui-badge>
     </div>
   </div>
   <div class="row-desc">
@@ -74,17 +75,13 @@
     <div
       class="billble"
       [ngStyle]="{ visibility: type === 1 ? 'visible' : 'hidden' }"
-    >
-
-    </div>
+    ></div>
   </div>
 
   <hr />
   <div class="row-foot">
-    <fui-badge [color]="'ghost'" [size]="'sizem'"> <b>Billable</b> </fui-badge>
-    <fui-badge [color]="'ghost'" [size]="'sizem'">
-      <b>Hourly</b>
-    </fui-badge>
+    <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Billable'" />
+    <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Hourly'" />
     <fui-badge
       [color]="
         type === 1
@@ -93,29 +90,27 @@
           ? 'warning'
           : type === 3
           ? 'danger'
-          : 'text'
+          : 'default'
       "
-      [size]="'sizel'"
-    >
-      <b>{{
+      [size]="'s'"
+      [text]="
         type === 1
-          ? "Active"
+          ? 'Active'
           : type === 2
-          ? "Complete"
+          ? 'Complete'
           : type === 3
-          ? "Pending"
-          : "Closed"
-      }}</b>
-    </fui-badge>
+          ? 'Pending'
+          : 'Closed'
+      "
+    />
     <fui-badge
-      [isBadgeIcon]="true"
-      [color]="'ghost'"
+      [iconShow]="true"
+      [color]="'hollow'"
       [iconPosition]="'start'"
       [icon]="'timeRefresh'"
-      [size]="'sizem'"
-      [sizeIcon]="'sizes'"
-    >
-      <b> 3 Jan 24</b>
-    </fui-badge>
+      [size]="'s'"
+      [iconSize]="'sizes'"
+      [text]="'3 Jan 24'"
+    />
   </div>
 </div>

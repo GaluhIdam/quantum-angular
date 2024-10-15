@@ -60,7 +60,7 @@
           [checked]="isCounterparty"
           [(ngModel)]="isCounterparty"
         />
-        <fui-text [size]="'sizes'" (click)="isCounterparty = !isCounterparty"
+        <fui-text [size]="'s'" (click)="isCounterparty = !isCounterparty"
           >N/A</fui-text
         >
       </div>
@@ -82,6 +82,7 @@
       >Not Applicable</fui-text
     >
     <fui-button-icon
+      [fullWidth]="'fit'"
       (onClick)="opeCloseFlyout('CP')"
       *ngIf="!isCounterparty"
       class="flex mt-15"
@@ -165,50 +166,45 @@
         [checked]="isOtherStakeholder"
         [(ngModel)]="isOtherStakeholder"
       />
-      <fui-text
-        [size]="'sizes'"
-        (click)="isOtherStakeholder = !isOtherStakeholder"
+      <fui-text [size]="'s'" (click)="isOtherStakeholder = !isOtherStakeholder"
         >N/A</fui-text
       >
     </div>
   </div>
 
   <!-- LIST  -->
-  <fui-badge
-    [color]="'ghost'"
-    [size]="'sizedefault'"
-    *ngIf="!isOtherStakeholder"
-  >
-    <div class="flex p-5 border-rounded align-center">
-      <fui-icons [icon]="'node'" />
-      <div class="grid-1 gap-5 text-left">
-        <fui-text
-          ><b>Barone LLC.</b> as Indonesian Legal Counselor for Tripatra
-          Engineers & Constructor, PT</fui-text
-        >
-        <fui-text> Ut enim ad minim veniam, quis nostrud </fui-text>
-      </div>
-      <fui-button-icon
-        [type]="'button'"
-        [option]="'icon'"
-        [style]="'secondary'"
-        [icon]="'pencil'"
-      />
-      <fui-button-icon
-        [type]="'button'"
-        [option]="'icon'"
-        [style]="'secondary'"
-        [color]="'danger'"
-        [icon]="'trash'"
-      />
+  <div class="badge-list" *ngIf="!isOtherStakeholder">
+    <fui-icons [icon]="'node'" />
+    <div class="grid-1 gap-5 text-left">
+      <p style="overflow: hidden; text-wrap: nowrap; text-overflow: ellipsis">
+        <b>Barone LLC.</b> as Indonesian Legal Counselor for Tripatra Engineers
+        & Constructor, PT
+      </p>
+      <fui-text [color]="'text'"> Ut enim ad minim veniam, quis nostrud </fui-text>
     </div>
-  </fui-badge>
+    <fui-button-icon
+      [fullWidth]="'fit'"
+      [type]="'button'"
+      [option]="'icon'"
+      [style]="'secondary'"
+      [icon]="'pencil'"
+    />
+    <fui-button-icon
+      [fullWidth]="'fit'"
+      [type]="'button'"
+      [option]="'icon'"
+      [style]="'secondary'"
+      [color]="'danger'"
+      [icon]="'trash'"
+    />
+  </div>
   <fui-text class="fs-italic" [color]="'disabled'" *ngIf="isOtherStakeholder"
     >Not Applicable</fui-text
   >
   <!-- LIST  -->
 
   <fui-button-icon
+    [fullWidth]="'fit'"
     *ngIf="!isOtherStakeholder"
     (onClick)="opeCloseFlyout('SH')"
     class="flex mt-15"
@@ -233,7 +229,7 @@
           [checked]="isTransaction"
           [(ngModel)]="isTransaction"
         />
-        <fui-text [size]="'sizes'" (click)="isTransaction = !isTransaction"
+        <fui-text [size]="'s'" (click)="isTransaction = !isTransaction"
           >N/A</fui-text
         >
       </div>
@@ -311,7 +307,7 @@
           [checked]="isJurisdiction"
           [(ngModel)]="isJurisdiction"
         />
-        <fui-text [size]="'sizes'" (click)="isJurisdiction = !isJurisdiction"
+        <fui-text [size]="'s'" (click)="isJurisdiction = !isJurisdiction"
           >N/A</fui-text
         >
       </div>
@@ -383,9 +379,7 @@
           [checked]="isAddTranc"
           [(ngModel)]="isAddTranc"
         />
-        <fui-text [size]="'sizes'" (click)="isAddTranc = !isAddTranc"
-          >N/A</fui-text
-        >
+        <fui-text [size]="'s'" (click)="isAddTranc = !isAddTranc">N/A</fui-text>
       </div>
     </div>
     <fui-text [color]="'disabled'"
@@ -408,7 +402,7 @@
       [checked]="isOtherStakeholder"
       [(ngModel)]="isOtherStakeholder"
     />
-    <fui-text [size]="'sizes'">Include in Ranking Submissions</fui-text>
+    <fui-text [size]="'s'">Include in Ranking Submissions</fui-text>
   </div>
 </div>
 

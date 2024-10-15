@@ -11,7 +11,7 @@
           ></fui-input-field>
         </fui-form-control-layout>
 
-        <fui-button-icon
+        <fui-button-icon [fullWidth]="'fit'"
           (onClick)="openCloseFlyout('filter')"
           [type]="'button'"
           [option]="'iconText'"
@@ -21,7 +21,7 @@
           [style]="'secondary'"
         />
       </div>
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         (onClick)="openCloseFlyout('create')"
         [type]="'button'"
         [option]="'iconText'"
@@ -60,14 +60,14 @@
             </fui-table-body-data>
             <fui-table-body-data>
               <div class="flex">
-                <fui-button-icon
+                <fui-button-icon [fullWidth]="'fit'"
                   (onClick)="openCloseFlyout('edit')"
                   [size]="'s'"
                   [type]="'button'"
                   [option]="'icon'"
                   [icon]="'pencil'"
                 />
-                <fui-button-icon
+                <fui-button-icon [fullWidth]="'fit'"
                   (onClick)="openCloseFlyout('delete')"
                   [size]="'s'"
                   [type]="'button'"
@@ -92,7 +92,7 @@
 >
   <div body>
     <div class="form-control">
-      <fui-text class="label" [size]="'sizes'">Practice Group</fui-text>
+      <fui-text class="label" [size]="'s'">Practice Group</fui-text>
       <fui-combo-box
         [leftIcon]="'search'"
         [selectedValue]="[]"
@@ -101,7 +101,7 @@
     </div>
 
     <div class="form-control">
-      <fui-text class="label" [size]="'sizes'">Active</fui-text>
+      <fui-text class="label" [size]="'s'">Active</fui-text>
       <fui-form-control-layout>
         <fui-select-field
           [placeholder]="'Please select one'"
@@ -127,7 +127,7 @@
     </div>
 
     <div class="form-control">
-      <fui-text class="label" [size]="'sizes'">In Appraisal</fui-text>
+      <fui-text class="label" [size]="'s'">In Appraisal</fui-text>
       <fui-form-control-layout>
         <fui-select-field
           [placeholder]="'Please select one'"
@@ -154,7 +154,7 @@
   </div>
 
   <div footer class="flex-between">
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openCloseFlyout('filter')"
       [type]="'button'"
       [option]="'text'"
@@ -162,7 +162,7 @@
       [color]="'text'"
       [style]="'secondary'"
     />
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openCloseFlyout('filter')"
       [type]="'button'"
       [option]="'iconText'"
@@ -182,7 +182,7 @@
 >
   <div body>
     <div class="form-control">
-      <fui-text class="label" [size]="'sizes'">Name</fui-text>
+      <fui-text class="label" [size]="'s'">Name</fui-text>
       <fui-form-control-layout>
         <fui-input-field [type]="'text'" [size]="'m'" [invalid]="false">
           <fui-icons
@@ -198,7 +198,7 @@
     </div>
 
     <div class="form-control">
-      <fui-text class="label" [size]="'sizes'">Code</fui-text>
+      <fui-text class="label" [size]="'s'">Code</fui-text>
       <fui-form-control-layout>
         <fui-input-field [type]="'text'" [size]="'m'" [invalid]="false">
           <fui-icons
@@ -214,7 +214,7 @@
     </div>
 
     <div class="form-control">
-      <fui-text class="label" [size]="'sizes'">Practice Group</fui-text>
+      <fui-text class="label" [size]="'s'">Practice Group</fui-text>
       <fui-combo-box
         [leftIcon]="'search'"
         [selectedValue]="[]"
@@ -223,7 +223,7 @@
     </div>
 
     <div class="form-control">
-      <fui-text class="label" [size]="'sizes'">Practice Area</fui-text>
+      <fui-text class="label" [size]="'s'">Practice Area</fui-text>
       <fui-combo-box
         [leftIcon]="'search'"
         [selectedValue]="[]"
@@ -234,16 +234,16 @@
     <div class="form-control">
       <div class="flex">
         <input type="checkbox" name="" id="" />
-        <fui-text class="label" [size]="'sizes'">Show in Appraisal </fui-text>
+        <fui-text class="label" [size]="'s'">Show in Appraisal </fui-text>
       </div>
       <div class="flex">
         <input type="checkbox" name="" id="" />
-        <fui-text class="label" [size]="'sizes'">Active </fui-text>
+        <fui-text class="label" [size]="'s'">Active </fui-text>
       </div>
     </div>
 
     <div class="form-control">
-      <fui-text class="label" [size]="'sizes'">Skillss</fui-text>
+      <fui-text class="label" [size]="'s'">Skillss</fui-text>
       <fui-combo-box
         [leftIcon]="'search'"
         [selectedValue]="[]"
@@ -253,7 +253,7 @@
   </div>
 
   <div footer class="flex-between">
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openCloseFlyout('create')"
       [type]="'button'"
       [option]="'text'"
@@ -261,7 +261,7 @@
       [color]="'text'"
       [style]="'secondary'"
     />
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openCloseFlyout('create')"
       [type]="'button'"
       [option]="'iconText'"
