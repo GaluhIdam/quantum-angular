@@ -107,15 +107,15 @@
         }
       }
     },
-    "quantum-integeration": {
+    "quantum-integration": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/quantum-integeration",
-      "sourceRoot": "projects/quantum-integeration/src",
+      "root": "projects/quantum-integration",
+      "sourceRoot": "projects/quantum-integration/src",
       "prefix": "app",
       "architect": {
         "build": {
@@ -125,26 +125,26 @@
               "dayjs",
               "dayjs/plugin/customParseFormat"
             ],
-            "outputPath": "dist/quantum-integeration",
-            "index": "projects/quantum-integeration/src/index.html",
-            "browser": "projects/quantum-integeration/src/main.ts",
+            "outputPath": "dist/quantum-integration",
+            "index": "projects/quantum-integration/src/index.html",
+            "browser": "projects/quantum-integration/src/main.ts",
             "polyfills": [
               "zone.js"
             ],
-            "tsConfig": "projects/quantum-integeration/tsconfig.app.json",
+            "tsConfig": "projects/quantum-integration/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/quantum-integeration/src/favicon.ico",
-              "projects/quantum-integeration/src/assets"
+              "projects/quantum-integration/src/favicon.ico",
+              "projects/quantum-integration/src/assets"
             ],
             "styles": [
-              "projects/quantum-integeration/src/styles.scss"
+              "projects/quantum-integration/src/styles.scss"
             ],
             "scripts": [],
-            "server": "projects/quantum-integeration/src/main.server.ts",
+            "server": "projects/quantum-integration/src/main.server.ts",
             "prerender": true,
             "ssr": {
-              "entry": "projects/quantum-integeration/server.ts"
+              "entry": "projects/quantum-integration/server.ts"
             }
           },
           "configurations": {
@@ -175,10 +175,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "quantum-integeration:build:production"
+              "buildTarget": "quantum-integration:build:production"
             },
             "development": {
-              "buildTarget": "quantum-integeration:build:development"
+              "buildTarget": "quantum-integration:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -186,7 +186,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "quantum-integeration:build"
+            "buildTarget": "quantum-integration:build"
           }
         },
         "test": {
@@ -196,14 +196,14 @@
               "zone.js",
               "zone.js/testing"
             ],
-            "tsConfig": "projects/quantum-integeration/tsconfig.spec.json",
+            "tsConfig": "projects/quantum-integration/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/quantum-integeration/src/favicon.ico",
-              "projects/quantum-integeration/src/assets"
+              "projects/quantum-integration/src/favicon.ico",
+              "projects/quantum-integration/src/assets"
             ],
             "styles": [
-              "projects/quantum-integeration/src/styles.scss"
+              "projects/quantum-integration/src/styles.scss"
             ],
             "scripts": []
           }
