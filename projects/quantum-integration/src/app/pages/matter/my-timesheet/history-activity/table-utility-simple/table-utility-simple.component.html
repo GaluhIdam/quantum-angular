@@ -13,11 +13,7 @@
         [style]="'empty'"
         (onClick)="toggleBtn('prev')"
       />
-      <fui-text class="desktop" [size]="'s'" [weight]="'semibold'">
-        {{ startDate | date : "dd MMM yyyy" }} -
-        {{ endDate | date : "dd MMM yyyy" }}</fui-text
-      >
-      <fui-text class="mobile" [size]="'s'" [weight]="'semibold'">
+      <fui-text [weight]="'semibold'">
         {{ startDate | date : "dd MMM yyyy" }} -
         {{ endDate | date : "dd MMM yyyy" }}</fui-text
       >
