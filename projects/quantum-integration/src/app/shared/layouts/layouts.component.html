@@ -4,7 +4,7 @@
     <div class="page-body">
       <fui-header [display]="'flex'" [position]="'fixed-top'" [shadow]="true">
         <fui-header-panel class="header">
-          <div class="flex-logo">
+          <div class="flex-logo" (click)="gotoAhpOld()">
             <img
               *ngIf="themeService.getTheme() === 'ahp-light'"
               src="../../../assets/Logo.svg"

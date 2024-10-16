@@ -343,4 +343,9 @@ export class LayoutsComponent {
     });
     this.filteredData = [...this.data];
   }
+
+  /** Back to ahp old */
+  gotoAhpOld(): void {
+    window.location.href = 'https://quantum.ahp.id/ahplms/start';
+  }
 }
