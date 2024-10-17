@@ -7,7 +7,7 @@
 
 <!-- TITLE PAGE -->
 <div class="grid">
-  <fui-text [weight]="'semibold'" [size]="'sizexl'"
+  <fui-text [weight]="'semibold'" [size]="'xl'"
     >5889-1 Matter Project Name</fui-text
   >
   <fui-text>
@@ -21,7 +21,7 @@
 <div class="tabs">
   <fui-tabs [dataTabs]="dataTabs">
     <fui-tabs-content [id]="'Overview'">
-      Content not available!
+      <app-overview />
     </fui-tabs-content>
     <fui-tabs-content [id]="'Information'">
       <app-information />
@@ -29,7 +29,7 @@
 
     <!-- TIMESHEET  -->
     <fui-tabs-content [id]="'Timesheet'">
-      <div class="card-content">
+      <div class="card-content mt-20">
         <app-timesheet />
       </div>
     </fui-tabs-content>

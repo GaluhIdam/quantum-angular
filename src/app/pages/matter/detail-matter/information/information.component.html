@@ -1,10 +1,988 @@
-<fui-button-icon
-  [type]="'button'"
-  [option]="'iconText'"
-  [style]="'secondary'"
-  [text]="'Edit Matter'"
-  [color]="'primary'"
-  [icon]="'pencil'"
-  (onClick)="movePage()"
->
-</fui-button-icon>
+<div class="grid-3 gap-20 mt-20">
+  <!-- GRID LEFT  -->
+  <div class="grid-1-custom gap-20">
+    <!-- OUTLINE -->
+    <div class="card-content flex-wrap">
+      <div class="flex-label justify-between mb-10">
+        <fui-text [weight]="'semibold'">Outline</fui-text>
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'text'"
+          [text]="'Edit Matter'"
+          (onClick)="movePage()"
+        />
+      </div>
+      <div>
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'text'"
+          [text]="'Matter Information'"
+          [style]="'empty'"
+          (onClick)="scrollToSection('matterInformation')"
+        />
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'text'"
+          [text]="'Client Information'"
+          [style]="'empty'"
+          (onClick)="scrollToSection('clientInformation')"
+        />
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'text'"
+          [text]="'Billing Information'"
+          [style]="'empty'"
+          (onClick)="scrollToSection('billingInformation')"
+        />
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'text'"
+          [text]="'Transaction/Case Information'"
+          [style]="'empty'"
+          (onClick)="scrollToSection('transactionInformation')"
+        />
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'text'"
+          [text]="'Other Information'"
+          [style]="'empty'"
+          (onClick)="scrollToSection('otherInformation')"
+        />
+      </div>
+    </div>
+    <!-- OUTLINE -->
+
+    <!-- OVERVIEW -->
+    <div class="card-content flex-wrap">
+      <div class="flex-label justify-between mb-10">
+        <fui-text [weight]="'semibold'">Overview</fui-text>
+      </div>
+      <div class="flex-badge-general mt-10">
+        <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Billable'" />
+        <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Hourly'" />
+        <fui-badge [color]="'default'" [size]="'s'" [text]="'Closed'" />
+        <fui-badge
+          [color]="'hollow'"
+          [iconShow]="true"
+          [icon]="'timeRefresh'"
+          [iconSize]="'sizes'"
+          [size]="'s'"
+          [text]="'3 Jan 24'"
+        />
+      </div>
+
+      <div class="line-135 mt-10">
+        <hr />
+      </div>
+
+      <div class="flex-label justify-between mt-10">
+        <fui-text>Opening Date</fui-text>
+        <fui-text>24 Jan 2024</fui-text>
+      </div>
+      <div class="flex-label justify-between mt-10">
+        <fui-text>Completion Date</fui-text>
+        <fui-text>24 Jan 2024</fui-text>
+      </div>
+      <div class="flex-label justify-between mt-10">
+        <fui-text>Closing Date</fui-text>
+        <fui-text>24 Jan 2024</fui-text>
+      </div>
+    </div>
+    <!-- OVERVIEW -->
+
+    <!-- COMPLETED WITH INSUFFICIENT  -->
+    <div class="card-content flex-wrap">
+      <div class="flex-label justify-between mb-20">
+        <fui-text [weight]="'semibold'"
+          >Completed with Insufficient Information</fui-text
+        >
+      </div>
+      <fui-text
+        >Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
+        fugit, sed quia consequuntur ma</fui-text
+      >
+    </div>
+    <!-- COMPLETED WITH INSUFFICIENT  -->
+
+    <!-- MATTER FORM & EL  -->
+    <div class="card-content flex-wrap">
+      <!-- DOC 1  -->
+      <div class="flex-label justify-between mb-20">
+        <fui-text [weight]="'semibold'">Matter Form & EL</fui-text>
+      </div>
+      <div class="flex-label-gap-10">
+        <fui-icons [icon]="'document'" />
+        <p>11397 - Tripatra - KIP.docx</p>
+      </div>
+      <!-- DOC 1  -->
+
+      <!-- DOC 2  -->
+      <div class="flex-label-gap-10 mt-20">
+        <fui-icons [icon]="'document'" />
+        <p class="text-overflow">
+          AHP Proposal - DAB (Driver Wallet)(AHP 02072024)(c).pdf
+        </p>
+        <fui-badge [color]="'hollow'" [size]="'s'" [text]="'EL AHP Signed'" />
+      </div>
+
+      <div class="flex-label-gap-10 mt-5">
+        <div class="flex-label">
+          <fui-icons
+            [icon]="'calendar'"
+            [color]="'disabled'"
+            [size]="'sizes'"
+          />
+          <fui-text [size]="'s'" [color]="'text'">24 Jan 2024</fui-text>
+        </div>
+        <div class="flex-label">
+          <fui-icons [icon]="'number'" [color]="'disabled'" [size]="'sizes'" />
+          <fui-text [size]="'s'" [color]="'text'">0283/02/58/01/2023</fui-text>
+        </div>
+      </div>
+      <!-- DOC 2  -->
+
+      <!-- DOC 3  -->
+      <div class="flex-label-gap-10 mt-20">
+        <fui-icons [icon]="'document'" />
+        <p class="text-overflow">
+          AHP Proposal - DAB (Driver Wallet)(AHP 02072024)(c).pdf
+        </p>
+        <fui-badge [color]="'hollow'" [size]="'s'" [text]="'EL AHP Signed'" />
+      </div>
+
+      <div class="flex-label-gap-10 mt-5">
+        <div class="flex-label">
+          <fui-icons
+            [icon]="'calendar'"
+            [color]="'disabled'"
+            [size]="'sizes'"
+          />
+          <fui-text [size]="'s'" [color]="'text'">24 Jan 2024</fui-text>
+        </div>
+        <div class="flex-label">
+          <fui-icons [icon]="'number'" [color]="'disabled'" [size]="'sizes'" />
+          <fui-text [size]="'s'" [color]="'text'">0283/02/58/01/2023</fui-text>
+        </div>
+      </div>
+      <!-- DOC 3  -->
+    </div>
+    <!-- MATTER FORM & EL  -->
+
+    <!-- COMPLETED WITH INSUFFICIENT  -->
+    <div class="card-content flex-wrap">
+      <div class="flex-label justify-between mb-20">
+        <fui-text [weight]="'semibold'">Associated Matters</fui-text>
+      </div>
+      <fui-text>Associated to 7930-1 and 1 other submatters.</fui-text>
+      <fui-link
+        class="mt-10"
+        [urlLink]="'#'"
+        [typeLink]="'coloring'"
+        [colorLink]="'primary'"
+      >
+        See All
+      </fui-link>
+    </div>
+    <!-- COMPLETED WITH INSUFFICIENT  -->
+  </div>
+  <!-- GRID LEFT  -->
+
+  <!-- GRID RIGHT  -->
+  <div class="col-span-2 h-100-relative">
+    <div class="flex-col-20 scroll-container absolute-x-auto-y-hidden">
+      <!-- MATTER INFORMATION  -->
+      <div #matterInformatSecion class="card-content">
+        <fui-text [weight]="'semibold'">Matter Information</fui-text>
+        <div class="mt-5">
+          <fui-text [color]="'text'"
+            >General Information of the matter</fui-text
+          >
+          <div class="grid-3 gap-30 mt-20">
+            <div class="">
+              <fui-text>Matter Number</fui-text>
+              <div class="mt-10">
+                <fui-text>5889</fui-text>
+              </div>
+            </div>
+            <div class="">
+              <fui-text>Parent Matter Number</fui-text>
+              <div class="mt-10">
+                <fui-text [color]="'text'" [fwStyle]="'italic'"
+                  >Not Applicable</fui-text
+                >
+              </div>
+            </div>
+            <div class="">
+              <fui-text>Conflict Search ID</fui-text>
+              <div class="mt-10">
+                <fui-text [color]="'text'" [fwStyle]="'italic'"
+                  >Not Applicable</fui-text
+                >
+              </div>
+            </div>
+            <div class="">
+              <fui-text>Matter Short Description</fui-text>
+              <div class="mt-10">
+                <fui-text [color]="'text'" [fwStyle]="'italic'"
+                  >Not Applicable</fui-text
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HR  -->
+        <div class="line-310 mt-20 mb-20">
+          <hr />
+        </div>
+        <!-- HR  -->
+
+        <div class="grid-3 gap-20 mt-20">
+          <div class="">
+            <fui-text>Practice Matter</fui-text>
+            <div class="mt-10">
+              <fui-text>Banking & Finance</fui-text>
+            </div>
+          </div>
+          <div class="">
+            <fui-text>Matter Type</fui-text>
+            <div class="mt-10">
+              <fui-text [color]="'text'" [fwStyle]="'italic'"
+                >Not Applicable</fui-text
+              >
+            </div>
+          </div>
+          <div class="">
+            <div class="flex-label">
+              <fui-text>Partner in Charge (PIC)</fui-text>
+              <fui-tooltip
+                [position]="'top'"
+                [content]="'Hey there, I m using whatsapp!'"
+              >
+                <fui-icons
+                  [size]="'sizes'"
+                  [color]="'disabled'"
+                  [icon]="'questionInCircle'"
+                />
+              </fui-tooltip>
+            </div>
+            <div class="mt-10">
+              <fui-text>Jacob Jones (JJ)</fui-text>
+            </div>
+          </div>
+        </div>
+        <div class="mt-30">
+          <div class="flex-label">
+            <fui-text [textWrap]="'nowrap'"
+              >Partner Referral Marketing (PRM)</fui-text
+            >
+            <fui-tooltip
+              [position]="'top'"
+              [content]="'Hey there, I m using whatsapp!'"
+            >
+              <fui-icons
+                [size]="'sizes'"
+                [color]="'disabled'"
+                [icon]="'questionInCircle'"
+              />
+            </fui-tooltip>
+          </div>
+          <div class="mt-10">
+            <fui-text>Owen Wilson (OW)</fui-text>
+          </div>
+        </div>
+      </div>
+      <!-- MATTER INFORMATION  -->
+
+      <!-- CLIENT INFORMATION  -->
+      <div #clientInformationSec class="card-content">
+        <fui-text [weight]="'semibold'">Client Information</fui-text>
+        <div class="mt-5">
+          <fui-text [color]="'text'"
+            >Clients information, contact person and instructing
+            party.</fui-text
+          >
+        </div>
+        <!-- CLIENT  -->
+        <div>
+          <!-- LABEL  -->
+          <div class="grid-2 gap-10 mt-30">
+            <div class="">
+              <div class="flex-label">
+                <fui-text [textWrap]="'nowrap'">Clients</fui-text>
+                <fui-tooltip
+                  [position]="'top'"
+                  [content]="'Hey there, I m using whatsapp!'"
+                >
+                  <fui-icons
+                    [size]="'sizes'"
+                    [color]="'disabled'"
+                    [icon]="'questionInCircle'"
+                  />
+                </fui-tooltip>
+              </div>
+              <div class="mt-10">
+                <fui-text
+                  >Big Kahuna Burger Ltd., Miniso Lifestyle Trading Indonesia
+                  and 2 others</fui-text
+                >
+              </div>
+            </div>
+            <div class="">
+              <fui-text>Client Contact Person</fui-text>
+              <div class="mt-10">
+                <fui-text>Jacob Jones - Big Kahuna Burger Ltd.</fui-text>
+                <div class="flex-label-gap-10 mt-5">
+                  <div class="flex-label">
+                    <fui-icons
+                      [icon]="'email'"
+                      [color]="'disabled'"
+                      [size]="'sizes'"
+                    />
+                    <fui-text [size]="'s'" [color]="'text'">{{
+                      "cody.fisher@example.com"
+                    }}</fui-text>
+                  </div>
+                  <div class="flex-label">
+                    <fui-icons
+                      [icon]="'node'"
+                      [color]="'disabled'"
+                      [size]="'sizes'"
+                    />
+                    <fui-text [size]="'s'" [color]="'text'"
+                      >(307) 555-0133</fui-text
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- LABEL  -->
+
+          <!-- SLIDER  -->
+          <div class="mt-20">
+            <shared-slider-card
+              *ngIf="clientNameSlider.length > 0"
+              [dataSlider]="clientNameSlider"
+              [currentSlideIndex]="currentSlideIndexClientName"
+              (slideOut)="slideOut($event, 'CN')"
+            >
+              <shared-slider-card-body
+                *ngFor="let item of clientNameSelected; let i = index"
+                [id]="i + 1"
+                [current]="currentSlideIndexClientName + 1"
+              >
+                <div class="card-blue">
+                  <div class="grid-2">
+                    <fui-text>Parent/Group Company</fui-text>
+                    <fui-text>Company's Origin Country</fui-text>
+                  </div>
+                  <div class="mt-5 grid-2">
+                    <fui-text [weight]="'semibold'">{{
+                      item.value.parent
+                    }}</fui-text>
+                    <fui-text [weight]="'semibold'">{{
+                      item.value.companyOrigin
+                    }}</fui-text>
+                  </div>
+                  <div class="grid">
+                    <fui-text>Address</fui-text>
+                    <fui-text [weight]="'semibold'" class="mt-5">{{
+                      item.value.address
+                    }}</fui-text>
+                  </div>
+                  <div class="grid">
+                    <fui-text>Entity Type</fui-text>
+                    <fui-text [weight]="'semibold'" class="mt-5">{{
+                      item.value.entityType
+                    }}</fui-text>
+                  </div>
+                  <div class="grid">
+                    <fui-text>Industry/Business Sector</fui-text>
+                    <fui-text [weight]="'semibold'" class="mt-5">{{
+                      item.value.industry
+                    }}</fui-text>
+                  </div>
+                </div>
+              </shared-slider-card-body>
+            </shared-slider-card>
+          </div>
+          <!-- SLIDER  -->
+        </div>
+        <!-- CLIENT  -->
+
+        <!-- HR  -->
+        <div class="line-310 mt-20 mb-20">
+          <hr />
+        </div>
+        <!-- HR  -->
+
+        <!-- INSTRUCTING PARTY  -->
+        <div>
+          <!-- LABEL  -->
+          <div class="flex-label">
+            <fui-text [textWrap]="'nowrap'">Instructing Party</fui-text>
+            <fui-tooltip
+              [position]="'top'"
+              [content]="'Hey there, I m using whatsapp!'"
+            >
+              <fui-icons
+                [size]="'sizes'"
+                [color]="'disabled'"
+                [icon]="'questionInCircle'"
+              />
+            </fui-tooltip>
+          </div>
+          <div class="mt-10">
+            <fui-text>Barone LLC.</fui-text>
+          </div>
+          <!-- LABEL  -->
+
+          <!-- SLIDER  -->
+          <div class="mt-20">
+            <shared-slider-card
+              *ngIf="clientNameSlider.length > 0"
+              [dataSlider]="clientNameSlider"
+              [currentSlideIndex]="currentSlideIndexClientName"
+              (slideOut)="slideOut($event, 'CN')"
+            >
+              <shared-slider-card-body
+                *ngFor="let item of clientNameSelected; let i = index"
+                [id]="i + 1"
+                [current]="currentSlideIndexClientName + 1"
+              >
+                <div class="card-blue">
+                  <div class="grid-2">
+                    <fui-text>Parent/Group Company</fui-text>
+                    <fui-text>Company's Origin Country</fui-text>
+                  </div>
+                  <div class="mt-5 grid-2">
+                    <fui-text [weight]="'semibold'">{{
+                      item.value.parent
+                    }}</fui-text>
+                    <fui-text [weight]="'semibold'">{{
+                      item.value.companyOrigin
+                    }}</fui-text>
+                  </div>
+                  <div class="grid">
+                    <fui-text>Address</fui-text>
+                    <fui-text [weight]="'semibold'" class="mt-5">{{
+                      item.value.address
+                    }}</fui-text>
+                  </div>
+                  <div class="grid">
+                    <fui-text>Entity Type</fui-text>
+                    <fui-text [weight]="'semibold'" class="mt-5">{{
+                      item.value.entityType
+                    }}</fui-text>
+                  </div>
+                  <div class="grid">
+                    <fui-text>Industry/Business Sector</fui-text>
+                    <fui-text [weight]="'semibold'" class="mt-5">{{
+                      item.value.industry
+                    }}</fui-text>
+                  </div>
+                </div>
+              </shared-slider-card-body>
+            </shared-slider-card>
+          </div>
+          <!-- SLIDER  -->
+        </div>
+        <!-- INSTRUCTING PARTY  -->
+      </div>
+      <!-- CLIENT INFORMATION  -->
+
+      <!-- BILLING INFORMATION  -->
+      <div #billingInformationSec class="card-content">
+        <fui-text [weight]="'semibold'">Billing Information</fui-text>
+        <div class="mt-5">
+          <fui-text [color]="'text'"
+            >Paying entities and outline payment terms for this matter</fui-text
+          >
+        </div>
+
+        <!-- CLIENT  -->
+        <div>
+          <!-- LABEL  -->
+          <div class="grid-2 gap-10 mt-30">
+            <div class="">
+              <div class="flex-label">
+                <fui-text [textWrap]="'nowrap'">Paying Entity</fui-text>
+                <fui-tooltip
+                  [position]="'top'"
+                  [content]="'Hey there, I m using whatsapp!'"
+                >
+                  <fui-icons
+                    [size]="'sizes'"
+                    [color]="'disabled'"
+                    [icon]="'questionInCircle'"
+                  />
+                </fui-tooltip>
+              </div>
+              <div class="mt-10">
+                <fui-text
+                  >Big Kahuna Burger Ltd., Miniso Lifestyle Trading Indonesia
+                  and 2 others</fui-text
+                >
+              </div>
+            </div>
+            <div class="">
+              <fui-text>Paying Entity Contract Person</fui-text>
+              <div class="mt-10">
+                <fui-text>Jacob Jones - Big Kahuna Burger Ltd.</fui-text>
+                <div class="flex-label-gap-10 mt-5">
+                  <div class="flex-label">
+                    <fui-icons
+                      [icon]="'email'"
+                      [color]="'disabled'"
+                      [size]="'sizes'"
+                    />
+                    <fui-text [size]="'s'" [color]="'text'">{{
+                      "cody.fisher@example.com"
+                    }}</fui-text>
+                  </div>
+                  <div class="flex-label">
+                    <fui-icons
+                      [icon]="'node'"
+                      [color]="'disabled'"
+                      [size]="'sizes'"
+                    />
+                    <fui-text [size]="'s'" [color]="'text'"
+                      >(307) 555-0133</fui-text
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- LABEL  -->
+
+          <!-- SLIDER  -->
+          <div class="mt-20">
+            <shared-slider-card
+              *ngIf="clientNameSlider.length > 0"
+              [dataSlider]="clientNameSlider"
+              [currentSlideIndex]="currentSlideIndexClientName"
+              (slideOut)="slideOut($event, 'CN')"
+            >
+              <shared-slider-card-body
+                *ngFor="let item of clientNameSelected; let i = index"
+                [id]="i + 1"
+                [current]="currentSlideIndexClientName + 1"
+              >
+                <div class="card-blue">
+                  <div class="grid-2">
+                    <fui-text>Parent/Group Company</fui-text>
+                    <fui-text>Company's Origin Country</fui-text>
+                  </div>
+                  <div class="mt-5 grid-2">
+                    <fui-text [weight]="'semibold'">{{
+                      item.value.parent
+                    }}</fui-text>
+                    <fui-text [weight]="'semibold'">{{
+                      item.value.companyOrigin
+                    }}</fui-text>
+                  </div>
+                  <div class="grid">
+                    <fui-text>Address</fui-text>
+                    <fui-text [weight]="'semibold'" class="mt-5">{{
+                      item.value.address
+                    }}</fui-text>
+                  </div>
+                  <div class="grid">
+                    <fui-text>Entity Type</fui-text>
+                    <fui-text [weight]="'semibold'" class="mt-5">{{
+                      item.value.entityType
+                    }}</fui-text>
+                  </div>
+                  <div class="grid">
+                    <fui-text>Industry/Business Sector</fui-text>
+                    <fui-text [weight]="'semibold'" class="mt-5">{{
+                      item.value.industry
+                    }}</fui-text>
+                  </div>
+                </div>
+              </shared-slider-card-body>
+            </shared-slider-card>
+          </div>
+          <!-- SLIDER  -->
+        </div>
+        <!-- CLIENT  -->
+
+        <!-- HR  -->
+        <div class="line-310 mt-20 mb-20">
+          <hr />
+        </div>
+        <!-- HR  -->
+
+        <div class="grid-2">
+          <div>
+            <div class="flex-label">
+              <fui-text [textWrap]="'nowrap'">Pricing Type</fui-text>
+              <fui-tooltip
+                [position]="'top'"
+                [content]="'Hey there, I m using whatsapp!'"
+              >
+                <fui-icons
+                  [size]="'sizes'"
+                  [color]="'disabled'"
+                  [icon]="'questionInCircle'"
+                />
+              </fui-tooltip>
+            </div>
+            <div class="mt-10">
+              <fui-text>Hourly</fui-text>
+            </div>
+          </div>
+          <div>
+            <fui-text [textWrap]="'nowrap'">Estimated Fee</fui-text>
+            <div class="mt-10">
+              <fui-text>USD 5,000.00</fui-text>
+            </div>
+          </div>
+        </div>
+        <div class="mt-30">
+          <fui-text [textWrap]="'nowrap'">Billing Notes</fui-text>
+          <div class="mt-10">
+            <fui-text>USD 5,000.00</fui-text>
+          </div>
+        </div>
+        <div class="mt-30">
+          <div class="flex-label">
+            <fui-text [textWrap]="'nowrap'"
+              >Default Billing Bank Account</fui-text
+            >
+            <fui-tooltip
+              [position]="'top'"
+              [content]="'Hey there, I m using whatsapp!'"
+            >
+              <fui-icons
+                [size]="'sizes'"
+                [color]="'disabled'"
+                [icon]="'questionInCircle'"
+              />
+            </fui-tooltip>
+          </div>
+          <div class="mt-10">
+            <fui-text [color]="'text'" [fwStyle]="'italic'"
+              >Not Applicable</fui-text
+            >
+          </div>
+        </div>
+      </div>
+      <!-- BILLING INFORMATION  -->
+
+      <!-- TRANSACTION/CASE INFORMATION  -->
+      <div #transactionInformationSec class="card-content">
+        <fui-text [weight]="'semibold'">Transaction/Case Information</fui-text>
+        <div class="mt-5">
+          <fui-text [color]="'text'"
+            >Detail on the matter including scope of work, counterparties,
+            entities involved, and team members for this matter.</fui-text
+          >
+        </div>
+        <div class="mt-30">
+          <fui-text>Matter Description</fui-text>
+          <div class="mt-5">
+            <fui-text
+              >Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Consequuntur atque sint et, dolore dicta accusamus laborum
+              laboriosam a labore enim. Quas harum ipsam pariatur incidunt
+              accusantium beatae aperiam praesentium ut!</fui-text
+            >
+          </div>
+        </div>
+        <div class="mt-20">
+          <fui-text>Scope of Work</fui-text>
+          <div class="mt-5">
+            <fui-text
+              >Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Consequuntur atque sint et, dolore dicta accusamus laborum
+              laboriosam a labore enim. Quas harum ipsam pariatur incidunt
+              accusantium beatae aperiam praesentium ut!</fui-text
+            >
+          </div>
+        </div>
+        <div class="mt-30">
+          <div class="flex-label">
+            <fui-text [textWrap]="'nowrap'">Counterparty</fui-text>
+            <fui-tooltip
+              [position]="'top'"
+              [content]="'Hey there, I m using whatsapp!'"
+            >
+              <fui-icons
+                [size]="'sizes'"
+                [color]="'disabled'"
+                [icon]="'questionInCircle'"
+              />
+            </fui-tooltip>
+          </div>
+          <div class="mt-10">
+            <fui-text>Barone LLC.</fui-text>
+          </div>
+        </div>
+
+        <!-- SLIDER  -->
+        <div class="mt-20">
+          <shared-slider-card
+            *ngIf="clientNameSlider.length > 0"
+            [dataSlider]="clientNameSlider"
+            [currentSlideIndex]="currentSlideIndexClientName"
+            (slideOut)="slideOut($event, 'CN')"
+          >
+            <shared-slider-card-body
+              *ngFor="let item of clientNameSelected; let i = index"
+              [id]="i + 1"
+              [current]="currentSlideIndexClientName + 1"
+            >
+              <div class="card-blue">
+                <div class="grid-2">
+                  <fui-text>Parent/Group Company</fui-text>
+                  <fui-text>Company's Origin Country</fui-text>
+                </div>
+                <div class="mt-5 grid-2">
+                  <fui-text [weight]="'semibold'">{{
+                    item.value.parent
+                  }}</fui-text>
+                  <fui-text [weight]="'semibold'">{{
+                    item.value.companyOrigin
+                  }}</fui-text>
+                </div>
+                <div class="grid">
+                  <fui-text>Address</fui-text>
+                  <fui-text [weight]="'semibold'" class="mt-5">{{
+                    item.value.address
+                  }}</fui-text>
+                </div>
+                <div class="grid">
+                  <fui-text>Entity Type</fui-text>
+                  <fui-text [weight]="'semibold'" class="mt-5">{{
+                    item.value.entityType
+                  }}</fui-text>
+                </div>
+                <div class="grid">
+                  <fui-text>Industry/Business Sector</fui-text>
+                  <fui-text [weight]="'semibold'" class="mt-5">{{
+                    item.value.industry
+                  }}</fui-text>
+                </div>
+              </div>
+            </shared-slider-card-body>
+          </shared-slider-card>
+        </div>
+        <!-- SLIDER  -->
+
+        <!-- STAKEHOLDER  -->
+        <div class="mt-30">
+          <div class="flex-label">
+            <fui-text [textWrap]="'nowrap'">Other Stakeholder</fui-text>
+            <fui-tooltip
+              [position]="'top'"
+              [content]="'Hey there, I m using whatsapp!'"
+            >
+              <fui-icons
+                [size]="'sizes'"
+                [color]="'disabled'"
+                [icon]="'questionInCircle'"
+              />
+            </fui-tooltip>
+          </div>
+
+          <!-- BADGE LIST  -->
+          <div class="badge-list mt-10">
+            <fui-icons [icon]="'node'" />
+            <div class="grid-1 gap-5 text-left">
+              <p
+                style="
+                  margin-bottom: 5px;
+                  overflow: hidden;
+                  text-wrap: nowrap;
+                  text-overflow: ellipsis;
+                "
+              >
+                <b>Barone LLC.</b> as Indonesian Legal Counselor for Tripatra
+                Engineers & Constructor, PT
+              </p>
+              <fui-text [color]="'text'">
+                Ut enim ad minim veniam, quis nostrud
+              </fui-text>
+            </div>
+          </div>
+          <div class="badge-list mt-10">
+            <fui-icons [icon]="'node'" />
+            <div class="grid-1 gap-5 text-left">
+              <p
+                style="
+                  margin-bottom: 5px;
+                  overflow: hidden;
+                  text-wrap: nowrap;
+                  text-overflow: ellipsis;
+                "
+              >
+                <b>Barone LLC.</b> as Indonesian Legal Counselor for Tripatra
+                Engineers & Constructor, PT
+              </p>
+              <fui-text [color]="'text'">
+                Ut enim ad minim veniam, quis nostrud
+              </fui-text>
+            </div>
+          </div>
+          <!-- BADGE LIST  -->
+        </div>
+        <!-- STAKEHOLDER  -->
+
+        <!-- SLIDER  -->
+        <div class="mt-20">
+          <shared-slider-card
+            *ngIf="clientNameSlider.length > 0"
+            [dataSlider]="clientNameSlider"
+            [currentSlideIndex]="currentSlideIndexClientName"
+            (slideOut)="slideOut($event, 'CN')"
+          >
+            <shared-slider-card-body
+              *ngFor="let item of clientNameSelected; let i = index"
+              [id]="i + 1"
+              [current]="currentSlideIndexClientName + 1"
+            >
+              <div class="card-blue">
+                <div class="grid-2">
+                  <fui-text>Parent/Group Company</fui-text>
+                  <fui-text>Company's Origin Country</fui-text>
+                </div>
+                <div class="mt-5 grid-2">
+                  <fui-text [weight]="'semibold'">{{
+                    item.value.parent
+                  }}</fui-text>
+                  <fui-text [weight]="'semibold'">{{
+                    item.value.companyOrigin
+                  }}</fui-text>
+                </div>
+                <div class="grid">
+                  <fui-text>Address</fui-text>
+                  <fui-text [weight]="'semibold'" class="mt-5">{{
+                    item.value.address
+                  }}</fui-text>
+                </div>
+                <div class="grid">
+                  <fui-text>Entity Type</fui-text>
+                  <fui-text [weight]="'semibold'" class="mt-5">{{
+                    item.value.entityType
+                  }}</fui-text>
+                </div>
+                <div class="grid">
+                  <fui-text>Industry/Business Sector</fui-text>
+                  <fui-text [weight]="'semibold'" class="mt-5">{{
+                    item.value.industry
+                  }}</fui-text>
+                </div>
+              </div>
+            </shared-slider-card-body>
+          </shared-slider-card>
+        </div>
+        <!-- SLIDER  -->
+
+        <!-- ADDITIONAL TRANSACTION INFORMATION  -->
+        <div class="mt-20">
+          <fui-text>Additional Transaction Information</fui-text>
+          <div class="mt-5">
+            <fui-text
+              >Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Consequuntur atque sint et, dolore dicta accusamus laborum
+              laboriosam a labore enim. Quas harum ipsam pariatur incidunt
+              accusantium beatae aperiam praesentium ut!</fui-text
+            >
+          </div>
+        </div>
+        <!-- ADDITIONAL TRANSACTION INFORMATION  -->
+
+        <!-- HR  -->
+        <div class="line-310 mt-20 mb-20">
+          <hr />
+        </div>
+        <!-- HR  -->
+
+        <!-- MATTER MEMBERS  -->
+        <div>
+          <div class="flex-label align-center">
+            <fui-text>Matter Members</fui-text>
+            <fui-badge [text]="'5'" [color]="'hollow'" [size]="'s'" />
+          </div>
+          <div class="mt-5">
+            <fui-text [color]="'text'"
+              >Members who will have direct access to the matter</fui-text
+            >
+          </div>
+          <div class="grid-3 gap-10 mt-10">
+            <div class="badge-block">
+              <fui-text>Jane Cooper (JC)</fui-text>
+              <fui-text>Senior Associate</fui-text>
+            </div>
+            <div class="badge-block">
+              <fui-text>Darrell Steward (DS)</fui-text>
+              <fui-text>Senior Associate</fui-text>
+            </div>
+            <div class="badge-block">
+              <fui-text>Jerome Bell (JB)</fui-text>
+              <fui-text>Senior Associate</fui-text>
+            </div>
+            <div class="badge-block">
+              <fui-text>Guy Hawkins (GH)</fui-text>
+              <fui-text>Senior Associate</fui-text>
+            </div>
+            <div class="badge-block">
+              <fui-text>Robert Fox (RF)</fui-text>
+              <fui-text>Senior Associate</fui-text>
+            </div>
+          </div>
+        </div>
+        <!-- MATTER MEMBERS  -->
+      </div>
+      <!-- TRANSACTION/CASE INFORMATION  -->
+
+      <!-- OTHER INFORMATION  -->
+      <div #otherInformationSec class="card-content">
+        <fui-text [textWrap]="'nowrap'" [weight]="'semibold'"
+          >Other Information</fui-text
+        >
+        <div class="mt-20">
+          <div class="flex-label align-center">
+            <fui-text>Matter Controllers</fui-text>
+            <fui-badge [text]="'5'" [color]="'hollow'" [size]="'s'" />
+          </div>
+          <div class="grid-3 gap-10 mt-10">
+            <div class="badge-block">
+              <fui-text>Jane Cooper (JC)</fui-text>
+              <fui-text>Senior Associate</fui-text>
+            </div>
+            <div class="badge-block">
+              <fui-text>Darrell Steward (DS)</fui-text>
+              <fui-text>Senior Associate</fui-text>
+            </div>
+            <div class="badge-block">
+              <fui-text>Jerome Bell (JB)</fui-text>
+              <fui-text>Senior Associate</fui-text>
+            </div>
+            <div class="badge-block">
+              <fui-text>Guy Hawkins (GH)</fui-text>
+              <fui-text>Senior Associate</fui-text>
+            </div>
+            <div class="badge-block">
+              <fui-text>Robert Fox (RF)</fui-text>
+              <fui-text>Senior Associate</fui-text>
+            </div>
+          </div>
+        </div>
+        <div class="mt-20">
+          <fui-text [weight]="'semibold'">BD Matter Description</fui-text>
+          <div class="mt-5">
+            <fui-text [color]="'text'" [fwStyle]="'italic'"
+              >Not Applicable</fui-text
+            >
+          </div>
+        </div>
+      </div>
+      <!-- OTHER INFORMATION  -->
+    </div>
+  </div>
+  <!-- GRID RIGHT  -->
+</div>

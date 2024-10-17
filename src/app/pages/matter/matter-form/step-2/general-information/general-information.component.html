@@ -31,7 +31,7 @@
             [checked]="isParentMatter"
             [(ngModel)]="isParentMatter"
           />
-          <fui-text [size]="'sizes'" (click)="isParentMatter = !isParentMatter"
+          <fui-text [size]="'s'" (click)="isParentMatter = !isParentMatter"
             >N/A</fui-text
           >
         </div>
@@ -67,7 +67,7 @@
             [(ngModel)]="isConflictSearchId"
           />
           <fui-text
-            [size]="'sizes'"
+            [size]="'s'"
             (click)="isConflictSearchId = !isConflictSearchId"
             >N/A</fui-text
           >
@@ -107,7 +107,7 @@
           [checked]="isProjectName"
           [(ngModel)]="isProjectName"
         />
-        <fui-text [size]="'sizes'" (click)="isProjectName = !isProjectName"
+        <fui-text [size]="'s'" (click)="isProjectName = !isProjectName"
           >N/A</fui-text
         >
       </div>
@@ -142,7 +142,7 @@
           [checked]="isMatterShortDesc"
           [(ngModel)]="isMatterShortDesc"
         />
-        <fui-text [size]="'sizes'">N/A</fui-text>
+        <fui-text [size]="'s'">N/A</fui-text>
       </div>
     </div>
     <fui-form-control-layout *ngIf="!isMatterShortDesc">
@@ -203,7 +203,7 @@
             ></fui-input-field>
           </fui-form-control-layout>
         </div>
-        <fui-button-icon
+        <fui-button-icon [fullWidth]="'fit'"
           (onClick)="openFlyoutUploadMatter()"
           [style]="'secondary'"
           [type]="'button'"
@@ -368,7 +368,7 @@
   <div class="grid-1 gap-5">
     <div class="flex align-center">
       <fui-text>Matter Members</fui-text>
-      <fui-text [size]="'sizes'" class="border-badge">{{
+      <fui-text [size]="'s'" class="border-badge">{{
         selectedEmployeMatterMember.length
       }}</fui-text>
     </div>
@@ -396,7 +396,7 @@
     >
     <!-- BADGE MEMBER  -->
 
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openFlyoutManageMember()"
       class="mt-15"
       [style]="'secondary'"

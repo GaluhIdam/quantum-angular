@@ -8,7 +8,7 @@
     <div class="selected-fly">
       <div class="flex align-center">
         <fui-text [weight]="'semibold'">Selected</fui-text>
-        <fui-text [size]="'sizes'" class="border-badge">{{
+        <fui-text [size]="'s'" class="border-badge">{{
           selectedEmployeMatterMember.length
         }}</fui-text>
       </div>
@@ -24,7 +24,7 @@
               <fui-text>{{ item.name }}</fui-text>
               <fui-text class="flex mt-5">{{ item.position }}</fui-text>
             </div>
-            <fui-button-icon
+            <fui-button-icon [fullWidth]="'fit'"
               (onClick)="addRemoveMatterMember(item, 'remove')"
               [size]="'s'"
               [type]="'button'"
@@ -53,7 +53,7 @@
           [checked]="isProjectName"
           [(ngModel)]="isProjectName"
         />
-        <fui-text [size]="'sizes'" (click)="isProjectName = !isProjectName"
+        <fui-text [size]="'s'" (click)="isProjectName = !isProjectName"
           >Include inactive employee</fui-text
         >
       </div>
@@ -92,7 +92,7 @@
             {{ data.position }}
           </fui-table-body-data>
           <fui-table-body-data style="min-width: 20px; width: 20px">
-            <fui-button-icon
+            <fui-button-icon [fullWidth]="'fit'"
               (onClick)="addRemoveMatterMember(data, 'add')"
               [type]="'button'"
               [color]="'primary'"
@@ -107,7 +107,7 @@
     <!-- TABLE  -->
   </div>
   <div footer class="flex-between footer-fly">
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openFlyoutManageMember()"
       [type]="'button'"
       [color]="'primary'"
@@ -115,7 +115,7 @@
       [option]="'text'"
       [text]="'Cancel'"
     />
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openFlyoutManageMember()"
       [type]="'button'"
       [color]="'primary'"

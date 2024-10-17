@@ -2,10 +2,10 @@
 
 .wrap-container {
   border-radius: 5px;
-  margin: 10px 0px 20px 0px;
+  margin: 20px 0px 20px 0px;
 }
 .container {
-  width: -webkit-fill-available;
+  width: 100%;
   display: flex;
   align-items: center;
   margin-bottom: 15px;
@@ -18,7 +18,7 @@
   }
 
   fui-form-control-layout {
-    width: -webkit-fill-available;
+    width: 100%;
   }
 
   .group-btn {
@@ -46,7 +46,7 @@
 
 /** Footer Flyout Config */
 .footer-flyout {
-  width: -webkit-fill-available;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 5px 10px;

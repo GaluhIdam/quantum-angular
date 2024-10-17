@@ -21,12 +21,12 @@
           <div class="flex">
             <fui-text
               [textWrap]="'nowrap'"
-              style="width: -webkit-fill-available; text-align: end"
+              style="width: 100%; text-align: end"
               >{{ currencyForm.value }} {{ getMinMaxRates().minRate }}.00 ~
               {{ currencyForm.value }}
               {{ getMinMaxRates().maxRate }}.00</fui-text
             >
-            <fui-button-icon
+            <fui-button-icon [fullWidth]="'fit'"
               [size]="'s'"
               (onClick)="toggleCollapse()"
               [type]="'button'"
@@ -58,7 +58,7 @@
               </fui-table-body-data>
               <fui-table-body-data style="min-width: 20px; width: 20px">
                 <div class="flex">
-                  <fui-button-icon
+                  <fui-button-icon [fullWidth]="'fit'"
                     (onClick)="openCloseFlyout('Edit Sepcial Rates')"
                     [type]="'button'"
                     [color]="'primary'"
@@ -66,7 +66,7 @@
                     [option]="'icon'"
                     [icon]="'pencil'"
                   />
-                  <fui-button-icon
+                  <fui-button-icon [fullWidth]="'fit'"
                     [type]="'button'"
                     [color]="'danger'"
                     [style]="'secondary'"
@@ -82,7 +82,7 @@
     </fui-collapsible-nav-group>
     <!-- COLLABSIBLE  -->
 
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openCloseFlyout('Add Sepcial Rates')"
       class="mt-20"
       [type]="'button'"

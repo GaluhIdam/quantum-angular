@@ -21,7 +21,7 @@
         [optionValue]="clientNameOption"
         [selectedValue]="clientNameSelected"
       />
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         (onClick)="openCloseFlyout('SH')"
         class="flex mt-15"
         [style]="'secondary'"
@@ -44,7 +44,7 @@
             [checked]="isClientContactPerson"
             [(ngModel)]="isClientContactPerson"
           />
-          <fui-text [size]="'sizes'">N/A</fui-text>
+          <fui-text [size]="'s'">N/A</fui-text>
         </div>
       </div>
       <fui-form-control-layout *ngIf="!isClientContactPerson">
@@ -64,7 +64,7 @@
         *ngIf="isClientContactPerson"
         >Not Applicable</fui-text
       >
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         *ngIf="!isClientContactPerson && clientNameSelected.length > 0"
         (onClick)="openCloseFlyout('CP')"
         class="flex mt-15"
@@ -142,7 +142,7 @@
           [checked]="isInstructingParty"
           [(ngModel)]="isInstructingParty"
         />
-        <fui-text [size]="'sizes'">N/A</fui-text>
+        <fui-text [size]="'s'">N/A</fui-text>
       </div>
     </div>
     <fui-combo-box
@@ -162,7 +162,7 @@
       *ngIf="isInstructingParty"
       >Not Applicable</fui-text
     >
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       *ngIf="!isInstructingParty"
       (onClick)="openCloseFlyout('SH')"
       class="flex mt-15"

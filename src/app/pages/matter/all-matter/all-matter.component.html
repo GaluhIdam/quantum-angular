@@ -5,7 +5,6 @@
     <fui-form-control-layout>
       <fui-input-field
         [type]="'text'"
-        [borderRadius]="['6px', '6px', '6px', '6px']"
         [invalid]="false"
         [size]="'m'"
         [placeholder]="'Search by Number or Project Name'"
@@ -22,7 +21,7 @@
 
     <div class="group-btn">
       <!-- BUTTON FILTER FOR OPEN FLYOUT -->
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         [color]="'text'"
         [type]="'button'"
         [option]="'iconText'"
@@ -35,7 +34,7 @@
       <!-- BUTTON FILTER FOR OPEN FLYOUT -->
 
       <!-- ADD EXPENSE MATTER -->
-      <fui-button-icon
+      <fui-button-icon [fullWidth]="'fit'"
         [color]="'primary'"
         [type]="'button'"
         [option]="'iconText'"
@@ -65,7 +64,7 @@
   <!-- CARD MATTER -->
 
   <div class="loader">
-    <fui-button-icon
+    <fui-button-icon [fullWidth]="'fit'"
       [type]="'button'"
       [option]="'iconText'"
       [icon]="'refresh'"

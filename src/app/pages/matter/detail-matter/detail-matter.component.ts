@@ -12,6 +12,7 @@ import {
 import { TimesheetComponent } from './timesheet/timesheet.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { InformationComponent } from './information/information.component';
+import { OverviewComponent } from './overview/overview.component';
 
 @Component({
   selector: 'app-detail-matter',
@@ -23,6 +24,7 @@ import { InformationComponent } from './information/information.component';
     TabsContentComponent,
     TextComponent,
     IconsComponent,
+    OverviewComponent,
     TimesheetComponent,
     ExpensesComponent,
     InformationComponent,
@@ -43,7 +45,7 @@ export class DetailMatterComponent {
     title: string;
   }[] = [
     {
-      active: 'disabled',
+      active: true,
       icon: 'visArea',
       sideIcon: 'left',
       sizeIcon: 'sizem',
@@ -57,7 +59,7 @@ export class DetailMatterComponent {
       title: 'Information',
     },
     {
-      active: true,
+      active: false,
       icon: 'clock',
       sideIcon: 'left',
       sizeIcon: 'sizel',

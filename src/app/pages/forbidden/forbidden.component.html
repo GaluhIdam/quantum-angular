@@ -5,7 +5,7 @@
   <div class="sub-container block">
     <div class="flex">
       <fui-icons [icon]="'lock'" [size]="'sizexl'" [color]="'danger'" />
-      <fui-text [color]="'danger'" [size]="'sizexxl'" [weight]="'bold'"
+      <fui-text [color]="'danger'" [size]="'xl'" [weight]="'bold'"
         >Access Denied</fui-text
       >
     </div>
@@ -14,7 +14,7 @@
 </div>
 
 <div class="container">
-  <fui-button-icon
+  <fui-button-icon [fullWidth]="'fit'"
     (onClick)="backToHome()"
     [type]="'button'"
     [option]="'iconText'"

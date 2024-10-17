@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet, Routes } from '@angular/router';
 import {
   ButtonIconComponent,
   DataSideDTO,
@@ -20,6 +20,8 @@ import {
   TextComponent,
   AvatarComponent,
   OidcAuthenticatorService,
+  SitewideSearchComponent,
+  SitewideDTO,
 } from '@quantum/fui';
 import {
   debounceTime,
@@ -41,6 +43,7 @@ import {
 import { MyTimesheetService } from '../../pages/matter/my-timesheet/services/my-timesheet.service';
 import { FlyoutTimesheetComponent } from '../flyout-timesheet/flyout-timesheet.component';
 import { MiniSidebarComponent } from '../mini-sidebar/mini-sidebar.component';
+import { routes } from '../../app.routes';
 
 @Component({
   selector: 'app-layouts',
@@ -64,12 +67,14 @@ import { MiniSidebarComponent } from '../mini-sidebar/mini-sidebar.component';
     AvatarComponent,
     ModalDeleteComponent,
     FlyoutTimesheetComponent,
-    MiniSidebarComponent
+    MiniSidebarComponent,
+    SitewideSearchComponent,
   ],
   templateUrl: './layouts.component.html',
   styleUrl: './layouts.component.scss',
 })
 export class LayoutsComponent {
+  router: Routes = routes;
   searchForm: FormControl = new FormControl();
   loading: boolean = false;
   themeService = inject(ThemeService);
@@ -81,6 +86,11 @@ export class LayoutsComponent {
 
   mattersData: MatterDTO[] = [];
   activitesData: ActivityDTO[] = [];
+
+  searchForms: FormControl = new FormControl();
+  data: SitewideDTO[] = [];
+  filteredData: SitewideDTO[] = [];
+  searchTog: boolean = false;
 
   private destroy$ = new Subject<void>();
   private obs!: Subscription;
@@ -94,13 +104,13 @@ export class LayoutsComponent {
   nameUser: string = '';
 
   constructor(
-    private router: Router,
+    private navigate: Router,
     private cdr: ChangeDetectorRef,
     private readonly authService: OidcAuthenticatorService,
     private readonly myTimesheetService: MyTimesheetService
   ) {
     this.dataSide = DataSideBar.dataSideBar;
-    this.getUser();
+    // this.getUser();
   }
 
   ngOnInit(): void {
@@ -123,20 +133,28 @@ export class LayoutsComponent {
         map((value) => {
           this.filterDataSide(value);
           this.loading = false;
+          this.filterData();
         })
       )
       .subscribe();
-    this.router.events
+    this.obs = this.searchForms.valueChanges
+      .pipe(debounceTime(400))
+      .subscribe((data) => {
+        this.filterData();
+      });
+    this.restructureData();
+    this.navigate.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         map(() => {
-          let currentRoute = this.router.url;
+          let currentRoute = this.navigate.url;
           this.updateActiveStatus(currentRoute);
         }),
         takeUntil(this.destroy$)
       )
       .subscribe();
     this.cdr.detectChanges();
+    this.restructureData();
   }
 
   ngOnDestroy(): void {
@@ -263,5 +281,66 @@ export class LayoutsComponent {
         this.nameUser = 'Username';
       }
     });
+  }
+
+  filterData(): void {
+    if (this.searchForm.value) {
+      const searchTerm = this.searchForms.value.toLowerCase();
+      this.filteredData = this.data.filter((item) =>
+        item.title.toLowerCase().includes(searchTerm)
+      );
+    }
+  }
+
+  goTo(event: any): void {
+    this.navigate.navigate([
+      event.anything.parent + '/' + event.anything.child,
+    ]);
+    this.searchTog = false;
+  }
+
+  searchToggle(): void {
+    this.searchTog = !this.searchTog;
+  }
+
+  protected _sortRoutesAlphabetically(routes: any[]): void {
+    routes.forEach((route) => {
+      if (route.children) {
+        route.children.sort((a: { title?: string }, b: { title?: string }) => {
+          if (a.title && b.title) {
+            return a.title.localeCompare(b.title);
+          } else if (a.title) {
+            return 1;
+          } else if (b.title) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+        this._sortRoutesAlphabetically(route.children);
+      }
+    });
+  }
+
+  restructureData(): void {
+    this.router.forEach((item) => {
+      if (item.children) {
+        item.children.forEach((child) => {
+          if (child.title) {
+            const dto: SitewideDTO = {
+              title: child.title.toString(),
+              icon: 'arrowRight',
+              description: 'Navigate to the ' + child.title.toString(),
+              anything: {
+                parent: item.path,
+                child: child.path,
+              },
+            };
+            this.data.push(dto);
+          }
+        });
+      }
+    });
+    this.filteredData = [...this.data];
   }
 }

@@ -1,0 +1,10 @@
+<fui-filter-group [fullWidth]="false">
+  <fui-filter-group-button (onClick)="activeBtn(item)" *ngFor="let item of btnList" [active]="item.status"
+    ><div class="filter-title">
+      <span>{{ item.title }}</span>
+      <div *ngIf="item.total" class="{{ item.status === true ? 'icon accent' : 'icon' }}">
+        {{ item.total }}
+      </div>
+    </div>
+  </fui-filter-group-button>
+</fui-filter-group>

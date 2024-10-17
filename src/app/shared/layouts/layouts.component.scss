@@ -3,7 +3,7 @@
 .h-screen {
   display: flex;
   flex-direction: column;
-  height: -webkit-fill-available;
+  height: 100%;
   /** Add On*/
   ::-webkit-scrollbar {
     height: 5px;
@@ -24,7 +24,6 @@
   overflow-y: auto;
   padding: 0px 20px;
   flex: 1;
-
 }
 
 /** Container Page */
@@ -116,7 +115,8 @@
   margin: 1px 0px;
 }
 .icon-mode {
-  margin-right: 18px;
+  display: flex;
+  margin-right: 10px;
 }
 /** Sidebar Style */
 .sidebar-container {
@@ -153,15 +153,16 @@
 }
 .page-body {
   width: -webkit-fill-available;
-  height: -webkit-fill-available;
+  width: -moz-available;
+  height: 100%;
   position: fixed;
   overflow-y: auto;
   overflow-x: hidden;
+  height: 100%;
   background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
 }
 .wrap-page-body {
   padding: 25px;
-  margin-top: 70px;
 }
 
 .profile {
