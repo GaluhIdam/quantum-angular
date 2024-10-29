@@ -45,9 +45,8 @@
 
   <!-- DATA AVAILABLE  -->
   <fui-table
-    *ngIf="dataMatterTypes.length > 0"
     content
-    [showInfo]="false"
+    *ngIf="dataMatterTypes.length > 0"
     [limit]="limit"
     [totalItems]="totalItems"
     (onPageChanges)="onPageChanges($event)"
