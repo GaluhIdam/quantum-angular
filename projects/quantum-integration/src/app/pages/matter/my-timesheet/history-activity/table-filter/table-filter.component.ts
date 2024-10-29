@@ -7,6 +7,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {
+  BadgeComponent,
   ButtonIconComponent,
   IconsComponent,
   PaginationComponent,
@@ -24,6 +25,7 @@ import { EmptyDataComponent } from '../../../../../shared/empty-data/empty-data.
     EmptyDataComponent,
     IconsComponent,
     PaginationComponent,
+    BadgeComponent,
     TextComponent,
   ],
   templateUrl: './table-filter.component.html',

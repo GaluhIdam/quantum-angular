@@ -1,0 +1,68 @@
+@import "../../../app.component.scss";
+
+.flex {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.flex-10-end {
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+  align-items: center;
+}
+.flex-10-start {
+  display: flex;
+  gap: 10px;
+  justify-content: start;
+  align-items: center;
+}
+.grid-10-start {
+  display: grid;
+  gap: 10px;
+  justify-content: start;
+  align-items: center;
+}
+.relative-10 {
+  margin-left: 15%;
+}
+.relative-5 {
+  margin-left: 5%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.my-25 {
+  margin: 25px 0px;
+}
+
+.mb-15 {
+  margin-bottom: 15px;
+}
+
+.clicked {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}

@@ -10,7 +10,7 @@
         />
       </div>
       <div class="table-cell" *ngFor="let item of headerTable">
-        <div class="head-title">{{ item }}</div>
+        <fui-text>{{ item }}</fui-text>
       </div>
     </div>
     <div
@@ -18,7 +18,8 @@
       *ngFor="let item of dataTimesheet; let i = index"
     >
       <div class="table-cell">
-        <input [disabled]="item.tagEntityList.length > 0"
+        <input
+          [disabled]="item.tagEntityList.length > 0"
           type="checkbox"
           [checked]="isItemChecked(item)"
           (click)="checkItem(item)"
@@ -28,11 +29,7 @@
         {{ item.date | date : "d MMMM yy" }}
       </div>
       <div class="table-cell">
-        <div class="custom-badge">
-          <div class="item">
-            {{ item.matter.matter }}
-          </div>
-        </div>
+        <fui-badge [text]="item.matter.matter" [color]="'hollow'" />
       </div>
       <div class="table-cell">
         <fui-text>{{ item.description }}</fui-text>
@@ -50,7 +47,8 @@
 
       <div class="table-cell">
         <div class="wrap-action title-cell">
-          <fui-button-icon [fullWidth]="'fit'"
+          <fui-button-icon
+            [fullWidth]="'fit'"
             (onClick)="
               item.tagEntityList.length > 0
                 ? actionBtn('edit-tag', item)
@@ -64,7 +62,8 @@
             [icon]="'pencil'"
             [iconSide]="'left'"
           />
-          <fui-button-icon [fullWidth]="'fit'"
+          <fui-button-icon
+            [fullWidth]="'fit'"
             *ngIf="item.tagEntityList.length === 0"
             (onClick)="actionBtn('delete', item)"
             [type]="'button'"

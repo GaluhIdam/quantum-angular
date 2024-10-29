@@ -124,19 +124,19 @@ export class DataSideBar {
     {
       size: this.size,
       icon: 'document',
-      title: 'Example',
+      title: 'Administration',
       active: false,
       children: [
         {
-          title: 'Master Data',
+          title: 'Location',
           active: false,
-          link: '/master-data',
+          link: '/master-data/location',
           size: this.size,
         },
         {
-          title: 'Document 2',
+          title: 'Matter Type',
           active: false,
-          link: '',
+          link: '/master-data/matter-type',
           size: this.size,
         },
         {

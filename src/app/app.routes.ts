@@ -9,6 +9,8 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DetailMatterComponent } from './pages/matter/detail-matter/detail-matter.component';
 import { MatterFormComponent } from './pages/matter/matter-form/matter-form.component';
 import { MasterDataComponent } from './pages/master-data/master-data.component';
+import { LocationComponent } from './pages/master-data/location/location.component';
+import { MatterTypesComponent } from './pages/master-data/matter-types/matter-types.component';
 
 export const routes: Routes = [
   /** Home Modules */
@@ -75,9 +77,19 @@ export const routes: Routes = [
   },
 
   {
-    title: 'Master Data',
     path: 'master-data',
-    component: MasterDataComponent,
+    children: [
+      {
+        title: 'Location',
+        path: 'location',
+        component: LocationComponent,
+      },
+      {
+        title: 'Matter Type',
+        path: 'matter-type',
+        component: MatterTypesComponent,
+      },
+    ],
   },
 
   /** Wildcard route for a 404 page */

@@ -4,8 +4,7 @@ import {
   MyTimesheetDTO,
   TimesheetByDateDTO,
 } from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
-import { FormControl } from '@angular/forms';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 export class BaseController {
   /** Injector */

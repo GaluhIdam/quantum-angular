@@ -65,7 +65,7 @@
             />
           </div>
           <div class="table-cell" *ngFor="let item of headerTable">
-            <div class="head-title">{{ item }}</div>
+            <fui-text>{{ item }}</fui-text>
           </div>
         </div>
         <div
@@ -83,11 +83,7 @@
             </div>
           </div>
           <div class="table-cell">
-            <div class="custom-badge">
-              <div class="item">
-                {{ item.matter.matter }}
-              </div>
-            </div>
+            <fui-badge [text]="item.matter.matter" [color]="'hollow'" />
           </div>
           <div class="table-cell">
             {{ item.description }}

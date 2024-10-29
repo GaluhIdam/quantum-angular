@@ -17,6 +17,7 @@ import {
   Color,
   HorizontalStackComponent,
   IconsComponent,
+  TextComponent,
 } from '@quantum/fui';
 
 import { BaseController } from '../../../../../core/controller/basecontroller';
@@ -33,6 +34,7 @@ import { EmptyDataComponent } from '../../../../../shared/empty-data/empty-data.
     ButtonIconComponent,
     IconsComponent,
     EmptyDataComponent,
+    TextComponent,
   ],
   templateUrl: './table-without-filter.component.html',
   styleUrl: './table-without-filter.component.scss',
