@@ -38,6 +38,8 @@
 .flex-between {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
+  align-items: center;
 }
 
 .label {
@@ -53,16 +55,11 @@
   margin-bottom: 15px;
 }
 
-.clicked {
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.flex-between {
+.flex-link {
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 10px;
+  gap: 5px;
+  margin-top: 10px;
+}
+.block-data {
+  display: grid;
 }

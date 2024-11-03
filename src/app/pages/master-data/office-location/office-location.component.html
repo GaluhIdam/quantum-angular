@@ -1,0 +1,182 @@
+<shared-page-generic-default
+  [title]="'Office Location'"
+  [description]="'Available office location for the organization'"
+  [breadcrums]="link"
+>
+  <fui-form-control-layout formsearch>
+    <fui-input-field
+      [type]="'text'"
+      [placeholder]="'Search...'"
+      [size]="'m'"
+      [invalid]="false"
+    >
+      <fui-icons
+        left-icon
+        [label]="'left'"
+        [icon]="'search'"
+        [size]="'sizem'"
+        [color]="'text'"
+      />
+    </fui-input-field>
+  </fui-form-control-layout>
+
+  <fui-button-icon
+    cta
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'plus'"
+    [text]="'Add Office Location'"
+    [size]="'m'"
+    (onClick)="toggleOpenFlyout('create', true)"
+  />
+
+  <!-- DATA AVAILABLE  -->
+  <fui-table-tree
+    *ngIf="dataOfficeLocation.length > 0"
+    content
+    [limit]="limit"
+    [totalItems]="totalItems"
+    [showInfo]="true"
+    [info]="'Office Location'"
+    [pagination]="true"
+    (onPageChanges)="onPageChanges($event)"
+  >
+    <!-- HEADER  -->
+    <fui-table-head-tree
+      *ngFor="let item of title; let i = index"
+      [fieldName]="item"
+      [sortFeature]="item !== ''"
+      [utils]="{
+        index: i,
+        dataLength: title.length,
+        action: true,
+        activeField: sortData ? sortData.fieldName : ''
+      }"
+      (sortOut)="toggleSort($event)"
+    >
+      <fui-text [textWrap]="'nowrap'">{{ item }}</fui-text>
+    </fui-table-head-tree>
+    <!-- HEADER  -->
+
+    <!-- LEVEL 1  -->
+    <ng-container *ngFor="let item of dataOfficeLocation">
+      <fui-table-row-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-text [textWrap]="'nowrap'"> {{ item.name }} </fui-text>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-text [textWrap]="'nowrap'"> {{ item.code }} </fui-text>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [color]="'primary'"
+            [icon]="'pencil'"
+            [size]="'s'"
+            (onClick)="toggleOpenFlyout('update', true)"
+          ></fui-button-icon>
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [color]="'danger'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [icon]="'trash'"
+            [size]="'s'"
+            (onClick)="toggleModalDelete({ name: item.name, status: true })"
+          ></fui-button-icon>
+        </fui-table-data-tree>
+      </fui-table-row-tree>
+    </ng-container>
+    <!-- LEVEL 1  -->
+  </fui-table-tree>
+  <!-- DATA AVAILABLE  -->
+
+  <!-- EMPTY MESSAGE  -->
+  <shared-empty-data content [dataLength]="dataOfficeLocation.length" />
+  <!-- EMPTY MESSAGE  -->
+</shared-page-generic-default>
+
+<!-- FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="openFlyout"
+  [titleFlyout]="
+    createUpdate === 'create' ? 'Add Office Location' : 'Update Office Location'
+  "
+  (closeOut)="toggleOpenFlyout('create', false)"
+>
+  <div body>
+    <!-- NAME  -->
+    <div class="mb-15">
+      <fui-text class="label">Office Name</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [placeholder]="'Office Name'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="officeForm"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- NAME  -->
+
+    <!-- LOCATION  -->
+    <div class="mb-15">
+      <fui-text class="label">Location</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [placeholder]="'Indonesia, DKI Jakarta, Jakarta Selatan'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="locationForm"
+        >
+          <fui-icons left-icon [size]="'sizem'" [icon]="'search'" />
+        </fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- LOCATION  -->
+  </div>
+
+  <div footer class="flex-between">
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Cancel'"
+      [style]="'empty'"
+      (onClick)="toggleOpenFlyout('create', false)"
+    />
+    <fui-button-icon
+      *ngIf="createUpdate === 'create'"
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Save'"
+      [style]="'secondary'"
+      (onClick)="toggleUpdateCreateData('create', false)"
+    />
+    <fui-button-icon
+      *ngIf="createUpdate === 'update'"
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Update Location'"
+      [style]="'secondary'"
+      (onClick)="toggleUpdateCreateData('update', false)"
+    />
+  </div>
+</shared-flyout-simple>
+<!-- FLYOUT  -->
+
+<!-- MODAL DELETE  -->
+<shared-modal-delete
+  [openModalDelete]="openModalDelete"
+  (action)="toggleModalDelete($event)"
+/>
+<!-- MODAL DELETE  -->
+
+<!-- TOAST -->
+<fui-toast />
+<!-- TOAST -->

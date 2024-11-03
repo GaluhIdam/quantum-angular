@@ -17,7 +17,12 @@ import {
   TableBodyDataComponent,
   TableBodyRowComponent,
   TableComponent,
+  TableDataTreeComponent,
   TableHeadComponent,
+  TableHeadTreeComponent,
+  TableRowTreeComponent,
+  TableTreeComponent,
+  TableTreeDTO,
   TextComponent,
   ToastComponent,
   TooltipComponent,
@@ -42,11 +47,12 @@ import { MatterTypesDTO } from './dto/matter-types.dto';
     InputFieldComponent,
     IconsComponent,
     ButtonIconComponent,
-    TableComponent,
-    TableHeadComponent,
-    TableBodyComponent,
-    TableBodyDataComponent,
-    TableBodyRowComponent,
+
+    TableTreeComponent,
+    TableHeadTreeComponent,
+    TableRowTreeComponent,
+    TableDataTreeComponent,
+
     TextComponent,
     PopoverComponent,
     BadgeComponent,
@@ -67,6 +73,12 @@ import { MatterTypesDTO } from './dto/matter-types.dto';
   styleUrl: './matter-types.component.scss',
 })
 export class MatterTypesComponent extends BaseController {
+  /** Sort Data */
+  sortData?: {
+    fieldName: string;
+    sort: 'asc' | 'desc' | null;
+  };
+
   /** Flyout utility */
   openFlyout: boolean = false;
   createUpdate: 'create' | 'update' = 'create';
@@ -80,7 +92,7 @@ export class MatterTypesComponent extends BaseController {
   /** Link */
   link: BreadcrumbData[] = [
     { label: 'Administration', link: '/master-data' },
-    { label: 'Matter Type', link: '/master-data/matter-type' },
+    { label: 'Matter Types', link: '/master-data/matter-type' },
   ];
 
   /** Filter Group */
@@ -129,12 +141,7 @@ export class MatterTypesComponent extends BaseController {
       ],
     },
   ];
-  showHideRow: {
-    status: boolean;
-    child: {
-      status: boolean[];
-    };
-  }[] = [];
+  dataShowHide: TableTreeDTO[] = [];
 
   page: number = 1;
   limit: number = 10;
@@ -265,16 +272,20 @@ export class MatterTypesComponent extends BaseController {
 
   ngOnInit(): void {
     if (this.dataMatterTypes.length > 0) {
-      this.dataMatterTypes.forEach((practiceArea) => {
-        const provinceStatuses = practiceArea.practiceArea.map(() => false);
-
-        this.showHideRow.push({
-          status: false,
-          child: {
-            status: provinceStatuses,
-          },
+      if (this.dataMatterTypes.length > 0) {
+        this.dataMatterTypes.forEach((item, i) => {
+          this.dataShowHide.push({
+            status: false,
+            child: [],
+          });
+          item.practiceArea.forEach(() =>
+            this.dataShowHide[i].child.push({
+              status: false,
+              child: [],
+            })
+          );
         });
-      });
+      }
     }
   }
 
@@ -377,4 +388,9 @@ export class MatterTypesComponent extends BaseController {
       this.selectedValuePa = event;
     }
   }
+
+    /** Toggle Sort */
+    toggleSort(event: { fieldName: string; sort: 'asc' | 'desc' | null }): void {
+      this.sortData = event;
+    }
 }

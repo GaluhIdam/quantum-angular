@@ -9,11 +9,11 @@ import {
   InputFieldComponent,
   PopoverComponent,
   SelectFieldComponent,
-  TableBodyComponent,
-  TableBodyDataComponent,
-  TableBodyRowComponent,
-  TableComponent,
-  TableHeadComponent,
+  TableDataTreeComponent,
+  TableHeadTreeComponent,
+  TableRowTreeComponent,
+  TableTreeComponent,
+  TableTreeDTO,
   TextComponent,
   ToastComponent,
 } from '@quantum/fui';
@@ -36,11 +36,10 @@ import { BaseController } from '../../../core/controller/basecontroller';
     InputFieldComponent,
     IconsComponent,
     ButtonIconComponent,
-    TableComponent,
-    TableHeadComponent,
-    TableBodyComponent,
-    TableBodyDataComponent,
-    TableBodyRowComponent,
+    TableTreeComponent,
+    TableHeadTreeComponent,
+    TableRowTreeComponent,
+    TableDataTreeComponent,
     TextComponent,
     PopoverComponent,
     BadgeComponent,
@@ -56,6 +55,12 @@ import { BaseController } from '../../../core/controller/basecontroller';
   styleUrl: './location.component.scss',
 })
 export class LocationComponent extends BaseController {
+  /** Sort Data */
+  sortData?: {
+    fieldName: string;
+    sort: 'asc' | 'desc' | null;
+  };
+
   /** Flyout utility */
   openFlyout: boolean = false;
   createUpdate: 'create' | 'update' = 'create';
@@ -103,18 +108,8 @@ export class LocationComponent extends BaseController {
         },
       ],
     },
-    {
-      location: 'Malaysia',
-      type: 'Country',
-      child: [],
-    },
   ];
-  showHideRow: {
-    status: boolean;
-    child: {
-      status: boolean[];
-    };
-  }[] = [];
+  dataShowHide: TableTreeDTO[] = [];
 
   page: number = 1;
   limit: number = 10;
@@ -156,15 +151,17 @@ export class LocationComponent extends BaseController {
 
   ngOnInit(): void {
     if (this.dataLocation.length > 0) {
-      this.dataLocation.forEach((country) => {
-        const provinceStatuses = country.child.map(() => false);
-
-        this.showHideRow.push({
+      this.dataLocation.forEach((item, i) => {
+        this.dataShowHide.push({
           status: false,
-          child: {
-            status: provinceStatuses,
-          },
+          child: [],
         });
+        item.child.forEach(() =>
+          this.dataShowHide[i].child.push({
+            status: false,
+            child: [],
+          })
+        );
       });
     }
   }
@@ -181,13 +178,13 @@ export class LocationComponent extends BaseController {
     countryIndex: number,
     provinceIndex?: number
   ) {
-    if (level === 'country') {
-      this.showHideRow[countryIndex].status =
-        !this.showHideRow[countryIndex].status;
-    } else if (level === 'province' && provinceIndex !== undefined) {
-      this.showHideRow[countryIndex].child.status[provinceIndex] =
-        !this.showHideRow[countryIndex].child.status[provinceIndex];
-    }
+    // if (level === 'country') {
+    //   this.showHideRow[countryIndex].status =
+    //     !this.showHideRow[countryIndex].status;
+    // } else if (level === 'province' && provinceIndex !== undefined) {
+    //   this.showHideRow[countryIndex].child.status[provinceIndex] =
+    //     !this.showHideRow[countryIndex].child.status[provinceIndex];
+    // }
   }
 
   /** Toggle open flyout */
@@ -231,5 +228,10 @@ export class LocationComponent extends BaseController {
         'sizem'
       );
     }
+  }
+
+  /** Toggle Sort */
+  toggleSort(event: { fieldName: string; sort: 'asc' | 'desc' | null }): void {
+    this.sortData = event;
   }
 }

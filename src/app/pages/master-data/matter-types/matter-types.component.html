@@ -44,178 +44,189 @@
   />
 
   <!-- DATA AVAILABLE  -->
-  <fui-table
+  <fui-table-tree
     content
-    *ngIf="dataMatterTypes.length > 0"
     [limit]="limit"
     [totalItems]="totalItems"
+    [showInfo]="true"
+    [info]="'Matter Types'"
+    [pagination]="true"
     (onPageChanges)="onPageChanges($event)"
   >
-    <fui-table-head *ngFor="let header of title">
-      <div class="flex">
-        <fui-text [textWrap]="'nowrap'">{{ header }}</fui-text>
-        <fui-popover [position]="'bottom'" *ngIf="header !== ''">
-          <fui-icons [size]="'sizexs'" [icon]="'sortable'" />
-          <div popover-body>
+    <!-- HEADER  -->
+    <fui-table-head-tree
+      *ngFor="let item of title; let i = index"
+      [fieldName]="item"
+      [sortFeature]="item === 'Name'"
+      [utils]="{
+        index: i,
+        dataLength: title.length,
+        action: true,
+        activeField: sortData ? sortData.fieldName : ''
+      }"
+      (sortOut)="toggleSort($event)"
+    >
+      <fui-text [textWrap]="'nowrap'">{{ item }}</fui-text>
+    </fui-table-head-tree>
+    <!-- HEADER  -->
+
+    <ng-container *ngFor="let practiceGroup of dataMatterTypes; let x = index">
+      <!-- LEVEL 1  -->
+      <fui-table-row-tree>
+        <fui-table-data-tree
+          [showDropIcon]="practiceGroup.practiceArea.length > 0 ? true : false"
+          (clickOut)="dataShowHide[x].status = !dataShowHide[x].status"
+        >
+          <fui-text [textWrap]="'nowrap'">
+            {{ practiceGroup.practiceGroup }}
+          </fui-text>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false"> </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-badge [text]="'Practice Group'" [color]="'hollow'" />
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false"> </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [icon]="'pencil'"
+            [size]="'s'"
+            (onClick)="toggleOpenFlyout('update', true)"
+          ></fui-button-icon>
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [color]="'danger'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [icon]="'trash'"
+            [size]="'s'"
+            (onClick)="
+              toggleModalDelete({
+                name: practiceGroup.practiceGroup,
+                status: true
+              })
+            "
+          ></fui-button-icon>
+        </fui-table-data-tree>
+      </fui-table-row-tree>
+      <!-- LEVEL 1  -->
+
+      <ng-container
+        *ngFor="let practiceArea of practiceGroup.practiceArea; let y = index"
+      >
+        <!-- LEVEL 2  -->
+        <fui-table-row-tree *ngIf="dataShowHide[x].status">
+          <fui-table-data-tree
+            [showDropIcon]="practiceArea.matter.length > 0 ? true : false"
+            [level]="1"
+            (clickOut)="
+              dataShowHide[x].child[y].status = !dataShowHide[x].child[y].status
+            "
+          >
+            <fui-text [textWrap]="'nowrap'"> {{ practiceArea.name }} </fui-text>
+          </fui-table-data-tree>
+          <fui-table-data-tree [showDropIcon]="false"> </fui-table-data-tree>
+          <fui-table-data-tree [showDropIcon]="false">
+            <fui-badge [text]="'Practice Area'" [color]="'hollow'" />
+          </fui-table-data-tree>
+          <fui-table-data-tree [showDropIcon]="false"> </fui-table-data-tree>
+          <fui-table-data-tree [showDropIcon]="false">
             <fui-button-icon
-              [type]="'button'"
-              [option]="'iconText'"
-              [size]="'s'"
               [fullWidth]="'fit'"
-              [style]="'empty'"
-              [icon]="'sortAscending'"
-              [text]="'Ascending'"
-            />
+              [type]="'button'"
+              [style]="'secondary'"
+              [option]="'icon'"
+              [icon]="'pencil'"
+              [size]="'s'"
+              (onClick)="toggleOpenFlyout('update', true)"
+            ></fui-button-icon>
             <fui-button-icon
-              [type]="'button'"
-              [option]="'iconText'"
-              [size]="'s'"
               [fullWidth]="'fit'"
-              [style]="'empty'"
-              [icon]="'sortDescending'"
-              [text]="'Descending'"
-            />
-          </div>
-        </fui-popover>
-      </div>
-    </fui-table-head>
-    <fui-table-body>
-      <ng-container *ngFor="let pg of dataMatterTypes; let pgIndex = index">
-        <!-- PRACTICE GROUP -->
-        <fui-table-body-row>
-          <fui-table-body-data class="w-100">
-            <div class="flex-10-start">
+              [color]="'danger'"
+              [type]="'button'"
+              [style]="'secondary'"
+              [option]="'icon'"
+              [icon]="'trash'"
+              [size]="'s'"
+              (onClick)="
+                toggleModalDelete({ name: practiceArea.name, status: true })
+              "
+            ></fui-button-icon>
+          </fui-table-data-tree>
+        </fui-table-row-tree>
+        <!-- LEVEL 2  -->
+
+        <ng-container *ngFor="let matter of practiceArea.matter">
+          <!-- LEVEL 3  -->
+          <fui-table-row-tree *ngIf="dataShowHide[x].child[y].status">
+            <fui-table-data-tree
+              [showDropIcon]="false"
+              [level]="2"
+              (clickOut)="
+                dataShowHide[x].child[y].status =
+                  !dataShowHide[x].child[y].status
+              "
+            >
+              <div class="block-data">
+                <fui-text [textWrap]="'nowrap'">
+                  {{ matter.matterTypeName }}
+                </fui-text>
+                <div class="flex-link" *ngIf="matter.skills.length > 0">
+                  <fui-icons [icon]="'unlink'" [size]="'sizes'" [color]="'disabled'" />
+                  <fui-text [textWrap]="'nowrap'" [size]="'s'" [color]="'text'">
+                    Linked to
+                    {{ matter.skills.length }} skills
+                  </fui-text>
+                </div>
+              </div>
+            </fui-table-data-tree>
+            <fui-table-data-tree [showDropIcon]="false"
+              ><fui-badge [text]="matter.matterTypeCode" [color]="'hollow'"
+            /></fui-table-data-tree>
+            <fui-table-data-tree [showDropIcon]="false">
+              <fui-badge [text]="'Matter Types'" [color]="'hollow'" />
+            </fui-table-data-tree>
+            <fui-table-data-tree [showDropIcon]="false"
+              ><fui-badge
+                [text]="matter.status ? 'Active' : 'Inactive'"
+                [color]="matter.status ? 'success' : 'default'"
+            /></fui-table-data-tree>
+            <fui-table-data-tree [showDropIcon]="false">
               <fui-button-icon
-                *ngIf="pg.practiceArea.length > 0"
                 [fullWidth]="'fit'"
-                [style]="'empty'"
-                [color]="'text'"
                 [type]="'button'"
+                [style]="'secondary'"
                 [option]="'icon'"
-                [icon]="
-                  showHideRow[pgIndex].status ? 'arrowDown' : 'arrowRight'
-                "
+                [icon]="'pencil'"
+                [size]="'s'"
+                (onClick)="toggleOpenFlyout('update', true)"
+              ></fui-button-icon>
+              <fui-button-icon
+                [fullWidth]="'fit'"
+                [color]="'danger'"
+                [type]="'button'"
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'trash'"
+                [size]="'s'"
                 (onClick)="
-                  showHideRow[pgIndex].status = !showHideRow[pgIndex].status
+                  toggleModalDelete({
+                    name: matter.matterTypeName,
+                    status: true
+                  })
                 "
               ></fui-button-icon>
-              <fui-text>{{ pg.practiceGroup }}</fui-text>
-            </div>
-          </fui-table-body-data>
-          <fui-table-body-data></fui-table-body-data>
-          <fui-table-body-data>
-            <fui-badge [text]="'Practice Group'" [color]="'hollow'" />
-          </fui-table-body-data>
-          <fui-table-body-data></fui-table-body-data>
-          <fui-table-body-data> </fui-table-body-data>
-        </fui-table-body-row>
-        <!-- PRACTICE GROUP -->
-
-        @if (showHideRow[pgIndex].status) {
-        <ng-container *ngFor="let pa of pg.practiceArea; let paIndex = index">
-          <!-- PRACTICE AREA -->
-          <fui-table-body-row>
-            <fui-table-body-data>
-              <div class="flex-10-start relative-5">
-                <fui-button-icon
-                  *ngIf="pa.matter.length > 0"
-                  [fullWidth]="'fit'"
-                  [style]="'empty'"
-                  [color]="'text'"
-                  [type]="'button'"
-                  [option]="'icon'"
-                  [icon]="
-                    showHideRow[pgIndex].child.status[paIndex]
-                      ? 'arrowDown'
-                      : 'arrowRight'
-                  "
-                  (onClick)="
-                    showHideRow[pgIndex].child.status[paIndex] =
-                      !showHideRow[pgIndex].child.status[paIndex]
-                  "
-                ></fui-button-icon>
-                <fui-text>{{ pa.name }}</fui-text>
-              </div>
-            </fui-table-body-data>
-            <fui-table-body-data></fui-table-body-data>
-            <fui-table-body-data>
-              <fui-badge [text]="'Practice Area'" [color]="'hollow'" />
-            </fui-table-body-data>
-            <fui-table-body-data></fui-table-body-data>
-            <fui-table-body-data> </fui-table-body-data>
-          </fui-table-body-row>
-          <!-- PRACTICE AREA -->
-          @if (showHideRow[pgIndex].child.status[paIndex]) {
-          <ng-container *ngFor="let matter of pa.matter; let cityIndex = index">
-            <!-- MATTER TYPE  -->
-            <fui-table-body-row>
-              <fui-table-body-data>
-                <div class="grid-10-start relative-10">
-                  <fui-text>{{ matter.matterTypeName }}</fui-text>
-                  <div class="flex-10-start">
-                    <fui-icons [icon]="'unlink'" [color]="'disabled'" />
-                    <fui-text [color]="'text'"
-                      >Linked to {{ matter.skills.length }} skilss</fui-text
-                    >
-                  </div>
-                </div>
-              </fui-table-body-data>
-              <fui-table-body-data>
-                <div class="flex-10-start relative-10">
-                  <fui-badge
-                    [text]="matter.matterTypeCode"
-                    [color]="'hollow'"
-                  />
-                </div>
-              </fui-table-body-data>
-              <fui-table-body-data>
-                <fui-badge [text]="'Matter Type'" [color]="'hollow'" />
-              </fui-table-body-data>
-              <fui-table-body-data>
-                <div class="flex-10-start relative-10">
-                  <fui-badge
-                    [color]="matter.status ? 'success' : 'default'"
-                    [text]="matter.status ? 'Active' : 'Inactive'"
-                  />
-                </div>
-              </fui-table-body-data>
-              <fui-table-body-data>
-                <div class="flex-10-end">
-                  <fui-button-icon
-                    [fullWidth]="'fit'"
-                    [type]="'button'"
-                    [style]="'secondary'"
-                    [option]="'icon'"
-                    [icon]="'pencil'"
-                    [size]="'s'"
-                    (onClick)="toggleOpenFlyout('update', true)"
-                  ></fui-button-icon>
-                  <fui-button-icon
-                    [fullWidth]="'fit'"
-                    [color]="'danger'"
-                    [type]="'button'"
-                    [style]="'secondary'"
-                    [option]="'icon'"
-                    [icon]="'trash'"
-                    [size]="'s'"
-                    (onClick)="
-                      toggleModalDelete({
-                        name: matter.matterTypeName,
-                        status: true
-                      })
-                    "
-                  ></fui-button-icon>
-                </div>
-              </fui-table-body-data>
-            </fui-table-body-row>
-            <!-- MATTER TYPE  -->
-          </ng-container>
-          }
+            </fui-table-data-tree>
+          </fui-table-row-tree>
+          <!-- LEVEL 3  -->
         </ng-container>
-        }
       </ng-container>
-    </fui-table-body>
-  </fui-table>
+    </ng-container>
+  </fui-table-tree>
   <!-- DATA AVAILABLE  -->
 
   <!-- EMPTY MESSAGE  -->
