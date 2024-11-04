@@ -127,17 +127,79 @@
     <!-- LOCATION  -->
     <div class="mb-15">
       <fui-text class="label">Location</fui-text>
-      <fui-form-control-layout>
-        <fui-input-field
-          [placeholder]="'Indonesia, DKI Jakarta, Jakarta Selatan'"
-          [type]="'text'"
-          [size]="'m'"
-          [invalid]="false"
-          [formControlField]="locationForm"
-        >
-          <fui-icons left-icon [size]="'sizem'" [icon]="'search'" />
-        </fui-input-field>
-      </fui-form-control-layout>
+      <fui-popover
+        [preventClose]="true"
+        [displayPopover]="true"
+        [position]="'bottom'"
+        [align]="'start'"
+      >
+        <fui-form-control-layout>
+          <fui-input-field
+            [placeholder]="'Indonesia, DKI Jakarta, Jakarta Selatan'"
+            [type]="'text'"
+            [size]="'m'"
+            [invalid]="false"
+            [formControlField]="locationForm"
+          >
+            <fui-icons left-icon [size]="'sizem'" [icon]="'search'" />
+          </fui-input-field>
+        </fui-form-control-layout>
+        <div popover-body>
+          <div class="flex-start">
+            <fui-button-icon
+              *ngIf="level > 1"
+              [type]="'button'"
+              [option]="'icon'"
+              [style]="'empty'"
+              [color]="'text'"
+              [fullWidth]="'fit'"
+              [icon]="'sortLeft'"
+              (onClick)="backLocation()"
+            />
+            <fui-text [weight]="'semibold'">{{
+              level === 1 ? "Select Country" : location
+            }}</fui-text>
+          </div>
+
+          <hr />
+
+          <!-- SEARCH FORM  -->
+          <fui-form-control-layout>
+            <fui-input-field
+              [placeholder]="'Search'"
+              [type]="'text'"
+              [size]="'s'"
+              [invalid]="false"
+              [formControlField]="locationForm"
+            >
+              <fui-icons left-icon [size]="'sizes'" [icon]="'search'" />
+            </fui-input-field>
+          </fui-form-control-layout>
+          <!-- SEARCH FORM  -->
+
+          <hr />
+
+          <div class="selection-item" *ngFor="let item of dataLocationSub">
+            <fui-text>{{ item.location }}</fui-text>
+            <fui-button-icon
+              *ngIf="item.child.length > 0"
+              [type]="'button'"
+              [option]="'icon'"
+              [style]="'empty'"
+              [color]="'text'"
+              [fullWidth]="'fit'"
+              [icon]="'arrowRight'"
+              (onClick)="selectionLocation(item.child, item.location)"
+            />
+          </div>
+
+          <shared-empty-data
+            content
+            [dataLength]="dataLocationSub.length"
+            [subTitle]="''"
+          />
+        </div>
+      </fui-popover>
     </div>
     <!-- LOCATION  -->
   </div>

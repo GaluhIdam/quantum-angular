@@ -47,20 +47,16 @@ import { MatterTypesDTO } from './dto/matter-types.dto';
     InputFieldComponent,
     IconsComponent,
     ButtonIconComponent,
-
     TableTreeComponent,
     TableHeadTreeComponent,
     TableRowTreeComponent,
     TableDataTreeComponent,
-
     TextComponent,
     PopoverComponent,
     BadgeComponent,
     EmptyDataComponent,
     FlyoutSimpleComponent,
-    FormControlLayoutComponent,
     SelectFieldComponent,
-    InputFieldComponent,
     ModalDeleteComponent,
     ToastComponent,
     TooltipComponent,
@@ -338,6 +334,7 @@ export class MatterTypesComponent extends BaseController {
     }
   }
 
+  /** Observe adv filter ouput */
   actionOut(event: boolean | 'filter' | 'clear'): void {
     this.totalFilter = 0;
     if (event === true || event === false) {
@@ -389,8 +386,8 @@ export class MatterTypesComponent extends BaseController {
     }
   }
 
-    /** Toggle Sort */
-    toggleSort(event: { fieldName: string; sort: 'asc' | 'desc' | null }): void {
-      this.sortData = event;
-    }
+  /** Toggle Sort */
+  toggleSort(event: { fieldName: string; sort: 'asc' | 'desc' | null }): void {
+    this.sortData = event;
+  }
 }

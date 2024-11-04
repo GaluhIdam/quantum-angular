@@ -176,7 +176,11 @@
                   {{ matter.matterTypeName }}
                 </fui-text>
                 <div class="flex-link" *ngIf="matter.skills.length > 0">
-                  <fui-icons [icon]="'unlink'" [size]="'sizes'" [color]="'disabled'" />
+                  <fui-icons
+                    [icon]="'unlink'"
+                    [size]="'sizes'"
+                    [color]="'disabled'"
+                  />
                   <fui-text [textWrap]="'nowrap'" [size]="'s'" [color]="'text'">
                     Linked to
                     {{ matter.skills.length }} skills
@@ -412,6 +416,7 @@
 </shared-flyout-simple>
 <!-- FLYOUT  -->
 
+<!-- FILTER  -->
 <fui-advance-filter [openFilter]="openFilter" (actionOut)="actionOut($event)">
   <fui-advance-filter-section [title]="'General'">
     <!-- PG  -->
@@ -460,6 +465,8 @@
     <!-- AIA  -->
   </fui-advance-filter-section>
 </fui-advance-filter>
+<!-- FILTER  -->
+
 <!-- MODAL DELETE  -->
 <shared-modal-delete
   [openModalDelete]="openModalDelete"

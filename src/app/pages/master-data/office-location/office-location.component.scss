@@ -17,3 +17,18 @@
   display: flex;
   justify-content: space-between;
 }
+
+.flex-start {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.selection-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}

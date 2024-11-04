@@ -23,6 +23,7 @@ import { FlyoutSimpleComponent } from '../../../shared/flyout-simple/flyout-simp
 import { ModalDeleteComponent } from '../../../shared/modal-delete/modal-delete.component';
 import { BaseController } from '../../../core/controller/basecontroller';
 import { OfficeLocationDTO } from './dto/office-location.dto';
+import { LocationDTO } from '../location/dto/location.dto';
 
 @Component({
   selector: 'app-office-location',
@@ -47,6 +48,7 @@ import { OfficeLocationDTO } from './dto/office-location.dto';
     FlyoutSimpleComponent,
     ModalDeleteComponent,
     ToastComponent,
+    PopoverComponent,
   ],
   templateUrl: './office-location.component.html',
   styleUrl: './office-location.component.scss',
@@ -93,6 +95,50 @@ export class OfficeLocationComponent extends BaseController {
   limit: number = 10;
   totalItems: number = 100;
   title: string[] = ['Name', 'Code', ''];
+
+  location?: string;
+  dataLocation: LocationDTO[] = [
+    // {
+    //   location: 'Singapore',
+    //   type: 'Country',
+    //   child: [],
+    // },
+    // {
+    //   location: 'Indonesia',
+    //   type: 'Country',
+    //   child: [
+    //     {
+    //       location: 'Aceh',
+    //       type: 'Province',
+    //       child: [
+    //         {
+    //           location: 'Badung',
+    //           type: 'City',
+    //           child: [],
+    //         },
+    //         {
+    //           location: 'Bangli',
+    //           type: 'City',
+    //           child: [],
+    //         },
+    //         {
+    //           location: 'Buleleng',
+    //           type: 'City',
+    //           child: [],
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
+  ];
+  dataLocationSub: LocationDTO[] = [];
+  level: number = 1;
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.dataLocationSub = this.dataLocation;
+  }
 
   /** Observe table pagination */
   onPageChanges(event: { page: number; itemsPerPage: number }): void {
@@ -149,5 +195,16 @@ export class OfficeLocationComponent extends BaseController {
         'sizem'
       );
     }
+  }
+
+  /** Toggle Location */
+  selectionLocation(param: LocationDTO[], location: string): void {
+    this.dataLocationSub = param;
+    this.location = location;
+    this.level++;
+  }
+  backLocation(): void {
+    if (this.level > 1) this.level--;
+    if (this.level === 1) this.dataLocationSub = this.dataLocation;
   }
 }
