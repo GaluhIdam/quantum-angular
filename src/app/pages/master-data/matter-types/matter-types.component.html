@@ -312,7 +312,7 @@
     <!-- STATUS  -->
     <div class="mb-15">
       <fui-text class="label">Status</fui-text>
-      <div class="flex-10-start">
+      <div class="flex-10-start hover">
         <input class="clicked" type="checkbox" [(ngModel)]="statusMatter" />
         <fui-text class="clicked" (click)="statusMatter = !statusMatter"
           >Active</fui-text
@@ -327,9 +327,13 @@
 
     <!-- CHECKBOX  -->
     <div class="mb-15">
-      <div class="flex-10-start">
-        <input class="clicked" type="checkbox" [(ngModel)]="haveAssocited" />
-        <fui-text class="clicked" (click)="haveAssocited = !haveAssocited"
+      <div class="flex-10-start hover" (click)="toggleCheckHaveSkill()">
+        <input
+          class="clicked"
+          type="checkbox"
+          [(ngModel)]="haveAssocited"
+        />
+        <fui-text class="clicked"
           >Have Associated Skilss ({{ selectedSkills.length }})</fui-text
         >
       </div>
@@ -339,21 +343,22 @@
     <!-- SKILLS -->
     <div class="mb-15" *ngIf="haveAssocited">
       <fui-text class="label">Search Skills</fui-text>
-      <fui-form-control-layout>
-        <fui-select-field
-          [placeholder]="'Select'"
-          [size]="'m'"
-          [invalid]="false"
-          [formControlField]="skillsForm"
-          [selectOptions]="selectOptionSkills"
-        ></fui-select-field>
-      </fui-form-control-layout>
+      <fui-combo-box
+        [placeholder]="'Select'"
+        [selectedValue]="selectedSkills"
+        [optionValue]="selectOptionSkills"
+        [maxShow]="5"
+        (selection)="selectionSkill($event)"
+      />
     </div>
     <!-- SKILLS -->
 
     <!-- SKILL SELECTED  -->
-    <div class="flex-between" *ngFor="let item of selectedSkills">
-      <fui-text>{{ item }}</fui-text>
+    <div
+      class="flex-between mb-15 border-label-selected"
+      *ngFor="let item of selectedSkills"
+    >
+      <p class="hide-text">{{ item.name }}</p>
       <fui-button-icon
         [size]="'s'"
         [fullWidth]="'fit'"
@@ -362,6 +367,7 @@
         [icon]="'cross'"
         [style]="'secondary'"
         [color]="'text'"
+        (onClick)="toggleRemoveSkill(item)"
       />
     </div>
     <!-- SKILL SELECTED  -->
@@ -372,7 +378,7 @@
 
     <!-- CHECKBOX  -->
     <div class="mb-15">
-      <div class="flex-10-start">
+      <div class="flex-10-start hover">
         <input class="clicked" type="checkbox" [(ngModel)]="showAppraisal" />
         <fui-text class="clicked" (click)="showAppraisal = !showAppraisal"
           >Show In Appraisals

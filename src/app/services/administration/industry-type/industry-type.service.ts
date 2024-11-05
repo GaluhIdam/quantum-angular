@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class IndustryTypeService {
-
-  constructor() { }
+  private readonly httpClient = inject(HttpClient);
+  httpUrl: string = 'unknown';
 }

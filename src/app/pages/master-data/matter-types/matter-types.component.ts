@@ -13,12 +13,7 @@ import {
   InputFieldComponent,
   PopoverComponent,
   SelectFieldComponent,
-  TableBodyComponent,
-  TableBodyDataComponent,
-  TableBodyRowComponent,
-  TableComponent,
   TableDataTreeComponent,
-  TableHeadComponent,
   TableHeadTreeComponent,
   TableRowTreeComponent,
   TableTreeComponent,
@@ -33,7 +28,7 @@ import { PageGenericDefaultComponent } from '../../../shared/page-generic-defaul
 import { EmptyDataComponent } from '../../../shared/empty-data/empty-data.component';
 import { FlyoutSimpleComponent } from '../../../shared/flyout-simple/flyout-simple.component';
 import { ModalDeleteComponent } from '../../../shared/modal-delete/modal-delete.component';
-import { MatterTypesDTO } from './dto/matter-types.dto';
+import { MatterTypesDTO } from '../../../interfaces/matter-types.dto';
 
 @Component({
   selector: 'app-matter-types',
@@ -63,6 +58,7 @@ import { MatterTypesDTO } from './dto/matter-types.dto';
     AdvanceFilterComponent,
     AdvanceFilterSectionComponent,
     AdvanceFilterItemComponent,
+    ComboBoxComponent,
     ComboBoxComponent,
   ],
   templateUrl: './matter-types.component.html',
@@ -163,27 +159,30 @@ export class MatterTypesComponent extends BaseController {
   /** Skilss */
   skillsForm: FormControl = new FormControl('');
   selectOptionSkills: {
-    label: string;
+    name: string;
     value: any;
   }[] = [
     {
-      label: 'Basic knowledge of financial analysis and reporting standards',
+      name: 'Basic knowledge of financial analysis and reporting standards',
       value: 'Basic knowledge of financial analysis and reporting standards',
     },
     {
-      label: 'Understanding of supply chain and inventory management concepts',
+      name: 'Understanding of supply chain and inventory management concepts',
       value: 'Understanding of supply chain and inventory management concepts',
     },
     {
-      label: 'Familiarity with project management methodologies and tools',
+      name: 'Familiarity with project management methodologies and tools',
       value: 'Familiarity with project management methodologies and tools',
     },
     {
-      label: 'Knowledge of data analysis techniques and statistical concepts',
+      name: 'Knowledge of data analysis techniques and statistical concepts',
       value: 'Knowledge of data analysis techniques and statistical concepts',
     },
   ];
-  selectedSkills: string[] = [];
+  selectedSkills: {
+    name: string;
+    value: any;
+  }[] = [];
 
   /** Option PG */
   optionValuePg: {
@@ -267,6 +266,11 @@ export class MatterTypesComponent extends BaseController {
   totalFilter: number = 0;
 
   ngOnInit(): void {
+    this.initStatusShowHide();
+  }
+
+  /** Initial status show/hide per row */
+  initStatusShowHide(): void {
     if (this.dataMatterTypes.length > 0) {
       if (this.dataMatterTypes.length > 0) {
         this.dataMatterTypes.forEach((item, i) => {
@@ -389,5 +393,35 @@ export class MatterTypesComponent extends BaseController {
   /** Toggle Sort */
   toggleSort(event: { fieldName: string; sort: 'asc' | 'desc' | null }): void {
     this.sortData = event;
+  }
+
+  /** Skill Selection */
+  selectionSkill(
+    event: {
+      name: string;
+      value: any;
+    }[]
+  ): void {
+    this.selectedSkills = event;
+  }
+
+  /** Toggle remove skill */
+  toggleRemoveSkill(item: { name: string; value: any }): void {
+    const index = this.selectedSkills.findIndex(
+      (skill) => skill.name === item.name && skill.value === item.value
+    );
+    if (index === -1) {
+      this.selectedSkills.push(item);
+    } else {
+      this.selectedSkills.splice(index, 1);
+    }
+  }
+
+  /** Toggle for check or uncheck skills */
+  toggleCheckHaveSkill(): void {
+    this.haveAssocited = !this.haveAssocited;
+    if (!this.haveAssocited) {
+      this.selectedSkills = [];
+    }
   }
 }

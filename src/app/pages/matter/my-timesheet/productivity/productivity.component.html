@@ -7,7 +7,10 @@
   </div>
   <fui-popover [position]="'bottom'">
     <div class="select">
-      <span class="title-select">This Month </span>
+      <span class="title-select" *ngIf="periode === 'today'">Today </span>
+      <span class="title-select" *ngIf="periode === 'week'">This Week </span>
+      <span class="title-select" *ngIf="periode === 'month'">This Month </span>
+      <span class="title-select" *ngIf="periode === 'year'">This Year</span>
       <fui-icons
         class="icon-title"
         [icon]="'arrowDown'"
@@ -20,16 +23,42 @@
         <div class="wrap-icon">
           <fui-icons
             class="icon-prod"
-            [icon]="'check'"
+            [icon]="periode === 'today' ? 'check' : 'minus'"
+            [size]="'sizes'"
+            [color]="'primary'"
+          />
+          <fui-icons
+            class="icon-prod"
+            [icon]="periode === 'week' ? 'check' : 'minus'"
+            [size]="'sizes'"
+            [color]="'primary'"
+          />
+          <fui-icons
+            class="icon-prod"
+            [icon]="periode === 'month' ? 'check' : 'minus'"
+            [size]="'sizes'"
+            [color]="'primary'"
+          />
+          <fui-icons
+            class="icon-prod"
+            [icon]="periode === 'year' ? 'check' : 'minus'"
             [size]="'sizes'"
             [color]="'primary'"
           />
         </div>
         <div class="wrap-option">
-          <span class="option-pop">Today</span>
-          <span class="option-pop">This Week</span>
-          <span class="option-pop">This Month</span>
-          <span class="option-pop">This Year</span>
+          <span class="option-pop" (click)="getProductivityData('today')"
+            >Today</span
+          >
+          <span class="option-pop" (click)="getProductivityData('week')"
+            >This Week</span
+          >
+          <span class="option-pop" (click)="getProductivityData('month')"
+            >This Month</span
+          >
+          <span class="option-pop" (click)="getProductivityData('year')"
+            >This Year</span
+          >
         </div>
       </div>
     </div>
@@ -43,7 +72,7 @@
         [max]="100"
         [color]="'primary'"
         [size]="'sizedefault'"
-        [label]="'134 of 160 Billable Hours'"
+        [label]="'0 of 0 Billable Hours'"
       />
     </shared-skeleton>
   </div>
@@ -55,22 +84,22 @@
         [max]="100"
         [color]="'text'"
         [size]="'sizedefault'"
-        [label]="'80 of 120 Non-Billable Hours'"
+        [label]="'0 of 0 Non-Billable Hours'"
       />
     </shared-skeleton>
   </div>
   <div class="legend">
     <span class="legend-title">
       <div class="color-square primary"></div>
-      <fui-text [textWrap]="'nowrap'"   [size]="'s'">Billable</fui-text>
+      <fui-text [textWrap]="'nowrap'" [size]="'s'">Billable</fui-text>
     </span>
     <span class="legend-title"
       ><div class="color-square text"></div>
-      <fui-text [textWrap]="'nowrap'"   [size]="'s'">Non-Billable</fui-text>
+      <fui-text [textWrap]="'nowrap'" [size]="'s'">Non-Billable</fui-text>
     </span>
     <span class="legend-title"
       ><div class="color-square disabled"></div>
-      <fui-text [textWrap]="'nowrap'"   [size]="'s'">Untracked</fui-text>
+      <fui-text [textWrap]="'nowrap'" [size]="'s'">Untracked</fui-text>
     </span>
   </div>
 </div>

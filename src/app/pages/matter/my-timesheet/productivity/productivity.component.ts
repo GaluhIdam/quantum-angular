@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   ButtonIconComponent,
   IconsComponent,
@@ -8,8 +8,9 @@ import {
   TextComponent,
 } from '@quantum/fui';
 import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.component';
-import { Subscription } from 'rxjs';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
+import { ProductivityService } from '../../../../services/matter/my-timesheet/productivity/productivity.service';
+import { BaseController } from '../../../../core/controller/basecontroller';
 
 @Component({
   selector: 'app-productivity',
@@ -27,13 +28,38 @@ import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.componen
   templateUrl: './productivity.component.html',
   styleUrl: './productivity.component.scss',
 })
-export class ProductivityComponent implements OnInit {
-  @Input() loading: boolean = true;
-  @Input() data: number[] = [70, 90];
+export class ProductivityComponent extends BaseController implements OnInit {
+  /** Call service */
+  private readonly productivityService = inject(ProductivityService);
+
+  /** Loading status */
+  loading: boolean = true;
+
+  /** Data Productivity */
+  data: number[] = [];
+
+  /** Periode */
+  periode: 'today' | 'week' | 'month' | 'year' = 'month';
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
+    this.getProductivityData(this.periode);
+  }
+
+  /** Get data productivity from service */
+  getProductivityData(periode: 'today' | 'week' | 'month' | 'year'): void {
+    this.productivityService.getProductivity(periode).subscribe({
+      next: (value) => {
+        this.data = value.result;
+      },
+      error: (error) => {
+        this.errorToast(error);
+        this.loading = false;
+        this.periode = periode;
+      },
+      complete: () => {
+        this.loading = false;
+        this.periode = periode;
+      },
+    });
   }
 }

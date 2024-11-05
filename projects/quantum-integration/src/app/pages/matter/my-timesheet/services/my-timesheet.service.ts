@@ -9,7 +9,7 @@ import {
 } from '../dtos/my-timesheet.dto';
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { environment } from '../../../../environment/env';
-import { ResponseDTO, Result } from '../../../../core/dtos/response.dto';
+import { Response, Result } from '../../../../core/dtos/response.dto';
 import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 
 @Injectable({
@@ -97,8 +97,8 @@ export class MyTimesheetService extends BaseController {
   /** Post new timesheet */
   postTimesheet(
     request: MyTimesheetPostDTO
-  ): Observable<ResponseDTO<MyTimesheetDTO>> {
-    return this._http.post<ResponseDTO<MyTimesheetDTO>>(
+  ): Observable<Response<MyTimesheetDTO>> {
+    return this._http.post<Response<MyTimesheetDTO>>(
       `${environment.httpUrl}/my-timesheet`,
       request
     );
@@ -108,16 +108,16 @@ export class MyTimesheetService extends BaseController {
   putTimesheet(
     uuid: string,
     request: MyTimesheetPostDTO
-  ): Observable<ResponseDTO<MyTimesheetDTO>> {
-    return this._http.put<ResponseDTO<MyTimesheetDTO>>(
+  ): Observable<Response<MyTimesheetDTO>> {
+    return this._http.put<Response<MyTimesheetDTO>>(
       `${environment.httpUrl}/my-timesheet/${uuid}`,
       request
     );
   }
 
   /** Delete timesheet */
-  deleteTimesheet(uuid: string): Observable<ResponseDTO<MyTimesheetDTO>> {
-    return this._http.delete<ResponseDTO<MyTimesheetDTO>>(
+  deleteTimesheet(uuid: string): Observable<Response<MyTimesheetDTO>> {
+    return this._http.delete<Response<MyTimesheetDTO>>(
       `${environment.httpUrl}/my-timesheet/${uuid}`
     );
   }

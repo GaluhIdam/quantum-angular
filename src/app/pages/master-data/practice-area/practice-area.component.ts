@@ -20,7 +20,7 @@ import { EmptyDataComponent } from '../../../shared/empty-data/empty-data.compon
 import { FlyoutSimpleComponent } from '../../../shared/flyout-simple/flyout-simple.component';
 import { ModalDeleteComponent } from '../../../shared/modal-delete/modal-delete.component';
 import { BaseController } from '../../../core/controller/basecontroller';
-import { PracticeAreaDTO } from './dto/practice-area.dto';
+import { PracticeAreaDTO } from '../../../interfaces/practice-area.dto';
 
 @Component({
   selector: 'app-practice-area',

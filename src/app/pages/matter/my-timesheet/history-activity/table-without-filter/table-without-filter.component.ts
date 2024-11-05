@@ -7,10 +7,6 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {
-  MyTimesheetDTO,
-  TimesheetByDateDTO,
-} from '../../dtos/my-timesheet.dto';
-import {
   BadgeComponent,
   ButtonIconComponent,
   CollapsibleNavGroupComponent,
@@ -22,6 +18,7 @@ import {
 
 import { BaseController } from '../../../../../core/controller/basecontroller';
 import { EmptyDataComponent } from '../../../../../shared/empty-data/empty-data.component';
+import { MyTimesheetDTO, TimesheetByDateDTO } from '../../../../../interfaces/my-timesheet.dto';
 
 @Component({
   selector: 'app-table-without-filter',

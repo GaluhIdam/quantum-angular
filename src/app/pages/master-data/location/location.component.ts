@@ -17,7 +17,7 @@ import {
   TextComponent,
   ToastComponent,
 } from '@quantum/fui';
-import { LocationDTO } from './dto/location.dto';
+import { LocationDTO } from '../../../interfaces/location.dto';
 import { CommonModule } from '@angular/common';
 import { EmptyDataComponent } from '../../../shared/empty-data/empty-data.component';
 import { FlyoutSimpleComponent } from '../../../shared/flyout-simple/flyout-simple.component';
@@ -150,6 +150,11 @@ export class LocationComponent extends BaseController {
   }[] = [];
 
   ngOnInit(): void {
+    this.initStatusShowHide();
+  }
+
+  /** Initial status show/hide per row */
+  initStatusShowHide(): void {
     if (this.dataLocation.length > 0) {
       this.dataLocation.forEach((item, i) => {
         this.dataShowHide.push({
@@ -170,21 +175,6 @@ export class LocationComponent extends BaseController {
   onPageChanges(event: { page: number; itemsPerPage: number }): void {
     this.page = event.page;
     this.limit = event.itemsPerPage;
-  }
-
-  /** Toggle show/hide row */
-  toggleShowHide(
-    level: 'country' | 'province',
-    countryIndex: number,
-    provinceIndex?: number
-  ) {
-    // if (level === 'country') {
-    //   this.showHideRow[countryIndex].status =
-    //     !this.showHideRow[countryIndex].status;
-    // } else if (level === 'province' && provinceIndex !== undefined) {
-    //   this.showHideRow[countryIndex].child.status[provinceIndex] =
-    //     !this.showHideRow[countryIndex].child.status[provinceIndex];
-    // }
   }
 
   /** Toggle open flyout */

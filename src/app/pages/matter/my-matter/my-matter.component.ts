@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ContentCardComponent } from './content-card/content-card.component';
 import { FilterAppliedComponent } from '../../../shared/filter-applied/filter-applied.component';
 import { FilterAppliedDTO } from '../../../shared/filter-applied/filter-apllied.dto';
-import { MyMatterService } from './services/my-matter.service';
 import {
   ButtonIconComponent,
   FormControlLayoutComponent,
@@ -72,10 +71,7 @@ export class MyMatterComponent {
 
   isOpenFlyoutFilter: boolean = false;
 
-  constructor(private readonly myMatterService: MyMatterService) {}
-
   ngOnInit(): void {
-    this.filterApplied = this.myMatterService.dataFilterMyMatter();
     // this.loading = true;
     // setTimeout(() => {
     //   this.loading = false;

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { PageEmptyComponent } from '../../../shared/page-empty/page-empty.component';
 import {
   BadgeComponent,
@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common';
 import { Step2Component } from './step-2/step-2.component';
 import { Step3Component } from './step-3/step-3.component';
 import { Step4Component } from './step-4/step-4.component';
-import { FlyoutContactPersonComponent } from './flyout-shared/flyout-contact-person/flyout-contact-person.component';
 
 @Component({
   selector: 'app-matter-form',
