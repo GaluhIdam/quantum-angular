@@ -1,13 +1,13 @@
 <div class="flex">
   <fui-badge
-    [color]="'text'"
+    [color]="'default'"
     [size]="'m'"
     [iconShow]="true"
     [icon]="'cross'"
     [iconPosition]="'end'"
     (onClickBadge)="clearSelection()"
+    [text]="timesheetSelected.length + ' item on page selected'"
   >
-    <p class="text">{{ timesheetSelected.length }} item on page selected</p>
   </fui-badge>
   <div class="vertical-line"></div>
   <div class="toggle" (click)="handleOpenModal()">
@@ -77,7 +77,7 @@
                 <p class="{{ +showDesc ? 'title mb-0' : 'title' }}">
                   {{ item.matter }} - {{ item.description }}
                 </p>
-                <p *ngIf="!showDesc">Binford Ltd.; Acme Co. and 3 other</p>
+                <p *ngIf="!showDesc">Binford Ltd. Acme Co. and 3 other</p>
               </div>
             </div>
           </div>
@@ -85,9 +85,10 @@
       </div>
     </div>
   </fui-modal-body>
-  <fui-modal-footer >
+  <fui-modal-footer>
     <div class="footer-modal">
-      <fui-button-icon [fullWidth]="'fit'"
+      <fui-button-icon
+        [fullWidth]="'fit'"
         [type]="'button'"
         [option]="'text'"
         [text]="'Cancel'"
@@ -95,7 +96,8 @@
         [style]="'secondary'"
         (onClick)="handleCloseModal()"
       />
-      <fui-button-icon [fullWidth]="'fit'"
+      <fui-button-icon
+        [fullWidth]="'fit'"
         (onClick)="moveTimesheet()"
         [type]="'button'"
         [option]="'text'"

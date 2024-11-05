@@ -1,4 +1,8 @@
-<fui-flyout [openFlyout]="isOpenFlyout" [size]="'m'" (overlayOut)="toggleCloseFlyout()">
+<fui-flyout
+  [openFlyout]="isOpenFlyout"
+  [size]="'m'"
+  (overlayOut)="toggleCloseFlyout()"
+>
   <fui-flyout-header>
     <div class="header-flyout">
       <h2>{{ title }}</h2>
@@ -11,7 +15,7 @@
       <fui-text [color]="'primary'" [weight]="'semibold'"
         >Feel free to modify!</fui-text
       >
-      <fui-text [color]="'text'" [size]="'s'"
+      <fui-text [size]="'m'"
         >Editing or reject & remove tagged timesheet will not affect the other
         member timesheet, they have their own version!</fui-text
       >
@@ -20,27 +24,24 @@
     <div class="flyout-body">
       <!-- TAG ENTRY -->
       <fui-badge
-        *ngIf="actionButton === 'updateTag'"
-        class="tagged"
-        [color]="'ghost'"
+        style="display: flex; margin-bottom: 15px"
+        *ngIf="
+          actionButton === 'updateTag' &&
+          timesheet &&
+          timesheet.tagEntityList.length > 0
+        "
+        [color]="'hollow'"
         [size]="'m'"
         [iconShow]="true"
         [icon]="'user'"
         [iconPosition]="'start'"
-      >
-        <fui-text
-          [color]="'text'"
-          [weight]="'semibold'"
-          [size]="'s'"
-          *ngIf="timesheet && timesheet.tagEntityList.length > 0"
-          >Tagged timesheet by {{ timesheet.tagEntityList[0].tagBy }}</fui-text
-        >
-      </fui-badge>
+        [text]="'Tagged timesheet by ' + timesheet.tagEntityList[0].tagBy"
+      />
       <!-- TAG ENTRY -->
 
       <!-- FEE EARNER FORM  -->
       <div class="form" *ngIf="showFeeEarnerForm">
-        <fui-text [size]="'s'">Fee Earner</fui-text>
+        <fui-text>Fee Earner</fui-text>
         <div class="form-control">
           <fui-combo-box
             [invalid]="feeEarnerForm.invalid && feeEarnerForm.dirty"
@@ -59,9 +60,7 @@
 
       <div class="form">
         <!-- ACTIVITY FORM  -->
-        <fui-text [size]="'s'" *ngIf="showActivityForm"
-          >What did you do?</fui-text
-        >
+        <fui-text *ngIf="showActivityForm">What did you do?</fui-text>
         <div class="form-control" *ngIf="showActivityForm">
           <fui-combo-box
             [invalid]="activityForm.invalid && activityForm.dirty"
@@ -161,7 +160,7 @@
       <!-- MATTER FORM  -->
       <div class="form" *ngIf="showMatterForm">
         <div class="flex-between">
-          <fui-text [size]="'s'">Which matter?</fui-text>
+          <fui-text>Which matter?</fui-text>
           <div class="checkbox" *ngIf="showCheckLockMatter">
             <input
               type="checkbox"
@@ -169,7 +168,7 @@
               [(ngModel)]="lockMatter"
               [checked]="lockMatter"
             />
-            <fui-text [size]="'s'">Lock</fui-text>
+            <fui-text>Lock</fui-text>
             <fui-tooltip
               [position]="'top'"
               [align]="'end'"
@@ -202,7 +201,7 @@
           <!-- DATE FORM -->
           <div class="sub-form" *ngIf="showDateForm">
             <div class="flex-between">
-              <fui-text [size]="'s'">Date</fui-text>
+              <fui-text>Date</fui-text>
               <div class="checkbox" *ngIf="showCheckLockDate">
                 <input
                   type="checkbox"
@@ -214,7 +213,7 @@
                   [(ngModel)]="lockDate"
                   [checked]="lockDate"
                 />
-                <fui-text [size]="'s'">Lock</fui-text>
+                <fui-text>Lock</fui-text>
                 <fui-tooltip
                   [position]="'top'"
                   [align]="'center'"
@@ -239,7 +238,7 @@
 
           <!-- DURATION FORM -->
           <div class="sub-form" *ngIf="showDurationForm">
-            <fui-text [size]="'s'">Duration</fui-text>
+            <fui-text>Duration</fui-text>
             <fui-time-selection
               class="form-control"
               [position]="'top'"
@@ -261,7 +260,6 @@
         [fullWidth]="'fit'"
         (onClick)="toggleCloseFlyout()"
         [type]="'button'"
-        [size]="'s'"
         [option]="'text'"
         [style]="'secondary'"
         [text]="'Cancel'"
@@ -270,7 +268,6 @@
         <fui-button-icon
           [fullWidth]="'fit'"
           [type]="'button'"
-          [size]="'s'"
           [option]="'text'"
           [style]="'secondary'"
           [text]="'Save & Close'"
@@ -278,7 +275,6 @@
         <fui-button-icon
           [fullWidth]="'fit'"
           [type]="'button'"
-          [size]="'s'"
           [option]="'text'"
           [style]="'filled'"
           [text]="'Save'"
@@ -310,7 +306,6 @@
         [fullWidth]="'fit'"
         (onClick)="toggleCloseFlyout()"
         [type]="'button'"
-        [size]="'s'"
         [option]="'text'"
         [style]="'secondary'"
         [text]="'Cancel'"
@@ -319,7 +314,6 @@
         <fui-button-icon
           [fullWidth]="'fit'"
           [type]="'button'"
-          [size]="'s'"
           [option]="'text'"
           [color]="'danger'"
           [style]="'secondary'"
@@ -328,7 +322,6 @@
         <fui-button-icon
           [fullWidth]="'fit'"
           [type]="'button'"
-          [size]="'s'"
           [option]="'text'"
           [style]="'filled'"
           [text]="'Accept'"

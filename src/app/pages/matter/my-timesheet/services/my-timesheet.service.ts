@@ -8,7 +8,6 @@ import {
   MyTimesheetPostDTO,
 } from '../dtos/my-timesheet.dto';
 import { BaseController } from '../../../../core/controller/basecontroller';
-import { environment } from '../../../../environment/env';
 import { ResponseDTO, Result } from '../../../../core/dtos/response.dto';
 import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 
@@ -16,7 +15,8 @@ import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-aplli
   providedIn: 'root',
 })
 export class MyTimesheetService extends BaseController {
-  private readonly _http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
+  httpUrl: string = 'https://quantum-api-dummy.vercel.app/api';
 
   /** Data filter for my timesheet */
   dataFilterMyTimesheet(): FilterAppliedDTO[] {
@@ -38,21 +38,19 @@ export class MyTimesheetService extends BaseController {
 
   /** Get matter */
   getMatters(search: string): Observable<MatterDTO[]> {
-    return this._http.get<MatterDTO[]>(`${environment.httpUrl}/matters`, {
+    return this.http.get<MatterDTO[]>(`${this.httpUrl}/matters`, {
       params: new HttpParams().set('matter', search),
     });
   }
 
   /** Get activities */
   getActivites(): Observable<ActivityDTO[]> {
-    return this._http.get<ActivityDTO[]>(`${environment.httpUrl}/activities`);
+    return this.http.get<ActivityDTO[]>(`${this.httpUrl}/activities`);
   }
 
   /** Get timesheets */
   getTimesheets(): Observable<MyTimesheetDTO[]> {
-    return this._http.get<MyTimesheetDTO[]>(
-      `${environment.httpUrl}/timesheets`
-    );
+    return this.http.get<MyTimesheetDTO[]>(`${this.httpUrl}/timesheets`);
   }
 
   /** Get my timesheet data with range */
@@ -60,14 +58,11 @@ export class MyTimesheetService extends BaseController {
     startDate: string,
     endDate: string
   ): Observable<MyTimesheetDTO[]> {
-    return this._http.get<MyTimesheetDTO[]>(
-      `${environment.httpUrl}/timesheets`,
-      {
-        params: new HttpParams()
-          .set('startDate', startDate)
-          .set('endDate', endDate),
-      }
-    );
+    return this.http.get<MyTimesheetDTO[]>(`${this.httpUrl}/timesheets`, {
+      params: new HttpParams()
+        .set('startDate', startDate)
+        .set('endDate', endDate),
+    });
   }
 
   /** Filter timesheet */
@@ -88,8 +83,8 @@ export class MyTimesheetService extends BaseController {
     if (matters) params = params.set('matters', matters);
     if (addDescription) params = params.set('description', addDescription);
 
-    return this._http.get<Result<MyTimesheetDTO[]>>(
-      `${environment.httpUrl}/filter-timesheets`,
+    return this.http.get<Result<MyTimesheetDTO[]>>(
+      `${this.httpUrl}/filter-timesheets`,
       { params: params }
     );
   }
@@ -98,8 +93,8 @@ export class MyTimesheetService extends BaseController {
   postTimesheet(
     request: MyTimesheetPostDTO
   ): Observable<ResponseDTO<MyTimesheetDTO>> {
-    return this._http.post<ResponseDTO<MyTimesheetDTO>>(
-      `${environment.httpUrl}/my-timesheet`,
+    return this.http.post<ResponseDTO<MyTimesheetDTO>>(
+      `${this.httpUrl}/my-timesheet`,
       request
     );
   }
@@ -109,16 +104,16 @@ export class MyTimesheetService extends BaseController {
     uuid: string,
     request: MyTimesheetPostDTO
   ): Observable<ResponseDTO<MyTimesheetDTO>> {
-    return this._http.put<ResponseDTO<MyTimesheetDTO>>(
-      `${environment.httpUrl}/my-timesheet/${uuid}`,
+    return this.http.put<ResponseDTO<MyTimesheetDTO>>(
+      `${this.httpUrl}/my-timesheet/${uuid}`,
       request
     );
   }
 
   /** Delete timesheet */
   deleteTimesheet(uuid: string): Observable<ResponseDTO<MyTimesheetDTO>> {
-    return this._http.delete<ResponseDTO<MyTimesheetDTO>>(
-      `${environment.httpUrl}/my-timesheet/${uuid}`
+    return this.http.delete<ResponseDTO<MyTimesheetDTO>>(
+      `${this.httpUrl}/my-timesheet/${uuid}`
     );
   }
 }

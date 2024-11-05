@@ -30,7 +30,6 @@ import { TableUtilitySimpleComponent } from './table-utility-simple/table-utilit
 import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-simple.component';
 import { map } from 'rxjs';
 import { FlyoutTimesheetComponent } from '../../../../shared/flyout-timesheet/flyout-timesheet.component';
-import { FilterBarComponent } from '../../../../shared/filter-bar/filter-bar.component';
 
 @Component({
   selector: 'app-history-activity',
