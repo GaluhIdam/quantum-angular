@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, HostListener, inject, Input } from '@angular/core';
 import {
   ButtonIconComponent,
   ComboBoxComponent,
@@ -10,14 +10,8 @@ import {
   TextComponent,
   ToastComponent,
 } from '@quantum/fui';
-import {
-  ActivityDTO,
-  MatterDTO,
-  MyTimesheetDTO,
-  TimesheetByDateDTO,
-} from '../dtos/my-timesheet.dto';
+
 import { BaseController } from '../../../../core/controller/basecontroller';
-import { MyTimesheetService } from '../services/my-timesheet.service';
 import { TableWithoutFilterComponent } from './table-without-filter/table-without-filter.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TableFilterComponent } from './table-filter/table-filter.component';
@@ -28,8 +22,14 @@ import { MoveMatterComponent } from '../../../../shared/move-matter/move-matter.
 import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
 import { TableUtilitySimpleComponent } from './table-utility-simple/table-utility-simple.component';
 import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-simple.component';
-import { map } from 'rxjs';
 import { FlyoutTimesheetComponent } from '../../../../shared/flyout-timesheet/flyout-timesheet.component';
+import {
+  ActivityTimesheetDTO,
+  MatterTimesheetDTO,
+  MyTimesheetDTO,
+  TimesheetByDateDTO,
+} from '../../../../interfaces/my-timesheet.dto';
+import { HistoryActivityService } from '../../../../services/matter/my-timesheet/history-activity/history-activity.service';
 
 @Component({
   selector: 'app-history-activity',
@@ -60,12 +60,15 @@ import { FlyoutTimesheetComponent } from '../../../../shared/flyout-timesheet/fl
   providers: [DatePipe],
 })
 export class HistoryActivityComponent extends BaseController {
+  /** Call service */
+  private readonly historyActivityService = inject(HistoryActivityService);
+
   /** Data will input from MyTimesheetComponent */
-  @Input({ required: true }) listMatters: MatterDTO[] = [];
-  @Input({ required: true }) listActivities: ActivityDTO[] = [];
+  @Input({ required: true }) listMatters: MatterTimesheetDTO[] = [];
+  @Input({ required: true }) listActivities: ActivityTimesheetDTO[] = [];
 
   /** Loading Status */
-  loading: boolean = false;
+  loading: boolean = true;
 
   /** Config Utility */
   hourMinute: string = '0h 0m';
@@ -114,10 +117,7 @@ export class HistoryActivityComponent extends BaseController {
   /** Variable for modal delete */
   isModalDelete: boolean = false;
 
-  constructor(
-    private readonly mytimesheetService: MyTimesheetService,
-    private datePipe: DatePipe
-  ) {
+  constructor(private datePipe: DatePipe) {
     super();
     /** Replace start date and end date */
     this.startDate = new Date(this.defaultDate().startDateForm);
@@ -127,10 +127,6 @@ export class HistoryActivityComponent extends BaseController {
   ngOnInit(): void {
     this.moveDate(0);
     this.getTimesheetByDate(this.startDateForm.value, this.endDateForm.value);
-    this.loading = true;
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
   }
 
   ngOnChanges(): void {
@@ -148,14 +144,20 @@ export class HistoryActivityComponent extends BaseController {
     const endDateObj = endDate.split('-').reverse().join('-');
     this.startDate = new Date(startDateObj);
     this.endDate = new Date(endDateObj);
-    this.mytimesheetService
-      .getTimesheetWithRange(startDateObj, endDateObj)
-      .pipe(
-        map((data) => {
-          this.groupingData(data, startDateObj, endDateObj);
-        })
-      )
-      .subscribe();
+    this.historyActivityService
+      .getTimesheetByDateRange(startDateObj, endDateObj)
+      .subscribe({
+        next: (value) => {
+          this.groupingData(value.result, startDateObj, endDateObj);
+        },
+        error: (error) => {
+          this.errorToast(error);
+          this.loading = false;
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
   /** Getting timesheet by filter */
@@ -196,8 +198,7 @@ export class HistoryActivityComponent extends BaseController {
         status: true,
       });
     }
-
-    this.mytimesheetService
+    this.historyActivityService
       .getFilterTimesheet(
         startDate === ''
           ? null
@@ -210,15 +211,21 @@ export class HistoryActivityComponent extends BaseController {
         page,
         limit
       )
-      .pipe(
-        map((data) => {
-          this.dataTimesheet = data.data;
-          this.page = data.page;
-          this.limit = data.limit;
-          this.totalItems = data.totalItems;
-        })
-      )
-      .subscribe();
+      .subscribe({
+        next: (value) => {
+          this.dataTimesheet = value.result.data;
+          this.page = value.result.page;
+          this.limit = value.result.limit;
+          this.totalItems = value.result.totalItems;
+        },
+        error: (error) => {
+          this.errorToast(error);
+          this.loading = false;
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
   /** Pagination changes */
@@ -270,7 +277,6 @@ export class HistoryActivityComponent extends BaseController {
       this.page,
       this.limit
     );
-    console.log(this.descriptionForm.value);
     this.openFlyoutFilter = false;
   }
 

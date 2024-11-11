@@ -21,7 +21,7 @@ import {
 import { EmptyDataComponent } from '../../../shared/empty-data/empty-data.component';
 import { FlyoutSimpleComponent } from '../../../shared/flyout-simple/flyout-simple.component';
 import { ModalDeleteComponent } from '../../../shared/modal-delete/modal-delete.component';
-import { CompanyEntityDTO } from './dto/company-entity.dto';
+import { CompanyEntityDTO } from '../../../interfaces/company-entity.dto';
 import { BaseController } from '../../../core/controller/basecontroller';
 
 @Component({

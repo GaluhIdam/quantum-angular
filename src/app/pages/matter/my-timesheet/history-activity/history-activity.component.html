@@ -1,7 +1,8 @@
 <shared-skeleton [active]="loading">
   <!-- SIMPLE UTILITY TABLE  -->
   <shared-table-utility-simple
-    [nextPrevBtn]="!checkFilter()"
+    [prevBtn]="true"
+    [nextBtn]="true"
     [startDate]="startDate"
     [endDate]="endDate"
     [duration]="hourMinute"
@@ -164,7 +165,8 @@
 
   <!-- FOOTER FLYOUT FILTER  -->
   <div class="footer-flyout" footer>
-    <fui-button-icon [fullWidth]="'fit'"
+    <fui-button-icon
+      [fullWidth]="'fit'"
       [type]="'button'"
       [option]="'text'"
       [style]="'secondary'"
@@ -174,7 +176,8 @@
       (onClick)="cancelFilter()"
     />
     <div class="group-flex">
-      <fui-button-icon [fullWidth]="'fit'"
+      <fui-button-icon
+        [fullWidth]="'fit'"
         [type]="'button'"
         [option]="'text'"
         [style]="'secondary'"
@@ -183,7 +186,8 @@
         [color]="'text'"
         (onClick)="resetFilter()"
       />
-      <fui-button-icon [fullWidth]="'fit'"
+      <fui-button-icon
+        [fullWidth]="'fit'"
         [type]="'button'"
         [option]="'iconText'"
         [style]="'filled'"

@@ -17,6 +17,7 @@
   gap: 10px;
   justify-content: start;
   align-items: center;
+  width: fit-content;
 }
 .grid-10-start {
   display: grid;
@@ -62,4 +63,24 @@
 }
 .block-data {
   display: grid;
+}
+
+.hide-text {
+  font-size: small;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.border-label-selected {
+  border-width: 1px;
+  border-color: var(--fuiTextSecondary, $fuiTextSecondary);
+  border-style: solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.hover {
+  &:hover {
+    cursor: pointer;
+  }
 }

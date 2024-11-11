@@ -27,7 +27,7 @@ import { EmptyDataComponent } from '../../../shared/empty-data/empty-data.compon
 import { FlyoutSimpleComponent } from '../../../shared/flyout-simple/flyout-simple.component';
 import { ModalDeleteComponent } from '../../../shared/modal-delete/modal-delete.component';
 import { BaseController } from '../../../core/controller/basecontroller';
-import { IndustrySectorDTO } from './dto/industry-type.dto';
+import { IndustrySectorDTO } from '../../../interfaces/industry-type.dto';
 
 @Component({
   selector: 'app-industry-type',

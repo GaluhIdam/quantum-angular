@@ -32,7 +32,7 @@ import {
   TooltipComponent,
   ValidatorFieldComponent,
 } from '@quantum/fui';
-import { MyTimesheetDTO } from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
+import { MyTimesheetDTO } from '../../interfaces/my-timesheet-temporary.dto';
 
 @Component({
   selector: 'shared-flyout-timesheet',

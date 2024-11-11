@@ -5,7 +5,6 @@ import * as echarts from 'echarts/core';
 import { ThemesChartCustom } from './theme-chart';
 import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.component';
 import { SampleDataMyTimeSheet } from '../services/sample-data';
-import { MyTimesheetService } from '../services/my-timesheet.service';
 import { Subscription } from 'rxjs';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
 
@@ -65,7 +64,7 @@ export class YtdProductivityComponent {
     series: [],
   };
 
-  constructor(private readonly myTimesheetService: MyTimesheetService) {
+  constructor() {
     echarts.registerTheme('light', ThemesChartCustom.light);
     echarts.registerTheme('dark', ThemesChartCustom.dark);
   }

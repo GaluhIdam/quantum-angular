@@ -39,7 +39,7 @@ import { UserKeycloak } from '../../core/guard/keycloak/keycloak.dto';
 import {
   ActivityDTO,
   MatterDTO,
-} from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
+} from '../../interfaces/my-timesheet-temporary.dto';
 import { MyTimesheetService } from '../../pages/matter/my-timesheet/services/my-timesheet.service';
 import { FlyoutTimesheetComponent } from '../flyout-timesheet/flyout-timesheet.component';
 import { MiniSidebarComponent } from '../mini-sidebar/mini-sidebar.component';

@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
 import { Color, Icon, Size, ToastProps, ToastService } from '@quantum/fui';
+import { Observable, of } from 'rxjs';
 import {
   MyTimesheetDTO,
   TimesheetByDateDTO,
-} from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
-import { Observable, of } from 'rxjs';
+} from '../../interfaces/my-timesheet.dto';
 
 export class BaseController {
   /** Injector */
@@ -48,7 +48,8 @@ export class BaseController {
     title: string,
     icon: Icon,
     message: string,
-    sizeIcon: Size
+    sizeIcon: Size,
+    duration?: number
   ): void {
     let toastObject: ToastProps = {
       position: 'bottom-right',
@@ -62,7 +63,7 @@ export class BaseController {
       body: {
         message,
       },
-      duration: 2000,
+      duration: duration ?? 2000,
     };
     if (type) {
       toastObject.type = type;
@@ -249,5 +250,29 @@ export class BaseController {
     } else {
       return of({});
     }
+  }
+
+  /** Error toast */
+  errorToast(error: any): void {
+    this.toggleToast(
+      'danger',
+      'Error!',
+      'alert',
+      `status: ${error.status} | ${error.statusText} - ${error.message}`,
+      'sizem',
+      5000
+    );
+  }
+
+  /** Format date
+   * @example
+   * Tue Nov 05 2024 07:00:00 GMT+0700 (Western Indonesia Time) to be 05-11-2024
+   */
+  formatDateToDDMMYYYY(date: Date): string {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
   }
 }

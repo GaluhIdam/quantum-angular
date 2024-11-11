@@ -22,7 +22,7 @@ import { FlyoutSimpleComponent } from '../../../shared/flyout-simple/flyout-simp
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ModalDeleteComponent } from '../../../shared/modal-delete/modal-delete.component';
 import { BaseController } from '../../../core/controller/basecontroller';
-import { PositionDTO } from './dto/position.dto';
+import { PositionDTO } from '../../../interfaces/position.dto';
 
 @Component({
   selector: 'app-position',
@@ -61,7 +61,7 @@ export class PositionComponent extends BaseController {
   /** Link */
   link: BreadcrumbData[] = [
     { label: 'Administration', link: '/master-data' },
-    { label: 'Offive Location', link: '/master-data/office-location' },
+    { label: 'Position', link: '/master-data/position' },
   ];
 
   /** Flyout utility */

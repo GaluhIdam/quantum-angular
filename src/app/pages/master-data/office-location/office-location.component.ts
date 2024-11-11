@@ -22,8 +22,8 @@ import { EmptyDataComponent } from '../../../shared/empty-data/empty-data.compon
 import { FlyoutSimpleComponent } from '../../../shared/flyout-simple/flyout-simple.component';
 import { ModalDeleteComponent } from '../../../shared/modal-delete/modal-delete.component';
 import { BaseController } from '../../../core/controller/basecontroller';
-import { OfficeLocationDTO } from './dto/office-location.dto';
-import { LocationDTO } from '../location/dto/location.dto';
+import { OfficeLocationDTO } from '../../../interfaces/office-location.dto';
+import { LocationDTO } from '../../../interfaces/location.dto';
 
 @Component({
   selector: 'app-office-location',
@@ -98,45 +98,43 @@ export class OfficeLocationComponent extends BaseController {
 
   location?: string;
   dataLocation: LocationDTO[] = [
-    // {
-    //   location: 'Singapore',
-    //   type: 'Country',
-    //   child: [],
-    // },
-    // {
-    //   location: 'Indonesia',
-    //   type: 'Country',
-    //   child: [
-    //     {
-    //       location: 'Aceh',
-    //       type: 'Province',
-    //       child: [
-    //         {
-    //           location: 'Badung',
-    //           type: 'City',
-    //           child: [],
-    //         },
-    //         {
-    //           location: 'Bangli',
-    //           type: 'City',
-    //           child: [],
-    //         },
-    //         {
-    //           location: 'Buleleng',
-    //           type: 'City',
-    //           child: [],
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
+    {
+      location: 'Singapore',
+      type: 'Country',
+      child: [],
+    },
+    {
+      location: 'Indonesia',
+      type: 'Country',
+      child: [
+        {
+          location: 'Aceh',
+          type: 'Province',
+          child: [
+            {
+              location: 'Badung',
+              type: 'City',
+              child: [],
+            },
+            {
+              location: 'Bangli',
+              type: 'City',
+              child: [],
+            },
+            {
+              location: 'Buleleng',
+              type: 'City',
+              child: [],
+            },
+          ],
+        },
+      ],
+    },
   ];
   dataLocationSub: LocationDTO[] = [];
   level: number = 1;
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.dataLocationSub = this.dataLocation;
   }
 

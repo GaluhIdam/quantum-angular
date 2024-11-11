@@ -29,7 +29,8 @@ export class TableUtilitySimpleComponent {
   @Input() startDate: Date = new Date();
   @Input() endDate: Date = new Date();
   @Input() duration: string = '0h 0m';
-  @Input() nextPrevBtn: boolean = true;
+  @Input() nextBtn: boolean = true;
+  @Input() prevBtn: boolean = true;
 
   /** Tell consumer about Identity Button for next action */
   @Output() btnAction: EventEmitter<string> = new EventEmitter<string>();

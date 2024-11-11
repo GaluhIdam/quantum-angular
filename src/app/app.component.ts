@@ -6,6 +6,7 @@ import { OidcAuthenticatorService } from '@quantum/fui';
 import { keycloak } from './environment/env';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoggingInterceptor } from './core/interceptor/logging-interceptor';
+import { ErrorInterceptor } from './core/interceptor/error-interceptor';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,11 @@ import { LoggingInterceptor } from './core/interceptor/logging-interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoggingInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true,
     },
   ],

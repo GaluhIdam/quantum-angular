@@ -8,7 +8,7 @@ import {
 import { ProductivityComponent } from './productivity/productivity.component';
 import { YtdProductivityComponent } from './ytd-productivity/ytd-productivity.component';
 import { HistoryActivityComponent } from './history-activity/history-activity.component';
-import { ActivityDTO, MatterDTO } from './dtos/my-timesheet.dto';
+import { ActivityDTO, MatterDTO } from '../../../interfaces/my-timesheet-temporary.dto';
 import { MyTimesheetService } from './services/my-timesheet.service';
 import { map } from 'rxjs';
 import { PageEmptyComponent } from '../../../shared/page-empty/page-empty.component';

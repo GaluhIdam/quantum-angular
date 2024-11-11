@@ -8,7 +8,7 @@
     >
   </div>
 </div>
-<div class="body" *ngIf="optionBar.series.length > 0">
+<div class="body" *ngIf="dataBillable.length > 0 || dataNonBillable.length > 0">
   <div class="chart">
     <shared-skeleton [active]="loading">
       <fui-echarts
@@ -19,12 +19,15 @@
     </shared-skeleton>
   </div>
 </div>
-<div class="empty" *ngIf="optionBar.series.length === 0">
+<div
+  class="empty"
+  *ngIf="dataBillable.length === 0 && dataNonBillable.length === 0"
+>
   <shared-skeleton [active]="loading">
     <shared-empty-data
       [title]="'N/A'"
       [subTitle]="'You don’t have any target data for productivity'"
-      [dataLength]="optionBar.series.length"
+      [dataLength]="0"
     />
   </shared-skeleton>
 </div>

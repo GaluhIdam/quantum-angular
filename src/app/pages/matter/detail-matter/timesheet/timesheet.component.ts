@@ -4,8 +4,7 @@ import { UtilityDetailMatterComponent } from './utility-detail-matter/utility-de
 import { ButtonGroupComponent } from '../../../../shared/button-group/button-group.component';
 import { TableAutoGenerateComponent } from '../../../../shared/table-auto-generate/table-auto-generate.component';
 import { ActionBtn } from '../../../../shared/table-auto-generate/table-type';
-import { TimesheetDetailDTO } from './dto/timesheet.dto';
-import { MoveMatterComponent } from '../../../../shared/move-matter/move-matter.component';
+import { TimesheetDetailDTO } from '../../../../interfaces/timesheet-detail.dto';
 import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-simple.component';
 import {
   ButtonIconComponent,
@@ -21,6 +20,7 @@ import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter
 import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
 import { FlyoutTimesheetComponent } from '../../../../shared/flyout-timesheet/flyout-timesheet.component';
+import { MoveMatterComponent } from '../../../../shared/move-matter/move-matter.component';
 
 @Component({
   selector: 'app-timesheet',
