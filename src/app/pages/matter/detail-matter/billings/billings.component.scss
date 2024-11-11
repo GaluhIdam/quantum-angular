@@ -30,6 +30,9 @@
 .mt-15 {
   margin-top: 15px;
 }
+.mt-25 {
+  margin-top: 25px;
+}
 .mb-5 {
   margin-bottom: 5px;
 }
@@ -121,4 +124,15 @@
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: end;
+}
+
+.overflow-y-auto-h-500 {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 500px;
 }
