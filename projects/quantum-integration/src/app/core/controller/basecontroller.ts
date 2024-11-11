@@ -3,7 +3,7 @@ import { Color, Icon, Size, ToastProps, ToastService } from '@quantum/fui';
 import {
   MyTimesheetDTO,
   TimesheetByDateDTO,
-} from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
+} from '../../interfaces/my-timesheet-temporary.dto';
 import { FormControl } from '@angular/forms';
 import { Observable, of, throwError } from 'rxjs';
 

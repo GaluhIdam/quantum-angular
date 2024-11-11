@@ -23,7 +23,7 @@ import {
 import {
   MatterDTO,
   MyTimesheetDTO,
-} from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
+} from '../../interfaces/my-timesheet-temporary.dto';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MyTimesheetService } from '../../pages/matter/my-timesheet/services/my-timesheet.service';

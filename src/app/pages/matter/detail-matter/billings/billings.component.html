@@ -177,7 +177,8 @@
     [size]="'l'"
     (overlayOut)="toggleOpenFlyout(false)"
   >
-    <fui-flyout-header class="p-15">
+    <!-- HEADER  -->
+    <fui-flyout-header class="px-15-t-15" [padding]="'none'">
       <div class="flex-start">
         <fui-text [weight]="'bold'" [size]="'xl'">
           {{ titleFlyout }}
@@ -193,366 +194,545 @@
         <fui-text [color]="'text'"> Secondment - </fui-text>
         <fui-text [color]="'text'"> Periode {{ periode }} </fui-text>
       </div>
+
+      <!-- TAB SECTION  -->
+      <div class="flex-start mt-25">
+        <button
+          type="button"
+          class="tab-btn"
+          (click)="toggleTab('details')"
+          [ngClass]="{ active: tabStatus === 'details' }"
+        >
+          <fui-text
+            [color]="tabStatus === 'details' ? 'primary' : 'ink'"
+            [weight]="'semibold'"
+          >
+            Details</fui-text
+          >
+        </button>
+        <button
+          type="button"
+          class="tab-btn"
+          (click)="toggleTab('attachments')"
+          [ngClass]="{ active: tabStatus === 'attachments' }"
+        >
+          <fui-text
+            [color]="tabStatus === 'attachments' ? 'primary' : 'ink'"
+            [weight]="'semibold'"
+          >
+            Attachments ({{ totalAttachments }})</fui-text
+          >
+        </button>
+        <button
+          type="button"
+          class="tab-btn"
+          (click)="toggleTab('comments')"
+          [ngClass]="{ active: tabStatus === 'comments' }"
+        >
+          <fui-text
+            [color]="tabStatus === 'comments' ? 'primary' : 'ink'"
+            [weight]="'semibold'"
+          >
+            Comments ({{ totalComments }})</fui-text
+          >
+        </button>
+      </div>
+      <!-- TAB SECTION  -->
     </fui-flyout-header>
+    <!-- HEADER  -->
 
     <fui-flyout-body class="px-15">
-      <fui-tabs [dataTabs]="dataTabs">
-        <!-- DETAILS  -->
-        <fui-tabs-content [id]="'Details'">
-          <div class="my-25">
-            <fui-text [color]="'text'">Payer</fui-text>
+      <!-- DETAILS  -->
+      <div *ngIf="tabStatus === 'details'">
+        <div class="my-25">
+          <fui-text [color]="'text'">Payer</fui-text>
+          <div class="mt-5">
+            <fui-text>Financial Technology</fui-text>
+          </div>
+        </div>
+
+        <div class="my-25">
+          <fui-text [color]="'text'">Billing Address</fui-text>
+          <div class="mt-5">
+            <fui-text
+              >Gedung Aneka Tambang Jl. Letjen TB Simatupang No. 1 Lingkar
+              Selatan, Tanjung Barat Jakarta Selatan, 12530, Indonesia Phone:
+              0217891234, Fax: xx, Email: {{ "listi@antam.com" }} /
+              {{ "hari.purnomo@antam.com" }} (Hari Purnomo) /
+              {{ "alkautsar.sailanov@antam.com" }} (Alkautsar Prawira Sailanov)
+            </fui-text>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="my-5">
+            <fui-text [color]="'text'">Issuance Date</fui-text>
             <div class="mt-5">
-              <fui-text>Financial Technology</fui-text>
+              <fui-text>24 Oct 2024</fui-text>
             </div>
           </div>
 
-          <div class="my-25">
-            <fui-text [color]="'text'">Billing Address</fui-text>
+          <div class="my-5">
+            <fui-text [color]="'text'">Due Date</fui-text>
             <div class="mt-5">
-              <fui-text
-                >Gedung Aneka Tambang Jl. Letjen TB Simatupang No. 1 Lingkar
-                Selatan, Tanjung Barat Jakarta Selatan, 12530, Indonesia Phone:
-                0217891234, Fax: xx, Email: {{ "listi@antam.com" }} /
-                {{ "hari.purnomo@antam.com" }} (Hari Purnomo) /
-                {{ "alkautsar.sailanov@antam.com" }} (Alkautsar Prawira
-                Sailanov)
-              </fui-text>
+              <fui-text [color]="'danger'">1 Nov 2024</fui-text>
             </div>
           </div>
+        </div>
 
-          <div class="grid-2">
-            <div class="my-5">
-              <fui-text [color]="'text'">Issuance Date</fui-text>
-              <div class="mt-5">
-                <fui-text>24 Oct 2024</fui-text>
-              </div>
-            </div>
-
-            <div class="my-5">
-              <fui-text [color]="'text'">Due Date</fui-text>
-              <div class="mt-5">
-                <fui-text [color]="'danger'">1 Nov 2024</fui-text>
-              </div>
-            </div>
-          </div>
-
-          <!-- TABLE  -->
-          <div class="my-25">
-            <!-- HEAD  -->
-            <fui-table-tree
-              [limit]="5"
-              [totalItems]="10"
-              [showInfo]="false"
-              [pagination]="false"
+        <!-- TABLE  -->
+        <div class="my-25">
+          <!-- HEAD  -->
+          <fui-table-tree
+            [limit]="5"
+            [totalItems]="10"
+            [showInfo]="false"
+            [pagination]="false"
+          >
+            <fui-table-head-tree
+              *ngFor="let item of titleTableFlyout; let i = index"
+              [fieldName]="item"
+              [sortFeature]="false"
             >
-              <fui-table-head-tree
-                *ngFor="let item of titleTableFlyout; let i = index"
-                [fieldName]="item"
-                [sortFeature]="false"
-              >
-                <div class="text-right" *ngIf="item !== 'Items'">
-                  <fui-text [weight]="'semibold'"> {{ item }} </fui-text>
-                </div>
-                <fui-text [weight]="'semibold'" *ngIf="item === 'Items'">
-                  {{ item }}
-                </fui-text>
-              </fui-table-head-tree>
-              <!-- HEAD  -->
+              <div class="text-right" *ngIf="item !== 'Items'">
+                <fui-text [weight]="'semibold'"> {{ item }} </fui-text>
+              </div>
+              <fui-text [weight]="'semibold'" *ngIf="item === 'Items'">
+                {{ item }}
+              </fui-text>
+            </fui-table-head-tree>
+            <!-- HEAD  -->
 
-              <!-- CONTENT  -->
-              <fui-table-row-tree *ngFor="let item of dataTableFlyout">
-                <fui-table-data-tree [showDropIcon]="false">
-                  <div>
-                    <fui-text [weight]="'semibold'" [textWrap]="'nowrap'">{{
-                      item.item.billing
+            <!-- CONTENT  -->
+            <fui-table-row-tree *ngFor="let item of dataTableFlyout">
+              <fui-table-data-tree [showDropIcon]="false">
+                <div>
+                  <fui-text [weight]="'semibold'" [textWrap]="'nowrap'">{{
+                    item.item.billing
+                  }}</fui-text>
+                  <div class="mt-5">
+                    <fui-text [color]="'text'">{{
+                      item.item.service
                     }}</fui-text>
-                    <div class="mt-5">
-                      <fui-text [color]="'text'">{{
-                        item.item.service
-                      }}</fui-text>
-                    </div>
                   </div>
-                </fui-table-data-tree>
-                <fui-table-data-tree [showDropIcon]="false">
-                  <div class="text-right">
-                    <fui-text>{{ item.baseAmount }}</fui-text>
-                  </div>
-                </fui-table-data-tree>
-                <fui-table-data-tree [showDropIcon]="false">
-                  <div class="text-right">
-                    <fui-text>{{ item.discount }}</fui-text>
-                  </div>
-                </fui-table-data-tree>
-                <fui-table-data-tree [showDropIcon]="false">
-                  <div class="text-right">
-                    <fui-text>{{ item.ammountAfterDisc }}</fui-text>
-                  </div>
-                </fui-table-data-tree>
-              </fui-table-row-tree>
-              <!-- CONTENT  -->
-            </fui-table-tree>
-          </div>
-          <!-- TABLE  -->
-
-          <!-- TOTAL  -->
-          <div class="blue-card">
-            <div class="flex-between mb-5">
-              <fui-text>Subtotal</fui-text>
-              <div class="flex-start">
-                <fui-text>3,000.00</fui-text>
-                <fui-button-icon
-                  [type]="'button'"
-                  [option]="'icon'"
-                  [size]="'s'"
-                  [icon]="showSubtotal ? 'arrowDown' : 'arrowRight'"
-                  [fullWidth]="'fit'"
-                  [style]="'empty'"
-                  [color]="'text'"
-                  (onClick)="toggleShowOtherInform('subtotal')"
-                />
-              </div>
-            </div>
-            <div *ngIf="showSubtotal">p</div>
-
-            <div class="flex-between mb-5">
-              <fui-text>Discount</fui-text>
-              <div class="flex-start">
-                <fui-text>(300.00)</fui-text>
-                <fui-button-icon
-                  [type]="'button'"
-                  [option]="'icon'"
-                  [size]="'s'"
-                  [icon]="showSubDisc ? 'arrowDown' : 'arrowRight'"
-                  [fullWidth]="'fit'"
-                  [style]="'empty'"
-                  [color]="'text'"
-                  (onClick)="toggleShowOtherInform('disc')"
-                />
-              </div>
-            </div>
-            <div *ngIf="showSubDisc">p</div>
-
-            <div class="flex-between mb-5">
-              <fui-text>Subtotal after discount</fui-text>
-              <div class="flex-start">
-                <fui-text>2,700.00</fui-text>
-                <div style="width: 33px"></div>
-              </div>
-            </div>
-
-            <div class="flex-between mb-5">
-              <fui-text>Tax amount</fui-text>
-              <div class="flex-start">
-                <fui-text>285.00</fui-text>
-                <div style="width: 33px"></div>
-              </div>
-            </div>
-
-            <hr />
-
-            <div class="flex-between mb-5">
-              <fui-text>Total amount</fui-text>
-              <div class="flex-start">
-                <fui-text>2,700.00</fui-text>
-                <div style="width: 33px"></div>
-              </div>
-            </div>
-
-            <div class="flex-between mb-5">
-              <fui-text>PPh23 (2%)</fui-text>
-              <div class="flex-start">
-                <fui-text>285.00</fui-text>
-                <div style="width: 33px"></div>
-              </div>
-            </div>
-
-            <div class="flex-between mb-5">
-              <fui-text>Received amount</fui-text>
-              <div class="flex-start">
-                <fui-text>2,700.00</fui-text>
-                <div style="width: 33px"></div>
-              </div>
-            </div>
-
-            <div class="flex-between mb-5">
-              <fui-text>Closing Adjustment</fui-text>
-              <div class="flex-start">
-                <fui-text>285.00</fui-text>
-                <div style="width: 33px"></div>
-              </div>
-            </div>
-
-            <hr />
-
-            <div class="flex-between mb-5">
-              <fui-text>Due Amount</fui-text>
-              <div class="flex-start">
-                <fui-text>USD 2,601.00</fui-text>
-                <div style="width: 33px"></div>
-              </div>
-            </div>
-          </div>
-          <!-- TOTAL  -->
-
-          <div class="my-25">
-            <hr />
-          </div>
-
-          <!-- OTHER INFORMATION  -->
-          <div class="flex-between mt-25">
-            <fui-text>Other Information</fui-text>
-            <fui-button-icon
-              [type]="'button'"
-              [option]="'icon'"
-              [size]="'s'"
-              [icon]="showOtherInformation ? 'arrowDown' : 'arrowRight'"
-              [fullWidth]="'fit'"
-              [style]="'empty'"
-              [color]="'text'"
-              (onClick)="toggleShowOtherInform('other')"
-            />
-          </div>
-          <div class="my-15" *ngIf="showOtherInformation">
-            <div class="grid-2">
-              <div class="my-5">
-                <fui-text [color]="'text'">Associated Matter (2)</fui-text>
-                <div class="mt-5">
-                  <fui-text>9630, 5430</fui-text>
                 </div>
-              </div>
-
-              <div class="my-5">
-                <fui-text [color]="'text'">Matter PIC (2)</fui-text>
-                <div class="mt-5">
-                  <fui-text>Jacob Jones (JJ), John Doe (JJ)</fui-text>
+              </fui-table-data-tree>
+              <fui-table-data-tree [showDropIcon]="false">
+                <div class="text-right">
+                  <fui-text>{{ item.baseAmount }}</fui-text>
                 </div>
-              </div>
-            </div>
-
-            <div class="grid-2 mt-15">
-              <div class="my-5">
-                <fui-text [color]="'text'">FIC</fui-text>
-                <div class="mt-5">
-                  <fui-text>Jacob Jones (JJ)</fui-text>
+              </fui-table-data-tree>
+              <fui-table-data-tree [showDropIcon]="false">
+                <div class="text-right">
+                  <fui-text>{{ item.discount }}</fui-text>
                 </div>
-              </div>
-
-              <div class="my-5">
-                <fui-text [color]="'text'">Signature</fui-text>
-                <div class="mt-5">
-                  <fui-text>Jacob Jones (JJ)</fui-text>
+              </fui-table-data-tree>
+              <fui-table-data-tree [showDropIcon]="false">
+                <div class="text-right">
+                  <fui-text>{{ item.ammountAfterDisc }}</fui-text>
                 </div>
-              </div>
-            </div>
+              </fui-table-data-tree>
+            </fui-table-row-tree>
+            <!-- CONTENT  -->
+          </fui-table-tree>
+        </div>
+        <!-- TABLE  -->
 
-            <div class="mt-15">
-              <fui-text [color]="'text'">Settlement Account</fui-text>
-              <div class="mt-5">
-                <fui-text
-                  >Assegaf Hamzah & Partners, 5225489898 BANK CENTRAL ASIA /
-                  Talavera, Jakarta</fui-text
-                >
-              </div>
-            </div>
-
-            <div class="grid-2 mt-15">
-              <div class="my-5">
-                <fui-text [color]="'text'">BI Rate</fui-text>
-                <div class="mt-5">
-                  <fui-text>16,294.00</fui-text>
-                </div>
-              </div>
-
-              <div class="my-5">
-                <fui-text [color]="'text'">KMK Rate</fui-text>
-                <div class="mt-5">
-                  <fui-text>16,294.00</fui-text>
-                </div>
-              </div>
-            </div>
-
-            <div class="grid-2 mt-15">
-              <div class="my-5">
-                <fui-text [color]="'text'">Tax Applied</fui-text>
-                <div class="mt-5">
-                  <fui-text>WAPU 11%</fui-text>
-                </div>
-              </div>
-
-              <div class="my-5">
-                <fui-text [color]="'text'">Deducted by PPH23</fui-text>
-                <div class="mt-5">
-                  <fui-text>Yes</fui-text>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- OTHER INFORMATION  -->
-        </fui-tabs-content>
-        <!-- DETAILS  -->
-
-        <!-- ATTACHMENTS  -->
-        <fui-tabs-content [id]="'Attachments (1)'">
-          <div class="my-15 px-10">
-            <div class="flex-between">
-              <div class="flex-start">
-                <fui-icons
-                  [icon]="'document'"
-                  [color]="'primary'"
-                  [size]="'sizes'"
-                />
-                <fui-text [size]="'m'" [color]="'primary'">
-                  {{
-                    "0755 - 2024 - YA - Sarana Santosa Sejati PT - 10685.docx"
-                  }}
-                </fui-text>
-              </div>
-              <fui-badge
-                [weight]="'semibold'"
+        <!-- TOTAL  -->
+        <div class="blue-card" *ngIf="!showIdr">
+          <div class="flex-between">
+            <fui-text>Subtotal</fui-text>
+            <div class="flex-start">
+              <fui-text>3,000.00</fui-text>
+              <fui-button-icon
+                [type]="'button'"
+                [option]="'icon'"
                 [size]="'s'"
-                [color]="'hollow'"
-                [text]="'Proforma'"
+                [icon]="showSubtotal ? 'arrowDown' : 'arrowUp'"
+                [fullWidth]="'fit'"
+                [style]="'empty'"
+                [color]="'primary'"
+                (onClick)="toggleShowOtherInform('subtotal')"
               />
             </div>
-            <div class="mt-5">
-              <fui-text [size]="'s'" [color]="'text'" [fwStyle]="'italic'">
-                {{ "Send Date: 24 Jan 2024" }}
-              </fui-text>
+          </div>
+          <div *ngIf="showSubtotal" class="mb-5">
+            <div style="margin-left: 10px" class="flex-between mb-5">
+              <fui-text [color]="'text'">9630 - Legal Fee</fui-text>
+              <div class="flex-start">
+                <fui-text [color]="'text'">1,400.00</fui-text>
+                <div style="width: 33px"></div>
+              </div>
+            </div>
+            <div style="margin-left: 10px" class="flex-between mb-5">
+              <fui-text [color]="'text'">9630 - OPE</fui-text>
+              <div class="flex-start">
+                <fui-text [color]="'text'">500.00</fui-text>
+                <div style="width: 33px"></div>
+              </div>
+            </div>
+            <div style="margin-left: 10px" class="flex-between mb-5">
+              <fui-text [color]="'text'">5430 - Legal Fee</fui-text>
+              <div class="flex-start">
+                <fui-text [color]="'text'">1,100.00</fui-text>
+                <div style="width: 33px"></div>
+              </div>
             </div>
           </div>
-        </fui-tabs-content>
-        <!-- ATTACHMENTS  -->
 
-        <!-- COMMENTS  -->
-        <fui-tabs-content [id]="'Comments (2)'">
-          <div class="my-15">
-            <fui-timeline>
-              <fui-timeline-section>
-                <fui-icons [icon]="'userAvatar'"></fui-icons>
-                <div class="flex-start-5">
-                  <fui-text>Jacob Jones (JJ)</fui-text>
-                  <fui-text [color]="'text'">at 24 Oct 2024 13:41:22</fui-text>
-                </div>
-                <div class="mt-10">
-                  <fui-text [weight]="'light'">More foam next time</fui-text>
-                </div>
-              </fui-timeline-section>
-              <fui-timeline-section>
-                <fui-icons [icon]="'userAvatar'"></fui-icons>
-                <div class="flex-start-5">
-                  <fui-text>Jacob Jones (JJ)</fui-text>
-                  <fui-text [color]="'text'">at 24 Oct 2024 13:41:22</fui-text>
-                </div>
-                <div class="mt-10">
-                  <fui-text [weight]="'light'">More foam next time</fui-text>
-                </div>
-              </fui-timeline-section>
-            </fui-timeline>
+          <div class="flex-between">
+            <fui-text>Discount</fui-text>
+            <div class="flex-start">
+              <fui-text>(300.00)</fui-text>
+              <fui-button-icon
+                [type]="'button'"
+                [option]="'icon'"
+                [size]="'s'"
+                [icon]="showSubDisc ? 'arrowDown' : 'arrowUp'"
+                [fullWidth]="'fit'"
+                [style]="'empty'"
+                [color]="'primary'"
+                (onClick)="toggleShowOtherInform('disc')"
+              />
+            </div>
           </div>
-        </fui-tabs-content>
-        <!-- COMMENTS  -->
-      </fui-tabs>
+
+          <div *ngIf="showSubDisc" class="mb-5">
+            <div style="margin-left: 10px" class="flex-between mb-5">
+              <fui-text [color]="'text'">Discount, 9630</fui-text>
+              <div class="flex-start">
+                <fui-text [color]="'text'">(100.00)</fui-text>
+                <div style="width: 33px"></div>
+              </div>
+            </div>
+            <div style="margin-left: 10px" class="flex-between mb-5">
+              <fui-text [color]="'text'">Discount, 5430</fui-text>
+              <div class="flex-start">
+                <fui-text [color]="'text'">(200.00)</fui-text>
+                <div style="width: 33px"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-between mb-5">
+            <fui-text>Subtotal after discount</fui-text>
+            <div class="flex-start">
+              <fui-text>2,700.00</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+
+          <div class="flex-between mb-5">
+            <fui-text>Tax amount</fui-text>
+            <div class="flex-start">
+              <fui-text>285.00</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="flex-between mb-5">
+            <fui-text>Total amount</fui-text>
+            <div class="flex-start">
+              <fui-text>2,700.00</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+
+          <div class="flex-between mb-5">
+            <fui-text>PPh23 (2%)</fui-text>
+            <div class="flex-start">
+              <fui-text>(285.00)</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+
+          <div class="flex-between mb-5">
+            <fui-text>Received amount</fui-text>
+            <div class="flex-start">
+              <fui-text>(534.00)</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+
+          <div class="flex-between mb-5">
+            <fui-text>Closing Adjustment</fui-text>
+            <div class="flex-start">
+              <fui-text>(534.00)</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="flex-between mb-5">
+            <fui-text>Due Amount</fui-text>
+            <div class="flex-start">
+              <fui-text>USD 2,601.00</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+
+          <div class="hover-underline mt-10" (click)="toggleShowIDR()">
+            <fui-text [color]="'primary'">See in IDR</fui-text>
+          </div>
+        </div>
+
+        <div class="blue-card" *ngIf="showIdr">
+          <div class="flex-between">
+            <fui-text>Subtotal</fui-text>
+            <div class="flex-start">
+              <fui-text>3,000,000.00</fui-text>
+              <fui-button-icon
+                [type]="'button'"
+                [option]="'icon'"
+                [size]="'s'"
+                [icon]="showSubtotal ? 'arrowDown' : 'arrowUp'"
+                [fullWidth]="'fit'"
+                [style]="'empty'"
+                [color]="'text'"
+                (onClick)="toggleShowOtherInform('subtotal')"
+              />
+            </div>
+          </div>
+          <div *ngIf="showSubtotal" class="mb-5">
+            <div style="margin-left: 10px" class="flex-between mb-5">
+              <fui-text [color]="'text'">9630 - Legal Fee</fui-text>
+              <div class="flex-start">
+                <fui-text [color]="'text'">1,400.00</fui-text>
+                <div style="width: 33px"></div>
+              </div>
+            </div>
+            <div style="margin-left: 10px" class="flex-between mb-5">
+              <fui-text [color]="'text'">9630 - OPE</fui-text>
+              <div class="flex-start">
+                <fui-text [color]="'text'">500.00</fui-text>
+                <div style="width: 33px"></div>
+              </div>
+            </div>
+            <div style="margin-left: 10px" class="flex-between mb-5">
+              <fui-text [color]="'text'">5430 - Legal Fee</fui-text>
+              <div class="flex-start">
+                <fui-text [color]="'text'">1,100.00</fui-text>
+                <div style="width: 33px"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-between mb-5">
+            <fui-text>Tax amount</fui-text>
+            <div class="flex-start">
+              <fui-text>285,000.00</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="flex-between mb-5">
+            <fui-text>Total amount</fui-text>
+            <div class="flex-start">
+              <fui-text>IDR 3,135,000.00</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+
+          <div class="flex-between mb-5">
+            <fui-text>PPh23 (2%)</fui-text>
+            <div class="flex-start">
+              <fui-text>(285,000.00)</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+
+          <div class="flex-between mb-5">
+            <fui-text>Received amount</fui-text>
+            <div class="flex-start">
+              <fui-text>(534,000.00)</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+
+          <div class="flex-between mb-5">
+            <fui-text>Closing Adjustment</fui-text>
+            <div class="flex-start">
+              <fui-text>(534,000.00)</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="flex-between mb-5">
+            <fui-text>Due Amount</fui-text>
+            <div class="flex-start">
+              <fui-text>IDR 2,601,000.00</fui-text>
+              <div style="width: 33px"></div>
+            </div>
+          </div>
+          <div class="flex-between mb-5">
+            <fui-text [color]="'text'" [fwStyle]="'italic'"
+              >*Per applied KMK Rate</fui-text
+            >
+          </div>
+
+          <div class="hover-underline mt-10" (click)="toggleShowIDR()">
+            <fui-text [color]="'primary'">See in IDR</fui-text>
+          </div>
+        </div>
+        <!-- TOTAL  -->
+
+        <div class="my-25">
+          <hr />
+        </div>
+
+        <!-- OTHER INFORMATION  -->
+        <div class="flex-between mt-25">
+          <fui-text>Other Information</fui-text>
+          <fui-button-icon
+            [type]="'button'"
+            [option]="'icon'"
+            [size]="'s'"
+            [icon]="showOtherInformation ? 'arrowDown' : 'arrowUp'"
+            [fullWidth]="'fit'"
+            [style]="'empty'"
+            [color]="'text'"
+            (onClick)="toggleShowOtherInform('other')"
+          />
+        </div>
+        <div class="my-15" *ngIf="showOtherInformation">
+          <div class="grid-2">
+            <div class="my-5">
+              <fui-text [color]="'text'">Associated Matter (2)</fui-text>
+              <div class="mt-5">
+                <fui-text>9630, 5430</fui-text>
+              </div>
+            </div>
+
+            <div class="my-5">
+              <fui-text [color]="'text'">Matter PIC (2)</fui-text>
+              <div class="mt-5">
+                <fui-text>Jacob Jones (JJ), John Doe (JJ)</fui-text>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2 mt-15">
+            <div class="my-5">
+              <fui-text [color]="'text'">FIC</fui-text>
+              <div class="mt-5">
+                <fui-text>Jacob Jones (JJ)</fui-text>
+              </div>
+            </div>
+
+            <div class="my-5">
+              <fui-text [color]="'text'">Signature</fui-text>
+              <div class="mt-5">
+                <fui-text>Jacob Jones (JJ)</fui-text>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-15">
+            <fui-text [color]="'text'">Settlement Account</fui-text>
+            <div class="mt-5">
+              <fui-text
+                >Assegaf Hamzah & Partners, 5225489898 BANK CENTRAL ASIA /
+                Talavera, Jakarta</fui-text
+              >
+            </div>
+          </div>
+
+          <div class="grid-2 mt-15">
+            <div class="my-5">
+              <fui-text [color]="'text'">BI Rate</fui-text>
+              <div class="mt-5">
+                <fui-text>16,294.00</fui-text>
+              </div>
+            </div>
+
+            <div class="my-5">
+              <fui-text [color]="'text'">KMK Rate</fui-text>
+              <div class="mt-5">
+                <fui-text>16,294.00</fui-text>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2 mt-15">
+            <div class="my-5">
+              <fui-text [color]="'text'">Tax Applied</fui-text>
+              <div class="mt-5">
+                <fui-text>WAPU 11%</fui-text>
+              </div>
+            </div>
+
+            <div class="my-5">
+              <fui-text [color]="'text'">Deducted by PPH23</fui-text>
+              <div class="mt-5">
+                <fui-text>Yes</fui-text>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- DETAILS  -->
+
+      <!-- ATTACHMENTS  -->
+      <div class="my-15 px-10" *ngIf="tabStatus === 'attachments'">
+        <div class="flex-between">
+          <div class="flex-start">
+            <fui-icons
+              [icon]="'document'"
+              [color]="'primary'"
+              [size]="'sizes'"
+            />
+            <fui-text [size]="'m'" [color]="'primary'">
+              {{ "0755 - 2024 - YA - Sarana Santosa Sejati PT - 10685.docx" }}
+            </fui-text>
+          </div>
+          <fui-badge
+            [weight]="'semibold'"
+            [size]="'s'"
+            [color]="'hollow'"
+            [text]="'Proforma'"
+          />
+        </div>
+        <div class="mt-5">
+          <fui-text [size]="'s'" [color]="'text'" [fwStyle]="'italic'">
+            {{ "Send Date: 24 Jan 2024" }}
+          </fui-text>
+        </div>
+      </div>
+      <!-- ATTACHMENTS  -->
+
+      <!-- COMMENTS  -->
+      <div class="my-15" *ngIf="tabStatus === 'comments'">
+        <fui-timeline>
+          <fui-timeline-section>
+            <fui-icons [icon]="'userAvatar'"></fui-icons>
+            <div class="flex-start-5">
+              <fui-text>Jacob Jones (JJ)</fui-text>
+              <fui-text [color]="'text'">at 24 Oct 2024 13:41:22</fui-text>
+            </div>
+            <div class="mt-10">
+              <fui-text [weight]="'light'">More foam next time</fui-text>
+            </div>
+          </fui-timeline-section>
+          <fui-timeline-section>
+            <fui-icons [icon]="'userAvatar'"></fui-icons>
+            <div class="flex-start-5">
+              <fui-text>Jacob Jones (JJ)</fui-text>
+              <fui-text [color]="'text'">at 24 Oct 2024 13:41:22</fui-text>
+            </div>
+            <div class="mt-10">
+              <fui-text [weight]="'light'">More foam next time</fui-text>
+            </div>
+          </fui-timeline-section>
+        </fui-timeline>
+      </div>
+      <!-- COMMENTS  -->
     </fui-flyout-body>
 
     <fui-flyout-footer>

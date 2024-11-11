@@ -6,7 +6,7 @@ import {
   MatterDTO,
   MyTimesheetDTO,
   MyTimesheetPostDTO,
-} from '../dtos/my-timesheet.dto';
+} from '../../../../interfaces/my-timesheet-temporary.dto';
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { environment } from '../../../../environment/env';
 import { Response, Result } from '../../../../core/dtos/response.dto';

@@ -152,11 +152,38 @@ export class BillingsComponent {
       discount: '(100.00)',
       ammountAfterDisc: '1,300.00',
     },
+    {
+      item: {
+        billing: '9630 - OPE',
+        service:
+          'Legal service fee for 9630::AHP seconded 1 advocate to PT ANTAM Tbk for 1 year to handle litigation case in PT ANTAM Tbk',
+      },
+      baseAmount: '500.00',
+      discount: '-',
+      ammountAfterDisc: '500.00',
+    },
+    {
+      item: {
+        billing: '5430 - Legal Fee',
+        service:
+          'Legal service fee for 9630::AHP seconded 1 advocate to PT ANTAM Tbk for 1 year to handle litigation case in PT ANTAM Tbk',
+      },
+      baseAmount: '1,100.00',
+      discount: '(200.00)',
+      ammountAfterDisc: '900.00',
+    },
   ];
 
   showSubtotal: boolean = false;
   showSubDisc: boolean = false;
   showOtherInformation: boolean = false;
+  showIdr: boolean = false;
+
+  /** Tab status */
+  tabStatus: 'details' | 'attachments' | 'comments' = 'details';
+
+  totalAttachments: number = 1;
+  totalComments: number = 2;
 
   /** Getting color from status check */
   colorBadge(
@@ -220,5 +247,15 @@ export class BillingsComponent {
   /** Open Flyout */
   toggleOpenFlyout(event: boolean): void {
     this.isOpenFlyout = event;
+  }
+
+  /** Toggle show idr/dollar */
+  toggleShowIDR(): void {
+    this.showIdr = !this.showIdr;
+  }
+
+  /** Toggle Tab */
+  toggleTab(param: 'details' | 'attachments' | 'comments'): void {
+    this.tabStatus = param;
   }
 }

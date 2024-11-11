@@ -61,7 +61,7 @@ export class PositionComponent extends BaseController {
   /** Link */
   link: BreadcrumbData[] = [
     { label: 'Administration', link: '/master-data' },
-    { label: 'Offive Location', link: '/master-data/office-location' },
+    { label: 'Position', link: '/master-data/position' },
   ];
 
   /** Flyout utility */

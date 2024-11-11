@@ -15,7 +15,7 @@ import {
   MatterDTO,
   MyTimesheetDTO,
   TimesheetByDateDTO,
-} from '../dtos/my-timesheet.dto';
+} from '../../../../interfaces/my-timesheet-temporary.dto';
 import { BaseController } from '../../../../core/controller/basecontroller';
 import { MyTimesheetService } from '../services/my-timesheet.service';
 import { TableWithoutFilterComponent } from './table-without-filter/table-without-filter.component';
@@ -411,6 +411,7 @@ export class HistoryActivityComponent extends BaseController {
   /** Clear all filter */
   clearAllFilterOut(event: FilterAppliedDTO[]): void {
     this.filterApplied = event;
+    this.timesheetSelected = [];
   }
 
   /** Checking filter is on or not */

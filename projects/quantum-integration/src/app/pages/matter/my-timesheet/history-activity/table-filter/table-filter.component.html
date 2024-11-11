@@ -29,16 +29,22 @@
         {{ item.date | date : "d MMMM yy" }}
       </div>
       <div class="table-cell">
-        <fui-badge [text]="item.matter.matter" [color]="'hollow'" />
+        <div class="tag-badge">
+          <fui-badge [text]="item.matter.matter" [color]="'hollow'" />
+        </div>
       </div>
       <div class="table-cell">
         <fui-text>{{ item.description }}</fui-text>
         <br />
         <div class="tag-badge" *ngIf="item.tagEntityList.length > 0">
-          <fui-icons [icon]="'user'" [color]="'text'" />
-          <fui-text [textWrap]="'nowrap'" [weight]="'semibold'"
-            >Tagged entry by {{ item.tagEntityList[0].tagBy }}</fui-text
-          >
+          <fui-badge
+            *ngIf="item.tagEntityList.length > 0"
+            [iconShow]="true"
+            [icon]="'user'"
+            [color]="'hollow'"
+            [weight]="'semibold'"
+            [text]="'Tagged entry by ' + item.tagEntityList[0].tagBy"
+          />
         </div>
       </div>
       <div class="table-cell">

@@ -33,6 +33,9 @@
 .mb-5 {
   margin-bottom: 5px;
 }
+.mb-10 {
+  margin-bottom: 10px;
+}
 .grid-spec {
   display: flex;
   flex-direction: column;
@@ -76,6 +79,9 @@
 .px-15 {
   padding: 0px 15px;
 }
+.px-15-t-15 {
+  padding: 25px 25px 0px 25px;
+}
 
 .grid-2 {
   display: grid;
@@ -86,4 +92,33 @@
   background-color: var(--fuiPrimarySecondary, $fuiPrimarySecondary);
   padding: 15px;
   border-radius: 10px;
+}
+
+.hover-underline {
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: var(--fuiBtnPrimaryText, $fuiBtnPrimaryText);
+  }
+}
+
+.tab-btn {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  padding-bottom: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+  &.active {
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--fuiColorPrimary, $fuiColorPrimary);
+  }
+}
+
+.overflow-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
 }

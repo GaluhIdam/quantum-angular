@@ -8,7 +8,6 @@ import {
   TextComponent,
 } from '@quantum/fui';
 import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.component';
-import { Subscription } from 'rxjs';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
 
 @Component({

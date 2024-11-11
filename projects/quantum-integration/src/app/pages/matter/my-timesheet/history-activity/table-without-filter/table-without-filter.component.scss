@@ -220,13 +220,8 @@ fui-horizontal-stack {
   font-weight: bold;
   width: fit-content;
   display: flex;
-  border-width: 1px;
-  border-style: solid;
   font-size: smaller;
-  border-color: var(--fuiColorMediumShade, $fuiColorMediumShade);
-  border-radius: 6px;
-  padding: 3px 6px;
-  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
   fui-icons {
     margin-right: 5px;
   }

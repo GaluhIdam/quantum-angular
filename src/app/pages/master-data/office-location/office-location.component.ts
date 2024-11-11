@@ -98,38 +98,38 @@ export class OfficeLocationComponent extends BaseController {
 
   location?: string;
   dataLocation: LocationDTO[] = [
-    // {
-    //   location: 'Singapore',
-    //   type: 'Country',
-    //   child: [],
-    // },
-    // {
-    //   location: 'Indonesia',
-    //   type: 'Country',
-    //   child: [
-    //     {
-    //       location: 'Aceh',
-    //       type: 'Province',
-    //       child: [
-    //         {
-    //           location: 'Badung',
-    //           type: 'City',
-    //           child: [],
-    //         },
-    //         {
-    //           location: 'Bangli',
-    //           type: 'City',
-    //           child: [],
-    //         },
-    //         {
-    //           location: 'Buleleng',
-    //           type: 'City',
-    //           child: [],
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
+    {
+      location: 'Singapore',
+      type: 'Country',
+      child: [],
+    },
+    {
+      location: 'Indonesia',
+      type: 'Country',
+      child: [
+        {
+          location: 'Aceh',
+          type: 'Province',
+          child: [
+            {
+              location: 'Badung',
+              type: 'City',
+              child: [],
+            },
+            {
+              location: 'Bangli',
+              type: 'City',
+              child: [],
+            },
+            {
+              location: 'Buleleng',
+              type: 'City',
+              child: [],
+            },
+          ],
+        },
+      ],
+    },
   ];
   dataLocationSub: LocationDTO[] = [];
   level: number = 1;

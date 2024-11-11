@@ -13,7 +13,7 @@ import {
   PaginationComponent,
   TextComponent,
 } from '@quantum/fui';
-import { MyTimesheetDTO } from '../../dtos/my-timesheet.dto';
+import { MyTimesheetDTO } from '../../../../../interfaces/my-timesheet-temporary.dto';
 import { BaseController } from '../../../../../core/controller/basecontroller';
 import { EmptyDataComponent } from '../../../../../shared/empty-data/empty-data.component';
 @Component({

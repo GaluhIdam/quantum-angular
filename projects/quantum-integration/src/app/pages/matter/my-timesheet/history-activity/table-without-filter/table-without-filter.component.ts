@@ -9,7 +9,7 @@ import {
 import {
   MyTimesheetDTO,
   TimesheetByDateDTO,
-} from '../../dtos/my-timesheet.dto';
+} from '../../../../../interfaces/my-timesheet-temporary.dto';
 import {
   BadgeComponent,
   ButtonIconComponent,
