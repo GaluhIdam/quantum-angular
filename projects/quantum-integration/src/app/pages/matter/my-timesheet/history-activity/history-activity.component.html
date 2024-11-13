@@ -1,11 +1,12 @@
 <shared-skeleton [active]="loading">
   <!-- SIMPLE UTILITY TABLE  -->
   <shared-table-utility-simple
-    [nextPrevBtn]="!checkFilter()"
+    [nextBtn]="currentDate > endDate ? true : false"
+    [prevBtn]="filterApplied.length === 0"
     [startDate]="startDate"
     [endDate]="endDate"
-    [duration]="hourMinute"
-    (btnAction)="btnActionUtil($event)"
+    [duration]="calculateTotalDuration(dataTimesheet)"
+    (actionOut)="togglePrevNextWeek($event)"
   />
   <!-- SIMPLE UTILITY TABLE  -->
 
@@ -13,42 +14,41 @@
   <shared-filter-applied
     class="mb-15"
     [filterApplied]="filterApplied"
-    (action)="clearAllFilterOut($event)"
+    (actionOut)="toggleClearFilter($event)"
   />
   <!-- FILTER APPLIED -->
 
   <!-- MATTER MOVE -->
   <shared-move-matter
     *ngIf="timesheetSelected.length > 0"
-    [listMatters]="listMatters"
-    [timesheetSelected]="timesheetSelected"
-    (action)="actionMoveTimesheet($event)"
+    [listMatters]="[]"
+    [totalItemSelected]="timesheetSelected.length"
+    (actionOut)="moveTimesheet($event)"
   />
   <!-- MATTER MOVE -->
 
   <div class="wrap">
     <!-- TABLE WITHOUT FILTER -->
     <app-table-without-filter
-      *ngIf="!checkFilter()"
-      [dateTimesheetByDate]="dateTimesheetByDate"
-      [timesheetSelected]="timesheetSelected"
-      (timesheetSelectedOut)="timesheetSelectedOut($event)"
-      (action)="actionTableFilter($event)"
+      *ngIf="filterApplied.length === 0"
+      [startDate]="startDate"
+      [endDate]="endDate"
+      [dataTimesheet]="dataTimesheet"
+      (actionOut)="toggleEditDeleteTimesheet($event.action, $event.data)"
+      (selectionOut)="toggleSelection($event)"
     />
     <!-- TABLE WITHOUT FILTER -->
 
     <!-- TABLE WITH FILTER-->
     <app-table-filter
       class="container-table"
-      *ngIf="checkFilter()"
+      *ngIf="filterApplied.length > 0"
       [page]="page"
       [limit]="limit"
       [totalItems]="totalItems"
       [dataTimesheet]="dataTimesheet"
-      [timesheetSelected]="timesheetSelected"
-      (onPageChangeOut)="onPageChangeOut($event)"
-      (timesheetSelectedOut)="timesheetSelectedOut($event)"
-      (action)="actionTableFilter($event)"
+      (actionOut)="toggleEditDeleteTimesheet($event.action, $event.data)"
+      (selectionOut)="toggleSelection($event)"
     />
     <!-- TABLE WITH FILTER-->
   </div>
@@ -59,7 +59,6 @@
   [showFeeEarnerForm]="false"
   [title]="'Add Timesheet'"
   [isOpenFlyout]="isOpenCreateFlyout"
-  (closeOut)="closeOutCreate($event)"
 />
 <!-- FLYOUT CREATE TIMESHEET -->
 
@@ -67,14 +66,16 @@
 <shared-flyout-timesheet
   [showFeeEarnerForm]="false"
   [enableMatterForm]="false"
-  [timesheet]="timesheetEditSelected"
   [title]="'Update Timesheet'"
   [isOpenFlyout]="isOpenEditFlyout"
+  [timesheet]="timesheetEditSelected"
   [actionButton]="'update'"
   [showCheckLockMatter]="false"
   [showCheckLockDate]="false"
   [note]="'* Conduct desk research & prepare summary on licensing regulation.'"
-  (closeOut)="closeOutEdit($event)"
+  [listActivities]="converterActivityOpt()"
+  [listMatters]="converterMatterOpt()"
+  (closeOut)="toggleUtility('edit')"
 />
 <!-- EDIT TIMESHEET FLYOUT -->
 
@@ -82,22 +83,25 @@
 <shared-flyout-timesheet
   [showFeeEarnerForm]="false"
   [enableMatterForm]="false"
-  [timesheet]="timesheetEditSelected"
   [title]="'Update Timesheet'"
   [isOpenFlyout]="isOpenEditTagFlyout"
   [actionButton]="'updateTag'"
   [showCheckLockMatter]="false"
+  [timesheetSelected]="timesheetEditSelected"
   [showCheckLockDate]="false"
   [note]="'* Conduct desk research on licensing agreement with JJ.'"
-  (closeOut)="closeOutEditTag($event)"
+  [listActivities]="converterActivityOpt()"
+  [listMatters]="converterMatterOpt()"
+  (closeOut)="toggleUtility('editTag')"
 />
 <!-- EDIT TAG FLYOUT -->
 
 <!-- FILTER TIMESHEET  -->
 <shared-flyout-simple
-  [isOpenFlyout]="openFlyoutFilter"
+  [isOpenFlyout]="isOpenFilterFlyout"
   [titleFlyout]="'Filter'"
-  (closeOut)="closeOutFilter($event)"
+  (closeOut)="toggleUtility('filter')"
+  [size]="'m'"
 >
   <div body>
     <!-- DATE FORM  -->
@@ -108,8 +112,8 @@
           [dateFormat]="'DD-MM-YYYY'"
           [startDateControl]="startDateForm"
           [endDateControl]="endDateForm"
-          (onChangeStartDate)="changeDateForm($event, 'start')"
-          (onChangeEndDate)="changeDateForm($event, 'end')"
+          (onChangeStartDate)="watchDateChange('start', $event)"
+          (onChangeEndDate)="watchDateChange('end', $event)"
         />
       </div>
       <span
@@ -119,9 +123,12 @@
         <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
         Date range is required!
       </span>
-      <span class="filter-valid" *ngIf="invalidStartEndDate()">
+      <span
+        class="filter-valid"
+        *ngIf="validatorStartEndFilter(startDateForm.value, endDateForm.value)"
+      >
         <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
-        the start date cannot exceed the end date!
+        the start date can't exceed the end date!
       </span>
     </div>
     <!-- DATE FORM  -->
@@ -131,11 +138,10 @@
       <fui-text>Matter</fui-text>
       <div class="time-description">
         <fui-combo-box
-          (selection)="selectionMatter($event)"
           [comboxForm]="searchMatterForm"
           [size]="'m'"
           [placeholder]="'Matter'"
-          [optionValue]="optionMatter"
+          [optionValue]="converterMatterOpt()"
           [selectedValue]="selectedMatter"
         />
       </div>
@@ -164,26 +170,29 @@
 
   <!-- FOOTER FLYOUT FILTER  -->
   <div class="footer-flyout" footer>
-    <fui-button-icon [fullWidth]="'fit'"
+    <fui-button-icon
+      [fullWidth]="'fit'"
       [type]="'button'"
       [option]="'text'"
       [style]="'secondary'"
       [text]="'Cancel'"
       [size]="'m'"
       [color]="'text'"
-      (onClick)="cancelFilter()"
+      (onClick)="toggleUtility('filter')"
     />
     <div class="group-flex">
-      <fui-button-icon [fullWidth]="'fit'"
+      <fui-button-icon
+        [fullWidth]="'fit'"
         [type]="'button'"
         [option]="'text'"
         [style]="'secondary'"
         [text]="'Clear Filter'"
         [size]="'m'"
         [color]="'text'"
-        (onClick)="resetFilter()"
+        (onClick)="toggleClearFilter()"
       />
-      <fui-button-icon [fullWidth]="'fit'"
+      <fui-button-icon
+        [fullWidth]="'fit'"
         [type]="'button'"
         [option]="'iconText'"
         [style]="'filled'"
@@ -191,7 +200,7 @@
         [size]="'m'"
         [color]="'primary'"
         [icon]="'filter'"
-        (onClick)="actionFilter($event)"
+        (onClick)="toggleFilter()"
       />
     </div>
   </div>
@@ -203,7 +212,7 @@
 <shared-modal-delete
   [openModalDelete]="isModalDelete"
   [title]="'Delete Timesheet'"
-  (action)="actionModal($event)"
+  (actionOut)="toggleCancelDeleteTimesheet($event)"
 />
 <!-- MODAL DELETE  -->
 

@@ -10,18 +10,21 @@ export class ProductivityService {
   private readonly http = inject(HttpClient);
   httpUrl: string = 'https://example.api/v1/';
 
-  /** Get productivity */
-  getProductivity(
-    startDate: string,
-    endDate: string
-  ): Observable<ProductivitySummaryDTO[]> {
-    return this.http.get<ProductivitySummaryDTO[]>(
-      `${this.httpUrl}/productivity`,
-      {
-        params: new HttpParams()
-          .set('startDate', startDate)
-          .set('endDate', endDate),
-      }
+  /**
+   * Get productivity from REST API.
+   * @param startDate example: "2024-11-01"
+   * @param endDate example: "2024-11-30"
+   * @returns
+   * {
+   *   "billableActualHour": 20,
+   *   "billableTargetHour": 150,
+   *   "nonbillableActualHour": 10,
+   *   "nonbillableTargetHour": 100,
+   * }
+   */
+  getProductivities(type: string): Observable<ProductivitySummaryDTO> {
+    return this.http.get<ProductivitySummaryDTO>(
+      `${this.httpUrl}/productivity/${type}`
     );
   }
 }

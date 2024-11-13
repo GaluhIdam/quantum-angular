@@ -25,17 +25,14 @@
       <!-- TAG ENTRY -->
       <fui-badge
         style="display: flex; margin-bottom: 15px"
-        *ngIf="
-          actionButton === 'updateTag' &&
-          timesheet &&
-          timesheet.tagEntityList.length > 0
-        "
+        *ngIf="actionButton === 'updateTag' && timesheetSelected?.pending"
         [color]="'hollow'"
         [size]="'m'"
         [iconShow]="true"
         [icon]="'user'"
         [iconPosition]="'start'"
-        [text]="'Tagged timesheet by ' + timesheet.tagEntityList[0].tagBy"
+        [weight]="'semibold'"
+        [text]="'Tagged timesheet by ' + timesheetSelected?.tagBy"
       />
       <!-- TAG ENTRY -->
 
@@ -243,6 +240,7 @@
               class="form-control"
               [position]="'top'"
               [timeFormControl]="durationForm"
+              [timeFormat]="'24h'"
               [isInvalid]="durationForm.invalid && durationForm.dirty"
               [minuteInterval]="'15 minutes'"
               [message]="'Duration is required!'"
