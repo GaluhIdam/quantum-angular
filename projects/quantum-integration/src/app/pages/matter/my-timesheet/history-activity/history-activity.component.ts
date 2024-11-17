@@ -74,56 +74,7 @@ export class HistoryActivityComponent extends BaseController {
   dataActivities: ActivityDTO[] = [];
 
   /** Data timesheets from service */
-  dataTimesheet: MyTimesheetDTO[] = [
-    {
-      uuid: '123e4567-e89b-12d3-a456-426614174000',
-      matter: {
-        uuid: '987e6543-b21c-43d1-b657-729381040000',
-        matter: '12345',
-        description: 'Legal work for Client Project X',
-        created_at: '2024-11-01T08:30:00Z',
-        updated_at: '2024-11-10T10:45:00Z',
-      },
-      activity: {
-        uuid: '789e1234-d56c-47f2-b912-426881080000',
-        name: 'Document Review',
-        created_at: '2024-10-15T09:15:00Z',
-        updated_at: '2024-10-20T11:30:00Z',
-      },
-      description:
-        'Reviewed documents related to Project X legal requirements.',
-      date: '2024-11-12',
-      duration: '02:30',
-      pending: false,
-      tagBy: 'johndoe',
-      created_at: '2024-11-12T12:00:00Z',
-      updated_at: '2024-11-12T15:00:00Z',
-    },
-    {
-      uuid: '123e4567-e89b-12d3-a456-426614174000',
-      matter: {
-        uuid: '987e6543-b21c-43d1-b657-729381040000',
-        matter: '12345',
-        description: 'Legal work for Client Project X',
-        created_at: '2024-11-01T08:30:00Z',
-        updated_at: '2024-11-10T10:45:00Z',
-      },
-      activity: {
-        uuid: '789e1234-d56c-47f2-b912-426881080000',
-        name: 'Document Review',
-        created_at: '2024-10-15T09:15:00Z',
-        updated_at: '2024-10-20T11:30:00Z',
-      },
-      description:
-        'Reviewed documents related to Project X legal requirements.',
-      date: '2024-11-12',
-      duration: '02:30',
-      pending: true,
-      tagBy: 'johndoe',
-      created_at: '2024-11-12T12:00:00Z',
-      updated_at: '2024-11-12T15:00:00Z',
-    },
-  ];
+  dataTimesheet: MyTimesheetDTO[] = [];
 
   /** Date range for my timesheet */
   currentDate: Date = new Date();
@@ -200,6 +151,9 @@ export class HistoryActivityComponent extends BaseController {
     }
     if (event === 'editTag') {
       this.isOpenEditTagFlyout = !this.isOpenEditTagFlyout;
+    }
+    if (event === 'next' || event === 'prev') {
+      this.togglePrevNextWeek(event);
     }
   }
 
