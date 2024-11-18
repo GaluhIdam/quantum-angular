@@ -8,14 +8,9 @@ import {
   HeaderComponent,
   HeaderPanelComponent,
   IconsComponent,
-  PageBodyComponent,
-  PageComponent,
   PageSidebarComponent,
   SidenavComponent,
   ThemeService,
-  FormControlLayoutComponent,
-  InputFieldComponent,
-  LoadingComponent,
   PopoverComponent,
   TextComponent,
   AvatarComponent,
@@ -40,28 +35,18 @@ import { UserKeycloak } from '../../core/guard/keycloak/keycloak.dto';
 import { FlyoutTimesheetComponent } from '../flyout-timesheet/flyout-timesheet.component';
 import { MiniSidebarComponent } from '../mini-sidebar/mini-sidebar.component';
 import { routes } from '../../app.routes';
-import {
-  ActivityTimesheetDTO,
-  MatterTimesheetDTO,
-} from '../../interfaces/my-timesheet.dto';
 
 @Component({
   selector: 'app-layouts',
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
-    PageComponent,
-    PageBodyComponent,
     ButtonIconComponent,
     HeaderComponent,
     HeaderPanelComponent,
     PageSidebarComponent,
     IconsComponent,
     SidenavComponent,
-    FormControlLayoutComponent,
-    InputFieldComponent,
-    LoadingComponent,
     PopoverComponent,
     TextComponent,
     AvatarComponent,
@@ -84,8 +69,8 @@ export class LayoutsComponent {
   dataSide: DataSideDTO[] = [];
   theme!: string;
 
-  mattersData: MatterTimesheetDTO[] = [];
-  activitesData: ActivityTimesheetDTO[] = [];
+  mattersData: any[] = [];
+  activitesData: any[] = [];
 
   searchForms: FormControl = new FormControl();
   data: SitewideDTO[] = [];

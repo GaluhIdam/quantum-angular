@@ -1,14 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   BadgeComponent,
   ButtonIconComponent,
-  ComboBoxComponent,
   FormControlLayoutComponent,
   IconsComponent,
   InputFieldComponent,
@@ -18,16 +11,11 @@ import {
   ModalFooterComponent,
   ModalHeaderComponent,
   PopoverComponent,
-  TextComponent,
 } from '@quantum/fui';
-
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { debounceTime, map, Subscription, tap } from 'rxjs';
-import {
-  MatterTimesheetDTO,
-  MyTimesheetDTO,
-} from '../../interfaces/my-timesheet.dto';
+import { MatterDTO } from '../../interfaces/matter.dto';
 
 @Component({
   selector: 'shared-move-matter',
@@ -43,8 +31,6 @@ import {
     ModalHeaderComponent,
     ModalBodyComponent,
     ModalFooterComponent,
-    ComboBoxComponent,
-    TextComponent,
     FormControlLayoutComponent,
     InputFieldComponent,
     PopoverComponent,
@@ -54,30 +40,24 @@ import {
   styleUrl: './move-matter.component.scss',
 })
 export class MoveMatterComponent {
-  @Input() listMatters: MatterTimesheetDTO[] = [];
-  @Input() timesheetSelected: any[] = [];
+  @Input({ required: true }) listMatters: MatterDTO[] = [];
+  @Input({ required: true }) totalItemSelected: number = 0;
   @Input() writeOff: boolean = false;
-  @Output() action: EventEmitter<MyTimesheetDTO[]> = new EventEmitter<
-    MyTimesheetDTO[]
-  >();
+  @Output() searchOut: EventEmitter<string> = new EventEmitter<string>();
+  @Output() actionOut: EventEmitter<MatterDTO | null> =
+    new EventEmitter<MatterDTO | null>();
 
-  optionMatters: {
-    name: string;
-    value: any;
-  }[] = [];
-  selectedMatters: {
-    name: string;
-    value: any;
-  }[] = [];
-
+  /** Form for search matter */
   searchForm: FormControl = new FormControl('');
 
-  isModalOpen: boolean = false;
-  isOption: boolean = false;
-  showDesc: boolean = false;
-  loading: boolean = false;
+  /** Matter selected for move */
+  matterSelected: MatterDTO | null = null;
 
-  subscription!: Subscription;
+  loading: boolean = false;
+  isModalOpen: boolean = false;
+  showDesc: boolean = false;
+
+  private subscription!: Subscription;
 
   ngOnInit(): void {
     this.subscription = this.searchForm.valueChanges
@@ -85,52 +65,40 @@ export class MoveMatterComponent {
         tap(() => (this.loading = true)),
         debounceTime(500),
         map((value) => {
-          console.log(value);
+          this.loading = false;
+          this.searchOut.emit(value);
         })
       )
       .subscribe();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes) {
-      this.listMatters.forEach((item) => {
-        this.optionMatters.push({
-          name: item.matter,
-          value: item.idMatter,
-        });
-      });
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 
-  /** Move timesheet action, return data to consumer */
-  moveTimesheet(): void {
-    this.action.emit(this.timesheetSelected);
+  /** Toggle for open/close modal */
+  toggleOpenCloseModal(param: boolean): void {
+    this.isModalOpen = param;
+  }
+  /** Toggle select matter */
+  toggleSelectMatter(matter: MatterDTO): void {
+    this.matterSelected = matter;
+    this.searchForm.setValue(matter.matter);
   }
 
-  /** Clear Selection */
-  clearSelection(): void {
-    this.timesheetSelected = [];
-    this.action.emit([]);
+  /** Reset matter search and matter selected */
+  toggleReset(): void {
+    this.searchForm = new FormControl('');
+    this.matterSelected = null;
   }
 
-  /** Open Modal */
-  handleOpenModal(): void {
-    this.isModalOpen = true;
-  }
-
-  /** Close Modal */
-  handleCloseModal(): void {
-    this.isModalOpen = false;
-  }
-
-  /** Open/close option */
-  openClose(param: boolean): void {
-    setTimeout(() => {
-      this.isOption = param;
-    }, 200);
-  }
-
-  selectionOption(param: MatterTimesheetDTO): void {
-    this.searchForm.setValue(param.matter);
+  /** Toggle move timesheet */
+  toggleMoveTimesheet(): void {
+    this.toggleOpenCloseModal(false);
+    if (this.searchForm.value !== null || this.searchForm.value !== '') {
+      this.actionOut.emit(this.matterSelected);
+    }
   }
 }

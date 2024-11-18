@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {
-  ButtonIconComponent,
   IconsComponent,
   PopoverComponent,
   ProgressComponent,
@@ -9,8 +8,9 @@ import {
 } from '@quantum/fui';
 import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.component';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
-import { ProductivityService } from '../../../../services/matter/my-timesheet/productivity/productivity.service';
+import { ProductivitySummaryDTO } from '../../../../interfaces/productivity-summary.dto';
 import { BaseController } from '../../../../core/controller/basecontroller';
+import { ProductivityService } from '../../../../services/matter/my-timesheet/productivity/productivity.service';
 
 @Component({
   selector: 'app-productivity',
@@ -18,7 +18,6 @@ import { BaseController } from '../../../../core/controller/basecontroller';
   imports: [
     CommonModule,
     PopoverComponent,
-    ButtonIconComponent,
     IconsComponent,
     ProgressComponent,
     EmptyDataComponent,
@@ -28,37 +27,60 @@ import { BaseController } from '../../../../core/controller/basecontroller';
   templateUrl: './productivity.component.html',
   styleUrl: './productivity.component.scss',
 })
-export class ProductivityComponent extends BaseController implements OnInit {
-  /** Call service */
-  private readonly productivityService = inject(ProductivityService);
+export class ProductivityComponent extends BaseController {
+  @Output() typeOut: EventEmitter<'month' | 'year' | 'appraisalYear'> =
+    new EventEmitter<'month' | 'year' | 'appraisalYear'>();
 
   /** Loading status */
   loading: boolean = true;
 
-  /** Data Productivity */
-  data: number[] = [];
+  /** Data productivities */
+  dataProductivity: ProductivitySummaryDTO = {
+    billableActualHour: 0,
+    billableTargetHour: 0,
+    nonbillableActualHour: 0,
+    nonbillableTargetHour: 0,
+  };
 
-  /** Periode */
-  periode: 'today' | 'week' | 'month' | 'year' = 'month';
+  /** Percetage of productivity */
+  percentageBillabel: number = 0;
+  percentageNonBillabel: number = 0;
 
-  ngOnInit(): void {
-    this.getProductivityData(this.periode);
+  /** Period */
+  period: 'month' | 'year' | 'appraisalYear' = 'month';
+
+  constructor(private readonly productivitiesService: ProductivityService) {
+    super();
   }
 
-  /** Get data productivity from service */
-  getProductivityData(periode: 'today' | 'week' | 'month' | 'year'): void {
-    this.productivityService.getProductivity(periode).subscribe({
-      next: (value) => {
-        this.data = value.result;
+  ngOnInit(): void {
+    this.typeOut.emit(this.period);
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
+  }
+
+  /** Toggle for change date range */
+  toggleSelectRange(period: 'month' | 'year' | 'appraisalYear'): void {
+    this.period = period;
+    this.typeOut.emit(period);
+    // this.getDataProductivites(period);
+  }
+
+  /** Getting data productivities from service
+   * @service
+   *  ProductivityService
+   */
+  private getDataProductivites(type: string): void {
+    this.productivitiesService.getProductivities(type).subscribe({
+      next: (res) => {
+        this.dataProductivity = res;
       },
-      error: (error) => {
-        this.errorToast(error);
+      error: () => {
         this.loading = false;
-        this.periode = periode;
       },
       complete: () => {
         this.loading = false;
-        this.periode = periode;
       },
     });
   }

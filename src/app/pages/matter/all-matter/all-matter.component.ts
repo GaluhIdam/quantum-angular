@@ -5,7 +5,6 @@ import {
   FormControlLayoutComponent,
   IconsComponent,
   InputFieldComponent,
-  TextComponent,
 } from '@quantum/fui';
 import { FilterAppliedComponent } from '../../../shared/filter-applied/filter-applied.component';
 import { FilterAppliedDTO } from '../../../shared/filter-applied/filter-apllied.dto';
@@ -24,7 +23,6 @@ import { PageEmptyComponent } from '../../../shared/page-empty/page-empty.compon
     FormControlLayoutComponent,
     InputFieldComponent,
     IconsComponent,
-    TextComponent,
     FlyoutFilterMatterComponent,
     PageEmptyComponent,
   ],

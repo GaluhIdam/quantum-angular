@@ -33,10 +33,11 @@ export class TableUtilitySimpleComponent {
   @Input() prevBtn: boolean = true;
 
   /** Tell consumer about Identity Button for next action */
-  @Output() btnAction: EventEmitter<string> = new EventEmitter<string>();
+  @Output() actionOut: EventEmitter<'next' | 'prev' | 'filter' | 'add'> =
+    new EventEmitter<'next' | 'prev' | 'filter' | 'add'>();
 
   /** Toggle Click Button */
-  toggleBtn(param: string): void {
-    this.btnAction.emit(param);
+  toggleBtn(param: 'next' | 'prev' | 'filter' | 'add'): void {
+    this.actionOut.emit(param);
   }
 }

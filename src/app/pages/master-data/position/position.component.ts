@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { PageGenericDefaultComponent } from '../../../shared/page-generic-default/page-generic-default.component';
 import {
-  BadgeComponent,
   BreadcrumbData,
   ButtonIconComponent,
   FormControlLayoutComponent,
   IconsComponent,
   InputFieldComponent,
-  PopoverComponent,
   SelectFieldComponent,
   TableDataTreeComponent,
   TableHeadTreeComponent,
@@ -41,8 +39,6 @@ import { PositionDTO } from '../../../interfaces/position.dto';
     TableRowTreeComponent,
     TableDataTreeComponent,
     TextComponent,
-    PopoverComponent,
-    BadgeComponent,
     EmptyDataComponent,
     FlyoutSimpleComponent,
     ModalDeleteComponent,

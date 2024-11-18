@@ -23,9 +23,10 @@
       <fui-text>{{ desc }}</fui-text>
     </div>
   </fui-modal-body>
-  <fui-modal-footer >
+  <fui-modal-footer>
     <div class="foot">
-      <fui-button-icon [fullWidth]="'fit'"
+      <fui-button-icon
+        [fullWidth]="'fit'"
         (onClick)="closelModalDelete()"
         [size]="'m'"
         [type]="'button'"
@@ -34,8 +35,9 @@
         [style]="'secondary'"
         [color]="'text'"
       />
-      <fui-button-icon [fullWidth]="'fit'"
-        (onClick)="deleteAction()"
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        (onClick)="deleteActionOut()"
         [size]="'m'"
         [type]="'button'"
         [option]="'text'"

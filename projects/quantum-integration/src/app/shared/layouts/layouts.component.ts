@@ -1,26 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { NavigationEnd, Router, RouterOutlet, Routes } from '@angular/router';
+import { NavigationEnd, Router, Routes } from '@angular/router';
 import {
   ButtonIconComponent,
   DataSideDTO,
   HeaderComponent,
   HeaderPanelComponent,
   IconsComponent,
-  PageBodyComponent,
-  PageComponent,
-  PageSidebarComponent,
-  SidenavComponent,
   ThemeService,
-  FormControlLayoutComponent,
-  InputFieldComponent,
-  LoadingComponent,
   PopoverComponent,
   TextComponent,
-  AvatarComponent,
   OidcAuthenticatorService,
-  SitewideSearchComponent,
   SitewideDTO,
 } from '@quantum/fui';
 import {
@@ -35,40 +26,27 @@ import {
 import { DataSideBar } from './data-sidebar';
 import { keycloak } from '../../environment/env';
 import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
-import { UserKeycloak } from '../../core/guard/keycloak/keycloak.dto';
 import {
   ActivityDTO,
   MatterDTO,
 } from '../../interfaces/my-timesheet-temporary.dto';
-import { MyTimesheetService } from '../../pages/matter/my-timesheet/services/my-timesheet.service';
 import { FlyoutTimesheetComponent } from '../flyout-timesheet/flyout-timesheet.component';
-import { MiniSidebarComponent } from '../mini-sidebar/mini-sidebar.component';
 import { routes } from '../../app.routes';
+import { MatterService } from '../../services/matter/matter.service';
 
 @Component({
   selector: 'app-layouts',
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
-    PageComponent,
-    PageBodyComponent,
     ButtonIconComponent,
     HeaderComponent,
     HeaderPanelComponent,
-    PageSidebarComponent,
     IconsComponent,
-    SidenavComponent,
-    FormControlLayoutComponent,
-    InputFieldComponent,
-    LoadingComponent,
     PopoverComponent,
     TextComponent,
-    AvatarComponent,
     ModalDeleteComponent,
     FlyoutTimesheetComponent,
-    MiniSidebarComponent,
-    SitewideSearchComponent,
   ],
   templateUrl: './layouts.component.html',
   styleUrl: './layouts.component.scss',
@@ -107,15 +85,13 @@ export class LayoutsComponent {
     private navigate: Router,
     private cdr: ChangeDetectorRef,
     private readonly authService: OidcAuthenticatorService,
-    private readonly myTimesheetService: MyTimesheetService
+    private readonly matterService: MatterService
   ) {
     this.dataSide = DataSideBar.dataSideBar;
     // this.getUser();
   }
 
   ngOnInit(): void {
-    this.getMatterData('');
-    this.getActivityData();
     this.themeService.currentTheme$.subscribe((data) => {
       if (data === 'light') {
         this.theme = 'ahp-light';
@@ -163,26 +139,6 @@ export class LayoutsComponent {
     if (this.obs) {
       this.obs.unsubscribe();
     }
-  }
-
-  /** Get matters from service */
-  getMatterData(search: string): void {
-    this.myTimesheetService
-      .getMatters(search)
-      .pipe(map((data) => (this.mattersData = data)))
-      .subscribe();
-  }
-
-  /** Get activity from service */
-  getActivityData(): void {
-    this.myTimesheetService
-      .getActivites()
-      .pipe(
-        map((data) => {
-          this.activitesData = data;
-        })
-      )
-      .subscribe();
   }
 
   /** Hide Sidebar if Mobile Device */

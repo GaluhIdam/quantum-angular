@@ -1,141 +1,160 @@
-<div class="container">
+<div class="mt-20">
   <fui-collapsible-nav-group
-    *ngFor="let date of dateTimesheetByDate; let i = index"
-    [isCollapsed]="showHideTablePerRow[i]"
+    *ngFor="let day of dataTimesheetPerday; let i = index"
+    [isCollapsed]="day.show"
   >
-    <!-- HEADER TOGGLE SHOW TABLE -->
-    <div header class="header-tb">
-      <div class="left-tb">
-        <span>
-          {{ date.date | date : "EEE" }}, {{ date.date | date : "d MMMM yy" }}
-        </span>
-      </div>
-      <div *ngIf="date.data.length === 0" class="full-width"></div>
+    <div
+      class="header-tb"
+      [ngClass]="[day.show === true ? 'first' : '']"
+      header
+    >
+      <fui-text [textWrap]="'nowrap'" style="min-width: 200px"
+        >{{ day.date | date : "EEE" }},
+        {{ day.date | date : "d MMM" }}</fui-text
+      >
       <fui-horizontal-stack
+        *ngIf="day.data.length > 0"
         [showPercentage]="'none'"
-        *ngIf="date.data.length > 0"
-        [progress]="progress[i]"
+        [progress]="[
+          {
+            percentage: calculateTotalDurationTagPercent(day.data)
+              .untaggedPercentage,
+            color: 'primary'
+          },
+          {
+            percentage: calculateTotalDurationTagPercent(day.data)
+              .remainingPercentage,
+            color: 'disabled'
+          },
+          {
+            percentage: calculateTotalDurationTagPercent(day.data)
+              .taggedPercentage,
+            color: 'warning'
+          }
+        ]"
       />
-      <div class="right-tb">
-        <div class="duration">
-          <fui-badge
-            [color]="'hollow'"
-            [size]="'s'"
-            [iconShow]="false"
-            [text]="calculateTotalDurationTag(date.data).untaggedDuration"
-          />
-          <fui-badge
-            [iconShow]="true"
-            [iconPosition]="'start'"
-            [size]="'xs'"
-            [icon]="'questionInCircle'"
-            [color]="'warning'"
-            *ngIf="
-              calculateTotalDurationTag(date.data).taggedDuration !== '0h 0m'
-            "
-            [size]="'s'"
-            [text]="calculateTotalDurationTag(date.data).taggedDuration"
-          />
-        </div>
-        <div style="margin-left: 10px">
-          <fui-button-icon
-            [fullWidth]="'fit'"
-            [type]="'button'"
-            [option]="'icon'"
-            [style]="'secondary'"
-            [size]="'m'"
-            [color]="'text'"
-            [icon]="showHideTablePerRow[i] ? 'arrowDown' : 'arrowRight'"
-            [iconSide]="'left'"
-            (onClick)="openOrCloseTablePerRow(i)"
-          />
-        </div>
+      <div class="right-util">
+        <fui-badge
+          [size]="'s'"
+          [color]="'hollow'"
+          [text]="calculateTotalDurationTag(day.data).untaggedDuration"
+        />
+        <fui-badge
+          *ngIf="calculateTotalDurationTag(day.data).taggedDuration !== '0h 0m'"
+          [color]="'warning'"
+          [size]="'s'"
+          [text]="calculateTotalDurationTag(day.data).taggedDuration"
+          [iconShow]="true"
+          [icon]="'questionInCircle'"
+        />
+        <fui-button-icon
+          [type]="'button'"
+          [option]="'icon'"
+          [color]="'text'"
+          [fullWidth]="'fit'"
+          [icon]="day.show ? 'arrowDown' : 'arrowRight'"
+          [style]="'empty'"
+          (onClick)="day.show = !day.show"
+        />
       </div>
     </div>
 
-    <!-- BODY WHEN SHOW TABLE -->
     <div body>
-      <div class="table" *ngIf="date.data.length > 0">
-        <div class="table-row header">
-          <div class="table-cell">
-            <input
-              type="checkbox"
-              [checked]="timesheetChecked[i].length === date.data.length"
-              (click)="checkAllItems(i, date.data)"
-            />
-          </div>
-          <div class="table-cell" *ngFor="let item of headerTable">
-            <fui-text>{{ item }}</fui-text>
-          </div>
-        </div>
-        <div
-          class="table-row {{ item.tagEntityList.length > 0 ? 'tag-bg' : '' }}"
-          *ngFor="let item of date.data; let z = index"
-        >
-          <div class="table-cell">
-            <div>
+      <fui-table
+        *ngIf="day.data.length > 0"
+        [limit]="0"
+        [totalItems]="0"
+        [showInfo]="false"
+        [pagination]="false"
+      >
+        <fui-table-head style="width: 50px">
+          <input
+            type="checkbox"
+            [(ngModel)]="day.selectAll"
+            [checked]="day.selectAll"
+            (change)="toggleSelectAll(day.selectAll, day.data)"
+          />
+        </fui-table-head>
+        <fui-table-head *ngFor="let header of headerTable">
+          {{ header }}
+        </fui-table-head>
+        <fui-table-body *ngFor="let data of day.data">
+          <fui-table-body-row [ngClass]="[data.pending ? 'tag-bg' : '']">
+            <fui-table-body-data style="width: 50px; min-width: 50px">
               <input
-                [disabled]="item.tagEntityList.length > 0"
                 type="checkbox"
-                [checked]="isItemChecked(i, item)"
-                (click)="checkItem(i, item)"
+                [disabled]="data.pending"
+                [checked]="timesheetSelected.includes(data)"
+                (change)="toggleSelectTimesheet(data, i, day.data)"
               />
-            </div>
-          </div>
-          <div class="table-cell">
-            <fui-badge [text]="item.matter.matter" [color]="'hollow'" />
-          </div>
-          <div class="table-cell">
-            {{ item.description }}
-            <br />
-            <div class="tag-badge" *ngIf="item.tagEntityList.length > 0">
-              <fui-icons [icon]="'user'" [color]="'text'" />
-              Tagged entry by {{ item.tagEntityList[0].tagBy }}
-            </div>
-          </div>
-          <div class="table-cell">
-            {{ convertTimeToAngularFormat(item.duration) }}
-          </div>
-          <div class="table-cell">
-            <div class="wrap-action title-cell">
-              <fui-button-icon
-                [fullWidth]="'fit'"
-                (onClick)="
-                  item.tagEntityList.length > 0
-                    ? actionBtn('edit-tag', item)
-                    : actionBtn('edit', item)
-                "
-                [type]="'button'"
-                [option]="'icon'"
-                [style]="'secondary'"
-                [size]="'m'"
-                [color]="'primary'"
-                [icon]="'pencil'"
-                [iconSide]="'left'"
+            </fui-table-body-data>
+            <fui-table-body-data>
+              <fui-badge
+                [text]="data.matter.matter"
+                [weight]="'semibold'"
+                class="white-bg"
+                [color]="'hollow'"
               />
-              <fui-button-icon
-                [fullWidth]="'fit'"
-                *ngIf="item.tagEntityList.length === 0"
-                (onClick)="actionBtn('delete', item)"
-                [type]="'button'"
-                [option]="'icon'"
-                [style]="'secondary'"
-                [size]="'m'"
-                [color]="'danger'"
-                [icon]="'trash'"
-                [iconSide]="'left'"
+            </fui-table-body-data>
+            <fui-table-body-data>
+              <fui-text>{{ data.description }}</fui-text>
+              <fui-badge
+                style="margin-top: 8px; display: flex"
+                *ngIf="data.pending"
+                [weight]="'semibold'"
+                [iconShow]="true"
+                [icon]="'user'"
+                [size]="'s'"
+                [color]="'hollow'"
+                class="white-bg"
+                [weight]="'semibold'"
+                [text]="data.tagBy"
               />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="date.data.length === 0">
-        <p class="empty-message">
-          You don't have any time recorded for this period.
-        </p>
-      </div>
+            </fui-table-body-data>
+            <fui-table-body-data>
+              <fui-text>{{
+                convertTimeToAngularFormat(data.duration)
+              }}</fui-text>
+            </fui-table-body-data>
+            <fui-table-body-data>
+              <div class="flex-btn">
+                <fui-button-icon
+                  [type]="'button'"
+                  [option]="'icon'"
+                  [color]="'primary'"
+                  [style]="'secondary'"
+                  [fullWidth]="'fit'"
+                  [icon]="'pencil'"
+                  (onClick)="
+                    toggleEditDeleteTimesheet(
+                      data.pending ? 'editTag' : 'edit',
+                      data
+                    )
+                  "
+                />
+                <fui-button-icon
+                  *ngIf="!data.pending"
+                  [type]="'button'"
+                  [option]="'icon'"
+                  [color]="'danger'"
+                  [style]="'secondary'"
+                  [fullWidth]="'fit'"
+                  [icon]="'trash'"
+                  (onClick)="toggleEditDeleteTimesheet('delete', data)"
+                />
+              </div>
+            </fui-table-body-data>
+          </fui-table-body-row>
+        </fui-table-body>
+      </fui-table>
+      <fui-text
+        style="margin: 10px 0px; display: flex"
+        *ngIf="day.data.length === 0"
+        [size]="'s'"
+        [color]="'text'"
+        [fwStyle]="'italic'"
+        >You don't have any time recorded for this period.</fui-text
+      >
     </div>
   </fui-collapsible-nav-group>
-  <shared-empty-data [dataLength]="dateTimesheetByDate.length" />
 </div>
