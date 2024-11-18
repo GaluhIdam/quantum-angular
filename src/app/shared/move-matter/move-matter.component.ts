@@ -92,6 +92,7 @@ export class MoveMatterComponent {
   toggleReset(): void {
     this.searchForm = new FormControl('');
     this.matterSelected = null;
+    this.actionOut.emit(null);
   }
 
   /** Toggle move timesheet */

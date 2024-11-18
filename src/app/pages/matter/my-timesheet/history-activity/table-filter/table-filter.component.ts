@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   BadgeComponent,
   ButtonIconComponent,
@@ -33,6 +39,7 @@ import { MyTimesheetDTO } from '../../../../../interfaces/my-timesheet.dto';
 })
 export class TableFilterComponent extends BaseController {
   @Input() dataTimesheet: MyTimesheetDTO[] = [];
+  @Input() timesheetSelected: MyTimesheetDTO[] = [];
   @Input() page: number = 1;
   @Input() limit: number = 10;
   @Input() totalItems: number = 100;
@@ -47,14 +54,21 @@ export class TableFilterComponent extends BaseController {
     data: MyTimesheetDTO;
   }>();
 
-  /** Timesheet Selected */
-  timesheetSelected: MyTimesheetDTO[] = [];
-
   /** Header Table */
   headerTable: string[] = ['Matter#', 'Description', 'Duration', ''];
 
   /** Select all status */
   selectAllStatus: boolean = false;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes) {
+      if (changes['timesheetSelected']) {
+        if (this.timesheetSelected.length === 0) {
+          this.selectAllStatus = false;
+        }
+      }
+    }
+  }
 
   /** Toggle Select All */
   toggleSelectAll(status: boolean, data: MyTimesheetDTO[]): void {

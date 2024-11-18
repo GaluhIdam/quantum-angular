@@ -2,7 +2,6 @@ import { inject } from '@angular/core';
 import { Color, Icon, Size, ToastProps, ToastService } from '@quantum/fui';
 import { Observable, of } from 'rxjs';
 import { MyTimesheetDTO } from '../../interfaces/my-timesheet.dto';
-import { TimesheetByDateDTO } from '../../interfaces/my-timesheet-temporary.dto';
 
 export class BaseController {
   /** Injector */

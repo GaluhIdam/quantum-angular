@@ -20,7 +20,8 @@ export class MyTimesheetService {
    *     "uuid": "789e1234-e89b-12d3-a456-426614174000",
    *     "matter": {
    *       "uuid": "456e1234-e89b-12d3-a456-426614174000",
-   *       "name": "Matter A",
+   *       "matter": "Matter A",
+   *       "description": "Description",
    *       "created_at": "2024-10-15T08:30:00Z",
    *       "updated_at": "2024-10-15T09:00:00Z"
    *     },

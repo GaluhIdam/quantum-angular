@@ -46,6 +46,7 @@ import { MyTimesheetDTO } from '../../../../../interfaces/my-timesheet.dto';
 })
 export class TableWithoutFilterComponent extends BaseController {
   @Input() dataTimesheet: MyTimesheetDTO[] = [];
+  @Input() timesheetSelected: MyTimesheetDTO[] = [];
   @Input() startDate: Date = new Date();
   @Input() endDate: Date = new Date();
   @Output() selectionOut: EventEmitter<MyTimesheetDTO[]> = new EventEmitter<
@@ -62,9 +63,6 @@ export class TableWithoutFilterComponent extends BaseController {
   /** Data for day to day */
   dataTimesheetPerday: MyTimesheetPerDay[] = [];
 
-  /** Timesheet Selected */
-  timesheetSelected: MyTimesheetDTO[] = [];
-
   /** Header Table */
   headerTable: string[] = ['Matter#', 'Description', 'Duration', ''];
 
@@ -75,9 +73,20 @@ export class TableWithoutFilterComponent extends BaseController {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
-      if (this.dataTimesheet.length > 0) {
+      if (
+        changes['dataTimesheet'] ||
+        changes['startDate'] ||
+        changes['endDate']
+      ) {
         this.initializeDateWithParams(this.startDate, this.endDate);
         this.groupTimesheetsByDate();
+      }
+      if (changes['timesheetSelected']) {
+        if (this.timesheetSelected.length === 0) {
+          this.dataTimesheetPerday.forEach((item) => {
+            item.selectAll = false;
+          });
+        }
       }
     }
   }
