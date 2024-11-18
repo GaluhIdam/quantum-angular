@@ -8,11 +8,11 @@
       [ngClass]="[day.show === true ? 'first' : '']"
       header
     >
-      <fui-text [textWrap]="'nowrap'" style="min-width: 200px"
+      <fui-text [textWrap]="'nowrap'" style="min-width: 100px"
         >{{ day.date | date : "EEE" }},
         {{ day.date | date : "d MMM" }}</fui-text
       >
-      <fui-horizontal-stack
+      <fui-horizontal-stack style="min-width: 200px;"
         *ngIf="day.data.length > 0"
         [showPercentage]="'none'"
         [progress]="[

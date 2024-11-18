@@ -34,6 +34,7 @@
       [startDate]="startDate"
       [endDate]="endDate"
       [dataTimesheet]="dataTimesheet"
+      [timesheetSelected]="timesheetSelected"
       (actionOut)="toggleEditDeleteTimesheet($event.action, $event.data)"
       (selectionOut)="toggleSelection($event)"
     />
@@ -47,6 +48,7 @@
       [limit]="limit"
       [totalItems]="totalItems"
       [dataTimesheet]="dataTimesheet"
+      [timesheetSelected]="timesheetSelected"
       (actionOut)="toggleEditDeleteTimesheet($event.action, $event.data)"
       (selectionOut)="toggleSelection($event)"
     />

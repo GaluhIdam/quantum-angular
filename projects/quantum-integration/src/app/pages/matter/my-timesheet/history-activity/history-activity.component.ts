@@ -74,7 +74,54 @@ export class HistoryActivityComponent extends BaseController {
   dataActivities: ActivityDTO[] = [];
 
   /** Data timesheets from service */
-  dataTimesheet: MyTimesheetDTO[] = [];
+  dataTimesheet: MyTimesheetDTO[] = [
+    {
+      uuid: '789e1234-e89b-12d3-a456-426614174000',
+      matter: {
+        uuid: '456e1234-e89b-12d3-a456-426614174000',
+        matter: '123456',
+        description: 'Description',
+        created_at: '2024-10-15T08:30:00Z',
+        updated_at: '2024-10-15T09:00:00Z',
+      },
+      activity: {
+        uuid: '123e4567-e89b-12d3-a456-426614174001',
+        name: 'Activity 1',
+        created_at: '2024-11-01T10:00:00Z',
+        updated_at: '2024-11-02T12:00:00Z',
+      },
+      description: 'Meeting with client regarding project details',
+      date: '2024-11-19',
+      duration: '02:00',
+      pending: false,
+      tagBy: '',
+      created_at: '2024-11-10T09:00:00Z',
+      updated_at: '2024-11-10T11:30:00Z',
+    },
+    {
+      uuid: '789e1234-e89b-12d3-a456-426614174000',
+      matter: {
+        uuid: '456e1234-e89b-12d3-a456-426614174000',
+        matter: '123456',
+        description: 'Description',
+        created_at: '2024-10-15T08:30:00Z',
+        updated_at: '2024-10-15T09:00:00Z',
+      },
+      activity: {
+        uuid: '123e4567-e89b-12d3-a456-426614174001',
+        name: 'Activity 1',
+        created_at: '2024-11-01T10:00:00Z',
+        updated_at: '2024-11-02T12:00:00Z',
+      },
+      description: 'Meeting with client regarding project details',
+      date: '2024-11-19',
+      duration: '02:30',
+      pending: true,
+      tagBy: 'John Doe',
+      created_at: '2024-11-10T09:00:00Z',
+      updated_at: '2024-11-10T11:30:00Z',
+    },
+  ];
 
   /** Date range for my timesheet */
   currentDate: Date = new Date();
@@ -217,7 +264,9 @@ export class HistoryActivityComponent extends BaseController {
 
   /** Move timesheet to service */
   moveTimesheet(event: MatterDTO | null): void {
-    console.log(event);
+    if (!event) {
+      this.timesheetSelected = [];
+    }
   }
 
   /** Toggle Selection */

@@ -51,4 +51,17 @@
 
 .wrap {
   width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  app-table-without-filter {
+    width: 100%;
+    display: contents;
+  }
+  @media (max-width: 760px) {
+    app-table-without-filter {
+      width: 100%;
+      display: flex;
+    }
+  }
 }
