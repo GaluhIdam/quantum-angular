@@ -1,11 +1,8 @@
 import { inject } from '@angular/core';
 import { Color, Icon, Size, ToastProps, ToastService } from '@quantum/fui';
-import {
-  MyTimesheetDTO,
-  TimesheetByDateDTO,
-} from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
-import { FormControl } from '@angular/forms';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { MyTimesheetDTO } from '../../interfaces/my-timesheet.dto';
+import { TimesheetByDateDTO } from '../../interfaces/my-timesheet-temporary.dto';
 
 export class BaseController {
   /** Injector */
@@ -85,49 +82,6 @@ export class BaseController {
     return `${hours}h ${minutes}m`;
   }
 
-  /** Grouping Timesheet by date range */
-  groupingTimesheetByRangeDate(
-    timesheets: MyTimesheetDTO[],
-    startDate: string,
-    endDate: string
-  ): TimesheetByDateDTO[] {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const dateRange: { [date: string]: MyTimesheetDTO[] } = {};
-    const currentDate = new Date(startDate);
-
-    // Initialize the date range with empty arrays
-    while (currentDate <= end) {
-      const formattedDate = currentDate.toISOString().split('T')[0];
-      dateRange[formattedDate] = [];
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    // Fill the date range with timesheets
-    timesheets.forEach((timesheet: MyTimesheetDTO) => {
-      const date = new Date(timesheet.date).toISOString().split('T')[0];
-      if (dateRange[date]) {
-        dateRange[date].push(timesheet);
-      }
-    });
-
-    // Transform the date range object into an array of TimesheetByDateDTO
-    const groupedByDate: TimesheetByDateDTO[] = Object.keys(dateRange).map(
-      (date) => ({
-        date,
-        data: dateRange[date],
-      })
-    );
-
-    // Filter to ensure dates are within the specified range
-    const filteredGroupedTimesheets = groupedByDate.filter((entry) => {
-      const entryDate = new Date(entry.date);
-      return entryDate >= start;
-    });
-
-    return filteredGroupedTimesheets;
-  }
-
   /** Helper Date */
   addDays(dateString: string, days: number): string {
     const date = new Date(dateString);
@@ -172,7 +126,7 @@ export class BaseController {
       const [hours, minutes] = timesheet.duration.split(':').map(Number);
       const totalMinutes = hours * 60 + minutes;
 
-      if (timesheet.tagEntityList.length > 0) {
+      if (timesheet.pending) {
         taggedTotalMinutes += totalMinutes;
       } else {
         untaggedTotalMinutes += totalMinutes;
@@ -205,7 +159,7 @@ export class BaseController {
       const [hours, minutes] = timesheet.duration.split(':').map(Number);
       const totalMinutes = hours * 60 + minutes;
 
-      if (timesheet.tagEntityList.length > 0) {
+      if (timesheet.pending) {
         taggedTotalMinutes += totalMinutes;
       } else {
         untaggedTotalMinutes += totalMinutes;

@@ -13,6 +13,7 @@ import { TimesheetComponent } from './timesheet/timesheet.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { InformationComponent } from './information/information.component';
 import { OverviewComponent } from './overview/overview.component';
+import { BillingsComponent } from './billings/billings.component';
 
 @Component({
   selector: 'app-detail-matter',
@@ -28,6 +29,7 @@ import { OverviewComponent } from './overview/overview.component';
     TimesheetComponent,
     ExpensesComponent,
     InformationComponent,
+    BillingsComponent,
   ],
   templateUrl: './detail-matter.component.html',
   styleUrl: './detail-matter.component.scss',
@@ -71,6 +73,13 @@ export class DetailMatterComponent {
       sideIcon: 'left',
       sizeIcon: 'sizem',
       title: 'Expenses',
+    },
+    {
+      active: false,
+      icon: 'documents',
+      sideIcon: 'left',
+      sizeIcon: 'sizem',
+      title: 'Billings',
     },
     {
       active: 'disabled',

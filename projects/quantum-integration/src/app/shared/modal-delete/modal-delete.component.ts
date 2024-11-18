@@ -34,7 +34,7 @@ export class ModalDeleteComponent {
     'This data will be permanently deleted. Do you want to continue?';
   @Input() btnContinue: string = 'Yes, Delete';
   @Input() btnCancel: string = 'No, Keep it';
-  @Output() action: EventEmitter<{
+  @Output() actionOut: EventEmitter<{
     name: string;
     status: boolean;
   }> = new EventEmitter<{
@@ -45,16 +45,16 @@ export class ModalDeleteComponent {
   /** Close Modal Delete */
   closelModalDelete(): void {
     this.openModalDelete = false;
-    this.action.emit({
+    this.actionOut.emit({
       name: 'cancel',
       status: false,
     });
   }
 
   /** Send to consumer for continue a process */
-  deleteAction(): void {
+  deleteActionOut(): void {
     this.openModalDelete = false;
-    this.action.emit({
+    this.actionOut.emit({
       name: 'delete',
       status: false,
     });

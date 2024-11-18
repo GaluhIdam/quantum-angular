@@ -1,27 +1,31 @@
 <div class="flex">
   <fui-badge
-    [color]="'text'"
-    [size]="'m'"
+    [color]="'default'"
+    [size]="'s'"
     [iconShow]="true"
     [icon]="'cross'"
     [iconPosition]="'end'"
-    (onClickBadge)="clearSelection()"
+    (iconOnClick)="toggleReset()"
+    [text]="totalItemSelected + ' item on page selected'"
   >
-    <p class="text">{{ timesheetSelected.length }} item on page selected</p>
   </fui-badge>
   <div class="vertical-line"></div>
-  <div class="toggle" (click)="handleOpenModal()">
+  <div class="toggle" (click)="toggleOpenCloseModal(true)">
     <fui-icons [icon]="'push'" [size]="'sizem'" [color]="'primary'" />
     <p class="toggle-clear">Move</p>
   </div>
-  <div class="toggle danger" *ngIf="writeOff" (click)="handleOpenModal()">
+  <div
+    class="toggle danger"
+    *ngIf="writeOff"
+    (click)="toggleOpenCloseModal(true)"
+  >
     <p class="toggle-clear danger">Write-off</p>
   </div>
 </div>
 
 <!-- MODAL MOVE  -->
 <fui-modal [open]="isModalOpen">
-  <fui-modal-header (onCloseModal)="handleCloseModal()">
+  <fui-modal-header (onCloseModal)="toggleOpenCloseModal(false)">
     <div class="header-modal"><h1>Move Time</h1></div>
   </fui-modal-header>
   <fui-modal-body>
@@ -40,8 +44,6 @@
               [type]="'text'"
               [size]="'m'"
               [invalid]="false"
-              (onFocus)="openClose(true)"
-              (onBlur)="openClose(false)"
             >
               <fui-icons left-icon [icon]="'search'" [size]="'sizem'" />
               <fui-loading
@@ -71,13 +73,13 @@
             <div class="container-option">
               <div
                 class="option-matter"
-                (click)="selectionOption(item)"
+                (click)="toggleSelectMatter(item)"
                 *ngFor="let item of listMatters"
               >
                 <p class="{{ +showDesc ? 'title mb-0' : 'title' }}">
                   {{ item.matter }} - {{ item.description }}
                 </p>
-                <p *ngIf="!showDesc">Binford Ltd.; Acme Co. and 3 other</p>
+                <p *ngIf="!showDesc">Binford Ltd. Acme Co. and 3 other</p>
               </div>
             </div>
           </div>
@@ -85,18 +87,20 @@
       </div>
     </div>
   </fui-modal-body>
-  <fui-modal-footer >
+  <fui-modal-footer>
     <div class="footer-modal">
-      <fui-button-icon [fullWidth]="'fit'"
+      <fui-button-icon
+        [fullWidth]="'fit'"
         [type]="'button'"
         [option]="'text'"
         [text]="'Cancel'"
         [color]="'primary'"
         [style]="'secondary'"
-        (onClick)="handleCloseModal()"
+        (onClick)="toggleOpenCloseModal(false)"
       />
-      <fui-button-icon [fullWidth]="'fit'"
-        (onClick)="moveTimesheet()"
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        (onClick)="toggleMoveTimesheet()"
         [type]="'button'"
         [option]="'text'"
         [text]="'Move Timesheet'"

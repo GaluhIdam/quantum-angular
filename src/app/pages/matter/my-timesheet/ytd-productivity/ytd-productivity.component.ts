@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { EchartsComponent, TextComponent } from '@quantum/fui';
 import * as echarts from 'echarts/core';
 import { ThemesChartCustom } from './theme-chart';
 import { EmptyDataComponent } from '../../../../shared/empty-data/empty-data.component';
-import { SampleDataMyTimeSheet } from '../services/sample-data';
-import { MyTimesheetService } from '../services/my-timesheet.service';
-import { Subscription } from 'rxjs';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
+import { ProductivityMonthlyDTO } from '../../../../interfaces/productivity-monthly.dto';
+import { YtdProductivityService } from '../../../../services/matter/my-timesheet/ytd-productivity/ytd-productivity.service';
 
 @Component({
   selector: 'app-ytd-productivity',
@@ -23,8 +22,21 @@ import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.componen
   styleUrl: './ytd-productivity.component.scss',
 })
 export class YtdProductivityComponent {
+  @Input() type: 'month' | 'year' | 'appraisalYear' = 'year';
+
+  /** Loading status */
   loading: boolean = true;
 
+  /** Data ytd productivities */
+  dataYtdProductivity: ProductivityMonthlyDTO[] = [];
+
+  /** Series for billable */
+  private seriesBillable: number[] = [];
+
+  /** Series for non-billable */
+  private seriesNonBillable: number[] = [];
+
+  /** Echart Settings */
   optionBar: any = {
     xAxis: {
       type: 'category',
@@ -62,26 +74,121 @@ export class YtdProductivityComponent {
     tooltip: {
       trigger: 'axis',
     },
-    series: [],
+    series: [
+      {
+        name: 'Billable Hours',
+        data: this.seriesBillable,
+        type: 'bar',
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)',
+        },
+        label: {
+          show: true,
+          position: 'top',
+          textBorderWidth: 0,
+          formatter: (params: { data: number; dataIndex: number }) => {
+            let percent = Math.round(
+              (params.data /
+                this.getTargetHour(
+                  'billable',
+                  this.dataYtdProductivity,
+                  params.dataIndex
+                )) *
+                100
+            );
+            return percent + '%';
+          },
+        },
+      },
+      {
+        name: 'Non-Billable',
+        data: this.seriesNonBillable,
+        type: 'bar',
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)',
+        },
+        label: {
+          show: true,
+          position: 'top',
+          textBorderWidth: 0,
+          formatter: (params: { data: number; dataIndex: number }) => {
+            let percent = Math.round(
+              (params.data /
+                this.getTargetHour(
+                  'non-billable',
+                  this.dataYtdProductivity,
+                  params.dataIndex
+                )) *
+                100
+            );
+            console.log(params);
+            return percent + '%';
+          },
+        },
+      },
+    ],
   };
 
-  constructor(private readonly myTimesheetService: MyTimesheetService) {
+  constructor(
+    private readonly ytdProductivitiesService: YtdProductivityService
+  ) {
     echarts.registerTheme('light', ThemesChartCustom.light);
     echarts.registerTheme('dark', ThemesChartCustom.dark);
   }
 
-  private subscription!: Subscription;
-
   ngOnInit(): void {
     setTimeout(() => {
       this.loading = false;
-      this.optionBar.series = SampleDataMyTimeSheet.ytdProductivity;
     }, 1000);
   }
 
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes) {
+      // this.getDataYtdProductivites(new Date().getFullYear(), this.type);
+    }
+  }
+
+  /** Getting data productivities from service
+   * @service
+   *  YtdProductivityService
+   */
+  private getDataYtdProductivites(year: number, type: string): void {
+    this.ytdProductivitiesService.getYtdProductivities(year, type).subscribe({
+      next: (res) => {
+        this.dataYtdProductivity = res;
+        this.dataProcessingToArray(this.dataYtdProductivity);
+      },
+      error: () => {
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
+      },
+    });
+  }
+
+  /** Get data target hour for maximum value in chart */
+  private getTargetHour(
+    param: 'billable' | 'non-billable',
+    data: ProductivityMonthlyDTO[],
+    index: number
+  ): number {
+    if (param === 'billable') {
+      return data[index].billableTargetHour;
+    } else {
+      return data[index].nonbillableTargetHour;
+    }
+  }
+
+  /** Processing data to be number array */
+  private dataProcessingToArray(data: ProductivityMonthlyDTO[]): void {
+    if (data.length > 0) {
+      data.forEach((item) => this.seriesBillable.push(item.billableActualHour));
+      data.forEach((item) =>
+        this.seriesNonBillable.push(item.nonbillableActualHour)
+      );
     }
   }
 }

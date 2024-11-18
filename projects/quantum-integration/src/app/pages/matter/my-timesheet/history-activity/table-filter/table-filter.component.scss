@@ -1,174 +1,53 @@
 @import "../history-activity.component.scss";
-
-.container {
-  overflow-x: auto;
-  overflow-y: hidden;
+.mt-20 {
+  margin-top: 20px;
 }
+.header-tb {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 
-
-/** Table Config */
-.table {
-  display: table;
-  width: 100%;
-  border-collapse: collapse;
-}
-.table .table-row {
-  display: table-row;
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: var(--fuiColorLightShade, $fuiColorLightShade);
-}
-.table .table-row:last-child {
-  display: table-row;
-  border: none;
-}
-.table .table-cell {
-  text-wrap: nowrap;
-  display: table-cell;
-  padding: 8px;
-  text-align: left;
-  .head-title {
-    font-weight: bold;
-  }
-}
-.table .table-cell:first-child {
-  border-left: 0;
-}
-.table .table-cell:last-child {
-  border-right: 0;
-}
-.wrap-action {
-  display: flex;
-  align-items: baseline;
-  justify-content: start;
-  fui-button-icon {
-    margin-left: 3px;
-    margin-right: 3px;
-  }
-}
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: var(--fuiColorLightShade, $fuiColorLightShade);
+  padding: 5px 0px;
 
-/** Modal Edit */
-.container-modal-edit {
-  padding: 0px 10px;
-}
-.title-modal-edit {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  padding: 10px;
-}
-.title-modal-edit.foot {
-  display: flex;
-  padding: 10px;
-  justify-content: end;
-  fui-button-icon {
-    margin-left: 10px;
+  &.first {
+    border-bottom-width: 0px;
   }
-}
-.modal-edit {
-  width: 100%;
-  background-color: var(--fuiPrimarySecondary, $fuiPrimarySecondary);
-  padding: 10px;
-  .title-info {
+
+  .right-util {
     display: flex;
-    margin-bottom: 8px;
-    h4 {
-      margin-top: 2px;
-      margin-left: 4px;
-      color: var(--fuiColorPrimary, $fuiColorPrimary);
-    }
-  }
-  .desc {
-    font-size: 14px;
-    text-wrap: nowrap;
-  }
-}
-.form {
-  width: 100%;
-  margin-top: 20px;
-  display: flex;
-  .form-control {
-    margin-right: 5px;
-    .title-form {
-      margin-bottom: 5px;
-    }
-  }
-  .form-control.half {
-    width: 49%;
-  }
-  .form-control.full {
-    width: 100%;
-  }
-  .form-control:last-child {
-    margin-right: 0px;
+    align-items: center;
+    justify-content: end;
+    flex-direction: row;
+    gap: 10px;
   }
 }
 
-/** Tag Config */
+hr {
+  border-color: var(--fuiColorLightShade, $fuiColorLightShade);
+}
+
+.flex-btn {
+  display: flex;
+  gap: 10px;
+  justify-content: start;
+  align-items: center;
+}
+
 .tag-bg {
   background-color: var(--fuiWarningSecondary, $fuiWarningSecondary);
 }
-.tag-badge {
-  margin-top: 8px;
-  font-weight: bold;
+
+.white-bg {
+  display: flex;
   width: fit-content;
-  display: flex;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--fuiColorMediumShade, $fuiColorMediumShade);
-  border-radius: 6px;
-  padding: 3px 6px;
-  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
-  fui-icons {
-    margin-right: 5px;
-  }
-}
-
-/** Modal Config */
-.title-modal {
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  h3 {
-    color: var(--fuiColorDanger, $fuiColorDanger);
-  }
-}
-.title-modal.foot {
-  display: flex;
-  padding: 10px;
-  justify-content: end;
-  fui-button-icon {
-    margin-left: 10px;
-  }
-}
-.modal {
-  padding: 10px;
-  width: 350px;
-}
-
-.edit-form {
-  display: flex;
-  justify-content: space-between;
-}
-
-.custom-badge {
-  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
-  border-bottom-color: var(--fuiColorLightShade, $fuiColorLightShade);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--fuiColorMediumShade, $fuiColorMediumShade);
-  width: fit-content;
-  border-radius: 4px;
-  padding: 2px 8px;
-  .item {
-    margin-top: 2px;
-  }
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-
-fui-pagination {
-  margin-top: 10px;
-  display: block;
+  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+  border-radius: 3px;
 }

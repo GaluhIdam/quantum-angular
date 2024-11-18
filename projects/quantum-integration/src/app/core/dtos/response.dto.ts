@@ -3,7 +3,7 @@
  * @property message: string (for description from rest api)
  * @property result: T (data from rest api)
  */
-export interface ResponseDTO<T> {
+export interface Response<T> {
   status: string;
   message: string;
   result: T;
@@ -15,7 +15,6 @@ export interface Result<T> {
   page: number;
   limit: number;
   totalItems: number;
-  totalPages: number;
 }
 
 export interface Pageable {

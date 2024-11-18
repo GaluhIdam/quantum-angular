@@ -7,163 +7,183 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {
-  MyTimesheetDTO,
-  TimesheetByDateDTO,
-} from '../../dtos/my-timesheet.dto';
-import {
   BadgeComponent,
   ButtonIconComponent,
   CollapsibleNavGroupComponent,
-  Color,
   HorizontalStackComponent,
-  IconsComponent,
+  TableBodyComponent,
+  TableBodyDataComponent,
+  TableBodyRowComponent,
+  TableComponent,
+  TableHeadComponent,
+  TextComponent,
 } from '@quantum/fui';
 
 import { BaseController } from '../../../../../core/controller/basecontroller';
-import { EmptyDataComponent } from '../../../../../shared/empty-data/empty-data.component';
+import { MyTimesheetPerDay } from '../../../../../interfaces/my-timesheet-per-day.dto';
+import { FormsModule } from '@angular/forms';
+import { MyTimesheetDTO } from '../../../../../interfaces/my-timesheet.dto';
 
 @Component({
   selector: 'app-table-without-filter',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     CollapsibleNavGroupComponent,
     HorizontalStackComponent,
     BadgeComponent,
     ButtonIconComponent,
-    IconsComponent,
-    EmptyDataComponent,
+    TextComponent,
+    TableComponent,
+    TableHeadComponent,
+    TableBodyRowComponent,
+    TableBodyComponent,
+    TableBodyDataComponent,
   ],
   templateUrl: './table-without-filter.component.html',
   styleUrl: './table-without-filter.component.scss',
 })
 export class TableWithoutFilterComponent extends BaseController {
-  @Input() dateTimesheetByDate: TimesheetByDateDTO[] = [];
-  progress: {
-    percentage: number;
-    color: Color;
-  }[][] = [];
-  @Input() timesheetSelected: MyTimesheetDTO[] = [];
-
-  @Output() timesheetSelectedOut: EventEmitter<MyTimesheetDTO[]> =
-    new EventEmitter<MyTimesheetDTO[]>();
-
-  @Output() action: EventEmitter<{
-    action: string;
-    flyout: boolean;
+  @Input() dataTimesheet: MyTimesheetDTO[] = [];
+  @Input() startDate: Date = new Date();
+  @Input() endDate: Date = new Date();
+  @Output() selectionOut: EventEmitter<MyTimesheetDTO[]> = new EventEmitter<
+    MyTimesheetDTO[]
+  >();
+  @Output() actionOut: EventEmitter<{
+    action: 'edit' | 'editTag' | 'delete';
     data: MyTimesheetDTO;
   }> = new EventEmitter<{
-    action: string;
-    flyout: boolean;
+    action: 'edit' | 'editTag' | 'delete';
     data: MyTimesheetDTO;
   }>();
 
+  /** Data for day to day */
+  dataTimesheetPerday: MyTimesheetPerDay[] = [];
+
+  /** Timesheet Selected */
+  timesheetSelected: MyTimesheetDTO[] = [];
+
+  /** Header Table */
   headerTable: string[] = ['Matter#', 'Description', 'Duration', ''];
 
-  showHideTablePerRow: boolean[] = [];
-
-  hideSubMatter: boolean = false;
-
-  timesheetChecked: MyTimesheetDTO[][] = [];
+  constructor() {
+    super();
+    this.initializeDate();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['dateTimesheetByDate']) {
-      this.dateTimesheetByDate.forEach((item, index) => {
-        if (!this.showHideTablePerRow[index]) {
-          this.showHideTablePerRow[index] = false;
-        }
-        if (!this.timesheetChecked[index]) {
-          this.timesheetChecked[index] = [];
+    if (changes) {
+      if (this.dataTimesheet.length > 0) {
+        this.initializeDateWithParams(this.startDate, this.endDate);
+        this.groupTimesheetsByDate();
+      }
+    }
+  }
+
+  /** Initialization date per week */
+  initializeDate(): void {
+    const currentDate = new Date();
+    this.startDate = new Date(currentDate);
+    const dayOfWeek = currentDate.getDay();
+    const offset = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    this.startDate.setDate(currentDate.getDate() - offset);
+    this.endDate = new Date(this.startDate);
+    this.endDate.setDate(this.startDate.getDate() + 6);
+
+    this.dataTimesheetPerday = [];
+    for (
+      let i = new Date(this.startDate);
+      i <= this.endDate;
+      i.setDate(i.getDate() + 1)
+    ) {
+      this.dataTimesheetPerday.push({
+        date: this.formatDate(i),
+        data: [],
+        show: false,
+        selectAll: false,
+      });
+    }
+  }
+
+  /** Initialization date per week use param */
+  initializeDateWithParams(startDate: Date, endDate: Date): void {
+    this.startDate = new Date(startDate);
+    this.endDate = new Date(endDate);
+    this.dataTimesheetPerday = [];
+
+    for (
+      let i = new Date(this.startDate);
+      i <= this.endDate;
+      i.setDate(i.getDate() + 1)
+    ) {
+      this.dataTimesheetPerday.push({
+        date: this.formatDate(i),
+        data: [],
+        show: false,
+        selectAll: false,
+      });
+    }
+  }
+
+  /** Toggle Select All */
+  toggleSelectAll(status: boolean, data: MyTimesheetDTO[]): void {
+    if (status) {
+      data
+        .filter((timesheet) => !timesheet.pending)
+        .forEach((timesheet) => {
+          if (!this.timesheetSelected.includes(timesheet)) {
+            this.timesheetSelected.push(timesheet);
+          }
+        });
+    } else {
+      this.timesheetSelected = this.timesheetSelected.filter(
+        (timesheet) => !data.includes(timesheet) || timesheet.pending
+      );
+    }
+    this.selectionOut.emit(this.timesheetSelected);
+  }
+
+  /** Toggle select timesheet */
+  toggleSelectTimesheet(
+    data: MyTimesheetDTO,
+    idx: number,
+    dts: MyTimesheetDTO[]
+  ): void {
+    const index = this.timesheetSelected.findIndex(
+      (selected) => selected.uuid === data.uuid
+    );
+    if (index > -1) {
+      this.timesheetSelected.splice(index, 1);
+    } else {
+      this.timesheetSelected.push(data);
+    }
+    this.dataTimesheetPerday[idx].selectAll =
+      this.timesheetSelected.length ===
+      dts.filter((timesheet) => !timesheet.pending).length;
+    this.selectionOut.emit(this.timesheetSelected);
+  }
+
+  /** Groupingg timesheet */
+  groupTimesheetsByDate(): void {
+    this.dataTimesheetPerday.forEach((day, i) => {
+      this.dataTimesheet.forEach((timesheet) => {
+        if (day.date === timesheet.date) {
+          this.dataTimesheetPerday[i].data.push(timesheet);
         }
       });
-      this.progressStackConverter();
-    }
-
-    if (changes['timesheetSelected']) {
-      this.syncCheckedItems();
-    }
+    });
   }
 
-  syncCheckedItems(): void {
-    if (this.timesheetSelected.length === 0) {
-      this.timesheetChecked = this.timesheetChecked.map(() => []);
-    } else {
-      this.dateTimesheetByDate.forEach((date, index) => {
-        this.timesheetChecked[index] = date.data.filter((item) =>
-          this.timesheetSelected.some(
-            (selected) => selected.idTimesheet === item.idTimesheet
-          )
-        );
-      });
-    }
-  }
-
-  openOrCloseTablePerRow(index: number): void {
-    this.showHideTablePerRow[index] = !this.showHideTablePerRow[index];
-  }
-
-  progressStackConverter(): void {
-    this.progress = this.dateTimesheetByDate.map((item) => [
-      {
-        percentage: this.calculateTotalDurationTagPercent(item.data)
-          .untaggedPercentage,
-        color: 'primary',
-      },
-      {
-        percentage: this.calculateTotalDurationTagPercent(item.data)
-          .remainingPercentage,
-        color: 'text',
-      },
-      {
-        percentage: this.calculateTotalDurationTagPercent(item.data)
-          .taggedPercentage,
-        color: 'warning',
-      },
-    ]);
-  }
-
-  checkHideMatter(): void {
-    this.hideSubMatter = !this.hideSubMatter;
-  }
-
-  checkItem(index: number, item: MyTimesheetDTO): void {
-    const itemIndex = this.timesheetChecked[index].findIndex(
-      (dto) => dto.idTimesheet === item.idTimesheet
-    );
-    if (itemIndex !== -1) {
-      this.timesheetChecked[index].splice(itemIndex, 1);
-    } else {
-      this.timesheetChecked[index].push(item);
-    }
-    this.updateTimesheetSelected();
-  }
-
-  checkAllItems(index: number, items: MyTimesheetDTO[]): void {
-    if (this.timesheetChecked[index].length === items.length) {
-      this.timesheetChecked[index] = [];
-    } else {
-      this.timesheetChecked[index] = [...items];
-    }
-    this.updateTimesheetSelected();
-  }
-
-  isItemChecked(index: number, item: MyTimesheetDTO): boolean {
-    return this.timesheetChecked[index].some(
-      (dto) => dto.idTimesheet === item.idTimesheet
-    );
-  }
-
-  updateTimesheetSelected(): void {
-    this.timesheetSelected = this.timesheetChecked.flat();
-    this.timesheetSelectedOut.emit(this.timesheetSelected);
-  }
-
-  /** Action */
-  actionBtn(param: string, data: MyTimesheetDTO): void {
-    this.action.emit({
-      action: param,
-      flyout: true,
-      data: data,
+  /** Toggle edit or delete */
+  toggleEditDeleteTimesheet(
+    action: 'edit' | 'editTag' | 'delete',
+    data: MyTimesheetDTO
+  ): void {
+    this.actionOut.emit({
+      action,
+      data,
     });
   }
 }

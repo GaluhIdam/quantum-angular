@@ -9,7 +9,7 @@
   <shared-button-group [btnList]="btnFilterList" />
   <shared-filter-applied
     [filterApplied]="filterApplied"
-    (action)="clearAllFilterOut($event)"
+    (actionOut)="clearAllFilterOut($event)"
   />
 </div>
 <!-- FILTER STATUS  -->
@@ -18,8 +18,8 @@
 <div class="container-w" *ngIf="timesheetSelected.length > 0">
   <shared-move-matter
     [writeOff]="true"
-    [timesheetSelected]="timesheetSelected"
-    (action)="onSelectedItemsChange($event)"
+    [listMatters]="[]"
+    [totalItemSelected]="0"
   />
 </div>
 <!-- MOVE MATTER  -->
@@ -209,6 +209,6 @@
 <!-- MODEL DELETE  -->
 <shared-modal-delete
   [openModalDelete]="openModalDelete"
-  (action)="actionModal($event)"
+  (actionOut)="actionModal($event)"
 />
 <!-- MODEL DELETE  -->

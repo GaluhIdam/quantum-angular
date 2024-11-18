@@ -1,0 +1,180 @@
+<shared-page-generic-default
+  [title]="'Company Entity'"
+  [description]="'Available company entity'"
+  [breadcrums]="link"
+>
+  <fui-form-control-layout formsearch>
+    <fui-input-field
+      [type]="'text'"
+      [placeholder]="'Search...'"
+      [size]="'m'"
+      [invalid]="false"
+    >
+      <fui-icons
+        left-icon
+        [label]="'left'"
+        [icon]="'search'"
+        [size]="'sizem'"
+        [color]="'text'"
+      />
+    </fui-input-field>
+  </fui-form-control-layout>
+
+  <fui-button-icon
+    cta
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'plus'"
+    [text]="'Add Company Entitiy'"
+    [size]="'m'"
+    (onClick)="toggleOpenFlyout('create', true)"
+  />
+
+  <!-- DATA AVAILABLE  -->
+  <fui-table-tree
+    *ngIf="dataCompany.length > 0"
+    content
+    [limit]="limit"
+    [totalItems]="totalItems"
+    [showInfo]="true"
+    [info]="'Company Entity'"
+    [pagination]="true"
+    (onPageChanges)="onPageChanges($event)"
+  >
+    <!-- HEADER  -->
+    <fui-table-head-tree
+      *ngFor="let item of title; let i = index"
+      [fieldName]="item"
+      [sortFeature]="item !== ''"
+      [utils]="{
+        index: i,
+        dataLength: title.length,
+        action: true,
+        activeField: sortData ? sortData.fieldName : ''
+      }"
+      (sortOut)="toggleSort($event)"
+    >
+      <fui-text [textWrap]="'nowrap'">{{ item }}</fui-text>
+    </fui-table-head-tree>
+    <!-- HEADER  -->
+
+    <!-- LEVEL 1  -->
+    <ng-container *ngFor="let item of dataCompany">
+      <fui-table-row-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-text [textWrap]="'nowrap'"> {{ item.name }} </fui-text>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-badge [text]="item.code" [color]="'hollow'" />
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [color]="'primary'"
+            [icon]="'pencil'"
+            [size]="'s'"
+            (onClick)="toggleOpenFlyout('update', true)"
+          ></fui-button-icon>
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [color]="'danger'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [icon]="'trash'"
+            [size]="'s'"
+            (onClick)="toggleModalDelete({ name: item.name, status: true })"
+          ></fui-button-icon>
+        </fui-table-data-tree>
+      </fui-table-row-tree>
+    </ng-container>
+    <!-- LEVEL 1  -->
+  </fui-table-tree>
+  <!-- DATA AVAILABLE  -->
+
+  <!-- EMPTY MESSAGE  -->
+  <shared-empty-data content [dataLength]="dataCompany.length" />
+  <!-- EMPTY MESSAGE  -->
+</shared-page-generic-default>
+
+<!-- FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="openFlyout"
+  [titleFlyout]="
+    createUpdate === 'create' ? 'Add Company Entity' : 'Update Company Entity'
+  "
+  (closeOut)="toggleOpenFlyout('create', false)"
+>
+  <div body>
+    <!-- NAME  -->
+    <div class="mb-15">
+      <fui-text class="label">Company Entity Name</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [placeholder]="'Company entity name'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="companyForm"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- NAME  -->
+
+    <!-- CODE  -->
+    <div class="mb-15">
+      <fui-text class="label">Code</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [placeholder]="'Shortcodes'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="codeForm"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- CODE  -->
+  </div>
+
+  <div footer class="flex-between">
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Cancel'"
+      [style]="'empty'"
+      (onClick)="toggleOpenFlyout('create', false)"
+    />
+    <fui-button-icon
+      *ngIf="createUpdate === 'create'"
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Save'"
+      [style]="'secondary'"
+      (onClick)="toggleUpdateCreateData('create', false)"
+    />
+    <fui-button-icon
+      *ngIf="createUpdate === 'update'"
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Update Location'"
+      [style]="'secondary'"
+      (onClick)="toggleUpdateCreateData('update', false)"
+    />
+  </div>
+</shared-flyout-simple>
+<!-- FLYOUT  -->
+
+<!-- MODAL DELETE  -->
+<shared-modal-delete
+  [openModalDelete]="openModalDelete"
+  (actionOut)="toggleModalDelete($event)"
+/>
+<!-- MODAL DELETE  -->
+
+<!-- TOAST -->
+<fui-toast />
+<!-- TOAST -->

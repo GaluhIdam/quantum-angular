@@ -8,14 +8,9 @@ import {
   HeaderComponent,
   HeaderPanelComponent,
   IconsComponent,
-  PageBodyComponent,
-  PageComponent,
   PageSidebarComponent,
   SidenavComponent,
   ThemeService,
-  FormControlLayoutComponent,
-  InputFieldComponent,
-  LoadingComponent,
   PopoverComponent,
   TextComponent,
   AvatarComponent,
@@ -36,11 +31,7 @@ import { DataSideBar } from './data-sidebar';
 import { keycloak } from '../../environment/env';
 import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
 import { UserKeycloak } from '../../core/guard/keycloak/keycloak.dto';
-import {
-  ActivityDTO,
-  MatterDTO,
-} from '../../pages/matter/my-timesheet/dtos/my-timesheet.dto';
-import { MyTimesheetService } from '../../pages/matter/my-timesheet/services/my-timesheet.service';
+
 import { FlyoutTimesheetComponent } from '../flyout-timesheet/flyout-timesheet.component';
 import { MiniSidebarComponent } from '../mini-sidebar/mini-sidebar.component';
 import { routes } from '../../app.routes';
@@ -50,18 +41,12 @@ import { routes } from '../../app.routes';
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
-    PageComponent,
-    PageBodyComponent,
     ButtonIconComponent,
     HeaderComponent,
     HeaderPanelComponent,
     PageSidebarComponent,
     IconsComponent,
     SidenavComponent,
-    FormControlLayoutComponent,
-    InputFieldComponent,
-    LoadingComponent,
     PopoverComponent,
     TextComponent,
     AvatarComponent,
@@ -84,8 +69,8 @@ export class LayoutsComponent {
   dataSide: DataSideDTO[] = [];
   theme!: string;
 
-  mattersData: MatterDTO[] = [];
-  activitesData: ActivityDTO[] = [];
+  mattersData: any[] = [];
+  activitesData: any[] = [];
 
   searchForms: FormControl = new FormControl();
   data: SitewideDTO[] = [];
@@ -106,16 +91,13 @@ export class LayoutsComponent {
   constructor(
     private navigate: Router,
     private cdr: ChangeDetectorRef,
-    private readonly authService: OidcAuthenticatorService,
-    private readonly myTimesheetService: MyTimesheetService
+    private readonly authService: OidcAuthenticatorService
   ) {
     this.dataSide = DataSideBar.dataSideBar;
     // this.getUser();
   }
 
   ngOnInit(): void {
-    this.getMatterData('');
-    this.getActivityData();
     this.themeService.currentTheme$.subscribe((data) => {
       if (data === 'light') {
         this.theme = 'ahp-light';
@@ -163,26 +145,6 @@ export class LayoutsComponent {
     if (this.obs) {
       this.obs.unsubscribe();
     }
-  }
-
-  /** Get matters from service */
-  getMatterData(search: string): void {
-    this.myTimesheetService
-      .getMatters(search)
-      .pipe(map((data) => (this.mattersData = data)))
-      .subscribe();
-  }
-
-  /** Get activity from service */
-  getActivityData(): void {
-    this.myTimesheetService
-      .getActivites()
-      .pipe(
-        map((data) => {
-          this.activitesData = data;
-        })
-      )
-      .subscribe();
   }
 
   /** Hide Sidebar if Mobile Device */
