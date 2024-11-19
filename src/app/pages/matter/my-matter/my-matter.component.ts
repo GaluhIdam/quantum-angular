@@ -13,7 +13,6 @@ import { ButtonGroupComponent } from '../../../shared/button-group/button-group.
 import { FlyoutFilterMatterComponent } from '../../../shared/flyout-filter-matter/flyout-filter-matter.component';
 import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
 import { PageEmptyComponent } from '../../../shared/page-empty/page-empty.component';
-import { BaseController } from '../../../core/controller/basecontroller';
 
 @Component({
   selector: 'app-my-matter',
