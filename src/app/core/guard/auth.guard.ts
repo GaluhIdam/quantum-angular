@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
-import { OidcAuthenticatorService } from '@quantum/fui';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { keycloak } from '../../environment/env';
+import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard {
-  constructor(
-    private readonly authService: OidcAuthenticatorService
-  ) {}
+  constructor(private readonly oidcSecurityService: OidcSecurityService) {}
 
   canActivate(): Observable<boolean> {
-    return this.authService.checkAuth(keycloak).pipe(
-      tap((isAuthenticated) => {
-        if (!isAuthenticated) {
-          this.authService.loginWithPage(keycloak);
+    return this.oidcSecurityService.checkAuth().pipe(
+      map((loginResponse: LoginResponse) => {
+        if (loginResponse.isAuthenticated) {
+          return loginResponse.isAuthenticated;
+        } else {
+          this.oidcSecurityService.authorize();
+          return loginResponse.isAuthenticated;
         }
-      }),
-      map((isAuthenticated) => isAuthenticated)
+      })
     );
   }
 }

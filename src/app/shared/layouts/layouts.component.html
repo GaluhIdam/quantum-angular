@@ -230,7 +230,7 @@
 <!-- </fui-page> -->
 <shared-modal-delete
   [openModalDelete]="logoutModal"
-  (deleteActionOut)="logoutAction()"
+  (actionOut)="logoutAction($event)"
   [title]="'Are you sure want to sign out?'"
   [desc]="''"
   [btnContinue]="'Sign Out'"
