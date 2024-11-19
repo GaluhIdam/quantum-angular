@@ -47,7 +47,7 @@ export class DetailMatterComponent {
     title: string;
   }[] = [
     {
-      active: false,
+      active: true,
       icon: 'visArea',
       sideIcon: 'left',
       sizeIcon: 'sizem',
@@ -75,7 +75,7 @@ export class DetailMatterComponent {
       title: 'Expenses',
     },
     {
-      active: true,
+      active: false,
       icon: 'documents',
       sideIcon: 'left',
       sizeIcon: 'sizem',

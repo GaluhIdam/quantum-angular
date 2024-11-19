@@ -26,7 +26,7 @@
     filterbtn
     [fullWidth]="'fit'"
     [type]="'button'"
-    [option]="'iconText'"
+    [option]="totalFilter > 0 ? 'iconText' : 'icon'"
     [icon]="'filter'"
     [text]="'/ ' + totalFilter"
     [style]="'secondary'"
@@ -328,11 +328,7 @@
     <!-- CHECKBOX  -->
     <div class="mb-15">
       <div class="flex-10-start hover" (click)="toggleCheckHaveSkill()">
-        <input
-          class="clicked"
-          type="checkbox"
-          [(ngModel)]="haveAssocited"
-        />
+        <input class="clicked" type="checkbox" [(ngModel)]="haveAssocited" />
         <fui-text class="clicked"
           >Have Associated Skills ({{ selectedSkills.length }})</fui-text
         >
@@ -476,10 +472,6 @@
 <!-- MODAL DELETE  -->
 <shared-modal-delete
   [openModalDelete]="openModalDelete"
-  (action)="toggleModalDelete($event)"
+  (actionOut)="toggleModalDelete($event)"
 />
 <!-- MODAL DELETE  -->
-
-<!-- TOAST -->
-<fui-toast />
-<!-- TOAST -->

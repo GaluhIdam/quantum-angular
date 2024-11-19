@@ -1,100 +1,88 @@
-<!-- table if data is existing -->
 <div class="container">
-  <div class="table" *ngIf="dataTimesheet.length > 0">
-    <div class="table-row header">
-      <div class="table-cell">
-        <input
-          type="checkbox"
-          [checked]="timesheetSelected.length === dataTimesheet.length"
-          (click)="checkAllItems(dataTimesheet)"
-        />
-      </div>
-      <div class="table-cell" *ngFor="let item of headerTable">
-        <fui-text>{{ item }}</fui-text>
-      </div>
-    </div>
-    <div
-      class="table-row {{ item.tagEntityList.length > 0 ? 'tag-bg' : '' }}"
-      *ngFor="let item of dataTimesheet; let i = index"
-    >
-      <div class="table-cell">
-        <input
-          [disabled]="item.tagEntityList.length > 0"
-          type="checkbox"
-          [checked]="isItemChecked(item)"
-          (click)="checkItem(item)"
-        />
-      </div>
-      <div class="table-cell">
-        {{ item.date | date : "d MMMM yy" }}
-      </div>
-      <div class="table-cell">
-        <div class="tag-badge">
-          <fui-badge [text]="item.matter.matter" [color]="'hollow'" />
-        </div>
-      </div>
-      <div class="table-cell">
-        <fui-text>{{ item.description }}</fui-text>
-        <br />
-        <div class="tag-badge" *ngIf="item.tagEntityList.length > 0">
-          <fui-badge
-            *ngIf="item.tagEntityList.length > 0"
-            [iconShow]="true"
-            [icon]="'user'"
-            [color]="'hollow'"
-            [weight]="'semibold'"
-            [text]="'Tagged entry by ' + item.tagEntityList[0].tagBy"
-          />
-        </div>
-      </div>
-      <div class="table-cell">
-        {{ convertTimeToAngularFormat(item.duration) }}
-      </div>
-
-      <div class="table-cell">
-        <div class="wrap-action title-cell">
-          <fui-button-icon
-            [fullWidth]="'fit'"
-            (onClick)="
-              item.tagEntityList.length > 0
-                ? actionBtn('edit-tag', item)
-                : actionBtn('edit', item)
-            "
-            [type]="'button'"
-            [option]="'icon'"
-            [style]="'secondary'"
-            [size]="'m'"
-            [color]="'primary'"
-            [icon]="'pencil'"
-            [iconSide]="'left'"
-          />
-          <fui-button-icon
-            [fullWidth]="'fit'"
-            *ngIf="item.tagEntityList.length === 0"
-            (onClick)="actionBtn('delete', item)"
-            [type]="'button'"
-            [option]="'icon'"
-            [style]="'secondary'"
-            [size]="'m'"
-            [color]="'danger'"
-            [icon]="'trash'"
-            [iconSide]="'left'"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- table if data is existing -->
-
-<!-- message if data is empy -->
-<shared-empty-data [dataLength]="dataTimesheet.length" />
-<!-- message if data is empy -->
-
-<!-- PAGINATION -->
-<fui-pagination
-  *ngIf="dataTimesheet.length > 0"
+  <fui-table
+  [limit]="limit"
   [totalItems]="totalItems"
-  (onPageChange)="onPageChange($event)"
-/>
-<!-- PAGINATION -->
+  [showInfo]="false"
+  [pagination]="true"
+>
+  <fui-table-head style="width: 50px">
+    <input
+      type="checkbox"
+      [(ngModel)]="selectAllStatus"
+      [checked]="selectAllStatus"
+      (change)="toggleSelectAll(selectAllStatus, dataTimesheet)"
+    />
+  </fui-table-head>
+  <fui-table-head *ngFor="let header of headerTable">
+    {{ header }}
+  </fui-table-head>
+  <fui-table-body *ngFor="let data of dataTimesheet; let i = index">
+    <fui-table-body-row [ngClass]="[data.pending ? 'tag-bg' : '']">
+      <fui-table-body-data style="width: 50px; min-width: 50px">
+        <input
+          type="checkbox"
+          [disabled]="data.pending"
+          [checked]="timesheetSelected.includes(data)"
+          (change)="toggleSelectTimesheet(data, i)"
+        />
+      </fui-table-body-data>
+      <fui-table-body-data>
+        <fui-badge
+          [text]="data.matter.matter"
+          [weight]="'semibold'"
+          class="white-bg"
+          [color]="'hollow'"
+        />
+      </fui-table-body-data>
+      <fui-table-body-data>
+        <fui-text>{{ data.description }}</fui-text>
+        <fui-badge
+          style="margin-top: 8px; display: flex"
+          *ngIf="data.pending"
+          [weight]="'semibold'"
+          [iconShow]="true"
+          [icon]="'user'"
+          [size]="'s'"
+          [color]="'hollow'"
+          class="white-bg"
+          [weight]="'semibold'"
+          [text]="data.tagBy"
+        />
+      </fui-table-body-data>
+      <fui-table-body-data>
+        <fui-text>{{
+          convertTimeToAngularFormat(data.duration)
+        }}</fui-text>
+      </fui-table-body-data>
+      <fui-table-body-data>
+        <div class="flex-btn">
+          <fui-button-icon
+            [type]="'button'"
+            [option]="'icon'"
+            [color]="'primary'"
+            [style]="'secondary'"
+            [fullWidth]="'fit'"
+            [icon]="'pencil'"
+            (onClick)="
+              toggleEditDeleteTimesheet(
+                data.pending ? 'editTag' : 'edit',
+                data
+              )
+            "
+          />
+          <fui-button-icon
+            *ngIf="!data.pending"
+            [type]="'button'"
+            [option]="'icon'"
+            [color]="'danger'"
+            [style]="'secondary'"
+            [fullWidth]="'fit'"
+            [icon]="'trash'"
+            (onClick)="toggleEditDeleteTimesheet('delete', data)"
+          />
+        </div>
+      </fui-table-body-data>
+    </fui-table-body-row>
+  </fui-table-body>
+</fui-table>
+</div>

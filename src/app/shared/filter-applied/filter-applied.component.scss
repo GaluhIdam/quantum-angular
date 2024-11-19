@@ -1,9 +1,5 @@
 @import "../../app.component.scss";
-:host {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 5px;
-}
+
 .container {
   display: flex;
   align-items: center;

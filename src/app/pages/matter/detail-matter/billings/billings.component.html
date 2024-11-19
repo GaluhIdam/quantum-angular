@@ -26,11 +26,10 @@
           [fullWidth]="'fit'"
           [color]="'text'"
           [type]="'button'"
-          [option]="'iconText'"
+          [option]="'icon'"
           [icon]="'filter'"
           [style]="'secondary'"
           [size]="'m'"
-          [text]="'/ 0'"
         />
         <!-- BUTTON FILTER FOR OPEN FLYOUT -->
       </div>
@@ -42,6 +41,7 @@
         [style]="'empty'"
         [color]="'text'"
         [text]="'What is Ongoing, Offgoing status?'"
+        (onClick)="toggleModalBillingStatus(true)"
       />
     </div>
   </div>
@@ -95,6 +95,7 @@
               [size]="'s'"
               [color]="colorBadge(item.status)"
               [text]="item.status"
+              [customColor]="true"
             />
           </div>
           <div class="flex-start-5" *ngIf="item.secondment">
@@ -289,6 +290,7 @@
             [showInfo]="false"
             [pagination]="false"
           >
+            <!-- HEAD  -->
             <fui-table-head-tree
               *ngFor="let item of titleTableFlyout; let i = index"
               [fieldName]="item"
@@ -750,3 +752,67 @@
     </fui-flyout-footer>
   </fui-flyout>
 </div>
+
+<!-- MODAL BILLING STATUS  -->
+<fui-modal
+  [open]="openModalBillingStatus"
+  (onClickOverlayModal)="toggleModalBillingStatus(false)"
+>
+  <fui-modal-header (onCloseModal)="toggleModalBillingStatus(false)">
+    <fui-text [size]="'xl'" [weight]="'semibold'">Billing Status</fui-text>
+    <div class="my-25">
+      <fui-text
+        >Status indicate the progress of the billing, related to issuance and
+        collection. Categorizing the actionable needed to finish the billing
+        process.</fui-text
+      >
+    </div>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="overflow-y-auto-h-500">
+      <fui-table-tree
+        [limit]="0"
+        [totalItems]="0"
+        [showInfo]="false"
+        [pagination]="false"
+      >
+        <!-- HEAD  -->
+        <fui-table-head-tree [fieldName]="'Status'" [sortFeature]="false">
+          <fui-text> Status </fui-text>
+        </fui-table-head-tree>
+        <fui-table-head-tree [fieldName]="'Definition'" [sortFeature]="false">
+          <fui-text> Definition </fui-text>
+        </fui-table-head-tree>
+        <!-- HEAD  -->
+
+        <!-- CONTENT  -->
+        <fui-table-row-tree *ngFor="let billing of statusBillingList">
+          <fui-table-data-tree style="width: auto" [showDropIcon]="false">
+            <fui-badge
+              [text]="billing.status"
+              [color]="colorBadge(billing.status)"
+              [customColor]="true"
+            />
+          </fui-table-data-tree>
+          <fui-table-data-tree [showDropIcon]="false">
+            <fui-text>{{ billing.desc }}</fui-text>
+          </fui-table-data-tree>
+        </fui-table-row-tree>
+        <!-- CONTENT  -->
+      </fui-table-tree>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer>
+    <div class="flex-end">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'empty'"
+        [color]="'primary'"
+        [text]="'Close'"
+        (onClick)="toggleModalBillingStatus(false)"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>
+<!-- MODAL BILLING STATUS  -->

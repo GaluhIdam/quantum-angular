@@ -16,7 +16,6 @@ import {
     BadgeComponent,
     IconsComponent,
     TextComponent,
-    LinkComponent,
   ],
   templateUrl: './card-all-matter.component.html',
   styleUrl: './card-all-matter.component.scss',

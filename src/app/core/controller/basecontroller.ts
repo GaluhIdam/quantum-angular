@@ -1,10 +1,7 @@
 import { inject } from '@angular/core';
 import { Color, Icon, Size, ToastProps, ToastService } from '@quantum/fui';
 import { Observable, of } from 'rxjs';
-import {
-  MyTimesheetDTO,
-  TimesheetByDateDTO,
-} from '../../interfaces/my-timesheet.dto';
+import { MyTimesheetDTO } from '../../interfaces/my-timesheet.dto';
 
 export class BaseController {
   /** Injector */
@@ -48,8 +45,7 @@ export class BaseController {
     title: string,
     icon: Icon,
     message: string,
-    sizeIcon: Size,
-    duration?: number
+    sizeIcon: Size
   ): void {
     let toastObject: ToastProps = {
       position: 'bottom-right',
@@ -63,7 +59,7 @@ export class BaseController {
       body: {
         message,
       },
-      duration: duration ?? 2000,
+      duration: 2000,
     };
     if (type) {
       toastObject.type = type;
@@ -83,49 +79,6 @@ export class BaseController {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
     return `${hours}h ${minutes}m`;
-  }
-
-  /** Grouping Timesheet by date range */
-  groupingTimesheetByRangeDate(
-    timesheets: MyTimesheetDTO[],
-    startDate: string,
-    endDate: string
-  ): TimesheetByDateDTO[] {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const dateRange: { [date: string]: MyTimesheetDTO[] } = {};
-    const currentDate = new Date(startDate);
-
-    // Initialize the date range with empty arrays
-    while (currentDate <= end) {
-      const formattedDate = currentDate.toISOString().split('T')[0];
-      dateRange[formattedDate] = [];
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    // Fill the date range with timesheets
-    timesheets.forEach((timesheet: MyTimesheetDTO) => {
-      const date = new Date(timesheet.date).toISOString().split('T')[0];
-      if (dateRange[date]) {
-        dateRange[date].push(timesheet);
-      }
-    });
-
-    // Transform the date range object into an array of TimesheetByDateDTO
-    const groupedByDate: TimesheetByDateDTO[] = Object.keys(dateRange).map(
-      (date) => ({
-        date,
-        data: dateRange[date],
-      })
-    );
-
-    // Filter to ensure dates are within the specified range
-    const filteredGroupedTimesheets = groupedByDate.filter((entry) => {
-      const entryDate = new Date(entry.date);
-      return entryDate >= start;
-    });
-
-    return filteredGroupedTimesheets;
   }
 
   /** Helper Date */
@@ -172,7 +125,7 @@ export class BaseController {
       const [hours, minutes] = timesheet.duration.split(':').map(Number);
       const totalMinutes = hours * 60 + minutes;
 
-      if (timesheet.tagEntityList.length > 0) {
+      if (timesheet.pending) {
         taggedTotalMinutes += totalMinutes;
       } else {
         untaggedTotalMinutes += totalMinutes;
@@ -205,7 +158,7 @@ export class BaseController {
       const [hours, minutes] = timesheet.duration.split(':').map(Number);
       const totalMinutes = hours * 60 + minutes;
 
-      if (timesheet.tagEntityList.length > 0) {
+      if (timesheet.pending) {
         taggedTotalMinutes += totalMinutes;
       } else {
         untaggedTotalMinutes += totalMinutes;
@@ -250,29 +203,5 @@ export class BaseController {
     } else {
       return of({});
     }
-  }
-
-  /** Error toast */
-  errorToast(error: any): void {
-    this.toggleToast(
-      'danger',
-      'Error!',
-      'alert',
-      `status: ${error.status} | ${error.statusText} - ${error.message}`,
-      'sizem',
-      5000
-    );
-  }
-
-  /** Format date
-   * @example
-   * Tue Nov 05 2024 07:00:00 GMT+0700 (Western Indonesia Time) to be 05-11-2024
-   */
-  formatDateToDDMMYYYY(date: Date): string {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const year = date.getFullYear();
-
-    return `${day}-${month}-${year}`;
   }
 }

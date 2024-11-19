@@ -1,4 +1,8 @@
-<fui-flyout [openFlyout]="isOpenFlyout" (overlayOut)="toggleCloseFlyout()">
+<fui-flyout
+  [size]="size"
+  [openFlyout]="isOpenFlyout"
+  (overlayOut)="toggleCloseFlyout()"
+>
   <fui-flyout-header>
     <div class="header-flyout">
       <fui-text [size]="'l'" [weight]="'semibold'">{{ titleFlyout }}</fui-text>

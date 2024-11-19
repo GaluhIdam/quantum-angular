@@ -24,7 +24,7 @@
     filterbtn
     [fullWidth]="'fit'"
     [type]="'button'"
-    [option]="'iconText'"
+    [option]="totalFilter > 0 ? 'iconText' : 'icon'"
     [icon]="'filter'"
     [text]="'/ ' + totalFilter"
     [style]="'secondary'"
@@ -224,68 +224,66 @@
   (closeOut)="toggleOpenFlyout('create', false)"
 >
   <div body>
-        <!-- LOCATION  -->
-        <div class="mb-15">
-          <fui-popover
-            [preventClose]="true"
-            [displayPopover]="true"
-            [position]="'bottom'"
-            [align]="'start'"
-          >
-          <fui-text class="label">Parent Type</fui-text>
+    <!-- LOCATION  -->
+    <div class="mb-15">
+      <fui-popover
+        [preventClose]="true"
+        [displayPopover]="true"
+        [position]="'bottom'"
+        [align]="'start'"
+      >
+        <fui-text class="label">Parent Type</fui-text>
+        <fui-form-control-layout>
+          <fui-input-field
+            [type]="'text'"
+            [size]="'m'"
+            [placeholder]="'Select parent type'"
+            [formControlField]="parentTypeForm"
+            [invalid]="false"
+          ></fui-input-field>
+        </fui-form-control-layout>
+        <div popover-body>
+          <div class="flex-start">
+            <fui-button-icon
+              *ngIf="level > 1"
+              [type]="'button'"
+              [option]="'icon'"
+              [style]="'empty'"
+              [color]="'text'"
+              [fullWidth]="'fit'"
+              [icon]="'sortLeft'"
+            />
+            <fui-text [weight]="'semibold'">{{
+              level === 1 ? "Select Industry Type" : industryType
+            }}</fui-text>
+          </div>
+
+          <hr />
+
+          <!-- SEARCH FORM  -->
           <fui-form-control-layout>
             <fui-input-field
+              [placeholder]="'Search'"
               [type]="'text'"
-              [size]="'m'"
-              [placeholder]="'Select parent type'"
-              [formControlField]="parentTypeForm"
+              [size]="'s'"
               [invalid]="false"
-            ></fui-input-field>
+            >
+              <fui-icons left-icon [size]="'sizes'" [icon]="'search'" />
+            </fui-input-field>
           </fui-form-control-layout>
-            <div popover-body>
-              <div class="flex-start">
-                <fui-button-icon
-                  *ngIf="level > 1"
-                  [type]="'button'"
-                  [option]="'icon'"
-                  [style]="'empty'"
-                  [color]="'text'"
-                  [fullWidth]="'fit'"
-                  [icon]="'sortLeft'"
-                />
-                <fui-text [weight]="'semibold'">{{
-                  level === 1 ? "Select Industry Type" : industryType
-                }}</fui-text>
-              </div>
+          <!-- SEARCH FORM  -->
 
-              <hr />
+          <hr />
 
-              <!-- SEARCH FORM  -->
-              <fui-form-control-layout>
-                <fui-input-field
-                  [placeholder]="'Search'"
-                  [type]="'text'"
-                  [size]="'s'"
-                  [invalid]="false"
-                >
-                  <fui-icons left-icon [size]="'sizes'" [icon]="'search'" />
-                </fui-input-field>
-              </fui-form-control-layout>
-              <!-- SEARCH FORM  -->
-
-              <hr />
-
-
-
-              <shared-empty-data
-                content
-                [dataLength]="dataLocationSub.length"
-                [subTitle]="''"
-              />
-            </div>
-          </fui-popover>
+          <shared-empty-data
+            content
+            [dataLength]="dataLocationSub.length"
+            [subTitle]="''"
+          />
         </div>
-        <!-- LOCATION  -->
+      </fui-popover>
+    </div>
+    <!-- LOCATION  -->
 
     <div class="my-25">
       <hr />
@@ -404,10 +402,6 @@
 <!-- MODAL DELETE  -->
 <shared-modal-delete
   [openModalDelete]="openModalDelete"
-  (action)="toggleModalDelete($event)"
+  (actionOut)="toggleModalDelete($event)"
 />
 <!-- MODAL DELETE  -->
-
-<!-- TOAST -->
-<fui-toast />
-<!-- TOAST -->

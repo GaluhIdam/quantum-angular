@@ -7,10 +7,13 @@
   </div>
   <fui-popover [position]="'bottom'">
     <div class="select">
-      <span class="title-select" *ngIf="periode === 'today'">Today </span>
-      <span class="title-select" *ngIf="periode === 'week'">This Week </span>
-      <span class="title-select" *ngIf="periode === 'month'">This Month </span>
-      <span class="title-select" *ngIf="periode === 'year'">This Year</span>
+      <span class="title-select">{{
+        period === "month"
+          ? "This Month"
+          : period === "year"
+          ? "This Year"
+          : "Appraisal Year"
+      }}</span>
       <fui-icons
         class="icon-title"
         [icon]="'arrowDown'"
@@ -22,57 +25,62 @@
       <div class="container-option">
         <div class="wrap-icon">
           <fui-icons
+            [ngStyle]="{
+              visibility: period === 'month' ? 'visible' : 'hidden'
+            }"
             class="icon-prod"
-            [icon]="periode === 'today' ? 'check' : 'minus'"
+            [icon]="'check'"
             [size]="'sizes'"
             [color]="'primary'"
           />
           <fui-icons
+            [ngStyle]="{
+              visibility: period === 'year' ? 'visible' : 'hidden'
+            }"
             class="icon-prod"
-            [icon]="periode === 'week' ? 'check' : 'minus'"
+            [icon]="'check'"
             [size]="'sizes'"
             [color]="'primary'"
           />
           <fui-icons
+            [ngStyle]="{
+              visibility: period === 'appraisalYear' ? 'visible' : 'hidden'
+            }"
             class="icon-prod"
-            [icon]="periode === 'month' ? 'check' : 'minus'"
-            [size]="'sizes'"
-            [color]="'primary'"
-          />
-          <fui-icons
-            class="icon-prod"
-            [icon]="periode === 'year' ? 'check' : 'minus'"
+            [icon]="'check'"
             [size]="'sizes'"
             [color]="'primary'"
           />
         </div>
         <div class="wrap-option">
-          <span class="option-pop" (click)="getProductivityData('today')"
-            >Today</span
-          >
-          <span class="option-pop" (click)="getProductivityData('week')"
-            >This Week</span
-          >
-          <span class="option-pop" (click)="getProductivityData('month')"
+          <span class="option-pop" (click)="toggleSelectRange('month')"
             >This Month</span
           >
-          <span class="option-pop" (click)="getProductivityData('year')"
+          <span class="option-pop" (click)="toggleSelectRange('year')"
             >This Year</span
+          >
+          <span class="option-pop" (click)="toggleSelectRange('appraisalYear')"
+            >Appraisal year</span
           >
         </div>
       </div>
     </div>
   </fui-popover>
 </div>
-<div class="body" *ngIf="data.length > 0">
+<div class="body" *ngIf="percentageBillabel > 0 || percentageNonBillabel > 0">
   <div class="progress">
     <shared-skeleton [active]="loading">
       <fui-progress
-        [value]="data[0]"
-        [max]="100"
+        [value]="percentageBillabel"
+        [max]="dataProductivity.billableTargetHour"
         [color]="'primary'"
         [size]="'sizedefault'"
-        [label]="'0 of 0 Billable Hours'"
+        [label]="
+          dataProductivity.billableActualHour +
+          ' of ' +
+          dataProductivity.billableTargetHour +
+          ' Billable Hours'
+        "
       />
     </shared-skeleton>
   </div>
@@ -80,11 +88,16 @@
     <shared-skeleton [active]="loading">
       <fui-progress
         class="progress"
-        [value]="data[1]"
-        [max]="100"
+        [value]="percentageNonBillabel"
+        [max]="dataProductivity.nonbillableTargetHour"
         [color]="'text'"
         [size]="'sizedefault'"
-        [label]="'0 of 0 Non-Billable Hours'"
+        [label]="
+          dataProductivity.nonbillableActualHour +
+          ' of ' +
+          dataProductivity.nonbillableTargetHour +
+          ' Non-Billable Hours'
+        "
       />
     </shared-skeleton>
   </div>
@@ -103,10 +116,13 @@
     </span>
   </div>
 </div>
-<shared-skeleton [active]="loading">
+<shared-skeleton
+  [active]="loading"
+  *ngIf="percentageBillabel === 0 || percentageNonBillabel === 0"
+>
   <shared-empty-data
     [title]="'N/A'"
     [subTitle]="'You don’t have any target data for productivity'"
-    [dataLength]="data.length"
+    [dataLength]="0"
   />
 </shared-skeleton>

@@ -3,14 +3,12 @@ import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PageGenericDefaultComponent } from '../../../shared/page-generic-default/page-generic-default.component';
 import {
-  BadgeComponent,
   BreadcrumbData,
   ButtonIconComponent,
   FormControlLayoutComponent,
   IconsComponent,
   InputFieldComponent,
   PopoverComponent,
-  SelectFieldComponent,
   TableDataTreeComponent,
   TableHeadTreeComponent,
   TableRowTreeComponent,
@@ -34,7 +32,6 @@ import { LocationDTO } from '../../../interfaces/location.dto';
     PageGenericDefaultComponent,
     FormControlLayoutComponent,
     InputFieldComponent,
-    SelectFieldComponent,
     IconsComponent,
     ButtonIconComponent,
     TableTreeComponent,
@@ -43,7 +40,6 @@ import { LocationDTO } from '../../../interfaces/location.dto';
     TableDataTreeComponent,
     TextComponent,
     PopoverComponent,
-    BadgeComponent,
     EmptyDataComponent,
     FlyoutSimpleComponent,
     ModalDeleteComponent,
@@ -107,27 +103,27 @@ export class OfficeLocationComponent extends BaseController {
       location: 'Indonesia',
       type: 'Country',
       child: [
-        {
-          location: 'Aceh',
-          type: 'Province',
-          child: [
-            {
-              location: 'Badung',
-              type: 'City',
-              child: [],
-            },
-            {
-              location: 'Bangli',
-              type: 'City',
-              child: [],
-            },
-            {
-              location: 'Buleleng',
-              type: 'City',
-              child: [],
-            },
-          ],
-        },
+        // {
+        //   location: 'Aceh',
+        //   type: 'Province',
+        //   child: [
+        //     {
+        //       location: 'Badung',
+        //       type: 'City',
+        //       child: [],
+        //     },
+        //     {
+        //       location: 'Bangli',
+        //       type: 'City',
+        //       child: [],
+        //     },
+        //     {
+        //       location: 'Buleleng',
+        //       type: 'City',
+        //       child: [],
+        //     },
+        //   ],
+        // },
       ],
     },
   ];

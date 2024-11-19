@@ -2,22 +2,19 @@
   <div class="section-two-card">
     <!-- Productivity -->
     <div class="card-productivity">
-      <app-productivity />
+      <app-productivity (typeOut)="typeChanger($event)" />
     </div>
     <!-- Productivity -->
 
     <!-- YTD -->
     <div class="card-ytd">
-      <app-ytd-productivity />
+      <app-ytd-productivity [type]="period" />
     </div>
     <!-- YTD -->
   </div>
   <!-- History Activity -->
   <div class="card-create-activity">
-    <app-history-activity
-      [listMatters]="mattersData"
-      [listActivities]="activitesData"
-    />
+    <app-history-activity />
   </div>
   <!-- History Activity -->
 </shared-page-empty>

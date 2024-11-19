@@ -1,5 +1,5 @@
-import { CommonModule, DatePipe } from '@angular/common';
-import { Component, HostListener, Input } from '@angular/core';
+import { CommonModule, DatePipe, formatDate } from '@angular/common';
+import { Component, HostListener } from '@angular/core';
 import {
   ButtonIconComponent,
   ComboBoxComponent,
@@ -10,17 +10,9 @@ import {
   TextComponent,
   ToastComponent,
 } from '@quantum/fui';
-import {
-  ActivityDTO,
-  MatterDTO,
-  MyTimesheetDTO,
-  TimesheetByDateDTO,
-} from '../../../../interfaces/my-timesheet-temporary.dto';
 import { BaseController } from '../../../../core/controller/basecontroller';
-import { MyTimesheetService } from '../services/my-timesheet.service';
 import { TableWithoutFilterComponent } from './table-without-filter/table-without-filter.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { TableFilterComponent } from './table-filter/table-filter.component';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
 import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
@@ -28,9 +20,14 @@ import { MoveMatterComponent } from '../../../../shared/move-matter/move-matter.
 import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
 import { TableUtilitySimpleComponent } from './table-utility-simple/table-utility-simple.component';
 import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-simple.component';
-import { map } from 'rxjs';
 import { FlyoutTimesheetComponent } from '../../../../shared/flyout-timesheet/flyout-timesheet.component';
-import { FilterBarComponent } from '../../../../shared/filter-bar/filter-bar.component';
+import { MatterService } from '../../../../services/matter/matter.service';
+import { ActivityService } from '../../../../services/activity/activity.service';
+import { MatterDTO } from '../../../../interfaces/matter.dto';
+import { ActivityDTO } from '../../../../interfaces/activity.dto';
+import { MyTimesheetDTO } from '../../../../interfaces/my-timesheet.dto';
+import { MyTimesheetService } from '../../../../services/my-timesheet/my-timesheet.service';
+import { TableFilterComponent } from './table-filter/table-filter.component';
 
 @Component({
   selector: 'app-history-activity',
@@ -53,379 +50,356 @@ import { FilterBarComponent } from '../../../../shared/filter-bar/filter-bar.com
     FilterAppliedComponent,
     MoveMatterComponent,
     TableWithoutFilterComponent,
-    TableFilterComponent,
     SkeletonComponent,
     ToastComponent,
     FlyoutTimesheetComponent,
+    TableFilterComponent,
   ],
   providers: [DatePipe],
 })
 export class HistoryActivityComponent extends BaseController {
-  /** Data will input from MyTimesheetComponent */
-  @Input({ required: true }) listMatters: MatterDTO[] = [];
-  @Input({ required: true }) listActivities: ActivityDTO[] = [];
-
   /** Loading Status */
   loading: boolean = false;
 
-  /** Config Utility */
-  hourMinute: string = '0h 0m';
+  /** Variable for flyout and modal */
+  isOpenCreateFlyout: boolean = false;
+  isOpenEditFlyout: boolean = false;
+  isOpenEditTagFlyout: boolean = false;
+  isModalDelete: boolean = false;
 
-  /** Date for without filter */
-  endDate: Date = new Date();
+  /** Data matters from service */
+  dataMatters: MatterDTO[] = [];
+
+  /** Data activities from service */
+  dataActivities: ActivityDTO[] = [];
+
+  /** Data timesheets from service */
+  dataTimesheet: MyTimesheetDTO[] = [
+    {
+      uuid: '789e1234-e89b-12d3-a456-426614174000',
+      matter: {
+        uuid: '456e1234-e89b-12d3-a456-426614174000',
+        matter: '123456',
+        description: 'Description',
+        created_at: '2024-10-15T08:30:00Z',
+        updated_at: '2024-10-15T09:00:00Z',
+      },
+      activity: {
+        uuid: '123e4567-e89b-12d3-a456-426614174001',
+        name: 'Activity 1',
+        created_at: '2024-11-01T10:00:00Z',
+        updated_at: '2024-11-02T12:00:00Z',
+      },
+      description: 'Meeting with client regarding project details',
+      date: '2024-11-19',
+      duration: '02:00',
+      pending: false,
+      tagBy: '',
+      created_at: '2024-11-10T09:00:00Z',
+      updated_at: '2024-11-10T11:30:00Z',
+    },
+    {
+      uuid: '789e1234-e89b-12d3-a456-426614174000',
+      matter: {
+        uuid: '456e1234-e89b-12d3-a456-426614174000',
+        matter: '123456',
+        description: 'Description',
+        created_at: '2024-10-15T08:30:00Z',
+        updated_at: '2024-10-15T09:00:00Z',
+      },
+      activity: {
+        uuid: '123e4567-e89b-12d3-a456-426614174001',
+        name: 'Activity 1',
+        created_at: '2024-11-01T10:00:00Z',
+        updated_at: '2024-11-02T12:00:00Z',
+      },
+      description: 'Meeting with client regarding project details',
+      date: '2024-11-19',
+      duration: '02:30',
+      pending: true,
+      tagBy: 'John Doe',
+      created_at: '2024-11-10T09:00:00Z',
+      updated_at: '2024-11-10T11:30:00Z',
+    },
+  ];
+
+  /** Date range for my timesheet */
+  currentDate: Date = new Date();
   startDate: Date = new Date();
+  endDate: Date = new Date();
 
-  /** Data will input from service */
-  @Input() dataTimesheet: MyTimesheetDTO[] = [];
+  /** Timesheet Selected */
+  timesheetSelected: MyTimesheetDTO[] = [];
 
-  /** After gruping by date */
-  dateTimesheetByDate: TimesheetByDateDTO[] = [];
+  /** Filter data if applied */
+  filterApplied: FilterAppliedDTO[] = [];
 
+  /** Timesheet for edit */
   timesheetEditSelected!: MyTimesheetDTO;
 
   /** Filter Timesheet */
-  openFlyoutFilter: boolean = false;
+  isOpenFilterFlyout: boolean = false;
   startDateForm: FormControl = new FormControl();
   endDateForm: FormControl = new FormControl();
-  descriptionForm: FormControl = new FormControl('');
   searchMatterForm: FormControl = new FormControl('');
-  optionMatter: { name: string; value: any }[] = [];
   selectedMatter: { name: string; value: any }[] = [];
+  descriptionForm: FormControl = new FormControl('');
 
   /** Pagination for table filter */
   page: number = 1;
   limit: number = 10;
   totalItems: number = 0;
 
-  /** Data will input from utility compnent */
-  timesheetSelected: MyTimesheetDTO[] = [];
-
-  /** Data input from utility component and send to filter applied component */
-  filterApplied: FilterAppliedDTO[] = [];
-
-  /** Variable for create timesheet flyout */
-  isOpenCreateFlyout: boolean = false;
-
-  /** Variable for edit timesheet flyout */
-  isOpenEditFlyout: boolean = false;
-
-  /** Variable for edit tag timesheet flyout */
-  isOpenEditTagFlyout: boolean = false;
-
-  /** Variable for modal delete */
-  isModalDelete: boolean = false;
-
   constructor(
-    private readonly mytimesheetService: MyTimesheetService,
-    private datePipe: DatePipe
+    private readonly myTimesheetService: MyTimesheetService,
+    private readonly matterService: MatterService,
+    private readonly activityService: ActivityService
   ) {
     super();
     /** Replace start date and end date */
-    this.startDate = new Date(this.defaultDate().startDateForm);
-    this.endDate = new Date(this.defaultDate().endDateForm);
+    this.startDate.setDate(
+      this.currentDate.getDate() - ((this.currentDate.getDay() + 6) % 7)
+    );
+    this.endDate.setDate(this.startDate.getDate() + 6);
+    this.startDateForm = new FormControl(
+      formatDate(this.startDate, 'dd-MM-yyyy', 'en')
+    );
+    this.endDateForm = new FormControl(
+      formatDate(this.endDate, 'dd-MM-yyyy', 'en')
+    );
   }
 
   ngOnInit(): void {
-    this.moveDate(0);
-    this.getTimesheetByDate(this.startDateForm.value, this.endDateForm.value);
-    this.loading = true;
     setTimeout(() => {
       this.loading = false;
     }, 1000);
   }
 
-  ngOnChanges(): void {
-    this.dataTransform();
-  }
-
   @HostListener('document:keydown.escape', ['$event'])
   handleEscapeKey(event: KeyboardEvent) {
-    this.openFlyoutFilter = false;
+    this.isOpenFilterFlyout = false;
   }
 
-  /** Getting timssheet by date range */
-  getTimesheetByDate(startDate: string, endDate: string): void {
-    const startDateObj = startDate.split('-').reverse().join('-');
-    const endDateObj = endDate.split('-').reverse().join('-');
-    this.startDate = new Date(startDateObj);
-    this.endDate = new Date(endDateObj);
-    this.mytimesheetService
-      .getTimesheetWithRange(startDateObj, endDateObj)
-      .pipe(
-        map((data) => {
-          this.groupingData(data, startDateObj, endDateObj);
-        })
-      )
-      .subscribe();
-  }
-
-  /** Getting timesheet by filter */
-  getTimesheetFilter(
-    startDate: string,
-    endDate: string,
-    matters: string,
-    addDescription: string,
-    page: number,
-    limit: number
+  /** Toggle utility for prev, next, filter, and add timesheet */
+  toggleUtility(
+    event: 'next' | 'prev' | 'filter' | 'add' | 'edit' | 'editTag' | 'delete'
   ): void {
+    if (event === 'add') {
+      this.isOpenCreateFlyout = !this.isOpenCreateFlyout;
+    }
+    if (event === 'filter') {
+      this.isOpenFilterFlyout = !this.isOpenFilterFlyout;
+    }
+    if (event === 'edit') {
+      this.isOpenEditFlyout = !this.isOpenEditFlyout;
+    }
+    if (event === 'delete') {
+      this.isModalDelete = !this.isModalDelete;
+    }
+    if (event === 'editTag') {
+      this.isOpenEditTagFlyout = !this.isOpenEditTagFlyout;
+    }
+    if (event === 'next' || event === 'prev') {
+      this.togglePrevNextWeek(event);
+    }
+  }
+
+  /** Toggle filter */
+  toggleFilter(): void {
     this.filterApplied = [];
-
-    // Correctly parse the date strings from "DD-MM-YYYY" to "YYYY-MM-DD"
-    const startDateObj = startDate.split('-').reverse().join('-');
-    const endDateObj = endDate.split('-').reverse().join('-');
-
-    this.startDate = new Date(startDateObj);
-    this.endDate = new Date(endDateObj);
-
-    // Check if dates are valid
-    if (!isNaN(this.startDate.getTime()) && !isNaN(this.endDate.getTime())) {
+    if (
+      !this.validatorStartEndFilter(
+        this.startDateForm.value,
+        this.endDateForm.value
+      ) &&
+      (this.startDateForm.value !==
+        formatDate(this.startDate, 'dd-MM-yyyy', 'en') ||
+        this.endDateForm.value !== formatDate(this.endDate, 'dd-MM-yyyy', 'en'))
+    ) {
       this.filterApplied.push({
         name: 'Date',
         status: true,
       });
     }
-
-    if (matters !== '' && matters !== null) {
-      this.filterApplied.push({
-        name: 'Matter',
-        status: true,
-      });
-    }
-    if (addDescription !== '' && addDescription !== null) {
+    if (this.descriptionForm.value !== '') {
       this.filterApplied.push({
         name: 'Time Description',
         status: true,
       });
     }
 
-    this.mytimesheetService
-      .getFilterTimesheet(
-        startDate === ''
-          ? null
-          : this.datePipe.transform(this.startDate, 'yyyy-MM-dd')!.toString(), // Adjust format to 'yyyy-MM-dd'
-        endDate === ''
-          ? null
-          : this.datePipe.transform(this.endDate, 'yyyy-MM-dd')!.toString(), // Adjust format to 'yyyy-MM-dd'
-        matters === '' ? null : matters,
-        addDescription === '' ? null : addDescription,
-        page,
-        limit
-      )
-      .pipe(
-        map((data) => {
-          this.dataTimesheet = data.data;
-          this.page = data.page;
-          this.limit = data.limit;
-          this.totalItems = data.totalItems;
-        })
-      )
-      .subscribe();
+    if (this.selectedMatter.length > 0) {
+      this.filterApplied.push({
+        name: 'Matter',
+        status: true,
+      });
+    }
+    this.toggleUtility('filter');
   }
 
-  /** Pagination changes */
-  onPageChangeOut(event: { page: number; itemsPerPage: number }): void {
-    this.filterApplied = [];
-    /** Repelace page & limit */
-    this.page = event.page;
-    this.limit = event.itemsPerPage;
+  /** Toggle clear filter */
+  toggleClearFilter(event?: FilterAppliedDTO[]): void {
+    if (event) {
+      this.filterApplied = event;
+      if (event.length === 0) {
+        this.timesheetSelected = [];
+      }
+    }
+    this.searchMatterForm = new FormControl('');
+    this.selectedMatter = [];
+    this.descriptionForm = new FormControl('');
 
-    this.getTimesheetFilter(
-      this.startDateForm.value,
-      this.endDateForm.value,
-      this.getNamesAsString(this.selectedMatter),
-      this.descriptionForm.value,
-      event.page,
-      event.itemsPerPage
+    this.startDate.setDate(
+      this.currentDate.getDate() - ((this.currentDate.getDay() + 6) % 7)
     );
-  }
+    this.endDate.setDate(this.startDate.getDate() + 6);
 
-  /** Cancel Fiter */
-  cancelFilter(): void {
-    this.openFlyoutFilter = false;
-    this.resetFilter();
-  }
-
-  /** Reset form filter */
-  resetFilter(): void {
     this.startDateForm = new FormControl(
-      `${this.datePipe.transform(
-        this.defaultDate().startDateForm,
-        'dd-MM-yyyy'
-      )}`
+      formatDate(this.startDate, 'dd-MM-yyyy', 'en')
     );
     this.endDateForm = new FormControl(
-      this.datePipe.transform(this.defaultDate().endDateForm, 'dd-MM-yyyy')
+      formatDate(this.endDate, 'dd-MM-yyyy', 'en')
     );
-    this.searchMatterForm.setValue('');
-    this.selectedMatter = [];
-    this.descriptionForm.reset();
   }
 
-  /** Action for apply filter */
-  actionFilter(event: any): void {
-    this.getTimesheetFilter(
-      this.startDateForm.value,
-      this.endDateForm.value,
-      this.getNamesAsString(this.selectedMatter),
-      this.descriptionForm.value,
-      this.page,
-      this.limit
-    );
-    console.log(this.descriptionForm.value);
-    this.openFlyoutFilter = false;
+  /** Move timesheet to service */
+  moveTimesheet(event: MatterDTO | null): void {
+    if (!event) {
+      this.timesheetSelected = [];
+    }
   }
 
-  /** Transform data matters to be options */
-  dataTransform(): void {
-    this.listMatters.forEach((item) => {
-      this.optionMatter.push({
-        name: item.matter,
-        value: item.idMatter,
-      });
+  /** Toggle Selection */
+  toggleSelection(event: MyTimesheetDTO[]): void {
+    this.timesheetSelected = event;
+  }
+
+  /** Toggle Edit Delete My Timesheet */
+  toggleEditDeleteTimesheet(
+    action: 'edit' | 'editTag' | 'delete',
+    data: MyTimesheetDTO
+  ): void {
+    if (action === 'edit' || 'editTag') {
+      this.timesheetEditSelected = data;
+    }
+    this.toggleUtility(action);
+  }
+
+  /** Toggle modal for delete or cancel */
+  toggleCancelDeleteTimesheet(event: { name: string; status: boolean }): void {
+    this.isModalDelete = event.status;
+  }
+
+  /** Watch changes of date range */
+  watchDateChange(type: 'start' | 'end', value: string): void {
+    if (type === 'start') {
+      this.startDateForm = new FormControl(value);
+    } else {
+      this.endDateForm = new FormControl(value);
+    }
+  }
+
+  /** Validator start date & end date for filter */
+  validatorStartEndFilter(start: string, end: string): boolean {
+    let startDateObj = new Date(start.split('-').reverse().join('-'));
+    let endDateObj = new Date(end.split('-').reverse().join('-'));
+    if (startDateObj < endDateObj) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  /** Toggle for prev or next week */
+  togglePrevNextWeek(param: 'prev' | 'next' | 'filter' | 'add'): void {
+    if (param === 'prev') {
+      this.startDate = new Date(
+        this.startDate.setDate(this.startDate.getDate() - 7)
+      );
+      this.endDate = new Date(this.endDate.setDate(this.endDate.getDate() - 7));
+    }
+    if (param === 'next') {
+      this.startDate = new Date(
+        this.startDate.setDate(this.startDate.getDate() + 7)
+      );
+      this.endDate = new Date(this.endDate.setDate(this.endDate.getDate() + 7));
+    }
+  }
+
+  /**
+   * Get data timesheet from services
+   * @service
+   * MyTimesheetService
+   */
+  getDataMyTimesheet(startDate: string, endDate: string): void {
+    this.myTimesheetService.getMyTimesheetByDate(startDate, endDate).subscribe({
+      next: (res) => {
+        this.dataTimesheet = res;
+      },
     });
   }
 
-  /** Catch Btn Action Util */
-  btnActionUtil(event: string | number): void {
-    if (event === 'next') {
-      this.moveDate(5);
-      this.getTimesheetByDate(this.startDateForm.value, this.endDateForm.value);
-    }
-    if (event === 'prev') {
-      this.moveDate(-5);
-      this.getTimesheetByDate(this.startDateForm.value, this.endDateForm.value);
-    }
-    if (event === 'filter') {
-      this.closeOutFilter(true);
-    }
-    if (event === 'add') {
-      this.isOpenCreateFlyout = true;
-    }
+  /**
+   * Get data matter from services
+   * @service
+   * MatterService
+   */
+  getDataMatters(search: string): void {
+    this.matterService.getMatters(search).subscribe({
+      next: (res) => {
+        this.dataMatters = res.data;
+        this.converterMatterOpt();
+      },
+    });
   }
 
-  /** Move Date Next/Prev */
-  moveDate(day: number): void {
-    const newDate = new Date(this.endDate);
-    newDate.setDate(newDate.getDate() + day);
-    this.endDate = newDate;
-    this.startDate = new Date(this.endDate);
-    this.startDate.setDate(this.endDate.getDate() - 5);
-    const startDate = this.formatDate(this.startDate);
-    const endDate = this.formatDate(this.endDate);
-
-    /** Set form start date - end date */
-    this.startDateForm.setValue(
-      this.datePipe.transform(startDate, 'dd-MM-yyyy')
-    );
-    this.endDateForm.setValue(this.datePipe.transform(endDate, 'dd-MM-yyyy'));
+  /**
+   * Get data activities from services
+   * @service
+   * ActivityService
+   */
+  getDataActivities(search: string): void {
+    this.activityService.getActivities(search).subscribe({
+      next: (res) => {
+        this.dataActivities = res.data;
+        this.converterActivityOpt();
+      },
+    });
   }
 
-  /** Grouping and get total hours */
-  groupingData(
-    data: MyTimesheetDTO[],
-    startDate: string,
-    endDate: string
-  ): void {
-    this.hourMinute = this.calculateTotalDuration(data);
-    /** Grrouping process */
-    this.dateTimesheetByDate = this.groupingTimesheetByRangeDate(
-      data,
-      startDate,
-      endDate
-    );
+  /** Converter data for list activity */
+  converterActivityOpt(): {
+    name: string;
+    value: any;
+  }[] {
+    const data: {
+      name: string;
+      value: any;
+    }[] = [];
+    this.dataActivities.forEach((item) => {
+      return data.push({
+        name: item.name,
+        value: item.name,
+      });
+    });
+    return data;
   }
 
-  /** Catch changes from Create Timesheet Component */
-  closeOutCreate(event: boolean): void {
-    this.isOpenCreateFlyout = event;
-  }
-  /** Toggle Open/Close Flyout Filter */
-  closeOutFilter(event: boolean): void {
-    this.openFlyoutFilter = event;
-  }
-
-  /** Observe for startDate changes */
-  changeDateForm(event: string, param: 'start' | 'end'): void {
-    if (param === 'start') {
-      this.startDateForm.setValue(event);
-    }
-    if (param === 'end') {
-      this.endDateForm.setValue(event);
-    }
-  }
-
-  /** Invalid if start date less last date */
-  invalidStartEndDate(): boolean {
-    const [startDay, startMonth, startYear] =
-      this.startDateForm.value.split('-');
-    const [endDay, endMonth, endYear] = this.endDateForm.value.split('-');
-    const startDate = new Date(+startYear, +startMonth - 1, +startDay);
-    const endDate = new Date(+endYear, +endMonth - 1, +endDay);
-    return startDate >= endDate;
-  }
-
-  /** Matter Selection */
-  selectionMatter(event: { name: string; value: any }[]): void {
-    this.selectedMatter = event;
-  }
-
-  /** Action for move timesheet */
-  actionMoveTimesheet(event: MyTimesheetDTO[]): void {
-    this.timesheetSelected = event;
-  }
-
-  /** Catch action from table */
-  actionTableFilter(event: {
-    action: string;
-    flyout: boolean;
-    data: MyTimesheetDTO;
-  }): void {
-    this.timesheetEditSelected = event.data;
-    if (event.action === 'edit') {
-      this.isOpenEditFlyout = event.flyout;
-    }
-    if (event.action === 'edit-tag') {
-      this.isOpenEditTagFlyout = event.flyout;
-    }
-    if (event.action === 'delete') {
-      this.isModalDelete = event.flyout;
-    }
-  }
-
-  /** Catch data from table without filter component for get data timesheet selected
-   * then will send to service and move matter component */
-  timesheetSelectedOut(event: MyTimesheetDTO[]): void {
-    this.timesheetSelected = event;
-  }
-
-  /** Catch changes from edit timesheet flyout component */
-  closeOutEdit(event: boolean): void {
-    this.isOpenEditFlyout = false;
-  }
-  /** Catch changes from edit tag timesheet flyout component */
-
-  closeOutEditTag(event: boolean): void {
-    this.isOpenEditTagFlyout = event;
-  }
-
-  /** Clear all filter */
-  clearAllFilterOut(event: FilterAppliedDTO[]): void {
-    this.filterApplied = event;
-    this.timesheetSelected = [];
-  }
-
-  /** Checking filter is on or not */
-  checkFilter(): boolean {
-    return this.filterApplied.some((item) => item.status == true);
-  }
-
-  /** Catch action from modal delete */
-  actionModal(event: { name: string; status: boolean }): void {
-    if (event.name === 'cancel') {
-      this.isModalDelete = event.status;
-    }
-    if (event.name === 'delete') {
-      this.isModalDelete = event.status;
-    }
+  /** Converter data for list activity */
+  converterMatterOpt(): {
+    name: string;
+    value: any;
+  }[] {
+    const data: {
+      name: string;
+      value: any;
+    }[] = [];
+    this.dataMatters.forEach((item) => {
+      return data.push({
+        name: item.matter,
+        value: item.matter,
+      });
+    });
+    return data;
   }
 }

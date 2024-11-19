@@ -47,7 +47,6 @@ import { MatterTypesDTO } from '../../../interfaces/matter-types.dto';
     TableRowTreeComponent,
     TableDataTreeComponent,
     TextComponent,
-    PopoverComponent,
     BadgeComponent,
     EmptyDataComponent,
     FlyoutSimpleComponent,

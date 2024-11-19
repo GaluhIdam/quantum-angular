@@ -1,18 +1,43 @@
-import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { Response } from '../../../../core/dtos/response.dto';
-import { YTDProductivityDTO } from '../../../../interfaces/ytd-productivity.dto';
+import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ProductivityMonthlyDTO } from '../../../../interfaces/productivity-monthly.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class YtdProductivityService {
-  private readonly httpClient = inject(HttpClient);
-  httpUrl: string = 'https://quantum-api-dummy.vercel.app/api';
+  private readonly http = inject(HttpClient);
+  httpUrl: string = 'https://example.api/v1/';
 
-  /** Getting ytd productivity from REST API. */
-  getYTDProductivity(year: number): Observable<Response<YTDProductivityDTO[]>> {
-    return of();
+  /**
+   * Get ytd productivity by year from REST API.
+   * @param year example: 2024
+   * @example
+   * [
+   *  {
+   *   "month": "January"
+   *   "billableActualHour": 20,
+   *   "billableTargetHour": 150,
+   *   "nonbillableActualHour": 10,
+   *   "nonbillableTargetHour": 100,
+   *  },
+   *  {
+   *   "month": "February"
+   *   "billableActualHour": 20,
+   *   "billableTargetHour": 150,
+   *   "nonbillableActualHour": 10,
+   *   "nonbillableTargetHour": 100,
+   *  },
+   * ]
+   */
+  getYtdProductivities(
+    year: number,
+    type: string
+  ): Observable<ProductivityMonthlyDTO[]> {
+    return this.http.get<ProductivityMonthlyDTO[]>(
+      `${this.httpUrl}/ytd-productivity`,
+      { params: new HttpParams().set('year', year).set('type', type) }
+    );
   }
 }

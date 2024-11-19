@@ -1,10 +1,11 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import {
   Component,
   EventEmitter,
   HostListener,
   Input,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import {
   FormControl,
@@ -17,22 +18,19 @@ import {
   ButtonIconComponent,
   ComboBoxComponent,
   DatePickerComponent,
-  DateRangeComponent,
   FlyoutBodyComponent,
   FlyoutComponent,
   FlyoutFooterComponent,
   FlyoutHeaderComponent,
   FormControlLayoutComponent,
   IconsComponent,
-  InputFieldComponent,
-  SelectFieldComponent,
   TextareaComponent,
   TextComponent,
   TimeSelectionComponent,
   TooltipComponent,
   ValidatorFieldComponent,
 } from '@quantum/fui';
-import { MyTimesheetDTO } from '../../interfaces/my-timesheet-temporary.dto';
+import { MyTimesheetDTO } from '../../interfaces/my-timesheet.dto';
 
 @Component({
   selector: 'shared-flyout-timesheet',
@@ -50,12 +48,9 @@ import { MyTimesheetDTO } from '../../interfaces/my-timesheet-temporary.dto';
     IconsComponent,
     TooltipComponent,
     FormControlLayoutComponent,
-    InputFieldComponent,
     ValidatorFieldComponent,
     ComboBoxComponent,
-    SelectFieldComponent,
     DatePickerComponent,
-    DateRangeComponent,
     TimeSelectionComponent,
     BadgeComponent,
     TextareaComponent,
@@ -77,6 +72,7 @@ export class FlyoutTimesheetComponent {
   @Input() listFeeEarner: { name: string; value: any }[] = [];
   @Input() listMatters: { name: string; value: any }[] = [];
   @Input() listActivities: { name: string; value: any }[] = [];
+  @Input() timesheetSelected?: MyTimesheetDTO;
 
   /** show/hide form */
   @Input() showFeeEarnerForm: boolean = true;
@@ -185,21 +181,38 @@ export class FlyoutTimesheetComponent {
     }
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes && this.timesheetSelected) {
+      this.activityForm = new FormControl(this.timesheetSelected.activity.name);
+      this.objectEventForm = new FormControl(
+        this.timesheetSelected.activity.name
+      );
+      this.topicForm = new FormControl(this.timesheetSelected.activity.name);
+      this.addDescForm = new FormControl(this.timesheetSelected.activity.name);
+      this.dateFormControl = new FormControl(
+        formatDate(this.timesheetSelected.date, 'dd-MM-yyyy', 'en')
+      );
+      this.durationForm = new FormControl(this.timesheetSelected.duration);
+    }
+  }
+
   @HostListener('document:keydown.escape', ['$event'])
   handleEscapeKey(event: KeyboardEvent) {
-    this.toggleCloseFlyout();
+    if (event) {
+      this.toggleCloseFlyout();
+    }
   }
 
   /** Close flyout */
   toggleCloseFlyout(): void {
     this.isOpenFlyout = false;
-    this.feeEarnerForm.setValue('');
-    this.activityForm.setValue('');
-    this.objectEventForm.setValue('');
-    this.topicForm.setValue('');
-    this.addDescForm.setValue('');
-    this.dateFormControl.setValue('');
-    this.durationForm.setValue('');
+    this.feeEarnerForm = new FormControl();
+    this.activityForm = new FormControl();
+    this.objectEventForm = new FormControl();
+    this.topicForm = new FormControl();
+    this.addDescForm = new FormControl();
+    this.dateFormControl = new FormControl();
+    this.durationForm = new FormControl();
     this.closeOut.emit(false);
   }
 }
