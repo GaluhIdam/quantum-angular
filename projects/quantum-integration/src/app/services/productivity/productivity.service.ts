@@ -12,8 +12,8 @@ export class ProductivityService {
 
   /**
    * Get productivity from REST API.
-   * @param startDate example: "2024-11-01"
-   * @param endDate example: "2024-11-30"
+   * @param idEmployee example: "unknown"
+   * @param type example: "month, year, and appraisal year"
    * @returns
    * {
    *   "billableActualHour": 20,

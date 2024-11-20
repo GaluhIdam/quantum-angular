@@ -12,7 +12,9 @@ export class YtdProductivityService {
 
   /**
    * Get ytd productivity by year from REST API.
+   * @param idEmployee example: "unknown"
    * @param year example: 2024
+   * @param type example: "month, year, and appraisal year"
    * @example
    * [
    *  {
