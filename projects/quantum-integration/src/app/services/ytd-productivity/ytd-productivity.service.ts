@@ -32,12 +32,18 @@ export class YtdProductivityService {
    * ]
    */
   getYtdProductivities(
+    idEmployee: string,
     year: number,
     type: string
   ): Observable<ProductivityMonthlyDTO[]> {
     return this.http.get<ProductivityMonthlyDTO[]>(
       `${this.httpUrl}/ytd-productivity`,
-      { params: new HttpParams().set('year', year).set('type', type) }
+      {
+        params: new HttpParams()
+          .set('idEmployee', idEmployee)
+          .set('year', year)
+          .set('type', type),
+      }
     );
   }
 }

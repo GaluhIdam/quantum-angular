@@ -22,9 +22,17 @@ export class ProductivityService {
    *   "nonbillableTargetHour": 100,
    * }
    */
-  getProductivities(type: string): Observable<ProductivitySummaryDTO> {
+  getProductivities(
+    idEmployee: string,
+    type: string
+  ): Observable<ProductivitySummaryDTO> {
     return this.http.get<ProductivitySummaryDTO>(
-      `${this.httpUrl}/productivity/${type}`
+      `${this.httpUrl}/productivity`,
+      {
+        params: new HttpParams()
+          .set('idEmployee', idEmployee)
+          .set('type', type),
+      }
     );
   }
 }

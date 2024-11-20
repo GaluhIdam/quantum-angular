@@ -154,19 +154,25 @@ export class YtdProductivityComponent {
    * @service
    *  YtdProductivityService
    */
-  private getDataYtdProductivites(year: number, type: string): void {
-    this.ytdProductivitiesService.getYtdProductivities(year, type).subscribe({
-      next: (res) => {
-        this.dataYtdProductivity = res;
-        this.dataProcessingToArray(this.dataYtdProductivity);
-      },
-      error: () => {
-        this.loading = false;
-      },
-      complete: () => {
-        this.loading = false;
-      },
-    });
+  private getDataYtdProductivites(
+    idEmployee: string,
+    year: number,
+    type: string
+  ): void {
+    this.ytdProductivitiesService
+      .getYtdProductivities(idEmployee, year, type)
+      .subscribe({
+        next: (res) => {
+          this.dataYtdProductivity = res;
+          this.dataProcessingToArray(this.dataYtdProductivity);
+        },
+        error: () => {
+          this.loading = false;
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
   /** Get data target hour for maximum value in chart */

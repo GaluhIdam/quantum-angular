@@ -51,7 +51,6 @@ import { TableFilterComponent } from './table-filter/table-filter.component';
     MoveMatterComponent,
     TableWithoutFilterComponent,
     SkeletonComponent,
-    ToastComponent,
     FlyoutTimesheetComponent,
     TableFilterComponent,
   ],
@@ -331,12 +330,18 @@ export class HistoryActivityComponent extends BaseController {
    * @service
    * MyTimesheetService
    */
-  getDataMyTimesheet(startDate: string, endDate: string): void {
-    this.myTimesheetService.getMyTimesheetByDate(startDate, endDate).subscribe({
-      next: (res) => {
-        this.dataTimesheet = res;
-      },
-    });
+  getDataMyTimesheet(
+    idEmployee: string,
+    startDate: string,
+    endDate: string
+  ): void {
+    this.myTimesheetService
+      .getMyTimesheetByDate(idEmployee, startDate, endDate)
+      .subscribe({
+        next: (res) => {
+          this.dataTimesheet = res;
+        },
+      });
   }
 
   /**

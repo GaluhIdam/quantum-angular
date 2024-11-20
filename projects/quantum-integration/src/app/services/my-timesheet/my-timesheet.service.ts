@@ -41,11 +41,13 @@ export class MyTimesheetService {
    * ]
    */
   getMyTimesheetByDate(
+    idEmployee: string,
     startDate: string,
     endDate: string
   ): Observable<MyTimesheetDTO[]> {
     return this.http.get<MyTimesheetDTO[]>(`${this.httpUrl}/my-timesheet`, {
       params: new HttpParams()
+        .set('idEmployee', idEmployee)
         .set('startDate', startDate)
         .set('endDate', endDate),
     });
@@ -84,12 +86,14 @@ export class MyTimesheetService {
    * ]
    */
   filterTimesheet(
+    idEmployee: string,
     startDate: string,
     endDate: string,
     matters?: string,
     timeDescription?: string
   ): Observable<MyTimesheetDTO[]> {
     let params = new HttpParams()
+      .set('idEmployee', idEmployee)
       .set('startDate', startDate)
       .set('endDate', endDate);
     if (matters) {
