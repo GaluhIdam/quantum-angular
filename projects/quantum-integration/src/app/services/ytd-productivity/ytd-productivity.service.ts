@@ -12,7 +12,9 @@ export class YtdProductivityService {
 
   /**
    * Get ytd productivity by year from REST API.
+   * @param idEmployee example: "unknown"
    * @param year example: 2024
+   * @param type example: "month, year, and appraisal year"
    * @example
    * [
    *  {
@@ -32,12 +34,18 @@ export class YtdProductivityService {
    * ]
    */
   getYtdProductivities(
+    idEmployee: string,
     year: number,
     type: string
   ): Observable<ProductivityMonthlyDTO[]> {
     return this.http.get<ProductivityMonthlyDTO[]>(
       `${this.httpUrl}/ytd-productivity`,
-      { params: new HttpParams().set('year', year).set('type', type) }
+      {
+        params: new HttpParams()
+          .set('idEmployee', idEmployee)
+          .set('year', year)
+          .set('type', type),
+      }
     );
   }
 }

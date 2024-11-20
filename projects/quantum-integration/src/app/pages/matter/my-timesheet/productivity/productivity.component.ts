@@ -71,8 +71,8 @@ export class ProductivityComponent extends BaseController {
    * @service
    *  ProductivityService
    */
-  private getDataProductivites(type: string): void {
-    this.productivitiesService.getProductivities(type).subscribe({
+  private getDataProductivites(idEmployee: string, type: string): void {
+    this.productivitiesService.getProductivities(idEmployee, type).subscribe({
       next: (res) => {
         this.dataProductivity = res;
       },

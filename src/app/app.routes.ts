@@ -27,7 +27,7 @@ export const routes: Routes = [
     title: 'Home',
     path: 'home',
     component: HomeComponent,
-    // canActivate: mapToCanActivate([AuthGuard]),
+    canActivate: mapToCanActivate([AuthGuard]),
   },
 
   /** Forbidden Page */
