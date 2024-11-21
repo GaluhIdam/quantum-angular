@@ -18,8 +18,8 @@ export const appConfig: ApplicationConfig = {
     provideAuth({
       config: {
         authority: 'https://keycloak.ahp.id/realms/quantum',
-        redirectUrl: 'http://localhost:4200/',
-        postLogoutRedirectUri: 'http://localhost:4200/',
+        redirectUrl: window.location.origin,
+        postLogoutRedirectUri: window.location.origin,
         clientId: 'ahplms-beta',
         scope: 'openid profile email offline_access',
         responseType: 'code',
