@@ -72,7 +72,7 @@ export class DetailMatterComponent {
       icon: 'tag',
       sideIcon: 'left',
       sizeIcon: 'sizem',
-      title: 'Expenses',
+      title: 'OPE',
     },
     {
       active: false,

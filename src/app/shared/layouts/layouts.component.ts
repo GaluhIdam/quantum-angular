@@ -27,12 +27,10 @@ import {
   tap,
 } from 'rxjs';
 import { DataSideBar } from './data-sidebar';
-import { keycloak } from '../../environment/env';
 import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
 import { UserKeycloak } from '../../core/guard/keycloak/keycloak.dto';
 
 import { FlyoutTimesheetComponent } from '../flyout-timesheet/flyout-timesheet.component';
-import { MiniSidebarComponent } from '../mini-sidebar/mini-sidebar.component';
 import { routes } from '../../app.routes';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 
@@ -52,7 +50,6 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
     AvatarComponent,
     ModalDeleteComponent,
     FlyoutTimesheetComponent,
-    MiniSidebarComponent,
     SitewideSearchComponent,
   ],
   templateUrl: './layouts.component.html',
@@ -240,9 +237,9 @@ export class LayoutsComponent {
 
   /** Getting data user from keycloak */
   getUser(): void {
-    this.oidcSecurityService.getUserData().subscribe((res: UserKeycloak) => {
-      this.nameUser = res.given_name;
-    });
+    // this.oidcSecurityService.getUserData().subscribe((res: UserKeycloak) => {
+    //   this.nameUser = res.given_name;
+    // });
   }
 
   filterData(): void {

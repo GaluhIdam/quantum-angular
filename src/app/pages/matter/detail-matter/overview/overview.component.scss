@@ -32,6 +32,12 @@
   text-align: right;
 }
 
+.overdue-card {
+  color: #e7664c;
+  border: 2px solid #e7664c;
+  background-color: #f8e9e9;
+}
+
 @media (max-width: 400px) {
   .legend {
     align-items: baseline;

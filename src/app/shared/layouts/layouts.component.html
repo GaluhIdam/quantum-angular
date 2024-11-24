@@ -39,187 +39,201 @@
           [dataSide]="dataSide"
         ></fui-sidenav>
       </div>
-      <div class="profile">
-        <hr />
-        <div class="flex-signout" (click)="logout()">
-          <fui-icons [icon]="'continuityBelow'" [color]="'text'" />
-          <p>Sign Out</p>
-        </div>
-        <div class="flex">
-          <div class="sub-flex">
-            <fui-avatar
-              [shape]="'user'"
-              [type]="'initial'"
-              [name]="nameUser"
-              [size]="'sizes'"
-              [color]="'primary'"
-            ></fui-avatar>
-            <fui-text>{{ nameUser }}</fui-text>
-          </div>
-          <fui-icons [icon]="'popout'" />
-        </div>
-      </div>
     </div>
   </fui-page-sidebar>
-  <shared-mini-sidebar *ngIf="!showSidebar" [dataSidebar]="dataSide" />
   <div class="wrap-body">
-    <div class="page-body">
-      <div class="sticky">
-        <fui-header
-          [display]="'flex'"
-          class="header-d"
-          [position]="'fixed-top'"
-          [shadow]="false"
-        >
-          <fui-header-panel class="header">
-            <fui-button-icon
-              [fullWidth]="'fit'"
-              [type]="'button'"
-              [size]="'m'"
-              [option]="'icon'"
-              [style]="'secondary'"
-              [color]="'text'"
-              [icon]="showSidebar ? 'menuLeft' : 'menuRight'"
-              [iconSide]="'left'"
-              (onClick)="toggleSidebar()"
-            />
-          </fui-header-panel>
-          <fui-header-panel class="header">
-            <div class="flex">
-              <fui-sitewide-search
-                class="visible-sitewide"
-                style="margin-right: 15px"
-                (onClick)="goTo($event)"
-                [placeholder]="'Search for menu...'"
-                [size]="'s'"
-                [data]="filteredData"
-                [searchForm]="searchForms"
-              />
-              <fui-button-icon
-                [fullWidth]="'fit'"
-                class="icon-mode"
-                *ngIf="themeService.getTheme() === 'ahp-light'"
-                [type]="'button'"
-                [size]="'m'"
-                [option]="'icon'"
-                [style]="'empty'"
-                [color]="'text'"
-                [icon]="'moon'"
-                [iconSide]="'left'"
-                (onClick)="toggleMode('ahp-dark')"
-              />
-              <fui-button-icon
-                [fullWidth]="'fit'"
-                class="icon-mode"
-                *ngIf="themeService.getTheme() === 'ahp-dark'"
-                [type]="'button'"
-                [size]="'m'"
-                [option]="'icon'"
-                [style]="'empty'"
-                [color]="'text'"
-                [icon]="'sun'"
-                [iconSide]="'left'"
-                (onClick)="toggleMode('ahp-light')"
-              />
+    <div class="sticky">
+      <fui-header
+        [display]="'flex'"
+        class="header-d"
+        [position]="'none'"
+        [shadow]="false"
+      >
+        <div class="center">
+          <div class="max-header">
+            <fui-header-panel class="header">
               <fui-button-icon
                 [fullWidth]="'fit'"
                 [type]="'button'"
                 [size]="'m'"
                 [option]="'icon'"
-                [style]="'empty'"
+                [style]="'secondary'"
                 [color]="'text'"
-                [icon]="'email'"
+                [icon]="showSidebar ? 'menuLeft' : 'menuRight'"
                 [iconSide]="'left'"
+                (onClick)="toggleSidebar()"
               />
-              <span class="count-notif">{{ emailCount }}</span>
-              <fui-popover
-                class="create-new"
-                [position]="'bottom'"
-                [align]="'end'"
-              >
+            </fui-header-panel>
+            <fui-header-panel class="header">
+              <div class="flex">
+                <fui-sitewide-search
+                  class="visible-sitewide"
+                  style="margin-right: 15px"
+                  (onClick)="goTo($event)"
+                  [placeholder]="'Search for menu...'"
+                  [size]="'s'"
+                  [data]="filteredData"
+                  [searchForm]="searchForms"
+                />
                 <fui-button-icon
                   [fullWidth]="'fit'"
+                  class="icon-mode"
+                  *ngIf="themeService.getTheme() === 'ahp-light'"
                   [type]="'button'"
                   [size]="'m'"
-                  [option]="'iconText'"
-                  [text]="'Create New'"
-                  [style]="'filled'"
-                  [color]="'primary'"
-                  [icon]="'arrowDown'"
-                  [iconSide]="'right'"
+                  [option]="'icon'"
+                  [style]="'empty'"
+                  [color]="'text'"
+                  [icon]="'moon'"
+                  [iconSide]="'left'"
+                  (onClick)="toggleMode('ahp-dark')"
                 />
-                <div popover-body class="select-option">
-                  <!-- TAB 1  -->
-                  <div
-                    class="tab-1"
-                    [ngStyle]="{ display: tab !== 1 ? 'none' : 'block' }"
-                  >
-                    <fui-text class="title" [size]="'m'"
-                      ><b>Select Options</b></fui-text
-                    >
-                    <hr />
-                    <a class="timesheet" (click)="toggleOpenFlyout()"
-                      ><fui-icons [icon]="'clock'" [color]="'text'" />
-                      <fui-text>Timesheet</fui-text></a
-                    >
-                    <a class="timesheet"><fui-text>Matter Opening</fui-text></a>
-                    <a class="timesheet between" (click)="clickTab(2)"
-                      ><fui-text>Payment Request</fui-text
-                      ><fui-icons [icon]="'arrowRight'" [color]="'text'"
-                    /></a>
-                    <a class="timesheet"><fui-text>Leave Request</fui-text></a>
-                  </div>
-                  <!-- TAB 1  -->
-
-                  <!-- TAB 2  -->
-                  <div
-                    class="tab-2"
-                    [ngStyle]="{ display: tab !== 2 ? 'none' : 'block' }"
-                  >
-                    <div class="flex">
-                      <fui-icons
-                        class="back"
-                        [icon]="'sortLeft'"
-                        [color]="'text'"
-                        (click)="clickTab(1)"
-                      />
-                      <fui-text class="title" [size]="'m'"
-                        ><b>Payment Request</b></fui-text
-                      >
+                <fui-button-icon
+                  [fullWidth]="'fit'"
+                  class="icon-mode"
+                  *ngIf="themeService.getTheme() === 'ahp-dark'"
+                  [type]="'button'"
+                  [size]="'m'"
+                  [option]="'icon'"
+                  [style]="'empty'"
+                  [color]="'text'"
+                  [icon]="'sun'"
+                  [iconSide]="'left'"
+                  (onClick)="toggleMode('ahp-light')"
+                />
+                <div class="email">
+                  <fui-button-icon
+                    [fullWidth]="'fit'"
+                    [type]="'button'"
+                    [size]="'m'"
+                    [option]="'icon'"
+                    [style]="'empty'"
+                    [color]="'text'"
+                    [icon]="'email'"
+                    [iconSide]="'left'"
+                  />
+                  <span class="count-notif">{{ emailCount }}</span>
+                </div>
+                <fui-popover [position]="'bottom'">
+                  <fui-avatar
+                    class="cc-avatar"
+                    [shape]="'user'"
+                    [type]="'initial'"
+                    [name]="'Fui Design'"
+                    [size]="'sizem'"
+                    [color]="'primary'"
+                  />
+                  <div popover-body>
+                    <div class="cc-padding">
+                      <fui-text [textContent]="'(JJ) Jacob Jones'" />
                     </div>
                     <hr />
-                    <a class="timesheet">
-                      <fui-text>Payment For Vendor</fui-text></a
-                    >
-                    <a class="timesheet"
-                      ><fui-text>Payment For Employee</fui-text></a
-                    >
-                    <a class="timesheet"><fui-text>Cash Advance</fui-text></a>
+                    <div class="flex-link">
+                      <fui-icons [icon]="'user'" />
+                      <fui-text [textContent]="'Profile'" />
+                    </div>
+                    <div class="flex-link" (click)="logout()">
+                      <fui-icons [icon]="'continuityBelow'" />
+                      <fui-text [textContent]="'Logout'" />
+                    </div>
                   </div>
-                  <!-- TAB 2  -->
-                </div>
-              </fui-popover>
-            </div>
-          </fui-header-panel>
-        </fui-header>
-        <fui-header
-          class="visible-sitewide-m"
-          [display]="'flex'"
-          [position]="'fixed-top'"
-          [shadow]="true"
-        >
-          <fui-header-panel style="width: 100%">
-            <fui-sitewide-search
-              style="margin-right: 15px"
-              (onClick)="goTo($event)"
-              [placeholder]="'Search for menu...'"
-              [size]="'s'"
-              [data]="filteredData"
-              [searchForm]="searchForms"
-            />
-          </fui-header-panel>
-        </fui-header>
-      </div>
+                </fui-popover>
+
+                <fui-popover
+                  class="create-new"
+                  [position]="'bottom'"
+                  [align]="'end'"
+                >
+                  <fui-button-icon
+                    [fullWidth]="'fit'"
+                    [type]="'button'"
+                    [size]="'m'"
+                    [option]="'iconText'"
+                    [text]="'Create New'"
+                    [style]="'filled'"
+                    [color]="'primary'"
+                    [icon]="'arrowDown'"
+                    [iconSide]="'right'"
+                  />
+                  <div popover-body class="select-option">
+                    <!-- TAB 1  -->
+                    <div
+                      class="tab-1"
+                      [ngStyle]="{ display: tab !== 1 ? 'none' : 'block' }"
+                    >
+                      <fui-text class="title" [size]="'m'"
+                        ><b>Select Options</b></fui-text
+                      >
+                      <hr />
+                      <a class="timesheet" (click)="toggleOpenFlyout()"
+                        ><fui-icons [icon]="'clock'" [color]="'text'" />
+                        <fui-text>Timesheet</fui-text></a
+                      >
+                      <a class="timesheet"
+                        ><fui-text>Matter Opening</fui-text></a
+                      >
+                      <a class="timesheet between" (click)="clickTab(2)"
+                        ><fui-text>Payment Request</fui-text
+                        ><fui-icons [icon]="'arrowRight'" [color]="'text'"
+                      /></a>
+                      <a class="timesheet"
+                        ><fui-text>Leave Request</fui-text></a
+                      >
+                    </div>
+                    <!-- TAB 1  -->
+
+                    <!-- TAB 2  -->
+                    <div
+                      class="tab-2"
+                      [ngStyle]="{ display: tab !== 2 ? 'none' : 'block' }"
+                    >
+                      <div class="flex">
+                        <fui-icons
+                          class="back"
+                          [icon]="'sortLeft'"
+                          [color]="'text'"
+                          (click)="clickTab(1)"
+                        />
+                        <fui-text class="title" [size]="'m'"
+                          ><b>Payment Request</b></fui-text
+                        >
+                      </div>
+                      <hr />
+                      <a class="timesheet">
+                        <fui-text>Payment For Vendor</fui-text></a
+                      >
+                      <a class="timesheet"
+                        ><fui-text>Payment For Employee</fui-text></a
+                      >
+                      <a class="timesheet"><fui-text>Cash Advance</fui-text></a>
+                    </div>
+                    <!-- TAB 2  -->
+                  </div>
+                </fui-popover>
+              </div>
+            </fui-header-panel>
+          </div>
+        </div>
+      </fui-header>
+      <fui-header
+        class="visible-sitewide-m"
+        [display]="'flex'"
+        [position]="'fixed-top'"
+        [shadow]="true"
+      >
+        <fui-header-panel style="width: 100%">
+          <fui-sitewide-search
+            style="margin-right: 15px"
+            (onClick)="goTo($event)"
+            [placeholder]="'Search for menu...'"
+            [size]="'s'"
+            [data]="filteredData"
+            [searchForm]="searchForms"
+          />
+        </fui-header-panel>
+      </fui-header>
+    </div>
+    <div class="page-body">
       <div class="wrap-page-body">
         <ng-content />
       </div>
