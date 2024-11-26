@@ -27,6 +27,12 @@
   gap: 20px;
 }
 
+.flex-end-gap-10 {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
 .card-blue {
   padding: 20px;
   border-radius: 6px;
@@ -68,4 +74,34 @@
   border-radius: 5px;
   padding: 10px;
   display: grid;
+}
+.reopen-action {
+  color: var(--fuiColorPrimary, $fuiColorPrimary);
+  text-decoration: none;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.flex-step {
+  display: flex;
+  margin-bottom: 5px;
+  justify-content: space-between;
+}
+
+.body-c-modal {
+  max-width: 550px;
+}
+
+.card-matter {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+  padding: 20px;
+  border-radius: 6px;
 }

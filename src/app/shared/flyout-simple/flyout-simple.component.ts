@@ -5,7 +5,6 @@ import {
   FlyoutComponent,
   FlyoutFooterComponent,
   FlyoutHeaderComponent,
-  TextComponent,
 } from '@quantum/fui';
 
 @Component({
@@ -17,7 +16,6 @@ import {
     FlyoutComponent,
     FlyoutFooterComponent,
     FlyoutHeaderComponent,
-    TextComponent,
   ],
   templateUrl: './flyout-simple.component.html',
   styleUrl: './flyout-simple.component.scss',

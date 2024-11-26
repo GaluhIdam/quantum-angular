@@ -22,7 +22,7 @@
 }
 .fui-sidenav {
   overflow-y: auto;
-  padding: 0px 20px;
+  padding: 25px 20px 0px 20px;
   flex: 1;
 }
 
@@ -151,17 +151,14 @@
 /** Body Style */
 .wrap-body {
   width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
 }
 .page-body {
   display: flex;
   justify-content: center;
-  width: -webkit-fill-available;
-  width: -moz-available;
-  height: 100%;
-  position: fixed;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100%;
   background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
 }
 .wrap-page-body {

@@ -58,9 +58,25 @@
         <fui-text [weight]="'semibold'">Overview</fui-text>
       </div>
       <div class="flex-badge-general mt-10">
-        <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Billable'" />
-        <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Hourly'" />
-        <fui-badge [color]="'default'" [size]="'s'" [text]="'Closed'" />
+        <fui-badge [color]="'hollow'" [size]="'s'" [text]="type.billability" />
+        <fui-badge
+          [color]="'hollow'"
+          [size]="'s'"
+          *ngIf="type.pricingType"
+          [text]="type.pricingType"
+        />
+        <fui-badge
+          [color]="'default'"
+          [size]="'s'"
+          [text]="type.status"
+          [color]="
+            type.status === 'Active'
+              ? 'success'
+              : type.status === 'Complete'
+              ? 'warning'
+              : 'default'
+          "
+        />
         <fui-badge
           [color]="'hollow'"
           [iconShow]="true"
@@ -81,11 +97,50 @@
       </div>
       <div class="flex-label justify-between mt-10">
         <fui-text>Completion Date</fui-text>
-        <fui-text>24 Jan 2024</fui-text>
+        <fui-text *ngIf="type.status !== 'Active'">24 Jan 2024</fui-text>
+        <p
+          class="reopen-action"
+          *ngIf="type.status === 'Active'"
+          (click)="toggleModalReOpen('completion', true)"
+        >
+          Set Date
+        </p>
       </div>
+      <div class="flex-label mt-5" *ngIf="type.status !== 'Closed'">
+        <fui-text [size]="'s'" [color]="'text'"
+          >Completed with Insufficient Information</fui-text
+        >
+        <fui-icons
+          [size]="'sizes'"
+          [color]="'disabled'"
+          [icon]="'questionInCircle'"
+          (click)="toggleModalReOpen('fyiComplete', true)"
+        />
+      </div>
+      <div
+        class="flex-label justify-between mt-10"
+        *ngIf="type.status !== 'Active'"
+      >
+        <p class="reopen-action" (click)="toggleModalReOpen('reopen', true)">
+          Reopen
+        </p>
+      </div>
+
       <div class="flex-label justify-between mt-10">
-        <fui-text>Closing Date</fui-text>
-        <fui-text>24 Jan 2024</fui-text>
+        <fui-text>Closed Date</fui-text>
+        <fui-text *ngIf="type.status === 'Closed'">24 Jan 2024</fui-text>
+        <fui-text *ngIf="type.status === 'Active'">-</fui-text>
+      </div>
+      <div class="flex-label mt-5" *ngIf="type.status !== 'Closed'">
+        <fui-text [size]="'s'" [color]="'text'"
+          >Steps to close this matter</fui-text
+        >
+        <fui-icons
+          [size]="'sizes'"
+          [color]="'disabled'"
+          [icon]="'questionInCircle'"
+          (click)="toggleModalReOpen('infoStepClose', true)"
+        />
       </div>
     </div>
     <!-- OVERVIEW -->
@@ -174,14 +229,12 @@
         <fui-text [weight]="'semibold'">Associated Matters</fui-text>
       </div>
       <fui-text>Associated to 7930-1 and 1 other submatters.</fui-text>
-      <fui-link
-        class="mt-10"
-        [urlLink]="'#'"
-        [typeLink]="'coloring'"
-        [colorLink]="'primary'"
+      <p
+        class="reopen-action"
+        (click)="toggleModalReOpen('flyoutAssociateMatter', true)"
       >
         See All
-      </fui-link>
+      </p>
     </div>
     <!-- COMPLETED WITH INSUFFICIENT  -->
   </div>
@@ -986,3 +1039,319 @@
   </div>
   <!-- GRID RIGHT  -->
 </div>
+
+<!-- MODAL REOPEN  -->
+<fui-modal
+  [open]="isModalReOpen"
+  (onClickOverlayModal)="toggleModalReOpen('reopen', false)"
+>
+  <fui-modal-header (onCloseModal)="toggleModalReOpen('reopen', false)">
+    <fui-text [weight]="'bold'" [size]="'xl'">Reopen Matter</fui-text>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="mt-20 body-c-modal">
+      <fui-text
+        >Removing completion date will reopen this matter and allow other users
+        to add new timesheet or OPE to this matter. Remove completion date and
+        reopen this matter?</fui-text
+      >
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer>
+    <div class="flex-end-gap-10">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [style]="'empty'"
+        (onClick)="toggleModalReOpen('reopen', false)"
+      />
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Reopen Matter'"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>
+<!-- MODAL REOPEN  -->
+
+<!-- MODAL SET DATE  -->
+<fui-modal
+  [open]="isModalCompletionDate"
+  (onClickOverlayModal)="toggleModalReOpen('completion', false)"
+>
+  <fui-modal-header (onCloseModal)="toggleModalReOpen('completion', false)">
+    <fui-text [weight]="'bold'" [size]="'xl'">Set Completion Date</fui-text>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="body-c-modal">
+      <div class="mt-20">
+        <fui-text
+          >Setting completion date will automatically change the status of this
+          matter to Completed and prevent any timesheet or OPE to be added to
+          this matter.</fui-text
+        >
+      </div>
+      <div class="mt-20">
+        <div class="mb-5">
+          <fui-text>Completion Date</fui-text>
+        </div>
+        <fui-date-picker [dateFormat]="'DD-MM-YYYY'" />
+      </div>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer>
+    <div class="flex-end-gap-10">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [style]="'empty'"
+        (onClick)="toggleModalReOpen('completion', false)"
+      />
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Complete Matter'"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>
+<!-- MODAL SET DATE  -->
+
+<!-- MODAL Completed with Insufficient Information  -->
+<fui-modal
+  [open]="isModalFYICompleted"
+  (onClickOverlayModal)="toggleModalReOpen('fyiComplete', false)"
+>
+  <fui-modal-header (onCloseModal)="toggleModalReOpen('fyiComplete', false)">
+    <fui-text [weight]="'bold'" [size]="'xl'"
+      >Completed with Insufficient Information</fui-text
+    >
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="body-c-modal">
+      <div class="mt-20">
+        <fui-text
+          >This matter was completed with insufficient matter information as
+          part of Call to Action Live Matter Initiative.</fui-text
+        >
+      </div>
+      <div class="mt-20">
+        <fui-text>Approved By Jacob Jones (JJ)</fui-text>
+      </div>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer>
+    <div class="flex-end-gap-10">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Close'"
+        [style]="'empty'"
+        (onClick)="toggleModalReOpen('fyiComplete', false)"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>
+<!-- MODAL Completed with Insufficient Information  -->
+
+<!-- MODAL Steps to Close Matter  -->
+<fui-modal
+  [open]="isModalStepClose"
+  (onClickOverlayModal)="toggleModalReOpen('infoStepClose', false)"
+>
+  <fui-modal-header (onCloseModal)="toggleModalReOpen('infoStepClose', false)">
+    <fui-text [weight]="'bold'" [size]="'xl'">Steps to Close Matter</fui-text>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="body-c-modal">
+      <div class="mt-20">
+        <fui-text
+          >Closed status is determined automatically by the system. To close
+          this matter, follow these remaining steps:</fui-text
+        >
+      </div>
+      <div class="mt-20">
+        <div class="flex-step">
+          <fui-text [color]="'primary'"
+            >1. Fill in the required information to complete the
+            matter</fui-text
+          >
+          <fui-icons
+            [size]="'sizes'"
+            [color]="'primary'"
+            [icon]="'checkInCircleFilled'"
+          />
+        </div>
+        <div class="flex-step">
+          <fui-text [color]="'primary'">2. Set the Completion Date</fui-text>
+          <fui-icons
+            [size]="'sizes'"
+            [color]="'primary'"
+            [icon]="'checkInCircleFilled'"
+          />
+        </div>
+        <div class="flex-step">
+          <fui-text>3. Bill or Write-off 3 remaining timesheets</fui-text>
+        </div>
+        <div class="flex-step">
+          <fui-text>4. Bill or Write-off 3 remaining OPEs</fui-text>
+        </div>
+        <div class="flex-step">
+          <fui-text>5. Close 3 remaining billings</fui-text>
+        </div>
+      </div>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer>
+    <div class="flex-end-gap-10">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Close'"
+        [style]="'empty'"
+        (onClick)="toggleModalReOpen('infoStepClose', false)"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>
+<!-- MODAL Steps to Close Matter  -->
+
+<!-- FLYOUT ASSOCIATED MATTER  -->
+<shared-flyout-simple
+  [isOpenFlyout]="isFlyoutAssociateMatter"
+  (overlayOut)="toggleModalReOpen('flyoutAssociateMatter', false)"
+  [titleFlyout]="'Associated Matters'"
+>
+  <div body>
+    <div class="mb-5">
+      <fui-text>Parent Matter</fui-text>
+    </div>
+    <div class="card-matter">
+      <div class="flex-step">
+        <fui-text [weight]="'semibold'">6030 Startup Legal Support</fui-text>
+        <fui-icons [icon]="'popout'" />
+      </div>
+      <fui-text [color]="'text'"
+        >Due Diligence on the Indonesian Entity</fui-text
+      >
+      <div class="flex-badge-general mt-10">
+        <fui-badge [color]="'hollow'" [size]="'s'" [text]="type.billability" />
+        <fui-badge
+          [color]="'hollow'"
+          [size]="'s'"
+          *ngIf="type.pricingType"
+          [text]="type.pricingType"
+        />
+        <fui-badge
+          [color]="'default'"
+          [size]="'s'"
+          [text]="type.status"
+          [color]="
+            type.status === 'Active'
+              ? 'success'
+              : type.status === 'Complete'
+              ? 'warning'
+              : 'default'
+          "
+        />
+        <fui-badge
+          [color]="'hollow'"
+          [iconShow]="true"
+          [icon]="'timeRefresh'"
+          [iconSize]="'sizes'"
+          [size]="'s'"
+          [text]="'3 Jan 24'"
+        />
+      </div>
+    </div>
+    <div style="margin: 20px 0px">
+      <hr />
+    </div>
+    <div class="mb-5">
+      <fui-text>Other Sub-matters</fui-text>
+    </div>
+    <div class="card-matter mb-10">
+      <div class="flex-step">
+        <fui-text [weight]="'semibold'">6030 Startup Legal Support</fui-text>
+        <fui-icons [icon]="'popout'" />
+      </div>
+      <div class="flex-badge-general">
+        <fui-badge [color]="'hollow'" [size]="'s'" [text]="type.billability" />
+        <fui-badge
+          [color]="'hollow'"
+          [size]="'s'"
+          *ngIf="type.pricingType"
+          [text]="type.pricingType"
+        />
+        <fui-badge
+          [color]="'default'"
+          [size]="'s'"
+          [text]="type.status"
+          [color]="
+            type.status === 'Active'
+              ? 'success'
+              : type.status === 'Complete'
+              ? 'warning'
+              : 'default'
+          "
+        />
+        <fui-badge
+          [color]="'hollow'"
+          [iconShow]="true"
+          [icon]="'timeRefresh'"
+          [iconSize]="'sizes'"
+          [size]="'s'"
+          [text]="'3 Jan 24'"
+        />
+      </div>
+    </div>
+    <div class="card-matter">
+      <div class="flex-step">
+        <fui-text [weight]="'semibold'">6030 Startup Legal Support</fui-text>
+        <fui-icons [icon]="'popout'" />
+      </div>
+      <div class="flex-badge-general">
+        <fui-badge [color]="'hollow'" [size]="'s'" [text]="type.billability" />
+        <fui-badge
+          [color]="'hollow'"
+          [size]="'s'"
+          *ngIf="type.pricingType"
+          [text]="type.pricingType"
+        />
+        <fui-badge
+          [color]="'default'"
+          [size]="'s'"
+          [text]="type.status"
+          [color]="
+            type.status === 'Active'
+              ? 'success'
+              : type.status === 'Complete'
+              ? 'warning'
+              : 'default'
+          "
+        />
+        <fui-badge
+          [color]="'hollow'"
+          [iconShow]="true"
+          [icon]="'timeRefresh'"
+          [iconSize]="'sizes'"
+          [size]="'s'"
+          [text]="'3 Jan 24'"
+        />
+      </div>
+    </div>
+  </div>
+  <div footer style="display: flex; justify-content: end">
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Close'"
+      [style]="'empty'"
+      (onClick)="toggleModalReOpen('flyoutAssociateMatter', false)"
+    />
+  </div>
+</shared-flyout-simple>
+<!-- FLYOUT ASSOCIATED MATTER  -->

@@ -3,15 +3,21 @@ import { Router } from '@angular/router';
 import {
   BadgeComponent,
   ButtonIconComponent,
+  DatePickerComponent,
   Icon,
   IconsComponent,
   LinkComponent,
+  ModalBodyComponent,
+  ModalComponent,
+  ModalFooterComponent,
+  ModalHeaderComponent,
   TextComponent,
   TooltipComponent,
 } from '@quantum/fui';
 import { CommonModule } from '@angular/common';
 import { SliderCardComponent } from '../../../../shared/slider-card/slider-card.component';
 import { SliderCardBodyComponent } from '../../../../shared/slider-card/slider-card-body/slider-card-body.component';
+import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-simple.component';
 
 @Component({
   selector: 'app-information',
@@ -26,11 +32,43 @@ import { SliderCardBodyComponent } from '../../../../shared/slider-card/slider-c
     TooltipComponent,
     SliderCardComponent,
     SliderCardBodyComponent,
+    ModalComponent,
+    ModalHeaderComponent,
+    ModalBodyComponent,
+    ModalFooterComponent,
+    DatePickerComponent,
+    FlyoutSimpleComponent,
   ],
   templateUrl: './information.component.html',
   styleUrl: './information.component.scss',
 })
 export class InformationComponent {
+  /** Status modal reopen */
+  isModalReOpen: boolean = false;
+
+  /** Status modal reopen */
+  isModalCompletionDate: boolean = false;
+
+  /** Status modal step to close */
+  isModalStepClose: boolean = false;
+
+  /** Modal FYI */
+  isModalFYICompleted: boolean = false;
+
+  /** Flyout associate matter */
+  isFlyoutAssociateMatter: boolean = false;
+
+  /** Type Billable */
+  type: {
+    billability: 'Billable' | 'Potential Matter' | 'Probono' | 'Non Billable';
+    pricingType?: 'Lumpsum' | 'Retainer' | 'Hourly' | 'Cap';
+    status: 'Complete' | 'Active' | 'Closed';
+  } = {
+    billability: 'Billable',
+    pricingType: 'Hourly',
+    status: 'Complete',
+  };
+
   clientNameSelected: {
     name: string;
     value: any;
@@ -144,6 +182,33 @@ export class InformationComponent {
         top: targetPosition,
         behavior: 'smooth',
       });
+    }
+  }
+
+  /** Toggle Modal ReOpen */
+  toggleModalReOpen(
+    modal:
+      | 'reopen'
+      | 'completion'
+      | 'infoStepClose'
+      | 'fyiComplete'
+      | 'flyoutAssociateMatter',
+    param: boolean
+  ): void {
+    if (modal === 'reopen') {
+      this.isModalReOpen = param;
+    }
+    if (modal === 'completion') {
+      this.isModalCompletionDate = param;
+    }
+    if (modal === 'infoStepClose') {
+      this.isModalStepClose = param;
+    }
+    if (modal === 'fyiComplete') {
+      this.isModalFYICompleted = param;
+    }
+    if (modal === 'flyoutAssociateMatter') {
+      this.isFlyoutAssociateMatter = param;
     }
   }
 }
