@@ -26,7 +26,6 @@ import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-s
     CommonModule,
     ButtonIconComponent,
     TextComponent,
-    LinkComponent,
     BadgeComponent,
     IconsComponent,
     TooltipComponent,
