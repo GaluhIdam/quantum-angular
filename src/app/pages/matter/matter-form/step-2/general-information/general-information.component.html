@@ -181,6 +181,7 @@
           [placeholder]="'Please select billability'"
           [invalid]="false"
           [selectOptions]="billableOption"
+          (change)="changeBillability($event)"
         >
         </fui-select-field>
       </fui-form-control-layout>
@@ -203,7 +204,8 @@
             ></fui-input-field>
           </fui-form-control-layout>
         </div>
-        <fui-button-icon [fullWidth]="'fit'"
+        <fui-button-icon
+          [fullWidth]="'fit'"
           (onClick)="openFlyoutUploadMatter()"
           [style]="'secondary'"
           [type]="'button'"
@@ -396,7 +398,8 @@
     >
     <!-- BADGE MEMBER  -->
 
-    <fui-button-icon [fullWidth]="'fit'"
+    <fui-button-icon
+      [fullWidth]="'fit'"
       (onClick)="openFlyoutManageMember()"
       class="mt-15"
       [style]="'secondary'"
@@ -426,3 +429,39 @@
   (selectionOut)="selectionOut($event)"
 />
 <!-- Matter Member Flyout  -->
+
+<fui-modal
+  [open]="isModalConfirmBillability"
+  (onClickOverlayModal)="toggleModalChanger(false)"
+>
+  <fui-modal-header (onCloseModal)="toggleModalChanger(false)">
+    <fui-text>Change to {{ billabilityForm.value }}</fui-text>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div style="margin: 20px 0px">
+      <fui-text
+        >Changing this billability will cause all productivity to be counted as
+        {{ billabilityForm.value }}. Are you sure you want to change this
+        value?</fui-text
+      >
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer>
+    <div style="display: flex; justify-content: end; gap: 10px">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [style]="'empty'"
+        (onClick)="toggleModalChanger(false, 'cancel')"
+      />
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Change to ' + billabilityForm.value"
+        [color]="'danger'"
+        (onClick)="toggleModalChanger(false, 'change')"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>

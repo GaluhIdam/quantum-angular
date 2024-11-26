@@ -1,11 +1,14 @@
 <!-- PAYER INFORMATION  -->
-<app-payer-information [billabiltiySelection]="billabiltiySelection" *ngIf="billabiltiySelection !== 'Probono'" />
+<app-payer-information
+  [billabiltiySelection]="billabiltiySelection"
+  *ngIf="billabiltiySelection !== 'Probono'"
+/>
 <!-- PAYER INFORMATION  -->
 
 <!-- Proof of Engagement  -->
- <app-proof-engagement />
+<app-proof-engagement />
 <!-- Proof of Engagement  -->
 
 <!-- Special Rates  -->
- <app-special-rates />
+<app-special-rates *ngIf="billabiltiySelection !== 'Probono'"/>
 <!-- Special Rates  -->

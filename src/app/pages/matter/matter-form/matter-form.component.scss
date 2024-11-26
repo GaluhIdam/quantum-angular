@@ -92,6 +92,7 @@
   }
   &-between {
     display: flex;
+    flex-grow: 1;
     justify-content: space-between;
   }
   fui-form-control-layout {

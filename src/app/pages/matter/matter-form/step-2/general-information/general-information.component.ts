@@ -13,6 +13,10 @@ import {
   FormControlLayoutComponent,
   IconsComponent,
   InputFieldComponent,
+  ModalBodyComponent,
+  ModalComponent,
+  ModalFooterComponent,
+  ModalHeaderComponent,
   SelectFieldComponent,
   TextareaComponent,
   TextComponent,
@@ -41,6 +45,10 @@ import { FlyoutUploadMatterComponent } from '../../flyout-shared/flyout-upload-m
     ButtonIconComponent,
     FlyoutMatterMembersComponent,
     FlyoutUploadMatterComponent,
+    ModalComponent,
+    ModalHeaderComponent,
+    ModalBodyComponent,
+    ModalFooterComponent,
   ],
   templateUrl: './general-information.component.html',
   styleUrl: './general-information.component.scss',
@@ -69,8 +77,9 @@ export class GeneralInformationComponent {
   isMatterShortDesc: boolean = false;
 
   /** Billable Form */
+  billability: string = 'Billable';
   billabilityForm: FormControl = new FormControl(
-    'Billable',
+    this.billability,
     Validators.required
   );
   billableOption: { label: string; value: any }[] = [
@@ -160,6 +169,8 @@ export class GeneralInformationComponent {
   ];
   selectedEmployeMatterMember: { name: string; position: string }[] = [];
 
+  isModalConfirmBillability: boolean = false;
+
   isOpenFlyoutUploadMatter: boolean = false;
   isOpenFlyoutManageMember: boolean = false;
 
@@ -186,5 +197,22 @@ export class GeneralInformationComponent {
   /** Catch data from flyout matter member */
   selectionOut(event: { name: string; position: string }[]): void {
     this.selectedEmployeMatterMember = event;
+  }
+
+  /** Changes of billability */
+  changeBillability(event: any): void {
+    if (this.billabilityForm.value !== this.billability) {
+      this.isModalConfirmBillability = true;
+    }
+  }
+
+  /** Toggle Modal Confirm Billabilty */
+  toggleModalChanger(param: boolean, status?: 'change' | 'cancel'): void {
+    this.isModalConfirmBillability = param;
+    if (status === 'change') {
+      this.billability = this.billabilityForm.value;
+    } else {
+      this.billabilityForm = new FormControl(this.billability);
+    }
   }
 }
