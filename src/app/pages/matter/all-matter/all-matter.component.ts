@@ -6,7 +6,6 @@ import {
   IconsComponent,
   InputFieldComponent,
 } from '@quantum/fui';
-import { FilterAppliedComponent } from '../../../shared/filter-applied/filter-applied.component';
 import { FilterAppliedDTO } from '../../../shared/filter-applied/filter-apllied.dto';
 import { CardAllMatterComponent } from './card-all-matter/card-all-matter.component';
 import { FlyoutFilterMatterComponent } from '../../../shared/flyout-filter-matter/flyout-filter-matter.component';
@@ -18,7 +17,6 @@ import { PageEmptyComponent } from '../../../shared/page-empty/page-empty.compon
   imports: [
     CommonModule,
     ButtonIconComponent,
-    FilterAppliedComponent,
     CardAllMatterComponent,
     FormControlLayoutComponent,
     InputFieldComponent,
@@ -79,7 +77,7 @@ export class AllMatterComponent {
       this.isOpenFlyoutCreate = true;
     }
     if (event === 'filter') {
-      this.isOpenFlyoutFilter = true;
+      this.isOpenFlyoutFilter = !this.isOpenFlyoutFilter;
     }
   }
 

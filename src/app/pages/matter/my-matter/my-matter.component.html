@@ -29,18 +29,18 @@
       [style]="'secondary'"
       [size]="'m'"
       [text]="'Filter'"
-      (onClick)="openFilterFlyout()"
+      (onClick)="actionFilter(true)"
     />
     <!-- BUTTON FILTER FOR OPEN FLYOUT -->
   </div>
   <!-- FORM SEARCH & FILTER BUTTON  -->
 
-  <!-- FILTER FLYOUT  -->
-  <shared-flyout-filter-matter
-    [isOpenFlyout]="isOpenFlyoutFilter"
+  <!-- FILTER ADV  -->
+  <shared-adv-my-matter-filter
+    [openFilter]="isOpenAdvFilter"
     (action)="actionFilter($event)"
   />
-  <!-- FILTER FLYOUT  -->
+  <!-- FILTER ADV  -->
 
   <!-- FILTER SECTION  -->
   <div class="filter-applied">

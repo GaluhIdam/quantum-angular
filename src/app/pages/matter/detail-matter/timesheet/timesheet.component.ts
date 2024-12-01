@@ -5,18 +5,16 @@ import { ButtonGroupComponent } from '../../../../shared/button-group/button-gro
 import { TableAutoGenerateComponent } from '../../../../shared/table-auto-generate/table-auto-generate.component';
 import { ActionBtn } from '../../../../shared/table-auto-generate/table-type';
 import { TimesheetDetailDTO } from '../../../../interfaces/timesheet-detail.dto';
-import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-simple.component';
 import {
-  ButtonIconComponent,
+  AdvanceFilterComponent,
+  AdvanceFilterItemComponent,
+  AdvanceFilterSectionComponent,
   ComboBoxComponent,
   DateRangeComponent,
   FormControlLayoutComponent,
-  IconsComponent,
   InputFieldComponent,
-  TextComponent,
 } from '@quantum/fui';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
 import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
 import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
 import { FlyoutTimesheetComponent } from '../../../../shared/flyout-timesheet/flyout-timesheet.component';
@@ -32,17 +30,15 @@ import { MoveMatterComponent } from '../../../../shared/move-matter/move-matter.
     ButtonGroupComponent,
     TableAutoGenerateComponent,
     MoveMatterComponent,
-    FlyoutSimpleComponent,
-    TextComponent,
     DateRangeComponent,
-    IconsComponent,
-    ButtonIconComponent,
     ComboBoxComponent,
     FormControlLayoutComponent,
     InputFieldComponent,
-    FilterAppliedComponent,
     ModalDeleteComponent,
     FlyoutTimesheetComponent,
+    AdvanceFilterComponent,
+    AdvanceFilterSectionComponent,
+    AdvanceFilterItemComponent,
   ],
   templateUrl: './timesheet.component.html',
   styleUrl: './timesheet.component.scss',
@@ -130,8 +126,8 @@ export class TimesheetComponent {
   openModalDelete: boolean = false;
 
   /** Form Filter */
-  startDateForm: FormControl = new FormControl();
-  endDateForm: FormControl = new FormControl();
+  startDateForm: FormControl = new FormControl('');
+  endDateForm: FormControl = new FormControl('');
   descriptionForm: FormControl = new FormControl('');
 
   nameForm: FormControl = new FormControl('');
@@ -165,12 +161,7 @@ export class TimesheetComponent {
   writeOffStatusSelected: {
     name: string;
     value: any;
-  }[] = [
-    {
-      name: 'All',
-      value: 1,
-    },
-  ];
+  }[] = [];
 
   billingNumberForm: FormControl = new FormControl();
   billingNumberOption: {
@@ -221,11 +212,26 @@ export class TimesheetComponent {
   }
 
   /** Catch close create flyout */
-  closeOut(event: boolean, param: 'create' | 'filter' | 'edit'): void {
+  closeOut(
+    event: boolean,
+    param: 'create' | 'filter' | 'edit',
+    some?: boolean | 'filter' | 'clear'
+  ): void {
     if (param === 'create') {
       this.isOpenFlyoutCreate = event;
     }
     if (param === 'filter') {
+      if (some === 'clear') {
+        this.startDateForm = new FormControl('');
+        this.endDateForm = new FormControl('');
+        this.nameForm = new FormControl('');
+        this.nameSelected = [];
+        this.descriptionForm = new FormControl('');
+        this.writeOffStatusForm = new FormControl('');
+        this.writeOffStatusSelected = [];
+        this.billingNumberForm = new FormControl('');
+        this.billingNumberSelected = [];
+      }
       this.isOpenFlyoutFilter = event;
     }
     if (param === 'edit') {
@@ -273,6 +279,33 @@ export class TimesheetComponent {
     }
     if (param === 'billing') {
       this.billingNumberSelected = event;
+    }
+  }
+
+  /** Watch changes of date range */
+  watchDateChange(type: 'start' | 'end', value: string): void {
+    if (type === 'start') {
+      this.startDateForm = new FormControl(value);
+    } else {
+      this.endDateForm = new FormControl(value);
+    }
+  }
+
+  /** Array to string */
+  getFormattedNames(
+    param: {
+      name: string;
+      value: any;
+    }[]
+  ): string {
+    const names = param.map((item) => item.name);
+
+    if (names.length <= 3) {
+      return names.join(', ');
+    } else {
+      const firstThree = names.slice(0, 3).join(', ');
+      const remainingCount = names.length - 3;
+      return `${firstThree}, ${remainingCount}+`;
     }
   }
 }

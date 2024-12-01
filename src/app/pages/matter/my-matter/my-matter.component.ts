@@ -10,9 +10,9 @@ import {
 } from '@quantum/fui';
 import { RouterModule } from '@angular/router';
 import { ButtonGroupComponent } from '../../../shared/button-group/button-group.component';
-import { FlyoutFilterMatterComponent } from '../../../shared/flyout-filter-matter/flyout-filter-matter.component';
 import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
 import { PageEmptyComponent } from '../../../shared/page-empty/page-empty.component';
+import { AdvMyMatterFilterComponent } from '../../../shared/adv-my-matter-filter/adv-my-matter-filter.component';
 
 @Component({
   selector: 'app-my-matter',
@@ -26,9 +26,9 @@ import { PageEmptyComponent } from '../../../shared/page-empty/page-empty.compon
     InputFieldComponent,
     IconsComponent,
     ButtonGroupComponent,
-    FlyoutFilterMatterComponent,
     SkeletonComponent,
     PageEmptyComponent,
+    AdvMyMatterFilterComponent,
   ],
   templateUrl: './my-matter.component.html',
   styleUrl: './my-matter.component.scss',
@@ -69,7 +69,7 @@ export class MyMatterComponent {
   ];
   filterApplied: FilterAppliedDTO[] = [];
 
-  isOpenFlyoutFilter: boolean = false;
+  isOpenAdvFilter: boolean = false;
 
   ngOnInit(): void {
     // this.loading = true;
@@ -87,14 +87,10 @@ export class MyMatterComponent {
     console.log(event);
   }
 
-  /** Open filter flyout */
-  openFilterFlyout(): void {
-    this.isOpenFlyoutFilter = true;
-  }
-
   /** Catch filter action */
   actionFilter(event: boolean): void {
-    this.isOpenFlyoutFilter = event;
+    this.isOpenAdvFilter = event;
+    console.log(event);
   }
 
   /** Catch action from applied filter */

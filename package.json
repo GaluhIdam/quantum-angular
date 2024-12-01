@@ -24,7 +24,7 @@
     "@angular/router": "^17.1.0",
     "@angular/service-worker": "^17.1.0",
     "@angular/ssr": "^17.3.9",
-    "@quantum/fui": "file:quantum-fui-0.1.1.tgz",
+    "@quantum/fui": "file:quantum-fui-0.1.10.tgz",
     "angular-auth-oidc-client": "^18.0.2",
     "dayjs": "^1.11.11",
     "echarts": "^5.5.0",

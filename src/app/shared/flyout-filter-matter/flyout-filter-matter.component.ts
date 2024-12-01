@@ -6,21 +6,16 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
-  ButtonIconComponent,
-  CollapsibleNavGroupComponent,
+  AdvanceFilterComponent,
+  AdvanceFilterItemComponent,
+  AdvanceFilterSectionComponent,
   ComboBoxComponent,
   DateRangeComponent,
-  FlyoutBodyComponent,
-  FlyoutComponent,
-  FlyoutFooterComponent,
-  FlyoutHeaderComponent,
   FormControlLayoutComponent,
-  IconsComponent,
   InputFieldComponent,
   PrependComponent,
-  SelectFieldComponent,
 } from '@quantum/fui';
 import { OptionDTO } from '../../core/dtos/response.dto';
 import { Subscription, tap } from 'rxjs';
@@ -33,16 +28,11 @@ import { Subscription, tap } from 'rxjs';
     FormControlLayoutComponent,
     PrependComponent,
     InputFieldComponent,
-    IconsComponent,
-    ButtonIconComponent,
-    FlyoutBodyComponent,
-    FlyoutComponent,
-    FlyoutFooterComponent,
-    FlyoutHeaderComponent,
-    CollapsibleNavGroupComponent,
     ComboBoxComponent,
     DateRangeComponent,
-    SelectFieldComponent,
+    AdvanceFilterComponent,
+    AdvanceFilterItemComponent,
+    AdvanceFilterSectionComponent,
   ],
   providers: [DecimalPipe],
   templateUrl: './flyout-filter-matter.component.html',
@@ -65,7 +55,8 @@ export class FlyoutFilterMatterComponent {
     },
   ];
 
-  @Output() action: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() action: EventEmitter<boolean | 'filter' | 'clear'> =
+    new EventEmitter<boolean | 'filter' | 'clear'>();
 
   /** Show hide advance filter */
   isCollapsible: boolean = false;
@@ -190,5 +181,43 @@ export class FlyoutFilterMatterComponent {
   /** Toggle for open/close collapsible */
   toggleCollapsible(): void {
     this.isCollapsible = !this.isCollapsible;
+  }
+
+  /** Array to string */
+  getFormattedNames(
+    param: {
+      name: string;
+      value: any;
+    }[]
+  ): string {
+    const names = param.map((item) => item.name);
+
+    if (names.length <= 3) {
+      return names.join(', ');
+    } else {
+      const firstThree = names.slice(0, 3).join(', ');
+      const remainingCount = names.length - 3;
+      return `${firstThree}, ${remainingCount}+`;
+    }
+  }
+
+  /** Observe date creation */
+  onChangeDateCreation(event: string, param: 'start' | 'end'): void {
+    if (param === 'start') {
+      this.creationDateStartForm.setValue(event);
+    }
+    if (param === 'end') {
+      this.creationDateEndForm.setValue(event);
+    }
+  }
+
+  /** Observe date completion */
+  onChangeDateCompletion(event: string, param: 'start' | 'end'): void {
+    if (param === 'start') {
+      this.completionDateStartForm.setValue(event);
+    }
+    if (param === 'end') {
+      this.completionDateEndForm.setValue(event);
+    }
   }
 }

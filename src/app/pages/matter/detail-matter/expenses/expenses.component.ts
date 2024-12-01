@@ -2,15 +2,16 @@ import { Component } from '@angular/core';
 import { TableExpensesComponent } from './table-expenses/table-expenses.component';
 import { CommonModule } from '@angular/common';
 import {
+  AdvanceFilterComponent,
+  AdvanceFilterItemComponent,
+  AdvanceFilterSectionComponent,
   ButtonIconComponent,
   ComboBoxComponent,
   DateRangeComponent,
   FormControlLayoutComponent,
   IconsComponent,
-  InputFieldComponent,
-  TextComponent,
+  InputFieldComponent
 } from '@quantum/fui';
-import { FlyoutSimpleComponent } from '../../../../shared/flyout-simple/flyout-simple.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -24,10 +25,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     InputFieldComponent,
     IconsComponent,
     ButtonIconComponent,
-    FlyoutSimpleComponent,
-    TextComponent,
     ComboBoxComponent,
     DateRangeComponent,
+    AdvanceFilterComponent,
+    AdvanceFilterSectionComponent,
+    AdvanceFilterItemComponent,
   ],
   templateUrl: './expenses.component.html',
   styleUrl: './expenses.component.scss',
@@ -58,12 +60,12 @@ export class ExpensesComponent {
     value: any;
   }[] = [];
 
-  startDateForm: FormControl = new FormControl();
-  endDateForm: FormControl = new FormControl();
-  vendorINForm: FormControl = new FormControl();
-  paymentNumberForm: FormControl = new FormControl();
-  minAmountForm: FormControl = new FormControl();
-  maxAmountForm: FormControl = new FormControl();
+  startDateForm: FormControl = new FormControl('');
+  endDateForm: FormControl = new FormControl('');
+  vendorINForm: FormControl = new FormControl('');
+  paymentNumberForm: FormControl = new FormControl('');
+  minAmountForm: FormControl = new FormControl('');
+  maxAmountForm: FormControl = new FormControl('');
 
   collectionStatusForm: FormControl = new FormControl('');
   collectionStatusOption: {
@@ -149,5 +151,23 @@ export class ExpensesComponent {
     const endDate = new Date(+endYear, +endMonth - 1, +endDay);
 
     return startDate >= endDate;
+  }
+
+  /** Array to string */
+  getFormattedNames(
+    param: {
+      name: string;
+      value: any;
+    }[]
+  ): string {
+    const names = param.map((item) => item.name);
+
+    if (names.length <= 3) {
+      return names.join(', ');
+    } else {
+      const firstThree = names.slice(0, 3).join(', ');
+      const remainingCount = names.length - 3;
+      return `${firstThree}, ${remainingCount}+`;
+    }
   }
 }

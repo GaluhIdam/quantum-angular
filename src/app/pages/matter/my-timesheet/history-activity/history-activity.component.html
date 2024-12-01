@@ -98,117 +98,61 @@
 />
 <!-- EDIT TAG FLYOUT -->
 
-<!-- FILTER TIMESHEET  -->
-<shared-flyout-simple
-  [isOpenFlyout]="isOpenFilterFlyout"
-  [titleFlyout]="'Filter'"
-  (closeOut)="toggleUtility('filter')"
-  [size]="'m'"
+<!-- FILTER  -->
+<fui-advance-filter
+  [openFilter]="isOpenFilterFlyout"
+  (actionOut)="actionOut($event)"
 >
-  <div body>
-    <!-- DATE FORM  -->
-    <div class="form">
-      <fui-text>Date</fui-text>
-      <div class="time-description">
-        <fui-date-range
-          [dateFormat]="'DD-MM-YYYY'"
-          [startDateControl]="startDateForm"
-          [endDateControl]="endDateForm"
-          (onChangeStartDate)="watchDateChange('start', $event)"
-          (onChangeEndDate)="watchDateChange('end', $event)"
-        />
-      </div>
-      <span
-        class="filter-valid"
-        *ngIf="startDateForm.value === '' || endDateForm.value === ''"
-      >
-        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
-        Date range is required!
-      </span>
-      <span
-        class="filter-valid"
-        *ngIf="validatorStartEndFilter(startDateForm.value, endDateForm.value)"
-      >
-        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
-        the start date can't exceed the end date!
-      </span>
-    </div>
-    <!-- DATE FORM  -->
+  <fui-advance-filter-section [title]="''">
+    <!-- DATE  -->
+    <fui-advance-filter-item
+      [label]="'Date'"
+      [value]="startDateForm.value + ' to ' + endDateForm.value"
+    >
+      <fui-date-range
+        [dateFormat]="'DD-MM-YYYY'"
+        [startDateControl]="startDateForm"
+        [endDateControl]="endDateForm"
+        (onChangeStartDate)="watchDateChange('start', $event)"
+        (onChangeEndDate)="watchDateChange('end', $event)"
+      />
+    </fui-advance-filter-item>
+    <!-- DATE  -->
 
-    <!-- MATTER FORM  -->
-    <div class="form">
-      <fui-text>Matter</fui-text>
-      <div class="time-description">
-        <fui-combo-box
-          [comboxForm]="searchMatterForm"
+    <!-- MATTER  -->
+    <fui-advance-filter-item
+      [label]="'Matter'"
+      [value]="getFormattedNames(selectedMatter)"
+    >
+      <fui-combo-box
+        [comboxForm]="searchMatterForm"
+        [size]="'m'"
+        [placeholder]="'Matter'"
+        [optionValue]="converterMatterOpt()"
+        [selectedValue]="selectedMatter"
+      />
+    </fui-advance-filter-item>
+    <!-- MATTER  -->
+
+    <!-- DESCRIPTION  -->
+    <fui-advance-filter-item
+      [label]="'Time Description'"
+      [value]="descriptionForm.value"
+    >
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="descriptionForm"
+          [placeholder]="'e.g Meeting with client'"
+          [type]="'text'"
           [size]="'m'"
-          [placeholder]="'Matter'"
-          [optionValue]="converterMatterOpt()"
-          [selectedValue]="selectedMatter"
+          [invalid]="false"
         />
-      </div>
-    </div>
-    <!-- MATTER FORM  -->
-
-    <hr class="line-hr" />
-
-    <!-- DESC FORM  -->
-    <div class="form">
-      <fui-text>Time Description</fui-text>
-      <div class="time-description">
-        <fui-form-control-layout>
-          <fui-input-field
-            [formControlField]="descriptionForm"
-            [placeholder]="'e.g Meeting with client'"
-            [type]="'text'"
-            [size]="'m'"
-            [invalid]="false"
-          />
-        </fui-form-control-layout>
-      </div>
-    </div>
-    <!-- DESC FORM  -->
-  </div>
-
-  <!-- FOOTER FLYOUT FILTER  -->
-  <div class="footer-flyout" footer>
-    <fui-button-icon
-      [fullWidth]="'fit'"
-      [type]="'button'"
-      [option]="'text'"
-      [style]="'secondary'"
-      [text]="'Cancel'"
-      [size]="'m'"
-      [color]="'text'"
-      (onClick)="toggleUtility('filter')"
-    />
-    <div class="group-flex">
-      <fui-button-icon
-        [fullWidth]="'fit'"
-        [type]="'button'"
-        [option]="'text'"
-        [style]="'secondary'"
-        [text]="'Clear Filter'"
-        [size]="'m'"
-        [color]="'text'"
-        (onClick)="toggleClearFilter()"
-      />
-      <fui-button-icon
-        [fullWidth]="'fit'"
-        [type]="'button'"
-        [option]="'iconText'"
-        [style]="'filled'"
-        [text]="'Apply Filter'"
-        [size]="'m'"
-        [color]="'primary'"
-        [icon]="'filter'"
-        (onClick)="toggleFilter()"
-      />
-    </div>
-  </div>
-  <!-- FOOTER FLYOUT FILTER  -->
-</shared-flyout-simple>
-<!-- FILTER TIMESHEET  -->
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+    <!-- DESCRIPTION  -->
+  </fui-advance-filter-section>
+</fui-advance-filter>
+<!-- FILTER  -->
 
 <!-- MODAL DELETE  -->
 <shared-modal-delete

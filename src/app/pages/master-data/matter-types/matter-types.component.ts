@@ -11,7 +11,6 @@ import {
   FormControlLayoutComponent,
   IconsComponent,
   InputFieldComponent,
-  PopoverComponent,
   SelectFieldComponent,
   TableDataTreeComponent,
   TableHeadTreeComponent,
@@ -19,7 +18,6 @@ import {
   TableTreeComponent,
   TableTreeDTO,
   TextComponent,
-  ToastComponent,
   TooltipComponent,
 } from '@quantum/fui';
 import { CommonModule } from '@angular/common';
@@ -52,7 +50,6 @@ import { MatterTypesDTO } from '../../../interfaces/matter-types.dto';
     FlyoutSimpleComponent,
     SelectFieldComponent,
     ModalDeleteComponent,
-    ToastComponent,
     TooltipComponent,
     AdvanceFilterComponent,
     AdvanceFilterSectionComponent,
