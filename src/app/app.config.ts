@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideAuth } from 'angular-auth-oidc-client';
+import { keycloak } from './environment/env';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,12 +18,12 @@ export const appConfig: ApplicationConfig = {
     }),
     provideAuth({
       config: {
-        authority: 'https://keycloak.ahp.id/realms/quantum',
-        redirectUrl: 'http://localhost:4200/',
-        postLogoutRedirectUri: 'http://localhost:4200/',
-        clientId: 'ahplms-beta',
-        scope: 'openid profile email offline_access',
-        responseType: 'code',
+        authority: keycloak.authorization_endpoint,
+        redirectUrl: keycloak.redirect_uri,
+        postLogoutRedirectUri: keycloak.redirect_uri,
+        clientId: keycloak.client_id,
+        scope: keycloak.scope,
+        responseType: keycloak.response_type,
       },
     }),
   ],

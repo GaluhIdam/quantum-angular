@@ -5,7 +5,6 @@ import { EnvironmentInterface } from './env.interface';
 export const environment: EnvironmentInterface = {
   role: 'admin',
   httpUrl: 'https://quantum-api-dummy.vercel.app/api',
-  // httpUrl: 'http://localhost:3001/api',
   keycloakUrl: '',
   keycloakClientId: '',
   baseUrl: '',
@@ -17,28 +16,13 @@ export const environment: EnvironmentInterface = {
   channelUrlSocketSend: '',
 };
 
-/** Config for keycloak */
 export const keycloak: ConfigDTO = {
-  authorization_endpoint:
-    'http://localhost:8080/realms/quantum-demo/protocol/openid-connect/auth',
-  client_id: 'quantum-client',
-  redirect_uri: 'http://localhost:4200',
-  response_type: 'id_token token',
-  scope: 'openid email profile roles',
+  authorization_endpoint: 'https://keycloak.ahp.id/realms/quantum',
+  client_id: 'ahplms-beta',
+  redirect_uri: 'https://quantum-rc.ahp.id/quantum-angular',
+  response_type: 'code',
+  scope: 'openid profile email offline_access',
   authWellknownEndpointUrl:
-    'http://localhost:8080/realms/quantum-demo/.well-known/openid-configuration',
+    'https://keycloak.ahp.id/realms/quantum/.well-known/openid-configuration',
   storageUsage: 'local',
 };
-
-
-// export const keycloak: ConfigDTO = {
-//   authorization_endpoint:
-//     'https://keycloak.ahp.id/realms/quantum/protocol/openid-connect/auth',
-//   client_id: 'ahplms-beta',
-//   redirect_uri: 'http://localhost:4200',
-//   response_type: 'id_token token',
-//   scope: 'openid email profile roles',
-//   authWellknownEndpointUrl:
-//     'https://keycloak.ahp.id/realms/quantum/.well-known/openid-configuration',
-//   storageUsage: 'local',
-// };
