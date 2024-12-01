@@ -19,7 +19,7 @@ export const environment: EnvironmentInterface = {
 export const keycloak: ConfigDTO = {
   authorization_endpoint: 'https://keycloak.ahp.id/realms/quantum',
   client_id: 'ahplms-beta',
-  redirect_uri: 'https://quantum-rc.ahp.id/quantum-angular',
+  redirect_uri: 'https://quantum-rc.ahp.id/quantum-integration',
   response_type: 'code',
   scope: 'openid profile email offline_access',
   authWellknownEndpointUrl:
