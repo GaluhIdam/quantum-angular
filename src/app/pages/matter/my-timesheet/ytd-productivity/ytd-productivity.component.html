@@ -1,30 +1,24 @@
-<div class="header ytd">
-  <div class="grid-1">
+<div class="flex flex-between mb-20">
+  <div class="grid grid-col-1 gap-5">
     <fui-text
       [weight]="'semibold'"
       *ngIf="type === 'year' || type === 'month'"
-      [size]="'m'"
-      >YTD Billable Productivity</fui-text
-    >
+      [size]="'m'">YTD Billable Productivity</fui-text>
     <fui-text
       [weight]="'semibold'"
       *ngIf="type === 'appraisalYear'"
-      [size]="'m'"
-      >Appraisal Year Productivity</fui-text
-    >
-    <fui-text [color]="'text'" [fwStyle]="'italic'" [size]="'s'"
-      >Refreshed daily</fui-text
-    >
+      [size]="'m'">Appraisal Year Productivity</fui-text>
+    <fui-text [color]="'text'" [fwStyle]="'italic'" [size]="'s'">Refreshed
+      daily</fui-text>
   </div>
 </div>
-<div class="body" *ngIf="dataYtdProductivity.length > 0">
+<div class="body overflow-x-auto" *ngIf="dataYtdProductivity.length > 0">
   <div class="chart">
     <shared-skeleton [active]="loading">
       <fui-echarts
         [height]="'160px'"
         [chartOption]="optionBar"
-        [themeCustom]="true"
-      ></fui-echarts>
+        [themeCustom]="true"></fui-echarts>
     </shared-skeleton>
   </div>
 </div>
@@ -35,7 +29,6 @@
       [subTitle]="
         'You don’t have any target data for ytd billable productivity'
       "
-      [dataLength]="0"
-    />
+      [dataLength]="0" />
   </shared-skeleton>
 </div>

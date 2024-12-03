@@ -37,14 +37,14 @@ export class ProductivityComponent extends BaseController {
   /** Data productivities */
   dataProductivity: ProductivitySummaryDTO = {
     billableActualHour: 0,
-    billableTargetHour: 0,
+    billableTargetHour: 100,
     nonbillableActualHour: 0,
-    nonbillableTargetHour: 0,
+    nonbillableTargetHour: 100,
   };
 
   /** Percetage of productivity */
-  percentageBillabel: number = 0;
-  percentageNonBillabel: number = 0;
+  percentageBillabel: number = 20;
+  percentageNonBillabel: number = 20;
 
   /** Period */
   period: 'month' | 'year' | 'appraisalYear' = 'month';

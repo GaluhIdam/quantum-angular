@@ -1,0 +1,330 @@
+<fui-flyout
+  [openFlyout]="isOpenFlyout"
+  [size]="'m'"
+  (overlayOut)="toggleCloseFlyout()"
+>
+  <fui-flyout-header>
+    <div class="header-flyout">
+      <h2>{{ title }}</h2>
+    </div>
+  </fui-flyout-header>
+
+  <fui-flyout-body>
+    <!-- MESSAGE INFO -->
+    <div class="msg-info" *ngIf="actionButton === 'updateTag'">
+      <fui-text [color]="'primary'" [weight]="'semibold'"
+        >Feel free to modify!</fui-text
+      >
+      <fui-text [size]="'m'"
+        >Editing or reject & remove tagged timesheet will not affect the other
+        member timesheet, they have their own version!</fui-text
+      >
+    </div>
+    <!-- MESSAGE INFO -->
+    <div class="flyout-body">
+      <!-- TAG ENTRY -->
+      <fui-badge
+        style="display: flex; margin-bottom: 15px"
+        *ngIf="actionButton === 'updateTag' && timesheetSelected?.pending"
+        [color]="'hollow'"
+        [size]="'m'"
+        [iconShow]="true"
+        [icon]="'user'"
+        [iconPosition]="'start'"
+        [weight]="'semibold'"
+        [text]="'Tagged timesheet by ' + timesheetSelected?.tagBy"
+      />
+      <!-- TAG ENTRY -->
+
+      <!-- FEE EARNER FORM  -->
+      <div class="form" *ngIf="showFeeEarnerForm">
+        <fui-text>Fee Earner</fui-text>
+        <div class="form-control">
+          <fui-combo-box
+            [invalid]="feeEarnerForm.invalid && feeEarnerForm.dirty"
+            [message]="'Activity is required!'"
+            [comboxForm]="feeEarnerForm"
+            [singleSelection]="true"
+            [leftIcon]="'search'"
+            [size]="'m'"
+            [placeholder]="'Fee earner'"
+            [optionValue]="optionFeeEarner"
+            [selectedValue]="selectedFeeEarner"
+          />
+        </div>
+      </div>
+      <!-- FEE EARNER FORM  -->
+
+      <div class="form">
+        <!-- ACTIVITY FORM  -->
+        <fui-text *ngIf="showActivityForm">What did you do?</fui-text>
+        <div class="form-control" *ngIf="showActivityForm">
+          <fui-combo-box
+            [invalid]="activityForm.invalid && activityForm.dirty"
+            [message]="'Activity is required!'"
+            [comboxForm]="activityForm"
+            [singleSelection]="true"
+            [size]="'m'"
+            [placeholder]="'Activity/verb'"
+            [optionValue]="optionActivity"
+            [selectedValue]="selectedActivity"
+          />
+        </div>
+        <!-- ACTIVITY FORM  -->
+
+        <!-- OBJECT/EVENT FORM  -->
+        <div class="form-control" *ngIf="showObjectEventForm">
+          <fui-form-control-layout>
+            <fui-textarea
+              [size]="'m'"
+              [formControlField]="objectEventForm"
+              [rows]="1"
+              [placeholder]="'Object/Event'"
+              [invalid]="objectEventForm.invalid && objectEventForm.dirty"
+            >
+              <fui-icons
+                *ngIf="objectEventForm.invalid && objectEventForm.dirty"
+                right-icon
+                [label]="'right'"
+                [icon]="'alert'"
+                [size]="'sizem'"
+                [color]="'danger'"
+              />
+            </fui-textarea>
+            <fui-validator-field
+              validator
+              [message]="'Object/Event is required!'"
+            />
+          </fui-form-control-layout>
+        </div>
+        <!-- OBJECT/EVENT FORM  -->
+
+        <!-- TOPICS FORM  -->
+        <div class="form-control" *ngIf="showTopicForm">
+          <fui-form-control-layout>
+            <fui-textarea
+              [size]="'m'"
+              [formControlField]="topicForm"
+              [rows]="1"
+              [placeholder]="'Topics'"
+              [invalid]="topicForm.invalid && topicForm.dirty"
+            >
+              <fui-icons
+                *ngIf="topicForm.invalid && topicForm.dirty"
+                right-icon
+                [label]="'right'"
+                [icon]="'alert'"
+                [size]="'sizem'"
+                [color]="'danger'"
+              />
+            </fui-textarea>
+            <fui-validator-field validator [message]="'Topics is required!'" />
+          </fui-form-control-layout>
+        </div>
+        <!-- TOPICS FORM  -->
+
+        <!-- ADD DESC FORM  -->
+        <div class="form-control" *ngIf="showAddDescForm">
+          <fui-form-control-layout>
+            <fui-textarea
+              [size]="'m'"
+              [formControlField]="addDescForm"
+              [rows]="1"
+              [placeholder]="'Additional description'"
+              [invalid]="addDescForm.invalid && addDescForm.dirty"
+            >
+              <fui-icons
+                *ngIf="addDescForm.invalid && addDescForm.dirty"
+                right-icon
+                [label]="'right'"
+                [icon]="'alert'"
+                [size]="'sizem'"
+                [color]="'danger'"
+              />
+            </fui-textarea>
+            <fui-validator-field
+              validator
+              [message]="'Additional description is required!'"
+            />
+          </fui-form-control-layout>
+          <fui-text class="italic" [size]="'xs'" [color]="'text'">{{
+            note
+          }}</fui-text>
+        </div>
+        <!-- ADD DESC FORM  -->
+      </div>
+
+      <!-- MATTER FORM  -->
+      <div class="form" *ngIf="showMatterForm">
+        <div class="flex-between">
+          <fui-text>Which matter?</fui-text>
+          <div class="checkbox" *ngIf="showCheckLockMatter">
+            <input
+              type="checkbox"
+              [disabled]="!enableMatterForm"
+              [(ngModel)]="lockMatter"
+              [checked]="lockMatter"
+            />
+            <fui-text>Lock</fui-text>
+            <fui-tooltip
+              [position]="'top'"
+              [align]="'end'"
+              [content]="
+                'Allows you to keep using this value after adding new timesheet.'
+              "
+              ><fui-icons [icon]="'questionInCircle'"
+            /></fui-tooltip>
+          </div>
+        </div>
+        <div class="form-control">
+          <fui-combo-box
+            [leftIcon]="'search'"
+            [comboxForm]="matterForm"
+            [disabled]="lockMatter || !enableMatterForm"
+            [invalid]="matterForm.invalid && matterForm.dirty"
+            [message]="'Matter is required!'"
+            [singleSelection]="true"
+            [size]="'m'"
+            [placeholder]="'Search by number or project name'"
+            [optionValue]="optionMatter"
+            [selectedValue]="selectedOptionMatter"
+          />
+        </div>
+      </div>
+      <!-- MATTER FORM  -->
+
+      <div class="form" *ngIf="showDateForm || showDurationForm">
+        <div class="flex-between">
+          <!-- DATE FORM -->
+          <div class="sub-form" *ngIf="showDateForm">
+            <div class="flex-between">
+              <fui-text>Date</fui-text>
+              <div class="checkbox" *ngIf="showCheckLockDate">
+                <input
+                  type="checkbox"
+                  [disabled]="
+                    !enableDateForm ||
+                    actionButton === 'update' ||
+                    actionButton === 'updateTag'
+                  "
+                  [(ngModel)]="lockDate"
+                  [checked]="lockDate"
+                />
+                <fui-text>Lock</fui-text>
+                <fui-tooltip
+                  [position]="'top'"
+                  [align]="'center'"
+                  [content]="
+                    'Allows you to keep using this value after adding new timesheet.'
+                  "
+                  ><fui-icons [icon]="'questionInCircle'"
+                /></fui-tooltip>
+              </div>
+            </div>
+            <fui-date-picker
+              class="form-control"
+              [dateFormat]="'DD-MM-YYYY'"
+              [dateFormControl]="dateFormControl"
+              [disabled]="lockDate || !enableDateForm"
+              [position]="'top'"
+              [message]="'Date is required!'"
+              [isInvalid]="dateFormControl.invalid && dateFormControl.dirty"
+            />
+          </div>
+          <!-- DATE FORM -->
+
+          <!-- DURATION FORM -->
+          <div class="sub-form" *ngIf="showDurationForm">
+            <fui-text>Duration</fui-text>
+            <fui-time-selection
+              class="form-control"
+              [position]="'top'"
+              [timeFormControl]="durationForm"
+              [timeFormat]="'24h'"
+              [isInvalid]="durationForm.invalid && durationForm.dirty"
+              [minuteInterval]="'15 minutes'"
+              [message]="'Duration is required!'"
+            />
+          </div>
+          <!-- DURATION FORM -->
+        </div>
+      </div>
+    </div>
+  </fui-flyout-body>
+
+  <fui-flyout-footer>
+    <div class="footer-flyout flex-between" *ngIf="actionButton === 'create'">
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        (onClick)="toggleCloseFlyout()"
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'secondary'"
+        [text]="'Cancel'"
+      />
+      <div class="flex-between">
+        <fui-button-icon
+          [fullWidth]="'fit'"
+          [type]="'button'"
+          [option]="'text'"
+          [style]="'secondary'"
+          [text]="'Save & Close'"
+        />
+        <fui-button-icon
+          [fullWidth]="'fit'"
+          [type]="'button'"
+          [option]="'text'"
+          [style]="'filled'"
+          [text]="'Save'"
+        />
+      </div>
+    </div>
+    <div class="footer-flyout flex-between" *ngIf="actionButton === 'update'">
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        (onClick)="toggleCloseFlyout()"
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'secondary'"
+        [text]="'Cancel'"
+      />
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'filled'"
+        [text]="'Update Timesheet'"
+      />
+    </div>
+    <div
+      class="footer-flyout flex-between"
+      *ngIf="actionButton === 'updateTag'"
+    >
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        (onClick)="toggleCloseFlyout()"
+        [type]="'button'"
+        [option]="'text'"
+        [style]="'secondary'"
+        [text]="'Cancel'"
+      />
+      <div class="flex-between">
+        <fui-button-icon
+          [fullWidth]="'fit'"
+          [type]="'button'"
+          [option]="'text'"
+          [color]="'danger'"
+          [style]="'secondary'"
+          [text]="'Reject & Remove'"
+        />
+        <fui-button-icon
+          [fullWidth]="'fit'"
+          [type]="'button'"
+          [option]="'text'"
+          [style]="'filled'"
+          [text]="'Accept'"
+        />
+      </div>
+    </div>
+  </fui-flyout-footer>
+</fui-flyout>

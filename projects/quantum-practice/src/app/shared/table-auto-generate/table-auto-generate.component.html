@@ -1,0 +1,84 @@
+<fui-table
+  [limit]="limit"
+  [totalItems]="totalItems"
+  (onPageChanges)="onPageChanges($event)"
+  [showInfo]="showInfo"
+>
+  <fui-table-head style="width: 20px;" *ngIf="checkbox">
+    <input
+      type="checkbox"
+      [checked]="isAllSelected()"
+      (change)="onSelectAllChange($event)"
+    />
+  </fui-table-head>
+  <fui-table-head *ngFor="let header of title">
+    <div class="{{ 'text-' + headerAlign }}">
+      {{ header }}
+    </div>
+  </fui-table-head>
+  <fui-table-head></fui-table-head>
+
+  @if (data.length > 0) {
+    <fui-table-body *ngFor="let item of data; let index = index">
+      <fui-table-body-row>
+        <fui-table-body-data style="min-width: 20px;" *ngIf="checkbox">
+          <!-- Checkbox for each row -->
+          <input
+            type="checkbox"
+            [checked]="isChecked(index)"
+            (change)="onCheckboxChange(index)"
+          />
+        </fui-table-body-data>
+        @for (key of _getObjectKeys(item); track $index) {
+          <fui-table-body-data *ngIf="property.includes(key)">
+            {{ item[key] }}
+          </fui-table-body-data>
+        }
+        <fui-table-body-data>
+          <div class="flex">
+            @for (act of action; track $index) {
+              <fui-button-icon [fullWidth]="'fit'"
+                *ngIf="act === 'create'"
+                [type]="'button'"
+                [size]="'s'"
+                [style]="'secondary'"
+                [color]="'warning'"
+                [icon]="'plusInCircle'"
+                [option]="'icon'"
+                (onClick)="actionToggle('create', item)"
+              ></fui-button-icon>
+              <fui-button-icon [fullWidth]="'fit'"
+                *ngIf="act === 'edit'"
+                [type]="'button'"
+                [size]="'s'"
+                [style]="'secondary'"
+                [color]="'primary'"
+                [icon]="'pencil'"
+                [option]="'icon'"
+                (onClick)="actionToggle('edit', item)"
+              ></fui-button-icon>
+              <fui-button-icon [fullWidth]="'fit'"
+                *ngIf="act === 'delete'"
+                [type]="'button'"
+                [size]="'s'"
+                [style]="'secondary'"
+                [color]="'danger'"
+                [icon]="'trash'"
+                [option]="'icon'"
+                (onClick)="actionToggle('delete', item)"
+              ></fui-button-icon>
+            }
+          </div>
+        </fui-table-body-data>
+      </fui-table-body-row>
+    </fui-table-body>
+  } @else {
+    <fui-table-body>
+      <fui-table-body-row>
+        <div class="text-center na-message">
+          <fui-text>Data not available!</fui-text>
+        </div>
+      </fui-table-body-row>
+    </fui-table-body>
+  }
+</fui-table>

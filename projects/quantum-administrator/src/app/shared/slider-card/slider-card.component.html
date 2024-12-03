@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="grid-2">
+    @for (item of dataSlider; track $index) {
+    <div class="flex align-center gap-5" *ngIf="item.status">
+      <fui-icons [icon]="item.icon" />
+      <fui-link
+        [colorLink]="'text'"
+        [urlLink]="item.link"
+        [typeLink]="'external'"
+      >
+        {{ item.title }}
+      </fui-link>
+    </div>
+    }
+    <div class="flex-end align-center">
+      <fui-text class="mr-5">{{
+        "(" + (currentSlideIndex + 1) + "/" + dataSlider.length + ")"
+      }}</fui-text>
+      <fui-button-icon [fullWidth]="'fit'"
+        (onClick)="toggleMoveSlide('previous')"
+        [type]="'button'"
+        [size]="'s'"
+        [style]="'secondary'"
+        [color]="'text'"
+        [option]="'icon'"
+        [icon]="'arrowLeft'"
+      />
+      <fui-button-icon [fullWidth]="'fit'"
+        (onClick)="toggleMoveSlide('next')"
+        [type]="'button'"
+        [size]="'s'"
+        [style]="'secondary'"
+        [color]="'text'"
+        [option]="'icon'"
+        [icon]="'arrowRight'"
+      />
+    </div>
+  </div>
+  <ng-content></ng-content>
+</div>

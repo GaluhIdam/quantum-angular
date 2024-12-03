@@ -1,0 +1,244 @@
+<shared-flyout-simple
+  [titleFlyout]="'Add New Stakeholder'"
+  [size]="'s'"
+  [isOpenFlyout]="isOpenFlyoutStakeHolder"
+  (closeOut)="openFlyoutStakeholder()"
+>
+  <div body>
+    <fui-text [weight]="'semibold'">General Information</fui-text>
+
+    <!-- STAKEHOLDER NAME  -->
+    <div class="form-control mt-15">
+      <fui-text class="label"> Stakeholder Name </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [formControlField]="stakeholderNameForm"
+          [placeholder]="'Type stakeholder name'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- STAKEHOLDER NAME  -->
+
+    <!-- PARENT/GROUP COMPANY  -->
+    <div class="form-control">
+      <div class="flex-between">
+        <fui-text class="label"> Parent/Group Company </fui-text>
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            [checked]="isParentGroupCompany"
+            [(ngModel)]="isParentGroupCompany"
+          />
+          <fui-text
+            [size]="'s'"
+            (click)="isParentGroupCompany = !isParentGroupCompany"
+            >N/A</fui-text
+          >
+        </div>
+      </div>
+      <fui-form-control-layout *ngIf="!isParentGroupCompany">
+        <fui-input-field
+          [formControlField]="parentGroupCompanyForm"
+          [placeholder]="'Type parent/group company'"
+          [type]="'text'"
+          [invalid]="false"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+      <fui-text
+        class="fs-italic mt-10"
+        [color]="'disabled'"
+        *ngIf="isParentGroupCompany"
+        >Not Applicable</fui-text
+      >
+    </div>
+    <!-- PARENT/GROUP COMPANY  -->
+
+    <!-- PARENT/GROUP COMPANY ORIGIN COOUNTRY  -->
+    <div class="form-control">
+      <fui-text class="label"> Parent/Group Company Origin Country </fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [formControlField]="parentGroupCompanyOrigiinCountry"
+          [placeholder]="'Please select parent/group company origin country'"
+          [invalid]="false"
+          [selectOptions]="parentGroupCompanyOrigiinCountryOption"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- PARENT/GROUP COMPANY ORIGIN COOUNTRY  -->
+
+    <hr />
+
+    <!-- ADDRESS NAME  -->
+    <div class="form-control mt-15">
+      <fui-text class="label"> Address Name </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [formControlField]="addressNameForm"
+          [placeholder]="'e.g Main Office, Headquarters, etc'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- ADDRESS NAME  -->
+
+    <!-- Company NAME  -->
+    <div class="form-control mt-15">
+      <fui-text class="label"> Company Name </fui-text>
+      <fui-form-control-layout>
+        <fui-textarea
+          [invalid]="false"
+          [formControlField]="companyNameForm"
+          [placeholder]="'e.g 2118 Thornridge Cir. Syracuse, Connecticut 35624'"
+          [size]="'m'"
+        ></fui-textarea>
+      </fui-form-control-layout>
+    </div>
+    <!-- Company NAME  -->
+
+    <!-- LOCATION  -->
+    <div class="form-control">
+      <fui-text class="label"> Location </fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [formControlField]="parentGroupCompanyOrigiinCountry"
+          [placeholder]="'Please select location'"
+          [invalid]="false"
+          [selectOptions]="parentGroupCompanyOrigiinCountryOption"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- LOCATION  -->
+
+    <hr />
+
+    <fui-text class="flex mt-20" [weight]="'semibold'"
+      >Billing Information</fui-text
+    >
+
+    <!-- NPWP NUMBER  -->
+    <div class="form-control mt-15">
+      <fui-text class="label"> Number NPWP </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [formControlField]="npwpNumberForm"
+          [placeholder]="'Type NPWP Number'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- NPWP NUMBER  -->
+
+    <!-- BILLING NAME  -->
+    <div class="form-control mt-15">
+      <fui-text class="label"> Billing Name </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [formControlField]="billingNameForm"
+          [placeholder]="'Type billing name'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- BILLING NAME  -->
+
+    <!-- BILLING ADDRESS  -->
+    <div class="flex-between align-center">
+      <fui-text> Billing Address </fui-text>
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          [checked]="isBillingAddress"
+          [(ngModel)]="isBillingAddress"
+        />
+        <fui-text
+          [size]="'s'"
+          (click)="isBillingAddress = !isBillingAddress"
+          >Same as Company Address</fui-text
+        >
+      </div>
+    </div>
+    <!-- BILLING ADDRESS  -->
+
+    <div class="mt-20" *ngIf="!isBillingAddress">
+      <!-- BILLING ADDRESS NAME  -->
+      <div class="form-control mt-15">
+        <fui-text class="label"> Billing Address Name </fui-text>
+        <fui-form-control-layout>
+          <fui-input-field
+            [type]="'text'"
+            [invalid]="false"
+            [formControlField]="billingAddressNameForm"
+            [placeholder]="'Type billing address name'"
+            [size]="'m'"
+          ></fui-input-field>
+        </fui-form-control-layout>
+      </div>
+      <!-- BILLING ADDRESS NAME  -->
+
+      <!-- BILLING ADDRESS  -->
+      <div class="form-control mt-15">
+        <fui-text class="label"> Billing Address </fui-text>
+        <fui-form-control-layout>
+          <fui-input-field
+            [type]="'text'"
+            [invalid]="false"
+            [formControlField]="billingAddressForm"
+            [placeholder]="'Type billing adrress'"
+            [size]="'m'"
+          ></fui-input-field>
+        </fui-form-control-layout>
+      </div>
+      <!-- BILLING ADDRESS  -->
+
+      <!-- LOCATION  -->
+      <div class="form-control">
+        <fui-text class="label"> Location </fui-text>
+        <fui-form-control-layout>
+          <fui-select-field
+            [size]="'m'"
+            [formControlField]="locationBillingForm"
+            [placeholder]="'Please select location'"
+            [invalid]="false"
+            [selectOptions]="[]"
+          >
+          </fui-select-field>
+        </fui-form-control-layout>
+      </div>
+      <!-- LOCATION  -->
+    </div>
+  </div>
+
+  <div footer class="flex-between footer-fly">
+    <fui-button-icon [fullWidth]="'fit'"
+      (onClick)="openFlyoutStakeholder()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'secondary'"
+      [option]="'text'"
+      [text]="'Cancel'"
+    />
+    <fui-button-icon [fullWidth]="'fit'"
+      (onClick)="openFlyoutStakeholder()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'filled'"
+      [option]="'text'"
+      [text]="'Add Client'"
+    />
+  </div>
+</shared-flyout-simple>

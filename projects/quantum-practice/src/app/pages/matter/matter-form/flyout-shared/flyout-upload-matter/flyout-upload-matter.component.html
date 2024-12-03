@@ -1,0 +1,73 @@
+<shared-flyout-simple
+  [titleFlyout]="'Upload Matter Form'"
+  [isOpenFlyout]="isOpenFlyoutUploadMatter"
+  (closeOut)="openFlyoutMatterForm()"
+>
+  <div body>
+    <div class="flex">
+      <fui-icons [icon]="'folderOpen'" />
+      <fui-text>/</fui-text>
+      <fui-text>5889</fui-text>
+      <fui-text>/</fui-text>
+      <fui-text>EL</fui-text>
+    </div>
+    <div class="mt-10 overflow-hidden">
+      <fui-field-filepicker [files]="files" />
+    </div>
+    <hr width="150" class="mt-20" />
+    <div class="mt-20">
+      <fui-text class="head-label" [weight]="'semibold'"
+        >Document Metadata</fui-text
+      >
+    </div>
+    <!-- LANGUAGE  -->
+    <div class="form-control">
+      <fui-text class="label"> Language </fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [formControlField]="languageForm"
+          [size]="'m'"
+          [placeholder]="'Please select language'"
+          [invalid]="false"
+          [selectOptions]="languageOption"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- LANGUAGE  -->
+
+    <!-- DESCRIPTION  -->
+    <div class="form-control">
+      <fui-text class="label"> Description </fui-text>
+      <fui-form-control-layout>
+        <fui-textarea
+          [formControlField]="descriptionForm"
+          [placeholder]="'Type description'"
+          [size]="'m'"
+          [invalid]="false"
+        >
+        </fui-textarea>
+      </fui-form-control-layout>
+    </div>
+    <!-- DESCRIPTION  -->
+  </div>
+  <div footer class="flex-between footer-fly">
+    <fui-button-icon [fullWidth]="'fit'"
+      (onClick)="openFlyoutMatterForm()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'secondary'"
+      [option]="'text'"
+      [text]="'Cancel'"
+    />
+    <fui-button-icon [fullWidth]="'fit'"
+      (onClick)="openFlyoutMatterForm()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'filled'"
+      [option]="'iconText'"
+      [icon]="'export'"
+      [text]="'Upload File'"
+    />
+  </div>
+</shared-flyout-simple>

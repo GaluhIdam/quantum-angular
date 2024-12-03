@@ -1,0 +1,81 @@
+<div class="card">
+  <div class="grid">
+    <fui-text [weight]="'semibold'">Proof of Engagement</fui-text>
+    <fui-text class="flex mt-10" [color]="'disabled'"
+      >Represents binding work contracts related to this matter. You have the
+      option to add multiple proofs of engagement.</fui-text
+    >
+
+    <!-- TABLE PROOF -->
+    <div>
+      <fui-table
+        [pagination]="false"
+        class="flex mt-15"
+        [limit]="5"
+        [totalItems]="1"
+        [showInfo]="false"
+      >
+        <fui-table-head *ngFor="let header of titleProof">
+          {{ header }}
+        </fui-table-head>
+        <fui-table-body>
+          <fui-table-body-row>
+            <fui-table-body-data>
+              <div class="flex align-center">
+                <fui-icons [icon]="'document'" />
+                <fui-text
+                  >20240812 - Tripatra - Proposal Jasa Hukum - KIP [signed
+                  RNR].pdf
+                  <fui-badge class="flex mt-5" [size]="'m'" [color]="'text'"
+                    >EL AHP Signed</fui-badge
+                  ></fui-text
+                >
+              </div>
+            </fui-table-body-data>
+            <fui-table-body-data>
+              <fui-text>1570/02/56/07/2024</fui-text>
+            </fui-table-body-data>
+            <fui-table-body-data>
+              <fui-text>12 August 2024</fui-text>
+            </fui-table-body-data>
+            <fui-table-body-data style="min-width: 20px; width: 20px">
+              <div class="flex">
+                <fui-button-icon [fullWidth]="'fit'"
+                  [type]="'button'"
+                  [color]="'primary'"
+                  [style]="'secondary'"
+                  [option]="'icon'"
+                  [icon]="'search'"
+                />
+                <fui-button-icon [fullWidth]="'fit'"
+                  [type]="'button'"
+                  [color]="'primary'"
+                  [style]="'secondary'"
+                  [option]="'icon'"
+                  [icon]="'download'"
+                />
+                <fui-button-icon [fullWidth]="'fit'"
+                  [type]="'button'"
+                  [color]="'danger'"
+                  [style]="'secondary'"
+                  [option]="'icon'"
+                  [icon]="'trash'"
+                />
+              </div>
+            </fui-table-body-data>
+          </fui-table-body-row>
+        </fui-table-body>
+      </fui-table>
+      <fui-button-icon [fullWidth]="'fit'"
+        class="flex mt-15"
+        [style]="'secondary'"
+        [color]="'primary'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircle'"
+        [text]="'Add Proof of Engagement'"
+      />
+    </div>
+    <!-- TABLE PROOF -->
+  </div>
+</div>

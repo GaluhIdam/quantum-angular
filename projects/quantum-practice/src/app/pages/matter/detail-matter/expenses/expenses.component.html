@@ -1,0 +1,200 @@
+<div class="wrap-container">
+  <!-- FORM SEARCH & FILTER BUTTON  -->
+  <div class="container">
+    <!-- FORM SEARCH -->
+    <fui-form-control-layout>
+      <fui-input-field
+        [type]="'text'"
+        [invalid]="false"
+        [size]="'m'"
+        [placeholder]="'Search by Number or Project Name'"
+      >
+        <fui-icons
+          left-icon
+          [color]="'text'"
+          [icon]="'search'"
+          [size]="'sizem'"
+        />
+      </fui-input-field>
+    </fui-form-control-layout>
+    <!-- FORM SEARCH  -->
+
+    <div class="group-btn">
+      <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        [color]="'text'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'filter'"
+        [style]="'secondary'"
+        [size]="'m'"
+        [text]="'Filter'"
+        (onClick)="actionBtnUtil('filter')"
+      />
+      <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+
+      <!-- ADD EXPENSE MATTER -->
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        [color]="'primary'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircle'"
+        [style]="'filled'"
+        [size]="'m'"
+        [text]="'Add Expense'"
+      />
+      <!-- ADD EXPENSE MATTER -->
+    </div>
+  </div>
+  <!-- FORM SEARCH & FILTER BUTTON  -->
+
+  <!-- TABLE  -->
+  <div class="container">
+    <app-table-expenses />
+  </div>
+  <!-- TABLE  -->
+</div>
+
+<!-- ADV FILTER  -->
+<fui-advance-filter
+  [openFilter]="isOpenFlyoutFilter"
+  (actionOut)="closeOut(false, 'filter')"
+>
+  <fui-advance-filter-section [title]="''">
+    <fui-advance-filter-item
+      [label]="'Requested By'"
+      [value]="getFormattedNames(requestSelected)"
+    >
+      <fui-combo-box
+        (selection)="selectionCombox($event, 'requested')"
+        [comboxForm]="requestForm"
+        [size]="'m'"
+        [placeholder]="'Select requested'"
+        [optionValue]="requestOption"
+        [selectedValue]="requestSelected"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Item Category'"
+      [value]="getFormattedNames(itemCatSelected)"
+    >
+      <fui-combo-box
+        (selection)="selectionCombox($event, 'itemCat')"
+        [comboxForm]="itemCatForm"
+        [size]="'m'"
+        [placeholder]="'Select item category'"
+        [optionValue]="itemCatOption"
+        [selectedValue]="itemCatSelected"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Date'"
+      [value]="
+        startDateForm.value !== '' && endDateForm.value !== ''
+          ? startDateForm.value + ' to ' + endDateForm.value
+          : ''
+      "
+    >
+      <fui-date-range
+        [dateFormat]="'DD-MM-YYYY'"
+        [startDateControl]="startDateForm"
+        [endDateControl]="endDateForm"
+        (onChangeStartDate)="changeDateForm($event, 'start')"
+        (onChangeEndDate)="changeDateForm($event, 'end')"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Vendor Invoice Number'"
+      [value]="vendorINForm.value"
+    >
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="vendorINForm"
+          [placeholder]="'Type invoice number'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+        />
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Payment Number'"
+      [value]="paymentNumberForm.value"
+    >
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="paymentNumberForm"
+          [placeholder]="'Type payment number'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+        />
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Min. amount'"
+      [value]="minAmountForm.value"
+    >
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="minAmountForm"
+          [placeholder]="'Min. amount'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+        />
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Max. amount'"
+      [value]="maxAmountForm.value"
+    >
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="maxAmountForm"
+          [placeholder]="'Max. amount'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+        />
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Collection Status'"
+      [value]="getFormattedNames(collectionStatusSelected)"
+    >
+      <fui-combo-box
+        (selection)="selectionCombox($event, 'collection')"
+        [comboxForm]="collectionStatusForm"
+        [size]="'m'"
+        [placeholder]="'Select collection status'"
+        [optionValue]="collectionStatusOption"
+        [selectedValue]="collectionStatusSelected"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Collected In'"
+      [value]="getFormattedNames(collectionStatusSelected)"
+    >
+      <fui-combo-box
+        (selection)="selectionCombox($event, 'collected')"
+        [comboxForm]="collectionStatusForm"
+        [size]="'m'"
+        [placeholder]="'Select collected in'"
+        [optionValue]="collectionStatusOption"
+        [selectedValue]="collectionStatusSelected"
+      />
+    </fui-advance-filter-item>
+  </fui-advance-filter-section>
+</fui-advance-filter>
+<!-- ADV FILTER  -->

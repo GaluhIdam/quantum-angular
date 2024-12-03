@@ -1,0 +1,26 @@
+@import "../styles.scss";
+
+.layout {
+  display: flex;
+  .header {
+    width: 100%;
+    .body {
+      padding: 20px;
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 20;
+    }
+  }
+}
+.logo {
+  display: flex;
+  margin-left: 10px;
+  .img-logo {
+    margin-right: 5px;
+  }
+}
+
+/** Add On*/
+* {
+  scrollbar-width: thin;
+}

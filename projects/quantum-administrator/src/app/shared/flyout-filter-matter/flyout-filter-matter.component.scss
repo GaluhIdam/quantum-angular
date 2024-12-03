@@ -1,0 +1,103 @@
+@import "../../app.component.scss";
+
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+/** Form config */
+.container-form {
+  display: flex;
+  margin: 10px 0px;
+}
+.form-group {
+  display: flex;
+  width: 100%;
+  .child-form {
+    margin: 0px 5px 0px 0px;
+    &:last-child {
+      margin: 0;
+    }
+  }
+  &.child-form-adv {
+    display: block;
+    margin: 0px 0px 15px 0px;
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+.label-form {
+  margin-bottom: 6px;
+  margin-top: 15px;
+  font-size: smaller;
+  &:first-child {
+    margin-top: 0px;
+  }
+  &.mt-0 {
+    margin-top: 0;
+  }
+}
+
+/** Flyout config */
+.header-flyout {
+  padding: 15px;
+}
+.body-flyout {
+  justify-items: center;
+  display: grid;
+  padding: 15px;
+}
+.footer-flyout {
+  width: 100%;
+  display: flex;
+  padding: 5px;
+  justify-content: space-between;
+  .sub-button {
+    gap: 10px;
+    display: flex;
+    fui-button-icon {
+      margin-right: 8px;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}
+
+/** half hr config */
+.half-hr {
+  width: 150px;
+  margin: 30px 0px;
+}
+
+/** Collabsible Config */
+.collapsible {
+  width: 100%;
+  .header-collapsible {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+/** Wrapper for advance filter config */
+.wrap-advance-filter {
+  padding: 15px;
+  border-radius: 8px;
+  background-color: lighten($fuiColorLightShade, 8%);
+}
+
+/** Prepend Form */
+.prepend-title {
+  font-weight: bold;
+  font-size: small;
+}
+
+/** Wraper */
+.standard-filter {
+  width: 100%;
+}

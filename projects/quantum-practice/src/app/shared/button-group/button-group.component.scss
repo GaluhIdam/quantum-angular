@@ -1,0 +1,23 @@
+@import "../../app.component.scss";
+
+.filter-title {
+  padding: 3px 4px;
+  width: fit-content;
+  text-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .icon {
+    background-color: var(--fuiColorLightShade, $fuiColorLightShade);
+    font-size: 12px;
+    padding: 3px 3px 2px 3px;
+    border-radius: 3px;
+    margin-left: 5px;
+    text-decoration: none;
+    &.accent {
+      font-weight: 600;
+      color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+      background-color: var(--fuiColorAccent, $fuiColorAccent);
+    }
+  }
+}

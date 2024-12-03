@@ -1,32 +1,14 @@
 @import "../history-activity.component.scss";
-.mt-20 {
-  margin-top: 20px;
-}
 .header-tb {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: var(--fuiColorLightShade, $fuiColorLightShade);
   border-top-width: 1px;
   border-top-style: solid;
   border-top-color: var(--fuiColorLightShade, $fuiColorLightShade);
-  padding: 5px 0px;
 
   &.first {
     border-bottom-width: 0px;
-  }
-
-  .right-util {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    flex-direction: row;
-    gap: 10px;
   }
 }
 
@@ -34,20 +16,23 @@ hr {
   border-color: var(--fuiColorLightShade, $fuiColorLightShade);
 }
 
-.flex-btn {
-  display: flex;
-  gap: 10px;
-  justify-content: start;
-  align-items: center;
-}
-
 .tag-bg {
   background-color: var(--fuiWarningSecondary, $fuiWarningSecondary);
 }
 
 .white-bg {
-  display: flex;
-  width: fit-content;
   background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
   border-radius: 3px;
+}
+
+.min {
+  &-w-100 {
+    min-width: 100px;
+  }
+  &-w-200 {
+    min-width: 200px;
+  }
+}
+.w-50 {
+  width: 50px;
 }

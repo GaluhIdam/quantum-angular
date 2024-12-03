@@ -1,61 +1,54 @@
-<div class="container">
-  <fui-table
+<fui-table
   [limit]="limit"
   [totalItems]="totalItems"
   [showInfo]="false"
-  [pagination]="true"
->
-  <fui-table-head style="width: 50px">
+  [pagination]="true">
+  <fui-table-head class="w-50">
     <input
       type="checkbox"
       [(ngModel)]="selectAllStatus"
       [checked]="selectAllStatus"
-      (change)="toggleSelectAll(selectAllStatus, dataTimesheet)"
-    />
+      (change)="toggleSelectAll(selectAllStatus, dataTimesheet)" />
   </fui-table-head>
   <fui-table-head *ngFor="let header of headerTable">
     {{ header }}
   </fui-table-head>
   <fui-table-body *ngFor="let data of dataTimesheet; let i = index">
     <fui-table-body-row [ngClass]="[data.pending ? 'tag-bg' : '']">
-      <fui-table-body-data style="width: 50px; min-width: 50px">
+      <fui-table-body-data class="w-min-50">
         <input
           type="checkbox"
           [disabled]="data.pending"
           [checked]="timesheetSelected.includes(data)"
-          (change)="toggleSelectTimesheet(data, i)"
-        />
+          (change)="toggleSelectTimesheet(data, i)" />
       </fui-table-body-data>
       <fui-table-body-data>
         <fui-badge
           [text]="data.matter.matter"
           [weight]="'semibold'"
-          class="white-bg"
-          [color]="'hollow'"
-        />
+          class="flex w-fit white-bg"
+          [color]="'hollow'" />
       </fui-table-body-data>
       <fui-table-body-data>
         <fui-text>{{ data.description }}</fui-text>
         <fui-badge
-          style="margin-top: 8px; display: flex"
           *ngIf="data.pending"
           [weight]="'semibold'"
           [iconShow]="true"
           [icon]="'user'"
           [size]="'s'"
           [color]="'hollow'"
-          class="white-bg"
+          class="flex w-fit white-bg mt-10"
           [weight]="'semibold'"
-          [text]="data.tagBy"
-        />
+          [text]="data.tagBy" />
       </fui-table-body-data>
       <fui-table-body-data>
         <fui-text>{{
           convertTimeToAngularFormat(data.duration)
-        }}</fui-text>
+          }}</fui-text>
       </fui-table-body-data>
       <fui-table-body-data>
-        <div class="flex-btn">
+        <div class="flex flex-start gap-10 flex-items-center">
           <fui-button-icon
             [type]="'button'"
             [option]="'icon'"
@@ -64,12 +57,11 @@
             [fullWidth]="'fit'"
             [icon]="'pencil'"
             (onClick)="
-              toggleEditDeleteTimesheet(
-                data.pending ? 'editTag' : 'edit',
-                data
-              )
-            "
-          />
+            toggleEditDeleteTimesheet(
+              data.pending ? 'editTag' : 'edit',
+              data
+            )
+          " />
           <fui-button-icon
             *ngIf="!data.pending"
             [type]="'button'"
@@ -78,11 +70,9 @@
             [style]="'secondary'"
             [fullWidth]="'fit'"
             [icon]="'trash'"
-            (onClick)="toggleEditDeleteTimesheet('delete', data)"
-          />
+            (onClick)="toggleEditDeleteTimesheet('delete', data)" />
         </div>
       </fui-table-body-data>
     </fui-table-body-row>
   </fui-table-body>
 </fui-table>
-</div>

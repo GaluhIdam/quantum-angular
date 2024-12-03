@@ -142,6 +142,7 @@ export class YtdProductivityComponent {
     setTimeout(() => {
       this.loading = false;
     }, 1000);
+    // this.getDataYtdProductivites(new Date().getFullYear(), this.type);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -185,10 +186,16 @@ export class YtdProductivityComponent {
   /** Processing data to be number array */
   private dataProcessingToArray(data: ProductivityMonthlyDTO[]): void {
     if (data.length > 0) {
-      data.forEach((item) => this.seriesBillable.push(item.billableActualHour));
-      data.forEach((item) =>
-        this.seriesNonBillable.push(item.nonbillableActualHour)
-      );
+      this.seriesBillable = data.map((item) => item.billableActualHour);
+      this.seriesNonBillable = data.map((item) => item.nonbillableActualHour);
+
+      this.updateChartOptions();
     }
+  }
+
+  /** Update Chart */
+  private updateChartOptions(): void {
+    this.optionBar.series[0].data = this.seriesBillable;
+    this.optionBar.series[1].data = this.seriesNonBillable;
   }
 }

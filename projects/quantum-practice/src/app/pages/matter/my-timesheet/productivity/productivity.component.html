@@ -1,0 +1,128 @@
+<div class="header productivity">
+  <div class="grid-1">
+    <fui-text [weight]="'semibold'" [size]="'m'">Productivity</fui-text>
+    <fui-text [color]="'text'" [fwStyle]="'italic'" [size]="'s'"
+      >Refreshed daily</fui-text
+    >
+  </div>
+  <fui-popover [position]="'bottom'">
+    <div class="select">
+      <span class="title-select">{{
+        period === "month"
+          ? "This Month"
+          : period === "year"
+          ? "This Year"
+          : "Appraisal Year"
+      }}</span>
+      <fui-icons
+        class="icon-title"
+        [icon]="'arrowDown'"
+        [size]="'sizes'"
+        [color]="'primary'"
+      />
+    </div>
+    <div popover-body>
+      <div class="container-option">
+        <div class="wrap-icon">
+          <fui-icons
+            [ngStyle]="{
+              visibility: period === 'month' ? 'visible' : 'hidden'
+            }"
+            class="icon-prod"
+            [icon]="'check'"
+            [size]="'sizes'"
+            [color]="'primary'"
+          />
+          <fui-icons
+            [ngStyle]="{
+              visibility: period === 'year' ? 'visible' : 'hidden'
+            }"
+            class="icon-prod"
+            [icon]="'check'"
+            [size]="'sizes'"
+            [color]="'primary'"
+          />
+          <fui-icons
+            [ngStyle]="{
+              visibility: period === 'appraisalYear' ? 'visible' : 'hidden'
+            }"
+            class="icon-prod"
+            [icon]="'check'"
+            [size]="'sizes'"
+            [color]="'primary'"
+          />
+        </div>
+        <div class="wrap-option">
+          <span class="option-pop" (click)="toggleSelectRange('month')"
+            >This Month</span
+          >
+          <span class="option-pop" (click)="toggleSelectRange('year')"
+            >This Year</span
+          >
+          <span class="option-pop" (click)="toggleSelectRange('appraisalYear')"
+            >Appraisal year</span
+          >
+        </div>
+      </div>
+    </div>
+  </fui-popover>
+</div>
+<div class="body" *ngIf="percentageBillabel > 0 || percentageNonBillabel > 0">
+  <div class="progress">
+    <shared-skeleton [active]="loading">
+      <fui-progress
+        [value]="percentageBillabel"
+        [max]="dataProductivity.billableTargetHour"
+        [color]="'primary'"
+        [size]="'sizedefault'"
+        [label]="
+          dataProductivity.billableActualHour +
+          ' of ' +
+          dataProductivity.billableTargetHour +
+          ' Billable Hours'
+        "
+      />
+    </shared-skeleton>
+  </div>
+  <div class="progress">
+    <shared-skeleton [active]="loading">
+      <fui-progress
+        class="progress"
+        [value]="percentageNonBillabel"
+        [max]="dataProductivity.nonbillableTargetHour"
+        [color]="'text'"
+        [size]="'sizedefault'"
+        [label]="
+          dataProductivity.nonbillableActualHour +
+          ' of ' +
+          dataProductivity.nonbillableTargetHour +
+          ' Non-Billable Hours'
+        "
+      />
+    </shared-skeleton>
+  </div>
+  <div class="legend">
+    <span class="legend-title">
+      <div class="color-square primary"></div>
+      <fui-text [textWrap]="'nowrap'" [size]="'s'">Billable</fui-text>
+    </span>
+    <span class="legend-title"
+      ><div class="color-square text"></div>
+      <fui-text [textWrap]="'nowrap'" [size]="'s'">Non-Billable</fui-text>
+    </span>
+    <span class="legend-title"
+      ><div class="color-square disabled"></div>
+      <fui-text [textWrap]="'nowrap'" [size]="'s'">Untracked</fui-text>
+    </span>
+  </div>
+</div>
+<shared-skeleton
+  [active]="loading"
+  *ngIf="percentageBillabel === 0 || percentageNonBillabel === 0"
+>
+  <shared-empty-data
+    [title]="'N/A'"
+    [subTitle]="'You don’t have any target data for productivity'"
+    [dataLength]="0"
+  />
+</shared-skeleton>

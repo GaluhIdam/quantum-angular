@@ -6,16 +6,14 @@
     [startDate]="startDate"
     [endDate]="endDate"
     [duration]="calculateTotalDuration(dataTimesheet)"
-    (actionOut)="toggleUtility($event)"
-  />
+    (actionOut)="toggleUtility($event)" />
   <!-- SIMPLE UTILITY TABLE  -->
 
   <!-- FILTER APPLIED -->
   <shared-filter-applied
-    class="mb-15"
+    class="grid mb-15"
     [filterApplied]="filterApplied"
-    (actionOut)="toggleClearFilter($event)"
-  />
+    (actionOut)="toggleClearFilter($event)" />
   <!-- FILTER APPLIED -->
 
   <!-- MATTER MOVE -->
@@ -23,26 +21,24 @@
     *ngIf="timesheetSelected.length > 0"
     [listMatters]="[]"
     [totalItemSelected]="timesheetSelected.length"
-    (actionOut)="moveTimesheet($event)"
-  />
+    (actionOut)="moveTimesheet($event)" />
   <!-- MATTER MOVE -->
 
-  <div class="wrap">
+  <div class="w-full overflow-x-auto overflow-y-hidden">
     <!-- TABLE WITHOUT FILTER -->
-    <app-table-without-filter
+    <app-table-without-filter class="grid w-full"
       *ngIf="filterApplied.length === 0"
       [startDate]="startDate"
       [endDate]="endDate"
       [dataTimesheet]="dataTimesheet"
       [timesheetSelected]="timesheetSelected"
       (actionOut)="toggleEditDeleteTimesheet($event.action, $event.data)"
-      (selectionOut)="toggleSelection($event)"
-    />
+      (selectionOut)="toggleSelection($event)" />
     <!-- TABLE WITHOUT FILTER -->
 
     <!-- TABLE WITH FILTER-->
     <app-table-filter
-      class="container-table"
+      class="mt-30"
       *ngIf="filterApplied.length > 0"
       [page]="page"
       [limit]="limit"
@@ -50,8 +46,7 @@
       [dataTimesheet]="dataTimesheet"
       [timesheetSelected]="timesheetSelected"
       (actionOut)="toggleEditDeleteTimesheet($event.action, $event.data)"
-      (selectionOut)="toggleSelection($event)"
-    />
+      (selectionOut)="toggleSelection($event)" />
     <!-- TABLE WITH FILTER-->
   </div>
 </shared-skeleton>
@@ -60,8 +55,7 @@
 <shared-flyout-timesheet
   [showFeeEarnerForm]="false"
   [title]="'Add Timesheet'"
-  [isOpenFlyout]="isOpenCreateFlyout"
-/>
+  [isOpenFlyout]="isOpenCreateFlyout" />
 <!-- FLYOUT CREATE TIMESHEET -->
 
 <!-- EDIT TIMESHEET FLYOUT -->
@@ -77,8 +71,7 @@
   [note]="'* Conduct desk research & prepare summary on licensing regulation.'"
   [listActivities]="converterActivityOpt()"
   [listMatters]="converterMatterOpt()"
-  (closeOut)="toggleUtility('edit')"
-/>
+  (closeOut)="toggleUtility('edit')" />
 <!-- EDIT TIMESHEET FLYOUT -->
 
 <!-- EDIT TAG FLYOUT -->
@@ -94,59 +87,51 @@
   [note]="'* Conduct desk research on licensing agreement with JJ.'"
   [listActivities]="converterActivityOpt()"
   [listMatters]="converterMatterOpt()"
-  (closeOut)="toggleUtility('editTag')"
-/>
+  (closeOut)="toggleUtility('editTag')" />
 <!-- EDIT TAG FLYOUT -->
 
 <!-- FILTER  -->
 <fui-advance-filter
   [openFilter]="isOpenFilterFlyout"
-  (actionOut)="actionOut($event)"
->
+  (actionOut)="actionOut($event)">
   <fui-advance-filter-section [title]="''">
     <!-- DATE  -->
     <fui-advance-filter-item
       [label]="'Date'"
-      [value]="startDateForm.value + ' to ' + endDateForm.value"
-    >
+      [value]="startDateForm.value + ' to ' + endDateForm.value">
       <fui-date-range
         [dateFormat]="'DD-MM-YYYY'"
         [startDateControl]="startDateForm"
         [endDateControl]="endDateForm"
         (onChangeStartDate)="watchDateChange('start', $event)"
-        (onChangeEndDate)="watchDateChange('end', $event)"
-      />
+        (onChangeEndDate)="watchDateChange('end', $event)" />
     </fui-advance-filter-item>
     <!-- DATE  -->
 
     <!-- MATTER  -->
     <fui-advance-filter-item
       [label]="'Matter'"
-      [value]="getFormattedNames(selectedMatter)"
-    >
+      [value]="getFormattedNames(selectedMatter)">
       <fui-combo-box
         [comboxForm]="searchMatterForm"
         [size]="'m'"
         [placeholder]="'Matter'"
         [optionValue]="converterMatterOpt()"
-        [selectedValue]="selectedMatter"
-      />
+        [selectedValue]="selectedMatter" />
     </fui-advance-filter-item>
     <!-- MATTER  -->
 
     <!-- DESCRIPTION  -->
     <fui-advance-filter-item
       [label]="'Time Description'"
-      [value]="descriptionForm.value"
-    >
+      [value]="descriptionForm.value">
       <fui-form-control-layout>
         <fui-input-field
           [formControlField]="descriptionForm"
           [placeholder]="'e.g Meeting with client'"
           [type]="'text'"
           [size]="'m'"
-          [invalid]="false"
-        />
+          [invalid]="false" />
       </fui-form-control-layout>
     </fui-advance-filter-item>
     <!-- DESCRIPTION  -->
@@ -158,6 +143,5 @@
 <shared-modal-delete
   [openModalDelete]="isModalDelete"
   [title]="'Delete Timesheet'"
-  (actionOut)="toggleCancelDeleteTimesheet($event)"
-/>
+  (actionOut)="toggleCancelDeleteTimesheet($event)" />
 <!-- MODAL DELETE  -->

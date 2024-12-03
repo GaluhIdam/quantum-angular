@@ -1,0 +1,163 @@
+<!-- UTILITY TABLE  -->
+<div class="container-w">
+  <app-utility-detail-matter (actionBtn)="actionBtnUtil($event)" />
+</div>
+<!-- UTILITY TABLE  -->
+
+<!-- FILTER STATUS  -->
+<div class="container-w flex">
+  <shared-button-group [btnList]="btnFilterList" />
+</div>
+<!-- FILTER STATUS  -->
+
+<!-- MOVE MATTER  -->
+<div class="container-w" *ngIf="timesheetSelected.length > 0">
+  <shared-move-matter
+    [writeOff]="true"
+    [listMatters]="[]"
+    [totalItemSelected]="0"
+  />
+</div>
+<!-- MOVE MATTER  -->
+
+<!-- TABLE  -->
+<div class="container-w last">
+  <shared-table-auto-generate
+    [title]="titleTable"
+    [property]="propertyTable"
+    [data]="dataTable"
+    [action]="action"
+    [limit]="limit"
+    [totalItems]="totalItems"
+    [clearSelection]="clearSelection"
+    (actionOut)="actionOutTable($event)"
+    (selectedItemsChange)="onSelectedItemsChange($event)"
+  />
+</div>
+<!-- TABLE  -->
+
+<!-- CREATE FLYOUT  -->
+<shared-flyout-timesheet
+  [title]="'Add Timesheet to 5889-1'"
+  [note]="'* Conduct desk research & prepare summary on licensing regulation'"
+  [isOpenFlyout]="isOpenFlyoutCreate"
+  [enableMatterForm]="false"
+  [showCheckLockMatter]="false"
+  (closeOut)="closeOut($event, 'create')"
+/>
+<!-- CREATE FLYOUT  -->
+
+<!-- FILTER  -->
+<fui-advance-filter
+  [openFilter]="isOpenFlyoutFilter"
+  (actionOut)="closeOut(false, 'filter', $event)"
+>
+  <fui-advance-filter-section [title]="''">
+    <!-- DATE  -->
+    <fui-advance-filter-item
+      [label]="'Date'"
+      [value]="
+        startDateForm.value !== '' && endDateForm.value !== ''
+          ? startDateForm.value + ' to ' + endDateForm.value
+          : ''
+      "
+    >
+      <fui-date-range
+        [dateFormat]="'DD-MM-YYYY'"
+        [startDateControl]="startDateForm"
+        [endDateControl]="endDateForm"
+        (onChangeStartDate)="watchDateChange('start', $event)"
+        (onChangeEndDate)="watchDateChange('end', $event)"
+      />
+    </fui-advance-filter-item>
+    <!-- DATE  -->
+
+    <!-- MATTER  -->
+    <fui-advance-filter-item
+      [label]="'Name'"
+      [value]="getFormattedNames(nameSelected)"
+    >
+      <fui-combo-box
+        (selection)="selectionCombox($event, 'name')"
+        [comboxForm]="nameForm"
+        [size]="'m'"
+        [placeholder]="'Select name'"
+        [optionValue]="nameOption"
+        [selectedValue]="nameSelected"
+      />
+    </fui-advance-filter-item>
+    <!-- MATTER  -->
+
+    <!-- DESCRIPTION  -->
+    <fui-advance-filter-item
+      [label]="'Time Description'"
+      [value]="descriptionForm.value"
+    >
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="descriptionForm"
+          [placeholder]="'e.g Meeting with client'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+        />
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+    <!-- DESCRIPTION  -->
+
+    <!-- WRITE OFF FORM  -->
+    <fui-advance-filter-item
+      [label]="'Write-off Status'"
+      [value]="getFormattedNames(writeOffStatusSelected)"
+    >
+      <fui-combo-box
+        (selection)="selectionCombox($event, 'writeoff')"
+        [comboxForm]="writeOffStatusForm"
+        [size]="'m'"
+        [singleSelection]="true"
+        [placeholder]="'Select Write-off Status'"
+        [optionValue]="writeOffStatusOption"
+        [selectedValue]="writeOffStatusSelected"
+      />
+    </fui-advance-filter-item>
+    <!-- WRITE OFF FORM  -->
+
+    <!-- BILLING NUMBER  -->
+    <fui-advance-filter-item
+      [label]="'Billing Number'"
+      [value]="getFormattedNames(billingNumberSelected)"
+    >
+      <fui-combo-box
+        (selection)="selectionCombox($event, 'billing')"
+        [comboxForm]="billingNumberForm"
+        [size]="'m'"
+        [singleSelection]="true"
+        [placeholder]="'Select Write-off Status'"
+        [optionValue]="billingNumberOption"
+        [selectedValue]="billingNumberSelected"
+      />
+    </fui-advance-filter-item>
+    <!-- BILLING NUMBER  -->
+  </fui-advance-filter-section>
+</fui-advance-filter>
+<!-- FILTER  -->
+
+<!-- EDIT FLYOUT  -->
+<shared-flyout-timesheet
+  [title]="'Update Timesheet'"
+  [note]="'* Conduct desk research & prepare summary on licensing regulation'"
+  [isOpenFlyout]="isOpenFlyoutEdit"
+  [enableMatterForm]="false"
+  [showCheckLockMatter]="false"
+  [showCheckLockDate]="false"
+  [actionButton]="'update'"
+  (closeOut)="closeOut($event, 'edit')"
+/>
+<!-- EDIT FLYOUT  -->
+
+<!-- MODEL DELETE  -->
+<shared-modal-delete
+  [openModalDelete]="openModalDelete"
+  (actionOut)="actionModal($event)"
+/>
+<!-- MODEL DELETE  -->

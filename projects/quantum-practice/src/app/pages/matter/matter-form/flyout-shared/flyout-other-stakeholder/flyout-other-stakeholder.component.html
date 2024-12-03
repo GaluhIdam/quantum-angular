@@ -1,0 +1,86 @@
+<shared-flyout-simple
+  [titleFlyout]="'Add Other Stackholder'"
+  [size]="'s'"
+  [isOpenFlyout]="isOpenFlyoutOtherStackholder"
+  (closeOut)="openFlyoutOtherStackholder()"
+>
+  <div body>
+    <!-- ROLE  -->
+    <div class="form-control">
+      <fui-text class="label">Role</fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [placeholder]="'Please select role'"
+          [invalid]="false"
+          [selectOptions]="[]"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- ROLE  -->
+
+    <!-- PARTY ADVISED  -->
+    <div class="form-control">
+      <fui-text class="label">Party Advised</fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [placeholder]="'Please select party advised'"
+          [invalid]="false"
+          [selectOptions]="[]"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- PARTY ADVISED  -->
+
+    <!-- PROFESSIONAL ADVISER NAME  -->
+    <div class="form-control">
+      <fui-text class="label"> Professional adviser's name </fui-text>
+      <fui-combo-box
+        [singleSelection]="true"
+        [placeholder]="'Type professional adviser`s name'"
+        [invalid]="false"
+        [message]="''"
+        [leftIcon]="'search'"
+        [optionValue]="[]"
+        [selectedValue]="[]"
+      />
+    </div>
+    <!-- PROFESSIONAL ADVISER NAME  -->
+
+    <hr class="flex mb-30" />
+
+    <!-- ADDITIONAL NOTE  -->
+    <div class="form-control">
+      <fui-text class="label">Additional Notes</fui-text>
+      <fui-form-control-layout>
+        <fui-textarea
+          [placeholder]="'Add additional notes'"
+          [size]="'m'"
+          [invalid]="false"
+        />
+      </fui-form-control-layout>
+    </div>
+    <!-- ADDITIONAL NOTE  -->
+  </div>
+  <div footer class="flex-between footer-fly">
+    <fui-button-icon [fullWidth]="'fit'"
+      (onClick)="openFlyoutOtherStackholder()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'secondary'"
+      [option]="'text'"
+      [text]="'Cancel'"
+    />
+    <fui-button-icon [fullWidth]="'fit'"
+      (onClick)="openFlyoutOtherStackholder()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'filled'"
+      [option]="'text'"
+      [text]="'Add Other Stackholder'"
+    />
+  </div>
+</shared-flyout-simple>

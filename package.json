@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:quantum-intergeration": "node dist/quantum-intergeration/server/server.mjs",
-    "serve:ssr:quantum-integeration": "node dist/quantum-integeration/server/server.mjs"
+    "serve:ssr:quantum-integeration": "node dist/quantum-integeration/server/server.mjs",
+    "serve:ssr:quantum-practice": "node dist/quantum-practice/server/server.mjs",
+    "serve:ssr:quantum-administrator": "node dist/quantum-administrator/server/server.mjs"
   },
   "private": true,
   "dependencies": {

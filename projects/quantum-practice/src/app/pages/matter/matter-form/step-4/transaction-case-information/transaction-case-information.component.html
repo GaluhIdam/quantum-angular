@@ -1,0 +1,417 @@
+<div class="card">
+  <div class="grid form-control">
+    <fui-text [weight]="'semibold'">Transaction/Case Information</fui-text>
+    <fui-text class="mt-5" [weight]="'light'"
+      >Details on the matter including scope of work, counterparties, entities
+      involved, and team members for this matter.</fui-text
+    >
+  </div>
+
+  <!-- Matter Descriptions  -->
+  <div class="grid form-control">
+    <fui-text class="mt-20">Matter Descriptions</fui-text>
+    <fui-text class="mt-5" [color]="'disabled'">
+      Provide brief details of the matter, highlight any significant aspect: Any
+      ground-breaking / landmark/ innovative aspects? Legal technical /
+      geographical complexities? Importance to the market/ industry sector?
+      Relevance in terms of size or value?
+    </fui-text>
+    <fui-form-control-layout class="mt-10">
+      <fui-textarea
+        [placeholder]="'Add matter description'"
+        [size]="'m'"
+        [invalid]="false"
+      >
+      </fui-textarea>
+    </fui-form-control-layout>
+  </div>
+  <!-- Matter Descriptions  -->
+
+  <!-- Scope of Work  -->
+  <div class="grid form-control">
+    <fui-text class="mt-20">Scope of Work</fui-text>
+    <fui-text class="mt-10" [color]="'disabled'">
+      Please state AHP's scope of work. If the matter involved other PG's,
+      please identify them and their roles
+    </fui-text>
+    <fui-form-control-layout class="mt-10">
+      <fui-textarea
+        [placeholder]="'Add AHP Scope of works'"
+        [size]="'m'"
+        [invalid]="false"
+      >
+      </fui-textarea>
+    </fui-form-control-layout>
+  </div>
+  <!-- Scope of Work  -->
+
+  <!-- COUNTERPARTY  -->
+  <div class="form-control">
+    <div class="flex-between">
+      <div class="flex-start">
+        <fui-text class="label"> Counterparty </fui-text>
+        <fui-tooltip [position]="'top'" [content]="'Label tooltip'">
+          <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+        </fui-tooltip>
+      </div>
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          [checked]="isCounterparty"
+          [(ngModel)]="isCounterparty"
+        />
+        <fui-text [size]="'s'" (click)="isCounterparty = !isCounterparty"
+          >N/A</fui-text
+        >
+      </div>
+    </div>
+    <fui-combo-box
+      *ngIf="!isCounterparty"
+      [singleSelection]="true"
+      [placeholder]="'Search counterparty'"
+      [invalid]="false"
+      [message]="''"
+      [leftIcon]="'search'"
+      [optionValue]="[]"
+      [selectedValue]="[]"
+    />
+    <fui-text
+      class="fs-italic mt-10"
+      [color]="'disabled'"
+      *ngIf="isCounterparty"
+      >Not Applicable</fui-text
+    >
+    <fui-button-icon
+      [fullWidth]="'fit'"
+      (onClick)="opeCloseFlyout('CP')"
+      *ngIf="!isCounterparty"
+      class="flex mt-15"
+      [style]="'secondary'"
+      [color]="'primary'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'plusInCircle'"
+      [text]="'Add new contact person'"
+    />
+  </div>
+  <!-- COUNTERPARTY  -->
+
+  <!-- SLIDER  -->
+  <shared-slider-card
+    *ngIf="!isCounterparty"
+    [dataSlider]="dataSlider"
+    [currentSlideIndex]="currentSlideIndex"
+    (slideOut)="slideOut($event)"
+  >
+    <shared-slider-card-body
+      *ngFor="let item of clientData; let i = index"
+      [id]="i + 1"
+      [current]="currentSlideIndex + 1"
+    >
+      <div class="card-blue">
+        <div class="grid-2">
+          <fui-text>Parent/Group Company</fui-text>
+          <fui-text>Company's Origin Country</fui-text>
+        </div>
+        <div class="mt-5 grid-2">
+          <fui-text [weight]="'semibold'">{{ item.parent }}</fui-text>
+          <fui-text [weight]="'semibold'">{{ item.companyOrigin }}</fui-text>
+        </div>
+        <div class="mt-20 grid">
+          <fui-text>Address</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.address
+          }}</fui-text>
+        </div>
+        <fui-link
+          class="mt-20"
+          [colorLink]="'primary'"
+          [urlLink]="'#'"
+          [typeLink]="'coloring'"
+          >Change address</fui-link
+        >
+        <div class="mt-20 grid">
+          <fui-text>Entity Type</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.entityType
+          }}</fui-text>
+        </div>
+        <div class="mt-20 grid">
+          <fui-text>Industry/Business Sector</fui-text>
+          <fui-text [weight]="'semibold'" class="mt-5">{{
+            item.industry
+          }}</fui-text>
+        </div>
+      </div>
+    </shared-slider-card-body>
+  </shared-slider-card>
+  <!-- SLIDER  -->
+
+  <!-- OTHER STACKHOLDER  -->
+  <div class="flex-between mb-10 mt-10">
+    <div class="block mt-20">
+      <div class="flex-start">
+        <fui-text class="label"> Other Stakeholder </fui-text>
+        <fui-tooltip [position]="'top'" [content]="'Label tooltip'">
+          <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+        </fui-tooltip>
+      </div>
+      <fui-text class="mt-10" [color]="'disabled'">
+        Advisor, counsel to related party
+      </fui-text>
+    </div>
+    <div class="checkbox">
+      <input
+        type="checkbox"
+        [checked]="isOtherStakeholder"
+        [(ngModel)]="isOtherStakeholder"
+      />
+      <fui-text [size]="'s'" (click)="isOtherStakeholder = !isOtherStakeholder"
+        >N/A</fui-text
+      >
+    </div>
+  </div>
+
+  <!-- LIST  -->
+  <div class="badge-list" *ngIf="!isOtherStakeholder">
+    <fui-icons [icon]="'node'" />
+    <div class="grid-1 gap-5 text-left">
+      <p style="overflow: hidden; text-wrap: nowrap; text-overflow: ellipsis">
+        <b>Barone LLC.</b> as Indonesian Legal Counselor for Tripatra Engineers
+        & Constructor, PT
+      </p>
+      <fui-text [color]="'text'"> Ut enim ad minim veniam, quis nostrud </fui-text>
+    </div>
+    <fui-button-icon
+      [fullWidth]="'fit'"
+      [type]="'button'"
+      [option]="'icon'"
+      [style]="'secondary'"
+      [icon]="'pencil'"
+    />
+    <fui-button-icon
+      [fullWidth]="'fit'"
+      [type]="'button'"
+      [option]="'icon'"
+      [style]="'secondary'"
+      [color]="'danger'"
+      [icon]="'trash'"
+    />
+  </div>
+  <fui-text class="fs-italic" [color]="'disabled'" *ngIf="isOtherStakeholder"
+    >Not Applicable</fui-text
+  >
+  <!-- LIST  -->
+
+  <fui-button-icon
+    [fullWidth]="'fit'"
+    *ngIf="!isOtherStakeholder"
+    (onClick)="opeCloseFlyout('SH')"
+    class="flex mt-15"
+    [style]="'secondary'"
+    [color]="'primary'"
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'plusInCircle'"
+    [text]="'Add Other Stackholder'"
+  />
+  <!-- OTHER STACKHOLDER  -->
+
+  <hr width="250" class="mt-20" />
+
+  <!-- Transaction/Case Value  -->
+  <div class="form-control">
+    <div class="flex-between">
+      <fui-text class="label"> Transaction/Case Value </fui-text>
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          [checked]="isTransaction"
+          [(ngModel)]="isTransaction"
+        />
+        <fui-text [size]="'s'" (click)="isTransaction = !isTransaction"
+          >N/A</fui-text
+        >
+      </div>
+    </div>
+    <div class="grid-2 align-start" *ngIf="!isTransaction">
+      <div class="">
+        <fui-form-control-layout>
+          <fui-select-field
+            [size]="'m'"
+            [placeholder]="'Please select billability'"
+            [invalid]="false"
+            [selectOptions]="[]"
+          >
+          </fui-select-field>
+        </fui-form-control-layout>
+      </div>
+
+      <div class="">
+        <fui-form-control-layout>
+          <fui-input-field
+            [type]="'text'"
+            [placeholder]="'Transaction Value'"
+            [invalid]="false"
+            [size]="'m'"
+          >
+          </fui-input-field>
+        </fui-form-control-layout>
+      </div>
+    </div>
+    <fui-text class="fs-italic" *ngIf="isTransaction" [color]="'disabled'"
+      >Not Applicable</fui-text
+    >
+  </div>
+  <!-- Transaction/Case Value  -->
+
+  <div class="grid-2 align-start">
+    <!-- Jurisdiction(s) involved -->
+    <div class="form-control">
+      <fui-text class="label"> Jurisdiction(s) involved </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [placeholder]="'Indonesia'"
+          [invalid]="false"
+          [size]="'m'"
+        >
+        </fui-input-field>
+      </fui-form-control-layout>
+      <!-- Jurisdiction(s) involved -->
+    </div>
+
+    <!-- Governing Law(s)  -->
+    <div class="form-control">
+      <fui-text class="label"> Governing Law(s) </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [placeholder]="'Indonesia'"
+          [invalid]="false"
+          [size]="'m'"
+        >
+        </fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- Governing Law(s)  -->
+  </div>
+
+  <!-- Governing Law(s)  -->
+  <div class="form-control">
+    <div class="flex-between">
+      <fui-text class="label"> Jurisdiction for dispute resolution </fui-text>
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          [checked]="isJurisdiction"
+          [(ngModel)]="isJurisdiction"
+        />
+        <fui-text [size]="'s'" (click)="isJurisdiction = !isJurisdiction"
+          >N/A</fui-text
+        >
+      </div>
+    </div>
+    <fui-form-control-layout *ngIf="!isJurisdiction">
+      <fui-input-field
+        [type]="'text'"
+        [placeholder]="'Indonesia'"
+        [invalid]="false"
+        [size]="'m'"
+      >
+      </fui-input-field>
+    </fui-form-control-layout>
+    <fui-text class="fs-italic" *ngIf="isJurisdiction" [color]="'disabled'"
+      >Not Applicable</fui-text
+    >
+  </div>
+  <!-- Governing Law(s)  -->
+
+  <!-- Confidentiality  -->
+  <div class="form-control">
+    <fui-text class="label"> Confidentiality </fui-text>
+    <fui-form-control-layout>
+      <fui-select-field
+        [formControlField]="confidentialityForm"
+        [size]="'m'"
+        [placeholder]="'Please select billability'"
+        [invalid]="false"
+        [selectOptions]="confidentialityOption"
+      >
+      </fui-select-field>
+    </fui-form-control-layout>
+  </div>
+  <!-- Confidentiality  -->
+
+  <!-- Confidentiality notes  -->
+  <div
+    class="grid-1 gap-10"
+    *ngIf="
+      confidentialityForm.value ===
+      'Confidential: May be used in marketing materials'
+    "
+  >
+    <fui-text>Confidentiality notes</fui-text>
+    <fui-text [color]="'disabled'"
+      >IPplease indicated which part of the information is confidential, i.e.
+      all, only parties name and matter value, only information publicly
+      announced by the [Client] on IDX may be disclosed, or Client has not been
+      approached for clearance to disclose information on the deal
+    </fui-text>
+    <fui-form-control-layout>
+      <fui-textarea
+        [placeholder]="'Add confidentiality notes'"
+        [size]="'m'"
+        [invalid]="false"
+      >
+      </fui-textarea>
+    </fui-form-control-layout>
+  </div>
+  <!-- Confidentiality notes  -->
+
+  <!-- Additional Transaction Information  -->
+  <div class="grid-1 gap-10 mt-20">
+    <div class="flex-between">
+      <fui-text>Additional Transaction Information</fui-text>
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          [checked]="isAddTranc"
+          [(ngModel)]="isAddTranc"
+        />
+        <fui-text [size]="'s'" (click)="isAddTranc = !isAddTranc">N/A</fui-text>
+      </div>
+    </div>
+    <fui-text [color]="'disabled'"
+      >Such as links to press release, media coverage or awards won
+    </fui-text>
+    <fui-form-control-layout *ngIf="!isAddTranc">
+      <fui-textarea
+        [placeholder]="'Add additional information'"
+        [size]="'m'"
+        [invalid]="false"
+      >
+      </fui-textarea>
+    </fui-form-control-layout>
+  </div>
+  <!-- Additional Transaction Information  -->
+
+  <div class="checkbox mt-20">
+    <input
+      type="checkbox"
+      [checked]="isOtherStakeholder"
+      [(ngModel)]="isOtherStakeholder"
+    />
+    <fui-text [size]="'s'">Include in Ranking Submissions</fui-text>
+  </div>
+</div>
+
+<app-flyout-contact-person
+  [isOpenFlyoutContactPerson]="isOpenFlyoutContactPerson"
+  (closeOut)="opeCloseFlyout('CP')"
+/>
+
+<app-flyout-other-stakeholder
+  [isOpenFlyoutOtherStackholder]="isOpenFlyoutOtherStackholder"
+  (closeOut)="opeCloseFlyout('SH')"
+/>

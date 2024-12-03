@@ -1,0 +1,42 @@
+@import "../../matter-form.component.scss";
+
+.pointer {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.flex {
+  &:hover {
+    cursor: pointer;
+  }
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.container {
+  margin: 10px 0px 0px 0px;
+  width: 250px;
+  height: 150px;
+  overflow-y: auto;
+  font-size: 13px;
+}
+.country-flag {
+  display: flex;
+  gap: 10px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  .text-country {
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.mt-3 {
+  margin-top: 3px;
+}

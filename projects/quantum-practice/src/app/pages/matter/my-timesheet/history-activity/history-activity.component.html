@@ -1,0 +1,163 @@
+<shared-skeleton [active]="loading">
+  <!-- SIMPLE UTILITY TABLE  -->
+  <shared-table-utility-simple
+    [nextBtn]="currentDate > endDate ? true : false"
+    [prevBtn]="filterApplied.length === 0"
+    [startDate]="startDate"
+    [endDate]="endDate"
+    [duration]="calculateTotalDuration(dataTimesheet)"
+    (actionOut)="toggleUtility($event)"
+  />
+  <!-- SIMPLE UTILITY TABLE  -->
+
+  <!-- FILTER APPLIED -->
+  <shared-filter-applied
+    class="mb-15"
+    [filterApplied]="filterApplied"
+    (actionOut)="toggleClearFilter($event)"
+  />
+  <!-- FILTER APPLIED -->
+
+  <!-- MATTER MOVE -->
+  <shared-move-matter
+    *ngIf="timesheetSelected.length > 0"
+    [listMatters]="[]"
+    [totalItemSelected]="timesheetSelected.length"
+    (actionOut)="moveTimesheet($event)"
+  />
+  <!-- MATTER MOVE -->
+
+  <div class="wrap">
+    <!-- TABLE WITHOUT FILTER -->
+    <app-table-without-filter
+      *ngIf="filterApplied.length === 0"
+      [startDate]="startDate"
+      [endDate]="endDate"
+      [dataTimesheet]="dataTimesheet"
+      [timesheetSelected]="timesheetSelected"
+      (actionOut)="toggleEditDeleteTimesheet($event.action, $event.data)"
+      (selectionOut)="toggleSelection($event)"
+    />
+    <!-- TABLE WITHOUT FILTER -->
+
+    <!-- TABLE WITH FILTER-->
+    <app-table-filter
+      class="container-table"
+      *ngIf="filterApplied.length > 0"
+      [page]="page"
+      [limit]="limit"
+      [totalItems]="totalItems"
+      [dataTimesheet]="dataTimesheet"
+      [timesheetSelected]="timesheetSelected"
+      (actionOut)="toggleEditDeleteTimesheet($event.action, $event.data)"
+      (selectionOut)="toggleSelection($event)"
+    />
+    <!-- TABLE WITH FILTER-->
+  </div>
+</shared-skeleton>
+
+<!-- FLYOUT CREATE TIMESHEET -->
+<shared-flyout-timesheet
+  [showFeeEarnerForm]="false"
+  [title]="'Add Timesheet'"
+  [isOpenFlyout]="isOpenCreateFlyout"
+/>
+<!-- FLYOUT CREATE TIMESHEET -->
+
+<!-- EDIT TIMESHEET FLYOUT -->
+<shared-flyout-timesheet
+  [showFeeEarnerForm]="false"
+  [enableMatterForm]="false"
+  [title]="'Update Timesheet'"
+  [isOpenFlyout]="isOpenEditFlyout"
+  [timesheet]="timesheetEditSelected"
+  [actionButton]="'update'"
+  [showCheckLockMatter]="false"
+  [showCheckLockDate]="false"
+  [note]="'* Conduct desk research & prepare summary on licensing regulation.'"
+  [listActivities]="converterActivityOpt()"
+  [listMatters]="converterMatterOpt()"
+  (closeOut)="toggleUtility('edit')"
+/>
+<!-- EDIT TIMESHEET FLYOUT -->
+
+<!-- EDIT TAG FLYOUT -->
+<shared-flyout-timesheet
+  [showFeeEarnerForm]="false"
+  [enableMatterForm]="false"
+  [title]="'Update Timesheet'"
+  [isOpenFlyout]="isOpenEditTagFlyout"
+  [actionButton]="'updateTag'"
+  [showCheckLockMatter]="false"
+  [timesheetSelected]="timesheetEditSelected"
+  [showCheckLockDate]="false"
+  [note]="'* Conduct desk research on licensing agreement with JJ.'"
+  [listActivities]="converterActivityOpt()"
+  [listMatters]="converterMatterOpt()"
+  (closeOut)="toggleUtility('editTag')"
+/>
+<!-- EDIT TAG FLYOUT -->
+
+<!-- FILTER  -->
+<fui-advance-filter
+  [openFilter]="isOpenFilterFlyout"
+  (actionOut)="actionOut($event)"
+>
+  <fui-advance-filter-section [title]="''">
+    <!-- DATE  -->
+    <fui-advance-filter-item
+      [label]="'Date'"
+      [value]="startDateForm.value + ' to ' + endDateForm.value"
+    >
+      <fui-date-range
+        [dateFormat]="'DD-MM-YYYY'"
+        [startDateControl]="startDateForm"
+        [endDateControl]="endDateForm"
+        (onChangeStartDate)="watchDateChange('start', $event)"
+        (onChangeEndDate)="watchDateChange('end', $event)"
+      />
+    </fui-advance-filter-item>
+    <!-- DATE  -->
+
+    <!-- MATTER  -->
+    <fui-advance-filter-item
+      [label]="'Matter'"
+      [value]="getFormattedNames(selectedMatter)"
+    >
+      <fui-combo-box
+        [comboxForm]="searchMatterForm"
+        [size]="'m'"
+        [placeholder]="'Matter'"
+        [optionValue]="converterMatterOpt()"
+        [selectedValue]="selectedMatter"
+      />
+    </fui-advance-filter-item>
+    <!-- MATTER  -->
+
+    <!-- DESCRIPTION  -->
+    <fui-advance-filter-item
+      [label]="'Time Description'"
+      [value]="descriptionForm.value"
+    >
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="descriptionForm"
+          [placeholder]="'e.g Meeting with client'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+        />
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+    <!-- DESCRIPTION  -->
+  </fui-advance-filter-section>
+</fui-advance-filter>
+<!-- FILTER  -->
+
+<!-- MODAL DELETE  -->
+<shared-modal-delete
+  [openModalDelete]="isModalDelete"
+  [title]="'Delete Timesheet'"
+  (actionOut)="toggleCancelDeleteTimesheet($event)"
+/>
+<!-- MODAL DELETE  -->

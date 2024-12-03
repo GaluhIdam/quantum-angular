@@ -1,0 +1,107 @@
+@import "../detail-matter.component.scss";
+
+.line {
+  &-135 {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+
+    hr {
+      width: 135px;
+    }
+  }
+  &-310 {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+
+    hr {
+      width: 310px;
+    }
+  }
+}
+
+.flex-col-20 {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.flex-end-gap-10 {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
+.card-blue {
+  padding: 20px;
+  border-radius: 6px;
+  background-color: var(--fuiPrimarySecondary, $fuiPrimarySecondary);
+}
+
+.h-100-relative {
+  height: 100%;
+  position: relative;
+}
+
+.absolute-x-auto-y-hidden {
+  overflow-y: auto;
+  height: 100%;
+  overflow-x: hidden;
+  position: absolute;
+}
+
+.badge-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--fuiColorMediumShade, $fuiColorMediumShade);
+  border-radius: 5px;
+  padding: 10px;
+  align-items: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.badge-block {
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--fuiColorMediumShade, $fuiColorMediumShade);
+  border-radius: 5px;
+  padding: 10px;
+  display: grid;
+}
+.reopen-action {
+  color: var(--fuiColorPrimary, $fuiColorPrimary);
+  text-decoration: none;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.flex-step {
+  display: flex;
+  margin-bottom: 5px;
+  justify-content: space-between;
+}
+
+.body-c-modal {
+  max-width: 550px;
+}
+
+.card-matter {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+  padding: 20px;
+  border-radius: 6px;
+}

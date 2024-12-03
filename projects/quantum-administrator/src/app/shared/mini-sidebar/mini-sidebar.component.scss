@@ -1,0 +1,105 @@
+@import "../../app.component.scss";
+.wraper-sidebar {
+  z-index: 10;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+
+  .mini-sidebar {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    height: 250px;
+    box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .btn-circle {
+      padding: 9px 8px 8px 8px;
+      margin: 10px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.center {
+  padding: 0px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.logo-bg {
+  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+  margin-top: 10px;
+  margin-bottom: 30px;
+  height: 50px;
+  .img-logo {
+    background-color: transparent;
+    width: 20px;
+  }
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mt-10 {
+  display: flex;
+  margin-top: 10px;
+}
+
+.sub-menu {
+  z-index: 5;
+  position: fixed;
+  top: 50%;
+  left: 75px;
+  transform: translateY(-50%);
+  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+  height: fit-content;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px #0003;
+}
+
+.form-control {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.active {
+  background-color: var(--fuiBtnPrimary, $fuiBtnPrimary);
+  border-radius: 100%;
+}
+.body-search-sub {
+  padding: 5px;
+}
+
+fui-form-control-layout {
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  :host {
+    display: none;
+  }
+}

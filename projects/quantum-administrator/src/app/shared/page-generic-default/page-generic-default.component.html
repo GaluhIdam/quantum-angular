@@ -1,0 +1,41 @@
+<div class="flex-col">
+  <fui-breadcrumb
+    *ngIf="breadcrums.length > 0"
+    [maxDisplayLink]="2"
+    [data]="breadcrums"
+  />
+  <fui-text [size]="'xl'" [weight]="'bold'">{{ title }}</fui-text>
+  <fui-text *ngIf="description">{{ description }}</fui-text>
+</div>
+
+<div class="utility">
+  <div class="flex-row">
+    <ng-content select="[formsearch]"></ng-content>
+    <ng-content select="[filterbtn]"></ng-content>
+  </div>
+  <div>
+    <ng-content select="[cta]"></ng-content>
+  </div>
+</div>
+
+<div
+  class="utility-2"
+  *ngIf="filterGroup.length > 0 || filterApplied.length > 0"
+>
+  <div class="overflow">
+    <shared-button-group
+      *ngIf="filterGroup.length > 0"
+      [btnList]="filterGroup"
+      (action)="filterGroupAct($event)"
+    />
+  </div>
+  <shared-filter-applied
+    *ngIf="filterApplied.length > 0"
+    [filterApplied]="filterApplied"
+    (actionOut)="filterAppliedAct($event)"
+  />
+</div>
+
+<div class="card">
+  <ng-content select="[content]"></ng-content>
+</div>

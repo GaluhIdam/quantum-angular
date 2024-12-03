@@ -1,0 +1,49 @@
+@import "../detail-matter.component.scss";
+
+.container-w {
+  margin-bottom: 20px;
+  width: 100%;
+  &.flex {
+    display: flex;
+    gap: 15px 0px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  &.last {
+    margin-bottom: 0px;
+  }
+}
+
+.form {
+  margin-bottom: 15px;
+  fui-text {
+    margin-bottom: 5px;
+    display: flex;
+  }
+}
+.filter-valid {
+  display: flex;
+  font-size: small;
+  color: var(--fuiColorDanger, $fuiColorDanger);
+  margin-top: 8px;
+  fui-icons {
+    margin-right: 4px;
+  }
+}
+
+/** Footer Flyout Config */
+.footer-flyout {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+  .group-flex {
+    display: flex;
+    fui-button-icon {
+      margin-right: 10px;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}

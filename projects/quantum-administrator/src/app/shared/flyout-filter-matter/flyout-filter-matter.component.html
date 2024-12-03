@@ -1,0 +1,236 @@
+<!-- FILTER  -->
+<fui-advance-filter
+  [openFilter]="isOpenFlyout"
+  (actionOut)="action.emit($event)"
+>
+  <fui-advance-filter-section [title]="''">
+    <fui-advance-filter-item
+      [label]="'Client Name'"
+      [value]="getFormattedNames(clientNameSelected)"
+    >
+      <fui-combo-box
+        [leftIcon]="'search'"
+        [comboxForm]="clientNameForm"
+        [optionValue]="clientNameOption"
+        [selectedValue]="clientNameSelected"
+        [placeholder]="'Type client name'"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Matter/Sub-matter Number'"
+      [value]="getFormattedNames(matterSelected)"
+    >
+      <fui-combo-box
+        [leftIcon]="'search'"
+        [comboxForm]="matterForm"
+        [optionValue]="matterOption"
+        [selectedValue]="matterSelected"
+        [placeholder]="'Search by matter number'"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Project Name'"
+      [value]="projectNameForm.value"
+    >
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [formControlField]="projectNameForm"
+          [invalid]="false"
+          [size]="'m'"
+          [placeholder]="'Type matter description'"
+        >
+        </fui-input-field>
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Matter Description'"
+      [value]="matterDescriptionForm.value"
+    >
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="matterDescriptionForm"
+          [type]="'text'"
+          [invalid]="false"
+          [size]="'m'"
+          [placeholder]="'Type matter description'"
+        >
+        </fui-input-field>
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Billability'"
+      [value]="getFormattedNames(billabilitySelected)"
+    >
+      <fui-combo-box
+        [comboxForm]="billabilityForm"
+        [optionValue]="billabilityOption"
+        [selectedValue]="billabilitySelected"
+        [placeholder]="'Select matter category'"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Practice Group'"
+      [value]="getFormattedNames(practiceGroupSelected)"
+    >
+      <fui-combo-box
+        [comboxForm]="practiceGroupForm"
+        [optionValue]="practiceGroupOption"
+        [selectedValue]="practiceGroupSelected"
+        [placeholder]="'Select practice group'"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Practice Area'"
+      [value]="getFormattedNames(practiceAreaSelected)"
+    >
+      <fui-combo-box
+        [comboxForm]="practiceAreaForm"
+        [optionValue]="practiceAreaOption"
+        [selectedValue]="practiceAreaSelected"
+        [placeholder]="'Select practice area'"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Matter Type'"
+      [value]="getFormattedNames(matterTypeSelected)"
+    >
+      <fui-combo-box
+        [comboxForm]="matterTypeForm"
+        [optionValue]="matterTypeOption"
+        [selectedValue]="matterTypeSelected"
+        [placeholder]="'Select matter type'"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Matter Status'"
+      [value]="getFormattedNames(matterStatusSelected)"
+    >
+      <fui-combo-box
+        [comboxForm]="matterStatusForm"
+        [optionValue]="matterStatusOption"
+        [selectedValue]="matterStatusSelected"
+        [placeholder]="'Select matter status'"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Fee Structure'"
+      [value]="getFormattedNames(feeStructureSelected)"
+    >
+      <fui-combo-box
+        [comboxForm]="feeStructureForm"
+        [optionValue]="feeStructureOption"
+        [selectedValue]="feeStructureSelected"
+        [placeholder]="'Select fee structure'"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Partner In Charge (PIC)'"
+      [value]="getFormattedNames(partnerInChargeSelected)"
+    >
+      <fui-combo-box
+        [comboxForm]="partnerInChargeForm"
+        [optionValue]="partnerInChargeOption"
+        [selectedValue]="partnerInChargeSelected"
+        [placeholder]="'Select matter PIC'"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Matter Members'"
+      [value]="getFormattedNames(matterMembersSelected)"
+    >
+      <fui-combo-box
+        [comboxForm]="matterMembersForm"
+        [optionValue]="matterMembersOption"
+        [selectedValue]="matterMembersSelected"
+        [placeholder]="'Select matter members'"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Unbilled Amount (R3) higher or equal to'"
+      [value]="unbilledAmountForm.value"
+    >
+      <fui-form-control-layout class="full-width">
+        <fui-prepend>
+          <div class="prepend-title">USD</div>
+        </fui-prepend>
+        <fui-input-field
+          [formControlField]="unbilledAmountForm"
+          [type]="'text'"
+          [invalid]="false"
+          [size]="'m'"
+          [placeholder]="'Specify the unbilled amount'"
+        >
+        </fui-input-field>
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Unbilled Amount (R3) higher or equal to'"
+      [value]="unbilledAmountForm.value"
+    >
+      <fui-form-control-layout class="full-width">
+        <fui-prepend>
+          <div class="prepend-title">USD</div>
+        </fui-prepend>
+        <fui-input-field
+          [formControlField]="unbilledAmountForm"
+          [type]="'text'"
+          [invalid]="false"
+          [size]="'m'"
+          [placeholder]="'Specify the unbilled amount'"
+        >
+        </fui-input-field>
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Creation Date'"
+      [value]="
+        creationDateStartForm.value !== '' && creationDateEndForm.value !== ''
+          ? creationDateStartForm.value + ' to ' + creationDateEndForm.value
+          : ''
+      "
+    >
+      <fui-date-range
+        [position]="'top'"
+        [dateFormat]="'DD-MM-YYYY'"
+        [startDateControl]="creationDateStartForm"
+        [endDateControl]="creationDateEndForm"
+        (onChangeStartDate)="onChangeDateCreation($event, 'start')"
+        (onChangeEndDate)="onChangeDateCreation($event, 'end')"
+      />
+    </fui-advance-filter-item>
+
+    <fui-advance-filter-item
+      [label]="'Completion Date'"
+      [value]="
+        completionDateStartForm.value !== '' &&
+        completionDateEndForm.value !== ''
+          ? completionDateStartForm.value + ' to ' + completionDateEndForm.value
+          : ''
+      "
+    >
+      <fui-date-range
+        [position]="'top'"
+        [dateFormat]="'DD-MM-YYYY'"
+        [startDateControl]="completionDateStartForm"
+        [endDateControl]="completionDateEndForm"
+        (onChangeStartDate)="onChangeDateCompletion($event, 'start')"
+        (onChangeEndDate)="onChangeDateCompletion($event, 'end')"
+      />
+    </fui-advance-filter-item>
+  </fui-advance-filter-section>
+</fui-advance-filter>
