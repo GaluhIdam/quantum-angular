@@ -1,20 +1,18 @@
 <shared-page-empty [titlePage]="'My Matter'">
   <!-- FORM SEARCH & FILTER BUTTON  -->
-  <div class="container">
+  <div class="flex w-full mb-15 gap-10">
     <!-- FORM SEARCH -->
-    <fui-form-control-layout>
+    <fui-form-control-layout class="w-full">
       <fui-input-field
         [type]="'text'"
         [invalid]="false"
         [size]="'m'"
-        [placeholder]="'Search by Number or Project Name'"
-      >
+        [placeholder]="'Search by Number or Project Name'">
         <fui-icons
           left-icon
           [color]="'text'"
           [icon]="'search'"
-          [size]="'sizem'"
-        />
+          [size]="'sizem'" />
       </fui-input-field>
     </fui-form-control-layout>
     <!-- FORM SEARCH  -->
@@ -29,8 +27,7 @@
       [style]="'secondary'"
       [size]="'m'"
       [text]="'Filter'"
-      (onClick)="actionFilter(true)"
-    />
+      (onClick)="actionFilter(true)" />
     <!-- BUTTON FILTER FOR OPEN FLYOUT -->
   </div>
   <!-- FORM SEARCH & FILTER BUTTON  -->
@@ -38,29 +35,18 @@
   <!-- FILTER ADV  -->
   <shared-adv-my-matter-filter
     [openFilter]="isOpenAdvFilter"
-    (action)="actionFilter($event)"
-  />
+    (action)="actionFilter($event)" />
   <!-- FILTER ADV  -->
 
   <!-- FILTER SECTION  -->
-  <div class="filter-applied">
+  <div class="w-full flex flex-items-center flex-between mb-15">
     <!-- FILTER TAB SECTION  -->
-    <div class="overflow">
+    <div class="overflow-x-auto mb-10 pb-5">
       <shared-button-group
         [btnList]="btnFilterList"
-        (action)="actionFilterBtn($event)"
-      />
+        (action)="actionFilterBtn($event)" />
     </div>
     <!-- FILTER TAB SECTION  -->
-
-    <!-- FILTER APPLIED SECTION  -->
-    <div class="overflow filter">
-      <shared-filter-applied
-        [filterApplied]="filterApplied"
-        (actionOut)="actionFilterApplied($event)"
-      />
-    </div>
-    <!-- FILTER APPLIED SECTION  -->
   </div>
 
   <!-- CONTENT CARD LOOP  -->
@@ -93,7 +79,7 @@
   <!-- CONTENT CARD LOOP  -->
 
   <!-- LOAD BUTTON  -->
-  <div class="loader">
+  <div class="mt-30 flex w-full flex-center">
     <fui-button-icon
       [fullWidth]="'fit'"
       [type]="'button'"
@@ -101,8 +87,7 @@
       [icon]="'refresh'"
       [color]="'text'"
       [style]="'secondary'"
-      [text]="'Load more results'"
-    />
+      [text]="'Load more results'" />
   </div>
   <!-- LOAD BUTTON  -->
 </shared-page-empty>

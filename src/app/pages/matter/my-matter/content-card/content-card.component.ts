@@ -1,24 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import {
-  BadgeComponent,
-  ButtonIconComponent,
-  IconsComponent,
-  ProgressComponent,
-} from '@quantum/fui';
+import { BadgeComponent, ButtonIconComponent, TextComponent } from '@quantum/fui';
 
 @Component({
   selector: 'app-content-card',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    IconsComponent,
-    ButtonIconComponent,
-    ProgressComponent,
-    BadgeComponent,
-  ],
+  imports: [CommonModule, RouterModule, ButtonIconComponent, BadgeComponent, TextComponent],
   templateUrl: './content-card.component.html',
   styleUrl: './content-card.component.scss',
 })

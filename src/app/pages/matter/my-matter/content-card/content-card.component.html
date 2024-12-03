@@ -1,6 +1,8 @@
-<div class="card">
-  <div class="row-head">
-    <h1 class="title">5889-1 Matter Project Name</h1>
+<div class="card w-full">
+  <div class="flex flex-items-center flex-between px-20 pt-20">
+    <div class="mb-10">
+      <fui-text [size]="'l'"[weight]="'bold'">5889-1 Matter Project Name</fui-text>
+    </div>
     <fui-button-icon
       [fullWidth]="'fit'"
       (onClick)="gotoPage()"
@@ -8,24 +10,22 @@
       [option]="'icon'"
       [color]="'primary'"
       [style]="'secondary'"
-      [icon]="'boxesHorizontal'"
-    />
+      [icon]="'boxesHorizontal'" />
   </div>
-  <div class="row-sub">
-    <div class="badge-group">
+  <div class="py-10 px-20">
+    <div class="flex flex-wrap gap-5">
       <fui-badge
         [color]="'hollow'"
         [iconShow]="true"
         [icon]="'node'"
         [iconSize]="'sizes'"
         [size]="'s'"
-        [text]="'Ministry of Republic Indonesia'"
-      />
+        [text]="'Ministry of Republic Indonesia'" />
       <fui-badge [color]="'hollow'" [size]="'s'" [text]="'+2 others'" />
     </div>
   </div>
-  <div class="row-desc">
-    <p class="desc">
+  <div class="py-10 px-20">
+    <p class="mt-10 desc">
       Phasellus accumsan imperdiet tempor. Cras tincidunt, arcu nec eleifend
       porttitor, orci est vehicula Phasellus accumsan imperdiet tempor. Cras
       tincidunt, arcu nec eleifend porttitor, orci est vehicula Phasellus
@@ -38,47 +38,42 @@
   </div>
 
   <div
-    class="row-sub"
+    class="py-10 px-20"
     [ngStyle]="{
       visibility: type === 1 || type === 2 || type === 3 ? 'visible' : 'hidden'
-    }"
-  >
+    }">
     <div
-      class="billble"
+      class="flex flex-between w-full my-10"
       [ngStyle]="{
         visibility:
           type === 1 || type === 2 || type === 3 ? 'visible' : 'hidden'
-      }"
-    >
-      <p class="detail left">Partner in Charge</p>
-      <p class="detail right">(BS) Brooklyn Simmons</p>
+      }">
+      <p class="text-left text-nowrap">Partner in Charge</p>
+      <p class="text-right">(BS) Brooklyn Simmons</p>
     </div>
     <div
-      class="billble"
+      class="flex flex-between w-full my-10"
       [ngStyle]="{
         visibility: type === 1 || type === 2 ? 'visible' : 'hidden'
-      }"
-    >
-      <p class="detail left">Unbilled</p>
-      <p class="detail right">USD 25,500.00</p>
+      }">
+      <p class="text-left text-nowrap">Unbilled</p>
+      <p class="text-right">USD 25,500.00</p>
     </div>
     <div
-      class="billble"
+      class="flex flex-between w-full my-10"
       [ngStyle]="{
         visibility: type === 1 || type === 2 ? 'visible' : 'hidden'
-      }"
-    >
-      <p class="detail left">Uncollected</p>
-      <p class="detail right">USD 3,500.00</p>
+      }">
+      <p class="text-left text-nowrap">Uncollected</p>
+      <p class="text-right">USD 3,500.00</p>
     </div>
     <div
-      class="billble"
-      [ngStyle]="{ visibility: type === 1 ? 'visible' : 'hidden' }"
-    ></div>
+      class="flex flex-between w-full my-10"
+      [ngStyle]="{ visibility: type === 1 ? 'visible' : 'hidden' }"></div>
   </div>
 
   <hr />
-  <div class="row-foot">
+  <div class="flex flex-wrap gap-10 pt-10 px-20 pb-20">
     <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Billable'" />
     <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Hourly'" />
     <fui-badge
@@ -100,8 +95,7 @@
           : type === 3
           ? 'Pending'
           : 'Closed'
-      "
-    />
+      " />
     <fui-badge
       [iconShow]="true"
       [color]="'hollow'"
@@ -109,7 +103,6 @@
       [icon]="'timeRefresh'"
       [size]="'s'"
       [iconSize]="'sizes'"
-      [text]="'3 Jan 24'"
-    />
+      [text]="'3 Jan 24'" />
   </div>
 </div>

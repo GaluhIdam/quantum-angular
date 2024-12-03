@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ContentCardComponent } from './content-card/content-card.component';
-import { FilterAppliedComponent } from '../../../shared/filter-applied/filter-applied.component';
 import { FilterAppliedDTO } from '../../../shared/filter-applied/filter-apllied.dto';
 import {
   ButtonIconComponent,
@@ -20,7 +19,6 @@ import { AdvMyMatterFilterComponent } from '../../../shared/adv-my-matter-filter
   imports: [
     RouterModule,
     ContentCardComponent,
-    FilterAppliedComponent,
     ButtonIconComponent,
     FormControlLayoutComponent,
     InputFieldComponent,

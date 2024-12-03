@@ -1,87 +1,14 @@
 @import "../my-matter.component.scss";
 
-:host {
-  flex-direction: column;
-  margin: 10px;
+.desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
 .card {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  width: 100%;
   border-radius: 8px;
   background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
-  .row-head {
-    padding: 20px 20px 0px 20px;
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-  }
-  .row-desc {
-    padding: 0px 20px 10px 20px;
-    .desc {
-      margin-top: 10px;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-  .row-sub {
-    padding: 10px 20px 10px 20px;
-    .billble {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      margin: 10px 0px;
-    }
-  }
-  .row-foot {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 0px; /* Adjust the gap between badges */
-    padding: 10px 20px 20px 20px;
-  }
-  .title {
-    font-size: large;
-    margin-bottom: 10px;
-  }
-  .badge-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-}
-
-fui-progress {
-  width: 100%;
-}
-
-fui-badge {
-  margin-right: 8px;
-  .desc {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &:last-child {
-    margin-right: 0px;
-  }
-}
-
-.detail {
-  &.left {
-    text-align: left;
-    text-wrap: nowrap;
-  }
-  &.right {
-    text-align: right;
-  }
-}
-
-@media (max-width: 1000px) {
-  :host {
-    margin: 10px 0px;
-  }
 }
