@@ -1,33 +1,31 @@
 <shared-skeleton [active]="loading">
-  <!-- SIMPLE UTILITY TABLE  -->
-  <shared-table-utility-simple
-    [nextBtn]="currentDate > endDate ? true : false"
-    [prevBtn]="filterApplied.length === 0"
-    [startDate]="startDate"
-    [endDate]="endDate"
-    [duration]="calculateTotalDuration(dataTimesheet)"
-    (actionOut)="toggleUtility($event)" />
-  <!-- SIMPLE UTILITY TABLE  -->
+  <div class="mb-20">
+    <!-- SIMPLE UTILITY TABLE  -->
+    <shared-table-utility-simple
+      [nextBtn]="currentDate > endDate ? true : false"
+      [prevBtn]="totalFilter === 0"
+      [totalFilter]="totalFilter"
+      [startDate]="startDate"
+      [endDate]="endDate"
+      [duration]="calculateTotalDuration(dataTimesheet)"
+      (actionOut)="toggleUtility($event)" />
+    <!-- SIMPLE UTILITY TABLE  -->
 
-  <!-- FILTER APPLIED -->
-  <shared-filter-applied
-    class="grid mb-15"
-    [filterApplied]="filterApplied"
-    (actionOut)="toggleClearFilter($event)" />
-  <!-- FILTER APPLIED -->
-
-  <!-- MATTER MOVE -->
-  <shared-move-matter
-    *ngIf="timesheetSelected.length > 0"
-    [listMatters]="[]"
-    [totalItemSelected]="timesheetSelected.length"
-    (actionOut)="moveTimesheet($event)" />
-  <!-- MATTER MOVE -->
+    <div class="my-20">
+      <!-- MATTER MOVE -->
+      <shared-move-matter
+        *ngIf="timesheetSelected.length > 0"
+        [listMatters]="dataMatters"
+        [totalItemSelected]="timesheetSelected.length"
+        (actionOut)="moveTimesheet($event)" />
+      <!-- MATTER MOVE -->
+    </div>
+  </div>
 
   <div class="w-full overflow-x-auto overflow-y-hidden">
     <!-- TABLE WITHOUT FILTER -->
     <app-table-without-filter class="grid w-full"
-      *ngIf="filterApplied.length === 0"
+      *ngIf="totalFilter === 0"
       [startDate]="startDate"
       [endDate]="endDate"
       [dataTimesheet]="dataTimesheet"
@@ -39,7 +37,7 @@
     <!-- TABLE WITH FILTER-->
     <app-table-filter
       class="mt-30"
-      *ngIf="filterApplied.length > 0"
+      *ngIf="totalFilter > 0"
       [page]="page"
       [limit]="limit"
       [totalItems]="totalItems"
@@ -93,6 +91,7 @@
 <!-- FILTER  -->
 <fui-advance-filter
   [openFilter]="isOpenFilterFlyout"
+  [overflow]="'none'"
   (actionOut)="actionOut($event)">
   <fui-advance-filter-section [title]="''">
     <!-- DATE  -->

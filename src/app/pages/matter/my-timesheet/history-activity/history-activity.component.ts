@@ -14,7 +14,6 @@ import { TableWithoutFilterComponent } from './table-without-filter/table-withou
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SkeletonComponent } from '../../../../shared/skeleton/skeleton.component';
 import { FilterAppliedDTO } from '../../../../shared/filter-applied/filter-apllied.dto';
-import { FilterAppliedComponent } from '../../../../shared/filter-applied/filter-applied.component';
 import { MoveMatterComponent } from '../../../../shared/move-matter/move-matter.component';
 import { ModalDeleteComponent } from '../../../../shared/modal-delete/modal-delete.component';
 import { TableUtilitySimpleComponent } from './table-utility-simple/table-utility-simple.component';
@@ -41,7 +40,6 @@ import { ActivityService } from '../../../../services/matter/my-timesheet/activi
     InputFieldComponent,
     ComboBoxComponent,
     ModalDeleteComponent,
-    FilterAppliedComponent,
     MoveMatterComponent,
     TableWithoutFilterComponent,
     SkeletonComponent,
@@ -64,7 +62,22 @@ export class HistoryActivityComponent extends BaseController {
   isModalDelete: boolean = false;
 
   /** Data matters from service */
-  dataMatters: MatterDTO[] = [];
+  dataMatters: MatterDTO[] = [
+    {
+      uuid: '1',
+      matter: '12345',
+      description: 'Description',
+      created_at: 'a',
+      updated_at: 'a',
+    },
+    {
+      uuid: '2',
+      matter: '54321',
+      description: 'Description',
+      created_at: 'a',
+      updated_at: 'a',
+    },
+  ];
 
   /** Data activities from service */
   dataActivities: ActivityDTO[] = [];
@@ -126,9 +139,6 @@ export class HistoryActivityComponent extends BaseController {
 
   /** Timesheet Selected */
   timesheetSelected: MyTimesheetDTO[] = [];
-
-  /** Filter data if applied */
-  filterApplied: FilterAppliedDTO[] = [];
 
   /** Timesheet for edit */
   timesheetEditSelected!: MyTimesheetDTO;
@@ -200,64 +210,6 @@ export class HistoryActivityComponent extends BaseController {
     if (event === 'next' || event === 'prev') {
       this.togglePrevNextWeek(event);
     }
-  }
-
-  /** Toggle filter */
-  toggleFilter(): void {
-    this.filterApplied = [];
-    if (
-      !this.validatorStartEndFilter(
-        this.startDateForm.value,
-        this.endDateForm.value
-      ) &&
-      (this.startDateForm.value !==
-        formatDate(this.startDate, 'dd-MM-yyyy', 'en') ||
-        this.endDateForm.value !== formatDate(this.endDate, 'dd-MM-yyyy', 'en'))
-    ) {
-      this.filterApplied.push({
-        name: 'Date',
-        status: true,
-      });
-    }
-    if (this.descriptionForm.value !== '') {
-      this.filterApplied.push({
-        name: 'Time Description',
-        status: true,
-      });
-    }
-
-    if (this.selectedMatter.length > 0) {
-      this.filterApplied.push({
-        name: 'Matter',
-        status: true,
-      });
-    }
-    this.toggleUtility('filter');
-  }
-
-  /** Toggle clear filter */
-  toggleClearFilter(event?: FilterAppliedDTO[]): void {
-    if (event) {
-      this.filterApplied = event;
-      if (event.length === 0) {
-        this.timesheetSelected = [];
-      }
-    }
-    this.searchMatterForm = new FormControl('');
-    this.selectedMatter = [];
-    this.descriptionForm = new FormControl('');
-
-    this.startDate.setDate(
-      this.currentDate.getDate() - ((this.currentDate.getDay() + 6) % 7)
-    );
-    this.endDate.setDate(this.startDate.getDate() + 6);
-
-    this.startDateForm = new FormControl(
-      formatDate(this.startDate, 'dd-MM-yyyy', 'en')
-    );
-    this.endDateForm = new FormControl(
-      formatDate(this.endDate, 'dd-MM-yyyy', 'en')
-    );
   }
 
   /** Move timesheet to service */

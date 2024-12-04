@@ -1,50 +1,11 @@
 @import "../../../app.component.scss";
 
-.section-two-card {
-  display: flex;
-  width: 100%;
-  margin-top: 20px;
-  .card-productivity {
-    width: 30%;
-    padding: 25px 30px 25px 30px;
-    background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
-    border-radius: 5px;
-    margin: 10px 15px 0px 0px;
-  }
-  .card-ytd {
-    width: 70%;
-    overflow: hidden;
-    padding: 25px 30px 25px 30px;
-    background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
-    border-radius: 5px;
-    margin: 10px 0px 0px 15px;
-  }
+.flex-wrap-nowrap {
+  flex-wrap: nowrap;
 }
 
-.card-create-activity {
-  padding: 25px 20px 25px 20px;
-  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
-  border-radius: 5px;
-  margin: 30px 0px 20px 0px;
-}
-
-.card-history-activity {
-  padding: 25px 20px 25px 20px;
-  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
-  border-radius: 5px;
-  margin: 30px 0px 0px 0px;
-}
-
-@media (max-width: 1000px) {
-  .section-two-card {
-    display: block;
-    .card-productivity {
-      width: auto;
-      margin: 20px 0px 0px 0px;
-    }
-    .card-ytd {
-      width: auto;
-      margin: 20px 0px 0px 0px;
-    }
+@media (max-width: 760px) {
+  .flex-wrap-nowrap {
+    flex-wrap: wrap;
   }
 }

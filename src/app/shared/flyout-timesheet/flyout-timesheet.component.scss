@@ -4,6 +4,7 @@
 .msg-info {
   padding: 15px;
   background-color: var(--fuiPrimarySecondary, $fuiPrimarySecondary);
+  border-radius: 5px;
   fui-text {
     display: block;
     width: 100%;
@@ -14,81 +15,3 @@
   }
 }
 
-/** Bagde Tagged */
-.tagged {
-  margin: 10px 0px 20px 0px;
-  display: block;
-}
-
-/** Flyout Config */
-.header-flyout {
-  padding: 15px;
-}
-.flyout-body {
-  padding: 15px;
-  .form {
-    margin-bottom: 20px;
-    .form-control {
-      display: block;
-      margin-top: 5px;
-      margin-bottom: 10px;
-    }
-  }
-}
-.footer-flyout {
-  padding: 5px;
-  display: flex;
-  width: 100%;
-  align-items: center;
-  .footer-flyout-btn {
-    width: 100%;
-    justify-content: end;
-    display: flex;
-    fui-button-icon {
-      margin: 0px 0px 0px 10px;
-    }
-  }
-}
-
-/** Form Style */
-.sub-form {
-  margin-right: 15px;
-  &:last-child {
-    margin: 0;
-  }
-}
-.flex-between {
-  display: flex;
-  gap: 10px;
-  justify-content: space-between;
-  align-items: center;
-  fui-button-icon {
-    &:last-child {
-      margin-left: 10px;
-    }
-  }
-}
-.checkbox {
-  align-items: center;
-  display: flex;
-  fui-text {
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-}
-.italic {
-  font-style: italic;
-  margin-top: 3px;
-  display: block;
-}
-
-
-.flex-between {
-  display: flex;
-  justify-content: space-between;
-  fui-button-icon {
-    &:last-child {
-      margin-left: 10px;
-    }
-  }
-}

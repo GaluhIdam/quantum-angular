@@ -4,7 +4,7 @@
     [isCollapsed]="day.show">
     <div
       class="flex flex-row flex-between flex-items-center gap-10 py-5 header-tb"
-      [ngClass]="[day.show === true ? 'first' : '']"
+      [ngClass]="[i === 0 ? 'first' : '']"
       header>
       <fui-text [textWrap]="'nowrap'" class="min-w-200">{{ day.date |
         date : "EEE" }},

@@ -1,25 +1,23 @@
 <shared-page-empty [titlePage]="'All Matters'">
   <!-- FORM SEARCH & FILTER BUTTON  -->
-  <div class="container">
+  <div class="container w-full gap-10 flex flex-items-center mb-15 flex-between">
     <!-- FORM SEARCH -->
-    <fui-form-control-layout>
+    <fui-form-control-layout class="w-full">
       <fui-input-field
         [type]="'text'"
         [invalid]="false"
         [size]="'m'"
-        [placeholder]="'Search by Number or Project Name'"
-      >
+        [placeholder]="'Search by Number or Project Name'">
         <fui-icons
           left-icon
           [color]="'text'"
           [icon]="'search'"
-          [size]="'sizem'"
-        />
+          [size]="'sizem'" />
       </fui-input-field>
     </fui-form-control-layout>
     <!-- FORM SEARCH  -->
 
-    <div class="group-btn">
+    <div class="flex gap-10">
       <!-- BUTTON FILTER FOR OPEN FLYOUT -->
       <fui-button-icon
         [fullWidth]="'fit'"
@@ -30,8 +28,7 @@
         [style]="'secondary'"
         [size]="'m'"
         [text]="'Filter'"
-        (onClick)="actionBtnUtil('filter')"
-      />
+        (onClick)="actionBtnUtil('filter')" />
       <!-- BUTTON FILTER FOR OPEN FLYOUT -->
 
       <!-- ADD EXPENSE MATTER -->
@@ -44,21 +41,20 @@
         [style]="'filled'"
         [size]="'m'"
         [text]="'Add Mater'"
-        (onClick)="actionBtnUtil('create')"
-      />
+        (onClick)="actionBtnUtil('create')" />
       <!-- ADD EXPENSE MATTER -->
     </div>
   </div>
   <!-- FORM SEARCH & FILTER BUTTON  -->
 
   <!-- CARD MATTER -->
-  <div class="content-wrapper">
-    <app-card-all-matter />
-    <app-card-all-matter />
+  <div>
+    <app-card-all-matter class="mb-20" />
+    <app-card-all-matter class="mb-20" />
   </div>
   <!-- CARD MATTER -->
 
-  <div class="loader">
+  <div class="mt-30 flex w-full flex-center">
     <fui-button-icon
       [fullWidth]="'fit'"
       [type]="'button'"
@@ -66,15 +62,13 @@
       [icon]="'refresh'"
       [color]="'text'"
       [style]="'secondary'"
-      [text]="'Load more results'"
-    />
+      [text]="'Load more results'" />
   </div>
   <!-- LOAD BUTTON  -->
 
   <!-- FILTER FLYOUT  -->
   <shared-flyout-filter-matter
     [isOpenFlyout]="isOpenFlyoutFilter"
-    (action)="actionBtnUtil('filter')"
-  />
+    (action)="actionBtnUtil('filter')" />
   <!-- FILTER FLYOUT  -->
 </shared-page-empty>

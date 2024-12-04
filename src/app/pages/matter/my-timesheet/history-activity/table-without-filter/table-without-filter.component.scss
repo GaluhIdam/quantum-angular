@@ -3,12 +3,11 @@
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: var(--fuiColorLightShade, $fuiColorLightShade);
-  border-top-width: 1px;
-  border-top-style: solid;
-  border-top-color: var(--fuiColorLightShade, $fuiColorLightShade);
 
   &.first {
-    border-bottom-width: 0px;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: var(--fuiColorLightShade, $fuiColorLightShade);
   }
 }
 

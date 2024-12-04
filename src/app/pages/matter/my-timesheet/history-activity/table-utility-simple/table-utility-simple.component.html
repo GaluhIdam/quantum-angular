@@ -68,7 +68,7 @@
         [type]="'button'"
         [icon]="'filter'"
         [color]="'text'"
-        [text]="'Filter'"
+        [text]="totalFilter > 0 ? 'Filter / '+totalFilter : 'Filter'"
         [style]="'secondary'"
         (onClick)="toggleBtn('filter')"
         [size]="'m'" />

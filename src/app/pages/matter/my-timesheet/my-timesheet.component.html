@@ -1,19 +1,21 @@
 <shared-page-empty [titlePage]="'My Timesheet'">
-  <div class="section-two-card">
+  <div class="flex flex-wrap-nowrap mt-20 w-full gap-20">
     <!-- Productivity -->
-    <div class="card-productivity">
+    <div class="w-30 p-30 border-radius-10 bg-LightestShade">
       <app-productivity (typeOut)="typeChanger($event)" />
     </div>
     <!-- Productivity -->
 
     <!-- YTD -->
-    <div class="card-ytd">
+    <div
+      class="w-70 overflow-hidden p-30 bg-LightestShade border-radius-10">
       <app-ytd-productivity [type]="period" />
     </div>
     <!-- YTD -->
   </div>
   <!-- History Activity -->
-  <div class="card-create-activity">
+  <div
+    class="p-30 bg-LightestShade border-radius-10 mt-30">
     <app-history-activity />
   </div>
   <!-- History Activity -->

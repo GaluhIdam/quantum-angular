@@ -13,7 +13,7 @@
   </div>
 </div>
 <div class="body overflow-x-auto" *ngIf="dataYtdProductivity.length > 0">
-  <div class="chart">
+  <div class="chart mb-5">
     <shared-skeleton [active]="loading">
       <fui-echarts
         [height]="'160px'"
@@ -22,7 +22,7 @@
     </shared-skeleton>
   </div>
 </div>
-<div class="empty" *ngIf="dataYtdProductivity.length === 0">
+<div class="mt-30" *ngIf="dataYtdProductivity.length === 0">
   <shared-skeleton [active]="loading">
     <shared-empty-data
       [title]="'N/A'"

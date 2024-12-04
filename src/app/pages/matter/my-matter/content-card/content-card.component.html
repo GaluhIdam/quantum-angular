@@ -1,7 +1,8 @@
-<div class="card w-full">
-  <div class="flex flex-items-center flex-between px-20 pt-20">
+<div class="border-radius-10 bg-LightestShade p-20">
+  <div class="flex flex-items-center flex-between">
     <div class="mb-10">
-      <fui-text [size]="'l'"[weight]="'bold'">5889-1 Matter Project Name</fui-text>
+      <fui-text [size]="'m'" [weight]="'bold'">5889-1 Matter Project
+        Name</fui-text>
     </div>
     <fui-button-icon
       [fullWidth]="'fit'"
@@ -9,23 +10,24 @@
       [type]="'button'"
       [option]="'icon'"
       [color]="'primary'"
+      [size]="'s'"
       [style]="'secondary'"
       [icon]="'boxesHorizontal'" />
   </div>
-  <div class="py-10 px-20">
+  <div class="my-10">
     <div class="flex flex-wrap gap-5">
       <fui-badge
         [color]="'hollow'"
         [iconShow]="true"
         [icon]="'node'"
-        [iconSize]="'sizes'"
-        [size]="'s'"
+        [iconSize]="'sizexs'"
+        [size]="'xs'"
         [text]="'Ministry of Republic Indonesia'" />
-      <fui-badge [color]="'hollow'" [size]="'s'" [text]="'+2 others'" />
+      <fui-badge [color]="'hollow'" [size]="'xs'" [text]="'+2 others'" />
     </div>
   </div>
-  <div class="py-10 px-20">
-    <p class="mt-10 desc">
+  <div class="my-10 ">
+    <p class="small-txt desc">
       Phasellus accumsan imperdiet tempor. Cras tincidunt, arcu nec eleifend
       porttitor, orci est vehicula Phasellus accumsan imperdiet tempor. Cras
       tincidunt, arcu nec eleifend porttitor, orci est vehicula Phasellus
@@ -38,7 +40,7 @@
   </div>
 
   <div
-    class="py-10 px-20"
+    class="my-10"
     [ngStyle]="{
       visibility: type === 1 || type === 2 || type === 3 ? 'visible' : 'hidden'
     }">
@@ -48,24 +50,24 @@
         visibility:
           type === 1 || type === 2 || type === 3 ? 'visible' : 'hidden'
       }">
-      <p class="text-left text-nowrap">Partner in Charge</p>
-      <p class="text-right">(BS) Brooklyn Simmons</p>
+      <p class="small-txt text-align-left text-nowrap">Partner in Charge</p>
+      <p class="small-txt text-align-right">(BS) Brooklyn Simmons</p>
     </div>
     <div
       class="flex flex-between w-full my-10"
       [ngStyle]="{
         visibility: type === 1 || type === 2 ? 'visible' : 'hidden'
       }">
-      <p class="text-left text-nowrap">Unbilled</p>
-      <p class="text-right">USD 25,500.00</p>
+      <p class="small-txt text-align-left text-nowrap">Unbilled</p>
+      <p class="small-txt text-align-right">USD 25,500.00</p>
     </div>
     <div
       class="flex flex-between w-full my-10"
       [ngStyle]="{
         visibility: type === 1 || type === 2 ? 'visible' : 'hidden'
       }">
-      <p class="text-left text-nowrap">Uncollected</p>
-      <p class="text-right">USD 3,500.00</p>
+      <p class="small-txt text-align-left text-nowrap">Uncollected</p>
+      <p class="small-txt text-align-right">USD 3,500.00</p>
     </div>
     <div
       class="flex flex-between w-full my-10"
@@ -73,9 +75,9 @@
   </div>
 
   <hr />
-  <div class="flex flex-wrap gap-10 pt-10 px-20 pb-20">
-    <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Billable'" />
-    <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Hourly'" />
+  <div class="flex flex-wrap gap-10 mt-15">
+    <fui-badge [color]="'hollow'" [size]="'xs'" [text]="'Billable'" />
+    <fui-badge [color]="'hollow'" [size]="'xs'" [text]="'Hourly'" />
     <fui-badge
       [color]="
         type === 1
@@ -86,7 +88,7 @@
           ? 'danger'
           : 'default'
       "
-      [size]="'s'"
+      [size]="'xs'"
       [text]="
         type === 1
           ? 'Active'
@@ -101,8 +103,8 @@
       [color]="'hollow'"
       [iconPosition]="'start'"
       [icon]="'timeRefresh'"
-      [size]="'s'"
-      [iconSize]="'sizes'"
+      [size]="'xs'"
+      [iconSize]="'sizexs'"
       [text]="'3 Jan 24'" />
   </div>
 </div>

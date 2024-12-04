@@ -4,11 +4,6 @@
   background-color: var(--fuiWarningSecondary, $fuiWarningSecondary);
 }
 
-.white-bg {
-  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
-  border-radius: 3px;
-}
-
 .min {
   &-w-100 {
     min-width: 100px;

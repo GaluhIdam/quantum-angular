@@ -123,7 +123,6 @@ export class YtdProductivityComponent {
                 )) *
                 100
             );
-            console.log(params);
             return percent + '%';
           },
         },
@@ -142,12 +141,12 @@ export class YtdProductivityComponent {
     setTimeout(() => {
       this.loading = false;
     }, 1000);
-    // this.getDataYtdProductivites(new Date().getFullYear(), this.type);
+    this.getDataYtdProductivites(new Date().getFullYear(), this.type);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
-      // this.getDataYtdProductivites(new Date().getFullYear(), this.type);
+      this.getDataYtdProductivites(new Date().getFullYear(), this.type);
     }
   }
 

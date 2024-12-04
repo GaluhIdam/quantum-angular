@@ -1,15 +1,15 @@
 <!-- PAGE  -->
-<div class="page-view">
+<div class="page-view bg-EmptyShade flex overflow-hidden">
   <!-- SIDEBAR  -->
   <fui-page-sidebar [show]="showSidebar" (showEvent)="showEvent($event)">
     <div class="pt-20 pb-10 px-20">
       <div class="flex flex-items-center flex-between mb-30">
         <div class="flex flex-items-center gap-10">
-          <img
+          <img width="20"
             *ngIf="themeService.getTheme() === 'ahp-light'"
             src="../../../assets/Logo.svg"
             alt="logo" />
-          <img
+          <img width="20"
             *ngIf="themeService.getTheme() === 'ahp-dark'"
             src="../../../assets/logo-white.svg"
             alt="logo" />
@@ -33,11 +33,11 @@
   <!-- SIDEBAR  -->
 
   <!-- HEADER & BODY  -->
-  <div class="w-full">
+  <div class="w-full overflow-y-auto">
     <fui-header [position]="'sticky'">
-      <div class="flex flex-center">
+      <div class="flex flex-center px-20">
         <div class="w-1280">
-          <div class="flex flex-between flex-items-center px-15 py-20">
+          <div class="flex flex-between flex-items-center px-10 py-15">
             <fui-button-icon
               [fullWidth]="'fit'"
               [type]="'button'"
@@ -95,18 +95,102 @@
                 [iconSide]="'left'"
                 (onClick)="toggleMode('ahp-light')" />
 
-              <div class="email-btn mt-2">
-                <fui-button-icon
-                  [fullWidth]="'fit'"
-                  [type]="'button'"
-                  [size]="'m'"
-                  [option]="'icon'"
-                  [style]="'empty'"
-                  [color]="'text'"
-                  [icon]="'email'"
-                  [iconSide]="'left'" />
-                <span class="count-notif">{{ emailCount }}</span>
-              </div>
+              <fui-popover [position]="'bottom'" [align]="'center'">
+                <div class="email-btn mt-2">
+                  <fui-button-icon
+                    [fullWidth]="'fit'"
+                    [type]="'button'"
+                    [size]="'m'"
+                    [option]="'icon'"
+                    [style]="'empty'"
+                    [color]="'text'"
+                    [icon]="'email'"
+                    [iconSide]="'left'" />
+                  <span class="count-notif">{{ emailCount }}</span>
+                </div>
+                <div popover-body>
+                  <div class="min-w-250">
+                    <div class="px-10 pt-10">
+                      <div class="pb-10">
+                        <fui-text
+                          [size]="'s'"
+                          [color]="'text'"
+                          [textWrap]="'nowrap'">Notifications</fui-text>
+                      </div>
+
+                      <div class="overflow-x-auto h-max-250">
+                        <div
+                          class="flex gap-10 item-notif my-5 py-10">
+                          <fui-avatar
+                            class="cursor"
+                            [shape]="'user'"
+                            [type]="'initial'"
+                            [name]="'Caitlyn'"
+                            [size]="'sizem'"
+                            [color]="'primary'" />
+                          <div class="flex flex-column gap-5">
+                            <p class="comment-text"><b>Caitlyn</b> shared two
+                              files in ConnectBank.</p>
+                            <fui-text
+                              [size]="'s'"
+                              [color]="'text'"
+                              [textWrap]="'nowrap'">2 hours - Design</fui-text>
+                          </div>
+                        </div>
+
+                        <div
+                          class="flex gap-10 item-notif my-5 py-10">
+                          <fui-avatar
+                            class="cursor"
+                            [shape]="'user'"
+                            [type]="'initial'"
+                            [name]="'Harry Kane'"
+                            [size]="'sizem'"
+                            [color]="'primary'" />
+                          <div class="flex flex-column gap-5">
+                            <p class="comment-text"><b>Harry Kane</b> request
+                              acces to figma.</p>
+                            <fui-text
+                              [size]="'s'"
+                              [color]="'text'"
+                              [textWrap]="'nowrap'">3 days - Figma</fui-text>
+                          </div>
+                        </div>
+
+                        <div
+                          class="flex gap-10 item-notif my-5 py-10">
+                          <fui-avatar
+                            class="cursor"
+                            [shape]="'user'"
+                            [type]="'initial'"
+                            [name]="'Mbape'"
+                            [size]="'sizem'"
+                            [color]="'primary'" />
+                          <div class="flex flex-column gap-5">
+                            <p class="comment-text"><b>Mbape</b> take a corner
+                              kick from GBK Stadion.</p>
+                            <fui-text
+                              [size]="'s'"
+                              [color]="'text'"
+                              [textWrap]="'nowrap'">1 minute ago -
+                              Ball</fui-text>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="my-15">
+                      <hr />
+                    </div>
+                    <fui-button-icon
+                      [fullWidth]="'full'"
+                      [type]="'button'"
+                      [style]="'secondary'"
+                      [size]="'s'"
+                      [option]="'iconText'"
+                      [text]="'View All'" />
+                  </div>
+                </div>
+              </fui-popover>
 
               <fui-popover [position]="'bottom'" [align]="'end'">
                 <fui-avatar
@@ -116,25 +200,49 @@
                   [name]="'Jacob Jones'"
                   [size]="'sizem'"
                   [color]="'primary'" />
-                <div popover-body class="p-5">
+                <div popover-body>
                   <div class="w-200">
-                    <div class="py-10">
+                    <div class="px-10 pt-10">
+                      <div class="mb-10">
+                        <fui-text
+                          [size]="'m'"
+                          [weight]="'semibold'"
+                          [textWrap]="'nowrap'">(JJ) Jacob Jones</fui-text>
+                      </div>
+                      <div class="my-15">
+                        <hr />
+                      </div>
                       <fui-text
-                        [size]="'m'"
-                        [weight]="'semibold'"
-                        [textWrap]="'nowrap'">(JJ) Jacob Jones</fui-text>
+                        [size]="'s'"
+                        [color]="'text'"
+                        [textWrap]="'nowrap'">Profile Settings</fui-text>
+                      <div class="mt-10">
+                        <div
+                          class="flex flex-items-center gap-10 my-15 cursor">
+                          <fui-icons [icon]="'user'" [color]="'text'" />
+                          <p class="link-click">My Profile</p>
+                        </div>
+                        <div
+                          class="flex flex-items-center gap-10 my-15 cursor">
+                          <fui-icons [icon]="'apps'" [color]="'text'" />
+                          <p class="link-click">Others</p>
+                        </div>
+                      </div>
                     </div>
-                    <hr />
-                    <div
-                      class="flex flex-items-center gap-10 mb-15 cursor mt-15">
-                      <fui-icons [icon]="'user'" [color]="'text'" />
-                      <p class="link-click">Profile</p>
+                    <div class="my-15">
+                      <hr />
                     </div>
-                    <div (click)="logout()"
-                      class="flex flex-items-center gap-10 cursor mt-15">
-                      <fui-icons [icon]="'continuityBelow'" [color]="'text'" />
-                      <p class="link-click">Logout</p>
-                    </div>
+                    <fui-button-icon
+                      [fullWidth]="'full'"
+                      [type]="'button'"
+                      [style]="'secondary'"
+                      [size]="'m'"
+                      [option]="'iconText'"
+                      [color]="'danger'"
+                      [icon]="'push'"
+                      [text]="'Logout'"
+                      (onClick)="logout()" />
+
                   </div>
                 </div>
               </fui-popover>
@@ -155,35 +263,43 @@
                 <div popover-body>
                   <!-- TAB 1  -->
                   <div
-                    class="p-5 w-200"
+                    class="w-200 p-10"
                     [ngStyle]="{ display: tab !== 1 ? 'none' : 'block' }">
-                    <div class="py-10">
+                    <div class="mb-10">
                       <fui-text
-                        [size]="'m'"
-                        [weight]="'semibold'"
+                        [size]="'s'"
+                        [color]="'text'"
                         [textWrap]="'nowrap'">Select Options</fui-text>
                     </div>
 
-                    <hr />
-
                     <div
-                      class="flex flex-items-center gap-5 mb-15 cursor mt-15"
+                      class="flex flex-items-center gap-10 mb-10 cursor mt-15"
                       (click)="toggleOpenFlyout()">
                       <fui-icons [icon]="'clock'" [color]="'text'" />
                       <p class="link-click">Timesheet</p>
                     </div>
 
-                    <div class="mb-15 cursor"><p class="link-click">Matter
-                        Opening</p></div>
+                    <div
+                      class="flex flex-items-center gap-10 mb-10 cursor mt-15"
+                      (click)="toggleOpenFlyout()">
+                      <fui-icons [icon]="'folderOpen'" [color]="'text'" />
+                      <p class="link-click">Matter Opening</p>
+                    </div>
 
                     <div
-                      class="flex flex-items-center flex-between gap-5 mb-15 cursor"
+                      class="flex flex-items-center flex-between gap-10 mb-10 cursor mt-15"
                       (click)="clickTab(2)">
-                      <p class="link-click">Payment Request</p>
+                      <div class="flex flex-items-center gap-10"> <fui-icons
+                          [icon]="'document'"
+                          [color]="'text'" />
+                        <p class="link-click">Payment Request</p></div>
                       <fui-icons [icon]="'arrowRight'" [color]="'text'" />
                     </div>
 
-                    <div class="cursor">
+                    <div
+                      class="flex flex-items-center gap-10 cursor mt-15"
+                      (click)="toggleOpenFlyout()">
+                      <fui-icons [icon]="'push'" [color]="'text'" />
                       <p class="link-click">Leave Request</p>
                     </div>
                   </div>
@@ -191,15 +307,31 @@
 
                   <!-- TAB 2  -->
                   <div
-                    class="p-5 w-200" (click)="clickTab(1)"
+                    class="p-5 w-200"
                     [ngStyle]="{ display: tab !== 2 ? 'none' : 'block' }">
 
-                    <div class="flex flex-items-center gap-5 py-10 cursor">
+                    <div class="mb-10 flex flex-items-center gap-10 cursor"
+                      (click)="clickTab(1)">
                       <fui-icons [icon]="'arrowLeft'" [color]="'text'" />
-                      <p class="link-click-title">Payment Request</p>
+                      <div class="link-click">
+                        <fui-text
+                          [size]="'m'"
+                          [weight]="'semibold'"
+                          [textWrap]="'nowrap'">Payment Request</fui-text>
+                      </div>
                     </div>
 
-                    <hr />
+                    <div class="my-15">
+                      <hr />
+                    </div>
+
+                    <div class="mb-10">
+                      <fui-text
+                        [size]="'s'"
+                        [color]="'text'"
+                        [textWrap]="'nowrap'">Select Options</fui-text>
+                    </div>
+
                     <div class="mb-15 mt-15 cursor"><p
                         class="link-click">Payment For
                         Vendor</p></div>
@@ -229,35 +361,43 @@
                 <div popover-body>
                   <!-- TAB 1  -->
                   <div
-                    class="p-5 w-200"
+                    class="w-200 p-10"
                     [ngStyle]="{ display: tab !== 1 ? 'none' : 'block' }">
-                    <div class="py-10">
+                    <div class="mb-10">
                       <fui-text
-                        [size]="'m'"
-                        [weight]="'semibold'"
+                        [size]="'s'"
+                        [color]="'text'"
                         [textWrap]="'nowrap'">Select Options</fui-text>
                     </div>
 
-                    <hr />
-
                     <div
-                      class="flex flex-items-center gap-5 mb-15 cursor mt-15"
+                      class="flex flex-items-center gap-10 mb-10 cursor mt-15"
                       (click)="toggleOpenFlyout()">
                       <fui-icons [icon]="'clock'" [color]="'text'" />
                       <p class="link-click">Timesheet</p>
                     </div>
 
-                    <div class="mb-15 cursor"><p class="link-click">Matter
-                        Opening</p></div>
+                    <div
+                      class="flex flex-items-center gap-10 mb-10 cursor mt-15"
+                      (click)="toggleOpenFlyout()">
+                      <fui-icons [icon]="'folderOpen'" [color]="'text'" />
+                      <p class="link-click">Matter Opening</p>
+                    </div>
 
                     <div
-                      class="flex flex-items-center flex-between gap-5 mb-15 cursor"
+                      class="flex flex-items-center flex-between gap-10 mb-10 cursor mt-15"
                       (click)="clickTab(2)">
-                      <p class="link-click">Payment Request</p>
+                      <div class="flex flex-items-center gap-10"> <fui-icons
+                          [icon]="'document'"
+                          [color]="'text'" />
+                        <p class="link-click">Payment Request</p></div>
                       <fui-icons [icon]="'arrowRight'" [color]="'text'" />
                     </div>
 
-                    <div class="cursor">
+                    <div
+                      class="flex flex-items-center gap-10 cursor mt-15"
+                      (click)="toggleOpenFlyout()">
+                      <fui-icons [icon]="'push'" [color]="'text'" />
                       <p class="link-click">Leave Request</p>
                     </div>
                   </div>
@@ -265,15 +405,31 @@
 
                   <!-- TAB 2  -->
                   <div
-                    class="p-5 w-200" (click)="clickTab(1)"
+                    class="p-5 w-200"
                     [ngStyle]="{ display: tab !== 2 ? 'none' : 'block' }">
 
-                    <div class="flex flex-items-center gap-5 py-10 cursor">
+                    <div class="mb-10 flex flex-items-center gap-10 cursor"
+                      (click)="clickTab(1)">
                       <fui-icons [icon]="'arrowLeft'" [color]="'text'" />
-                      <p class="link-click-title">Payment Request</p>
+                      <div class="link-click">
+                        <fui-text
+                          [size]="'m'"
+                          [weight]="'semibold'"
+                          [textWrap]="'nowrap'">Payment Request</fui-text>
+                      </div>
                     </div>
 
-                    <hr />
+                    <div class="my-15">
+                      <hr />
+                    </div>
+
+                    <div class="mb-10">
+                      <fui-text
+                        [size]="'s'"
+                        [color]="'text'"
+                        [textWrap]="'nowrap'">Select Options</fui-text>
+                    </div>
+
                     <div class="mb-15 mt-15 cursor"><p
                         class="link-click">Payment For
                         Vendor</p></div>
@@ -294,7 +450,7 @@
         </div>
       </div>
     </fui-header>
-    <div class="flex flex-center my-30 mx-20">
+    <div class="flex flex-center my-30 mx-30">
       <div class="w-1280">
         <ng-content />
       </div>
