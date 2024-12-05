@@ -12,7 +12,6 @@ import {
   TableRowTreeComponent,
   TableTreeComponent,
   TextComponent,
-  ToastComponent,
 } from '@quantum/fui';
 import { CommonModule } from '@angular/common';
 import { EmptyDataComponent } from '../../../shared/empty-data/empty-data.component';
@@ -42,7 +41,6 @@ import { PositionDTO } from '../../../interfaces/position.dto';
     EmptyDataComponent,
     FlyoutSimpleComponent,
     ModalDeleteComponent,
-    ToastComponent,
   ],
   templateUrl: './position.component.html',
   styleUrl: './position.component.scss',

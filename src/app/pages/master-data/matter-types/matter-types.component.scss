@@ -1,5 +1,10 @@
 @import "../../../app.component.scss";
 
+hr {
+  border: none;
+  border-top: 1px solid var(--fuiColorLightShade, $fuiColorLightShade);
+}
+
 .flex {
   display: flex;
   gap: 10px;

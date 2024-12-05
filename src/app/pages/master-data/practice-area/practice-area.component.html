@@ -1,22 +1,19 @@
 <shared-page-generic-default
   [title]="'Practice Area'"
   [description]="'Available practice area for the organization'"
-  [breadcrums]="link"
->
+  [breadcrums]="link">
   <fui-form-control-layout formsearch>
     <fui-input-field
       [type]="'text'"
       [placeholder]="'Search...'"
       [size]="'m'"
-      [invalid]="false"
-    >
+      [invalid]="false">
       <fui-icons
         left-icon
         [label]="'left'"
         [icon]="'search'"
         [size]="'sizem'"
-        [color]="'text'"
-      />
+        [color]="'text'" />
     </fui-input-field>
   </fui-form-control-layout>
 
@@ -27,8 +24,7 @@
     [icon]="'plus'"
     [text]="'Add Practice Area'"
     [size]="'m'"
-    (onClick)="toggleOpenFlyout('create', true)"
-  />
+    (onClick)="toggleOpenFlyout('create', true)" />
 
   <!-- DATA AVAILABLE  -->
   <fui-table-tree
@@ -39,8 +35,7 @@
     [showInfo]="true"
     [info]="'Practice Area'"
     [pagination]="true"
-    (onPageChanges)="onPageChanges($event)"
-  >
+    (onPageChanges)="onPageChanges($event)">
     <!-- HEADER  -->
     <fui-table-head-tree
       *ngFor="let item of title; let i = index"
@@ -52,9 +47,8 @@
         action: true,
         activeField: sortData ? sortData.fieldName : ''
       }"
-      (sortOut)="toggleSort($event)"
-    >
-      <fui-text [textWrap]="'nowrap'">{{ item }}</fui-text>
+      (sortOut)="toggleSort($event)">
+      <fui-text [textWrap]="'nowrap'" [weight]="'semibold'">{{ item }}</fui-text>
     </fui-table-head-tree>
     <!-- HEADER  -->
 
@@ -67,8 +61,7 @@
         <fui-table-data-tree [showDropIcon]="false">
           <fui-badge
             [text]="item.status ? 'Active' : 'Inactive'"
-            [color]="item.status ? 'success' : 'default'"
-          />
+            [color]="item.status ? 'success' : 'default'" />
         </fui-table-data-tree>
         <fui-table-data-tree [showDropIcon]="false">
           <fui-button-icon
@@ -79,8 +72,7 @@
             [color]="'primary'"
             [icon]="'pencil'"
             [size]="'s'"
-            (onClick)="toggleOpenFlyout('update', true)"
-          ></fui-button-icon>
+            (onClick)="toggleOpenFlyout('update', true)"></fui-button-icon>
           <fui-button-icon
             [fullWidth]="'fit'"
             [color]="'danger'"
@@ -89,8 +81,7 @@
             [option]="'icon'"
             [icon]="'trash'"
             [size]="'s'"
-            (onClick)="toggleModalDelete({ name: item.text, status: true })"
-          ></fui-button-icon>
+            (onClick)="toggleModalDelete({ name: item.text, status: true })"></fui-button-icon>
         </fui-table-data-tree>
       </fui-table-row-tree>
     </ng-container>
@@ -109,8 +100,7 @@
   [titleFlyout]="
     createUpdate === 'create' ? 'Add Practice Area' : 'Update Practice Area'
   "
-  (closeOut)="toggleOpenFlyout('create', false)"
->
+  (closeOut)="toggleOpenFlyout('create', false)">
   <div body>
     <!-- PRACTICE AREA  -->
     <div class="mb-15">
@@ -121,8 +111,7 @@
           [type]="'text'"
           [size]="'m'"
           [invalid]="false"
-          [formControlField]="paForm"
-        ></fui-input-field>
+          [formControlField]="paForm"></fui-input-field>
       </fui-form-control-layout>
     </div>
     <!-- PRACTICE AREA  -->
@@ -134,24 +123,21 @@
       [option]="'text'"
       [text]="'Cancel'"
       [style]="'empty'"
-      (onClick)="toggleOpenFlyout('create', false)"
-    />
+      (onClick)="toggleOpenFlyout('create', false)" />
     <fui-button-icon
       *ngIf="createUpdate === 'create'"
       [type]="'button'"
-      [option]="'text'"
+      [option]="'iconText'"
       [text]="'Save'"
-      [style]="'secondary'"
-      (onClick)="toggleUpdateCreateData('create', false)"
-    />
+      [icon]="'save'"
+      (onClick)="toggleUpdateCreateData('create', false)" />
     <fui-button-icon
       *ngIf="createUpdate === 'update'"
       [type]="'button'"
-      [option]="'text'"
-      [text]="'Update Location'"
-      [style]="'secondary'"
-      (onClick)="toggleUpdateCreateData('update', false)"
-    />
+      [option]="'iconText'"
+      [text]="'Update'"
+      [icon]="'pencil'"
+      (onClick)="toggleUpdateCreateData('update', false)" />
   </div>
 </shared-flyout-simple>
 <!-- FLYOUT  -->
@@ -159,6 +145,5 @@
 <!-- MODAL DELETE  -->
 <shared-modal-delete
   [openModalDelete]="openModalDelete"
-  (actionOut)="toggleModalDelete($event)"
-/>
+  (actionOut)="toggleModalDelete($event)" />
 <!-- MODAL DELETE  -->

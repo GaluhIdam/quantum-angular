@@ -51,14 +51,14 @@ export class TimesheetComponent {
     total: number | null;
   }[] = [
     {
-      title: 'Uncollected',
+      title: 'Unbilled',
       status: true,
       total: 11,
     },
     {
-      title: 'Collected',
+      title: 'Billed',
       status: false,
-      total: 11,
+      total: null,
     },
   ];
 

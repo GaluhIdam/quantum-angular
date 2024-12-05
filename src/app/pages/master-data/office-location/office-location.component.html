@@ -54,7 +54,7 @@
       }"
       (sortOut)="toggleSort($event)"
     >
-      <fui-text [textWrap]="'nowrap'">{{ item }}</fui-text>
+      <fui-text [textWrap]="'nowrap'" [weight]="'semibold'">{{ item }}</fui-text>
     </fui-table-head-tree>
     <!-- HEADER  -->
 
@@ -210,24 +210,21 @@
       [option]="'text'"
       [text]="'Cancel'"
       [style]="'empty'"
-      (onClick)="toggleOpenFlyout('create', false)"
-    />
+      (onClick)="toggleOpenFlyout('create', false)" />
     <fui-button-icon
       *ngIf="createUpdate === 'create'"
       [type]="'button'"
-      [option]="'text'"
+      [option]="'iconText'"
       [text]="'Save'"
-      [style]="'secondary'"
-      (onClick)="toggleUpdateCreateData('create', false)"
-    />
+      [icon]="'save'"
+      (onClick)="toggleUpdateCreateData('create', false)" />
     <fui-button-icon
       *ngIf="createUpdate === 'update'"
       [type]="'button'"
-      [option]="'text'"
-      [text]="'Update Location'"
-      [style]="'secondary'"
-      (onClick)="toggleUpdateCreateData('update', false)"
-    />
+      [option]="'iconText'"
+      [text]="'Update'"
+      [icon]="'pencil'"
+      (onClick)="toggleUpdateCreateData('update', false)" />
   </div>
 </shared-flyout-simple>
 <!-- FLYOUT  -->

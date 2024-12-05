@@ -1,4 +1,4 @@
-<div class="card-all-matter p-20">
+<div class="card-all-matter p-30 border-radius-10 bg-LightestShade">
   <div class="flex flex-wrap gap-5">
     <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Billable'" />
     <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Hourly'" />
@@ -10,185 +10,158 @@
       [size]="'s'"
       [text]="'3 Jan 24'" />
   </div>
-  <h2 class="my-10">3536 HIPAA Business Associate Agreement</h2>
-  <p class="my-25">Photo Relase Form</p>
+  <div class="my-20">
+    <fui-text [weight]="'bold'" [size]="'xl'">3536 HIPAA Business Associate
+      Agreement</fui-text>
+  </div>
+  <div class="my-20">
+    <fui-text>Photo Relase Form</fui-text>
+  </div>
 
   <!-- ROW  -->
-  <div class="flex flex-wrap flex-between">
-    <!-- COLUMN  -->
-    <div class="flex flex-col">
-      <!-- PARTNER ITEM  -->
-      <div class="mb-30 flex flex-col">
-        <div class="flex gap-5">
-          <fui-icons [icon]="'user'" />
-          <fui-text>Partner</fui-text>
-        </div>
-        <fui-text class="flex flex-col my-5" [weight]="'semibold'">Brooklyn
-          Simmons</fui-text>
-        <fui-button-icon [color]="'primary'" [type]="'button'" [option]="'text'"
-          [style]="'empty'" [text]="'Show matter members'" />
+  <div class="grid grid-custom gap-20">
+    <!-- PARTNER ITEM  -->
+    <div class="flex flex-column gap-5">
+      <div class="flex gap-5">
+        <fui-icons [icon]="'user'" />
+        <fui-text>Partner</fui-text>
       </div>
-      <!-- PARTNER ITEM  -->
-
-      <!-- CLIENT NAME ITEM  -->
-      <div class="mb-30 flex flex-col">
-        <div class="flex">
-          <fui-text>Client Name (3)</fui-text>
-        </div>
-        <div class="flex flex-col my-5">
-          <fui-text class [weight]="'semibold'">Ome - Omega
-            Corporation</fui-text>
-          <fui-text class [weight]="'semibold'">Base - Base
-            Corporation</fui-text>
-        </div>
-        <fui-button-icon [color]="'primary'" [type]="'button'" [option]="'text'"
-          [style]="'empty'" [text]="'Show more'" />
-      </div>
-      <!-- CLIENT NAME ITEM  -->
+      <fui-text class="flex flex-col my-5" [weight]="'semibold'">Brooklyn
+        Simmons</fui-text>
+        <button type="button" class="custom-button">Show matter members</button>
     </div>
-    <!-- COLUMN  -->
+    <!-- PARTNER ITEM  -->
 
-    <!-- COLUMN  -->
-    <div class="flex flex-col">
-      <!-- PRACTICE GROUP ITEM  -->
-      <div class="mb-30 flex flex-col">
-        <div class="flex">
-          <fui-text>Practice Group</fui-text>
-        </div>
-        <fui-text class="flex flex-col my-5" [weight]="'semibold'">Banking and
-          Finance</fui-text>
-      </div>
-      <!-- PRACTICE GROUP ITEM  -->
-
-      <!-- PAYING ENTITY ITEM  -->
-      <div class="mb-30 flex flex-col">
-        <div class="flex">
-          <fui-text>Paying Entity (3)</fui-text>
-        </div>
-        <div class="flex flex-col my-5">
-          <fui-text class [weight]="'semibold'">Base - Base
-            Corporation</fui-text>
-        </div>
-      </div>
-      <!-- PAYING ENTITY ITEM  -->
+    <!-- PRACTICE GROUP ITEM  -->
+    <div class="flex flex-column gap-5">
+      <fui-text>Practice Group</fui-text>
+      <fui-text [weight]="'semibold'">Banking and
+        Finance</fui-text>
     </div>
-    <!-- COLUMN  -->
+    <!-- PRACTICE GROUP ITEM  -->
 
-    <!-- COLUMN  -->
-    <div class="flex flex-col">
-      <!-- MATTER TYPE ITEM  -->
-      <div class="mb-30 flex flex-col">
-        <div class="flex">
-          <fui-text>Matter Type</fui-text>
-        </div>
-        <fui-text class="flex flex-col my-5" [weight]="'semibold'">Banking and
-          Finance</fui-text>
-      </div>
-      <!-- MATTER TYPE ITEM  -->
-
-      <!-- ATTACHEMENT ITEM  -->
-      <div class="mb-30 flex flex-col">
-        <div class="flex gap-5">
-          <fui-icons [icon]="'document'" />
-          <fui-text>Attachments</fui-text>
-        </div>
-        <div class="flex flex-col my-5">
-          <fui-text class [weight]="'semibold'">Base - Base
-            Corporation</fui-text>
-        </div>
-        <fui-button-icon [color]="'primary'" [type]="'button'" [option]="'text'"
-          [style]="'empty'" [text]="'Show attachments'" />
-      </div>
-      <!-- ATTACHEMENT ITEM  -->
+    <!-- MATTER TYPE ITEM  -->
+    <div class="flex flex-column gap-5">
+      <fui-text>Matter Type</fui-text>
+      <fui-text [weight]="'semibold'">Banking and
+        Finance</fui-text>
     </div>
-    <!-- COLUMN  -->
+    <!-- MATTER TYPE ITEM  -->
 
-    <!-- COLUMN  -->
-    <div class="flex flex-col">
-      <!-- PRACTICE AREA ITEM  -->
-      <div class="mb-30 flex flex-col">
-        <div class="flex">
-          <fui-text>Parctice Area</fui-text>
-        </div>
-        <fui-text class="flex flex-col my-5" [weight]="'semibold'">Financial
-          Technology</fui-text>
-      </div>
-      <!-- PRACTICE AREA ITEM  -->
+    <!-- PRACTICE AREA ITEM  -->
+    <div class="flex flex-column gap-5">
+      <fui-text>Parctice Area</fui-text>
+      <fui-text [weight]="'semibold'">Financial
+        Technology</fui-text>
     </div>
-    <!-- COLUMN  -->
+    <!-- PRACTICE AREA ITEM  -->
+
+    <!-- CLIENT NAME ITEM  -->
+    <div class="flex flex-column gap-5">
+      <fui-text>Client Name (3)</fui-text>
+      <div class="flex flex-column gap-5">
+        <fui-text class [weight]="'semibold'">Ome - Omega
+          Corporation</fui-text>
+        <fui-text class [weight]="'semibold'">Base - Base
+          Corporation</fui-text>
+      </div>
+      <button type="button" class="custom-button">Show more</button>
+    </div>
+    <!-- CLIENT NAME ITEM  -->
+
+    <!-- PAYING ENTITY ITEM  -->
+    <div class="flex flex-column gap-5">
+      <fui-text>Paying Entity (3)</fui-text>
+      <fui-text class [weight]="'semibold'">Base - Base
+        Corporation</fui-text>
+    </div>
+    <!-- PAYING ENTITY ITEM  -->
+
+    <!-- ATTACHEMENT ITEM  -->
+    <div class="flex flex-column gap-5">
+      <div class="flex gap-5">
+        <fui-icons [icon]="'document'" />
+        <fui-text>Attachments</fui-text>
+      </div>
+      <fui-text class [weight]="'semibold'">Base - Base
+        Corporation</fui-text>
+        <button type="button" class="custom-button">Show attachments</button>
+    </div>
+    <!-- ATTACHEMENT ITEM  -->
   </div>
   <!-- ROW  -->
-  <hr />
 
-  <!-- ROW  -->
-  <div class="flex flex-row mt-30">
-    <!-- COLUMN  -->
-    <div class="flex flex-col mr-20">
-      <!-- PRACTICE AREA ITEM  -->
-      <div class="mb-30 flex flex-col">
-        <div class="flex">
-          <fui-text [weight]="'semibold'">Matter Value</fui-text>
+  <div class="my-30">
+    <hr />
+  </div>
+
+  <div class="flex gap-10 justify-between-custom">
+
+    <!-- Matter Value  -->
+    <div class="flex flex-column gap-20">
+      <fui-text [weight]="'semibold'">Matter Value</fui-text>
+      <div class="grid grid-custom gap-10">
+        <div class="flex flex-column gap-5">
+          <fui-text [textWrap]="'nowrap'">Estimated Fee</fui-text>
+          <fui-text [weight]="'semibold'" [textWrap]="'nowrap'">USD
+            80.17</fui-text>
         </div>
-        <div class="flex">
-          <div class="flex flex-col my-5">
-            <fui-text>Estimated Fee</fui-text>
-            <fui-text [weight]="'semibold'">USD 80.17</fui-text>
-          </div>
-          <div class="flex flex-col my-5">
-            <fui-text>Total Timesheet</fui-text>
-            <fui-text [weight]="'semibold'">USD 9,636.67</fui-text>
-          </div>
-          <div class="flex flex-col my-5">
-            <fui-text>Expense</fui-text>
-            <fui-text [weight]="'semibold'">USD 80.17</fui-text>
-          </div>
-          <div class="flex flex-col my-5">
-            <fui-text>Overlimit</fui-text>
-            <fui-text [weight]="'semibold'">USD 80.17</fui-text>
-          </div>
+        <div class="flex flex-column gap-5">
+          <fui-text [textWrap]="'nowrap'">Total Timesheet</fui-text>
+          <fui-text [weight]="'semibold'" [textWrap]="'nowrap'">USD
+            9,636.67</fui-text>
+        </div>
+        <div class="flex flex-column gap-5">
+          <fui-text [textWrap]="'nowrap'">Expense</fui-text>
+          <fui-text [weight]="'semibold'" [textWrap]="'nowrap'">USD
+            80.17</fui-text>
+        </div>
+        <div class="flex flex-column gap-5">
+          <fui-text [textWrap]="'nowrap'">Overlimit</fui-text>
+          <fui-text [weight]="'semibold'" [textWrap]="'nowrap'">USD
+            80.17</fui-text>
         </div>
       </div>
-      <!-- PRACTICE AREA ITEM  -->
     </div>
-    <!-- COLUMN  -->
+    <!-- Matter Value  -->
 
     <div class="vertical-line"></div>
 
-    <!-- COLUMN  -->
-    <div class="flex flex-col mr-20">
-      <!-- PRACTICE AREA ITEM  -->
-      <div class="mb-30 flex flex-col">
-        <div class="flex">
-          <fui-text [weight]="'bold'">Collection Status</fui-text>
+    <!-- Collection Status  -->
+    <div class="flex flex-column gap-20">
+      <fui-text [weight]="'semibold'">Collection Status</fui-text>
+      <div class="grid grid-custom gap-10">
+        <div class="flex flex-column gap-5">
+          <fui-text [textWrap]="'nowrap'">Unbilled</fui-text>
+          <fui-text [weight]="'semibold'">USD 80.17</fui-text>
         </div>
-        <div class="flex">
-          <div class="flex flex-col my-5">
-            <fui-text>Unbilled</fui-text>
-            <fui-text [weight]="'bold'">USD 80.17</fui-text>
-          </div>
-          <div class="flex flex-col my-5">
-            <fui-text>Awaiting Payment</fui-text>
-            <fui-text [weight]="'bold'">USD 9,636.67</fui-text>
-          </div>
-          <div class="flex flex-col my-5">
-            <fui-text>Collected</fui-text>
-            <fui-text [weight]="'bold'">USD 80.17</fui-text>
-          </div>
+        <div class="flex flex-column gap-5">
+          <fui-text [textWrap]="'nowrap'">Awaiting Payment</fui-text>
+          <fui-text [weight]="'semibold'">USD 9,636.67</fui-text>
+        </div>
+        <div class="flex flex-column gap-5">
+          <fui-text [textWrap]="'nowrap'">Collected</fui-text>
+          <fui-text [weight]="'semibold'">USD 80.17</fui-text>
         </div>
       </div>
-      <!-- PRACTICE AREA ITEM  -->
     </div>
-    <!-- COLUMN  -->
+    <!-- Collection Status  -->
   </div>
-  <!-- ROW  -->
-  <hr />
-  <div class="flex flex-wrap flex-between mt-20">
-    <fui-button-icon [color]="'primary'" [type]="'button'" [option]="'text'"
+
+  <div class="my-30">
+    <hr />
+  </div>
+
+  <div class="flex flex-wrap flex-between gap-10">
+    <fui-button-icon [fullWidth]="'fit'" [color]="'primary'" [type]="'button'"
+      [option]="'text'"
       [style]="'empty'" [text]="'Information'" (onClick)="navigateToDetail()" />
-    <div>
-      <fui-button-icon [color]="'danger'" [type]="'button'" [option]="'text'"
+    <div class="flex gap-5">
+      <fui-button-icon [fullWidth]="'fit'" [color]="'danger'" [type]="'button'"
+        [option]="'text'"
         [style]="'empty'" [text]="'Create Folder'" />
-      <fui-button-icon [color]="'danger'" [type]="'button'" [option]="'text'"
+      <fui-button-icon [fullWidth]="'fit'" [color]="'danger'" [type]="'button'"
+        [option]="'text'"
         [style]="'empty'" [text]="'Delete'" />
     </div>
   </div>

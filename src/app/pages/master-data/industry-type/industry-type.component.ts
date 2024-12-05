@@ -127,7 +127,7 @@ export class IndustryTypeComponent extends BaseController {
   page: number = 1;
   limit: number = 10;
   totalItems: number = 100;
-  title: string[] = ['Name', 'Code', 'Type', 'Status', ''];
+  title: string[] = ['Name', 'Code', 'Status', ''];
   totalFilter: number = 0;
 
   /** Parent Type Form */

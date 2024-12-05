@@ -77,6 +77,24 @@ export class DataSideBar {
           link: '/master-data/industry-type',
           size: this.size,
         },
+        {
+          title: 'Units',
+          active: false,
+          link: '/master-data/units',
+          size: this.size,
+        },
+        {
+          title: 'Timesheet Business Source',
+          active: false,
+          link: '/master-data/matter-business-source',
+          size: this.size,
+        },
+        {
+          title: 'Timesheet Activity Description',
+          active: false,
+          link: '/master-data/timesheet-activity-description',
+          size: this.size,
+        },
       ],
     },
   ];
