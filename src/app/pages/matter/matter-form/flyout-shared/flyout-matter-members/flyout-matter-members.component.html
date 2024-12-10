@@ -1,26 +1,24 @@
 <shared-flyout-simple
   [titleFlyout]="title"
-  [size]="'m'"
+  [size]="'l'"
   [isOpenFlyout]="isOpenFlyoutManageMember"
-  (closeOut)="openFlyoutManageMember()"
->
+  (closeOut)="openFlyoutManageMember()">
   <div body>
     <div class="selected-fly">
       <div class="flex align-center">
         <fui-text [weight]="'semibold'">Selected</fui-text>
         <fui-text [size]="'s'" class="border-badge">{{
           selectedEmployeMatterMember.length
-        }}</fui-text>
+          }}</fui-text>
       </div>
 
       <!-- BADGE SELECTED  -->
       <div class="grid-3 mt-10">
         <div
           class="border-badge"
-          *ngFor="let item of selectedEmployeMatterMember"
-        >
-          <div class="flex p-8 align-center">
-            <div class="">
+          *ngFor="let item of selectedEmployeMatterMember">
+          <div class="flex-between p-8 align-center">
+            <div class>
               <fui-text>{{ item.name }}</fui-text>
               <fui-text class="flex mt-5">{{ item.position }}</fui-text>
             </div>
@@ -31,16 +29,14 @@
               [option]="'icon'"
               [icon]="'cross'"
               [style]="'secondary'"
-              [color]="'danger'"
-            />
+              [color]="'danger'" />
           </div>
         </div>
       </div>
       <shared-empty-data
         [title]="'No Employee Selected'"
         [subTitle]="'Please select employee first.'"
-        [dataLength]="selectedEmployeMatterMember.length"
-      />
+        [dataLength]="selectedEmployeMatterMember.length" />
       <!-- BADGE SELECTED  -->
     </div>
 
@@ -51,11 +47,9 @@
         <input
           type="checkbox"
           [checked]="isProjectName"
-          [(ngModel)]="isProjectName"
-        />
-        <fui-text [size]="'s'" (click)="isProjectName = !isProjectName"
-          >Include inactive employee</fui-text
-        >
+          [(ngModel)]="isProjectName" />
+        <fui-text [size]="'s'" (click)="isProjectName = !isProjectName">Include
+          inactive employee</fui-text>
       </div>
     </div>
     <!-- LABEL  -->
@@ -66,8 +60,7 @@
         [type]="'text'"
         [placeholder]="'Search by name or initials'"
         [invalid]="false"
-        [size]="'m'"
-      >
+        [size]="'m'">
         <fui-icons left-icon [icon]="'search'" />
       </fui-input-field>
     </fui-form-control-layout>
@@ -78,8 +71,7 @@
       class="flex mt-20"
       [limit]="10"
       [totalItems]="allEmployeList.length"
-      [showInfo]="false"
-    >
+      [showInfo]="false">
       <fui-table-head *ngFor="let header of headerTable">
         {{ header }}
       </fui-table-head>
@@ -98,8 +90,7 @@
               [color]="'primary'"
               [style]="'secondary'"
               [option]="'icon'"
-              [icon]="'plusInCircle'"
-            ></fui-button-icon>
+              [icon]="'plusInCircle'"></fui-button-icon>
           </fui-table-body-data>
         </fui-table-body-row>
       </fui-table-body>
@@ -113,15 +104,13 @@
       [color]="'primary'"
       [style]="'secondary'"
       [option]="'text'"
-      [text]="'Cancel'"
-    />
+      [text]="'Cancel'" />
     <fui-button-icon [fullWidth]="'fit'"
       (onClick)="openFlyoutManageMember()"
       [type]="'button'"
       [color]="'primary'"
       [style]="'filled'"
       [option]="'text'"
-      [text]="'Add Member'"
-    />
+      [text]="'Add Member'" />
   </div>
 </shared-flyout-simple>

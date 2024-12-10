@@ -7,21 +7,19 @@
     [message]="
       'This matter is on hold, as the Fee Limit or Days Limit has been reached.'
     "
-    [visibility]="type.status === 'On Hold'"
-  >
+    [visibility]="type.status === 'On Hold'">
   </fui-callout>
 </div>
 
 <!-- GENERAL & PERFORMANCE  -->
-<div class="gap-10 mt-25">
+<div class="mt-25">
   <div>
     <!-- LABEL  -->
     <fui-text [weight]="'semibold'">Performance</fui-text>
     <div class="mt-5">
-      <fui-text [color]="'text'"
-        >You current matter performance which show cost, expenses and available
-        client deposit</fui-text
-      >
+      <fui-text [color]="'text'">You current matter performance which show cost,
+        expenses and available
+        client deposit</fui-text>
       <!-- STATUS BADGE  -->
       <div class="flex-badge-general mt-20">
         <fui-badge [color]="'hollow'" [size]="'s'" [text]="type.billability" />
@@ -29,40 +27,35 @@
           *ngIf="type.pricingType"
           [color]="'hollow'"
           [size]="'s'"
-          [text]="type.pricingType"
-        />
+          [text]="type.pricingType" />
         <fui-badge
           [color]="type.status === 'Active' ? 'success' : 'danger'"
           [size]="'s'"
-          [text]="type.status"
-        />
+          [text]="type.status" />
         <fui-badge
           [color]="'hollow'"
           [iconShow]="true"
           [icon]="'timeRefresh'"
           [iconSize]="'sizes'"
           [size]="'s'"
-          [text]="'3 Jan 24'"
-        />
+          [text]="'3 Jan 24'" />
       </div>
       <!-- STATUS BADGE  -->
     </div>
     <!-- LABEL  -->
 
-    <div class="grid-2 gap-10 mt-20">
+    <div class="grid-cs-2 gap-20 mt-20">
       <!-- ESTIMATED FEE  -->
       <div class="card-content" *ngIf="type.billability === 'Billable'">
         <div class="flex-label mb-20">
           <fui-text [color]="'text'">Estimated Fee</fui-text>
           <fui-tooltip
             [position]="'top'"
-            [content]="'Hey there, I m using whatsapp!'"
-          >
+            [content]="'Hey there, I m using whatsapp!'">
             <fui-icons
               [size]="'sizes'"
               [color]="'disabled'"
-              [icon]="'questionInCircle'"
-            />
+              [icon]="'questionInCircle'" />
           </fui-tooltip>
         </div>
         <div class="mb-10">
@@ -71,26 +64,20 @@
         <fui-horizontal-stack
           [size]="'s'"
           [showPercentage]="'none'"
-          [progress]="estimatedFee"
-        />
+          [progress]="estimatedFee" />
         <div class="legend">
           <span class="legend-title">
             <div class="color-square primary"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Used</fui-text
-            >
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Used</fui-text>
           </span>
-          <span class="legend-title"
-            ><div class="color-square disabled"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Remaining</fui-text
-            >
+          <span class="legend-title"><div class="color-square disabled"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Remaining</fui-text>
           </span>
-          <span class="legend-title"
-            ><div class="color-square orange"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Overlimit</fui-text
-            >
+          <span class="legend-title"><div class="color-square orange"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Overlimit</fui-text>
           </span>
         </div>
       </div>
@@ -102,13 +89,11 @@
           <fui-text [color]="'text'">Total Timesheet</fui-text>
           <fui-tooltip
             [position]="'top'"
-            [content]="'Hey there, I m using whatsapp!'"
-          >
+            [content]="'Hey there, I m using whatsapp!'">
             <fui-icons
               [size]="'sizes'"
               [color]="'disabled'"
-              [icon]="'questionInCircle'"
-            />
+              [icon]="'questionInCircle'" />
           </fui-tooltip>
         </div>
         <div class="mb-10">
@@ -117,26 +102,20 @@
         <fui-horizontal-stack
           [size]="'s'"
           [showPercentage]="'none'"
-          [progress]="totalTimesheet"
-        />
+          [progress]="totalTimesheet" />
         <div class="legend">
           <span class="legend-title">
             <div class="color-square primary"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Billed</fui-text
-            >
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Billed</fui-text>
           </span>
-          <span class="legend-title"
-            ><div class="color-square disabled"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Unbilled</fui-text
-            >
+          <span class="legend-title"><div class="color-square disabled"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Unbilled</fui-text>
           </span>
-          <span class="legend-title"
-            ><div class="color-square orange"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Write-off</fui-text
-            >
+          <span class="legend-title"><div class="color-square orange"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Write-off</fui-text>
           </span>
         </div>
       </div>
@@ -148,13 +127,11 @@
           <fui-text [color]="'text'">Total OPE</fui-text>
           <fui-tooltip
             [position]="'top'"
-            [content]="'Hey there, I m using whatsapp!'"
-          >
+            [content]="'Hey there, I m using whatsapp!'">
             <fui-icons
               [size]="'sizes'"
               [color]="'disabled'"
-              [icon]="'questionInCircle'"
-            />
+              [icon]="'questionInCircle'" />
           </fui-tooltip>
         </div>
         <div class="mb-10">
@@ -163,26 +140,20 @@
         <fui-horizontal-stack
           [size]="'s'"
           [showPercentage]="'none'"
-          [progress]="totalTimesheet"
-        />
+          [progress]="totalTimesheet" />
         <div class="legend">
           <span class="legend-title">
             <div class="color-square primary"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Billed</fui-text
-            >
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Billed</fui-text>
           </span>
-          <span class="legend-title"
-            ><div class="color-square disabled"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Unbilled</fui-text
-            >
+          <span class="legend-title"><div class="color-square disabled"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Unbilled</fui-text>
           </span>
-          <span class="legend-title"
-            ><div class="color-square orange"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Write-off</fui-text
-            >
+          <span class="legend-title"><div class="color-square orange"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Write-off</fui-text>
           </span>
         </div>
       </div>
@@ -196,13 +167,11 @@
           <fui-text [color]="'text'">Free Limit</fui-text>
           <fui-tooltip
             [position]="'top'"
-            [content]="'Hey there, I m using whatsapp!'"
-          >
+            [content]="'Hey there, I m using whatsapp!'">
             <fui-icons
               [size]="'sizes'"
               [color]="'disabled'"
-              [icon]="'questionInCircle'"
-            />
+              [icon]="'questionInCircle'" />
           </fui-tooltip>
         </div>
         <div class="flex flex-between mb-10">
@@ -210,26 +179,21 @@
           <fui-badge
             [color]="'hollow'"
             [size]="'s'"
-            [text]="freeLimit[0].percentage + '%'"
-          />
+            [text]="freeLimit[0].percentage + '%'" />
         </div>
         <fui-horizontal-stack
           [size]="'s'"
           [showPercentage]="'none'"
-          [progress]="freeLimit"
-        />
+          [progress]="freeLimit" />
         <div class="legend">
           <span class="legend-title">
             <div class="color-square orange"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Used</fui-text
-            >
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Used</fui-text>
           </span>
-          <span class="legend-title"
-            ><div class="color-square disabled"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Remaining</fui-text
-            >
+          <span class="legend-title"><div class="color-square disabled"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Remaining</fui-text>
           </span>
         </div>
       </div>
@@ -241,13 +205,11 @@
           <fui-text [color]="'text'">Day Limit</fui-text>
           <fui-tooltip
             [position]="'top'"
-            [content]="'Hey there, I m using whatsapp!'"
-          >
+            [content]="'Hey there, I m using whatsapp!'">
             <fui-icons
               [size]="'sizes'"
               [color]="'disabled'"
-              [icon]="'questionInCircle'"
-            />
+              [icon]="'questionInCircle'" />
           </fui-tooltip>
         </div>
         <div class="mb-10">
@@ -256,20 +218,16 @@
         <fui-horizontal-stack
           [size]="'s'"
           [showPercentage]="'none'"
-          [progress]="freeLimit"
-        />
+          [progress]="freeLimit" />
         <div class="legend">
           <span class="legend-title">
             <div class="color-square orange"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Used</fui-text
-            >
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Used</fui-text>
           </span>
-          <span class="legend-title"
-            ><div class="color-square disabled"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Remaining</fui-text
-            >
+          <span class="legend-title"><div class="color-square disabled"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Remaining</fui-text>
           </span>
         </div>
       </div>
@@ -280,19 +238,16 @@
         class="card-content flex-wrap"
         *ngIf="
           type.billability === 'Probono' || type.billability === 'Non Billable'
-        "
-      >
+        ">
         <div class="flex-label mb-20">
           <fui-text [color]="'text'">Total Timesheet</fui-text>
           <fui-tooltip
             [position]="'top'"
-            [content]="'Hey there, I m using whatsapp!'"
-          >
+            [content]="'Hey there, I m using whatsapp!'">
             <fui-icons
               [size]="'sizes'"
               [color]="'disabled'"
-              [icon]="'questionInCircle'"
-            />
+              [icon]="'questionInCircle'" />
           </fui-tooltip>
         </div>
         <div class="mt-30">
@@ -306,19 +261,16 @@
         class="card-content flex-wrap"
         *ngIf="
           type.billability === 'Probono' || type.billability === 'Non Billable'
-        "
-      >
+        ">
         <div class="flex-label mb-20">
           <fui-text [color]="'text'">Total OPE</fui-text>
           <fui-tooltip
             [position]="'top'"
-            [content]="'Hey there, I m using whatsapp!'"
-          >
+            [content]="'Hey there, I m using whatsapp!'">
             <fui-icons
               [size]="'sizes'"
               [color]="'disabled'"
-              [icon]="'questionInCircle'"
-            />
+              [icon]="'questionInCircle'" />
           </fui-tooltip>
         </div>
         <div class="mt-30">
@@ -335,19 +287,16 @@
         *ngIf="
           type.billability === 'Billable' ||
           type.billability === 'Potential Matter'
-        "
-      >
+        ">
         <div class="flex-label mb-20">
           <fui-text [color]="'text'">Remaining Deposit</fui-text>
           <fui-tooltip
             [position]="'top'"
-            [content]="'Hey there, I m using whatsapp!'"
-          >
+            [content]="'Hey there, I m using whatsapp!'">
             <fui-icons
               [size]="'sizes'"
               [color]="'disabled'"
-              [icon]="'questionInCircle'"
-            />
+              [icon]="'questionInCircle'" />
           </fui-tooltip>
         </div>
         <div class="mb-10">
@@ -356,20 +305,15 @@
         <fui-horizontal-stack
           [size]="'s'"
           [showPercentage]="'none'"
-          [progress]="remainingDeposit"
-        />
+          [progress]="remainingDeposit" />
         <div class="legend">
-          <span class="legend-title"
-            ><div class="color-square orange"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Used</fui-text
-            >
+          <span class="legend-title"><div class="color-square orange"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Used</fui-text>
           </span>
-          <span class="legend-title"
-            ><div class="color-square disabled"></div>
-            <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-              >Remaining</fui-text
-            >
+          <span class="legend-title"><div class="color-square disabled"></div>
+            <fui-text [textWrap]="'nowrap'" [color]="'text'"
+              [size]="'s'">Remaining</fui-text>
           </span>
         </div>
       </div>
@@ -378,19 +322,16 @@
       <!-- REVENUE -->
       <div
         class="card-content flex-wrap"
-        *ngIf="type.billability === 'Billable'"
-      >
+        *ngIf="type.billability === 'Billable'">
         <div class="flex-label mb-20">
           <fui-text [color]="'text'">Revenue</fui-text>
           <fui-tooltip
             [position]="'top'"
-            [content]="'Hey there, I m using whatsapp!'"
-          >
+            [content]="'Hey there, I m using whatsapp!'">
             <fui-icons
               [size]="'sizes'"
               [color]="'disabled'"
-              [icon]="'questionInCircle'"
-            />
+              [icon]="'questionInCircle'" />
           </fui-tooltip>
         </div>
         <div class="mt-30">
@@ -415,20 +356,18 @@
   <!-- LABEL  -->
 
   <!-- CARD GRID  -->
-  <div class="grid-4 gap-10 mt-20">
+  <div class="grid-cs-4 gap-20 mt-20">
     <!-- UNBILLED R3 -->
     <div class="card-content flex-wrap">
       <div class="flex-label justify-between mb-20">
         <fui-text [color]="'text'">Unbilled (R3)</fui-text>
         <fui-tooltip
           [position]="'top'"
-          [content]="'Hey there, I m using whatsapp!'"
-        >
+          [content]="'Hey there, I m using whatsapp!'">
           <fui-icons
             [size]="'sizes'"
             [color]="'disabled'"
-            [icon]="'questionInCircle'"
-          />
+            [icon]="'questionInCircle'" />
         </fui-tooltip>
 
         <fui-button-icon
@@ -436,8 +375,7 @@
           [style]="'empty'"
           [option]="'text'"
           [text]="'Create Prebill'"
-          [size]="'s'"
-        />
+          [size]="'s'" />
       </div>
       <div class="mt-30">
         <fui-text [weight]="'semibold'">USD 4,000</fui-text>
@@ -451,13 +389,11 @@
         <fui-text [color]="'text'">Unreceived (R2)</fui-text>
         <fui-tooltip
           [position]="'top'"
-          [content]="'Hey there, I m using whatsapp!'"
-        >
+          [content]="'Hey there, I m using whatsapp!'">
           <fui-icons
             [size]="'sizes'"
             [color]="'disabled'"
-            [icon]="'questionInCircle'"
-          />
+            [icon]="'questionInCircle'" />
         </fui-tooltip>
       </div>
       <div class="mt-30">
@@ -469,22 +405,18 @@
     <!-- OVERDUE -->
     <div class="card-content overdue-card flex-wrap">
       <div class="flex-label mb-20">
-        <fui-text [color]="'danger'">Overdue</fui-text>
+        <p>Overdue</p>
         <fui-tooltip
           [position]="'top'"
-          [content]="'Hey there, I m using whatsapp!'"
-        >
+          [content]="'Hey there, I m using whatsapp!'">
           <fui-icons
             [size]="'sizes'"
             [color]="'danger'"
-            [icon]="'questionInCircle'"
-          />
+            [icon]="'questionInCircle'" />
         </fui-tooltip>
       </div>
       <div class="mt-30">
-        <fui-text [color]="'danger'" [weight]="'semibold'"
-          >1 billing / USD 7,000</fui-text
-        >
+        <p style="font-weight: 700;">1 billing / USD 7,000</p>
       </div>
     </div>
     <!-- OVERDUE -->
@@ -495,13 +427,11 @@
         <fui-text [color]="'text'">Overdue Age</fui-text>
         <fui-tooltip
           [position]="'top'"
-          [content]="'Hey there, I m using whatsapp!'"
-        >
+          [content]="'Hey there, I m using whatsapp!'">
           <fui-icons
             [size]="'sizes'"
             [color]="'disabled'"
-            [icon]="'questionInCircle'"
-          />
+            [icon]="'questionInCircle'" />
         </fui-tooltip>
       </div>
       <div class="mt-30">
@@ -516,13 +446,11 @@
         <fui-text [color]="'text'">Received (R1)</fui-text>
         <fui-tooltip
           [position]="'top'"
-          [content]="'Hey there, I m using whatsapp!'"
-        >
+          [content]="'Hey there, I m using whatsapp!'">
           <fui-icons
             [size]="'sizes'"
             [color]="'disabled'"
-            [icon]="'questionInCircle'"
-          />
+            [icon]="'questionInCircle'" />
         </fui-tooltip>
       </div>
       <div class="mt-30">
@@ -537,13 +465,11 @@
         <fui-text [color]="'text'">Receive Ratio</fui-text>
         <fui-tooltip
           [position]="'top'"
-          [content]="'Hey there, I m using whatsapp!'"
-        >
+          [content]="'Hey there, I m using whatsapp!'">
           <fui-icons
             [size]="'sizes'"
             [color]="'disabled'"
-            [icon]="'questionInCircle'"
-          />
+            [icon]="'questionInCircle'" />
         </fui-tooltip>
       </div>
       <div class="mb-10">
@@ -552,20 +478,16 @@
       <fui-horizontal-stack
         [size]="'s'"
         [showPercentage]="'none'"
-        [progress]="collectionRatio"
-      />
+        [progress]="collectionRatio" />
       <div class="legend">
         <span class="legend-title">
           <div class="color-square primary"></div>
-          <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-            >Received</fui-text
-          >
+          <fui-text [textWrap]="'nowrap'" [color]="'text'"
+            [size]="'s'">Received</fui-text>
         </span>
-        <span class="legend-title"
-          ><div class="color-square disabled"></div>
-          <fui-text [textWrap]="'nowrap'" [color]="'text'" [size]="'s'"
-            >Unreceived</fui-text
-          >
+        <span class="legend-title"><div class="color-square disabled"></div>
+          <fui-text [textWrap]="'nowrap'" [color]="'text'"
+            [size]="'s'">Unreceived</fui-text>
         </span>
       </div>
     </div>
@@ -582,27 +504,24 @@
   <!-- LABEL  -->
   <fui-text [weight]="'semibold'">Time Spent</fui-text>
   <div class="mt-5">
-    <fui-text [color]="'text'"
-      >Total hours spent of your team on this matter</fui-text
-    >
+    <fui-text [color]="'text'">Total hours spent of your team on this
+      matter</fui-text>
   </div>
   <!-- LABEL  -->
 
   <!-- CARD GRID  -->
-  <div class="grid-5 gap-10 mt-20">
+  <div class="grid-cs-5 gap-10 mt-20">
     <!-- TOTAL HOURS -->
     <div class="card-content flex-wrap col-span-2">
       <div class="flex-label mb-20">
         <fui-text [color]="'text'">Total Hours</fui-text>
         <fui-tooltip
           [position]="'top'"
-          [content]="'Hey there, I m using whatsapp!'"
-        >
+          [content]="'Hey there, I m using whatsapp!'">
           <fui-icons
             [size]="'sizes'"
             [color]="'disabled'"
-            [icon]="'questionInCircle'"
-          />
+            [icon]="'questionInCircle'" />
         </fui-tooltip>
       </div>
       <div class="mt-30">
@@ -613,25 +532,22 @@
   </div>
   <!-- CARD GRID  -->
 
-  <div class="card-content mt-10">
+  <div class="card-content mt-20">
     <!-- BTN GROUP  -->
     <fui-filter-group [fullWidth]="false">
       <fui-filter-group-button
         [active]="memberFilterBtn === 'all'"
-        (onClick)="toggleFilterMember('all')"
-      >
+        (onClick)="toggleFilterMember('all')">
         All
       </fui-filter-group-button>
       <fui-filter-group-button
         [active]="memberFilterBtn === 'matter-members'"
-        (onClick)="toggleFilterMember('matter-members')"
-      >
+        (onClick)="toggleFilterMember('matter-members')">
         Matter Members
       </fui-filter-group-button>
       <fui-filter-group-button
         [active]="memberFilterBtn === 'non-members'"
-        (onClick)="toggleFilterMember('non-members')"
-      >
+        (onClick)="toggleFilterMember('non-members')">
         Non Members
       </fui-filter-group-button>
     </fui-filter-group>

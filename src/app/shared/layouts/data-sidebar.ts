@@ -84,7 +84,7 @@ export class DataSideBar {
           size: this.size,
         },
         {
-          title: 'Timesheet Business Source',
+          title: 'Matter Business Source',
           active: false,
           link: '/master-data/matter-business-source',
           size: this.size,

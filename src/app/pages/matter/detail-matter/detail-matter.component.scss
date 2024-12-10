@@ -18,9 +18,9 @@
   }
 }
 .card-content {
-  padding: 20px 15px;
+  padding: 20px;
   background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .grid {
@@ -169,13 +169,18 @@
 .flex-label-gap-10 {
   display: flex;
   width: inherit;
-  gap: 10px;
+  gap: 5px;
+}
+.flex-label-gap-10-text {
+  display: flex;
+  width: inherit;
+  gap: 5px;
 }
 
 .flex-badge-general {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 5px;
 }
 
 .grid-1-custom {

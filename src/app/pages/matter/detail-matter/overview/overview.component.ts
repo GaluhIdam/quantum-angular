@@ -49,8 +49,8 @@ export class OverviewComponent {
     pricingType?: 'Lumpsum' | 'Retainer' | 'Hourly' | 'Cap';
     status: 'On Hold' | 'Active';
   } = {
-    billability: 'Potential Matter',
-    // pricingType: 'Hourly',
+    billability: 'Billable',
+    pricingType: 'Hourly',
     status: 'Active',
   };
 

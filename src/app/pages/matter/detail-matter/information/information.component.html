@@ -1,4 +1,4 @@
-<div class="grid-3 gap-20 mt-20">
+<div class="grid-3-cs gap-20 mt-20">
   <!-- GRID LEFT  -->
   <div class="grid-1-custom gap-20">
     <!-- OUTLINE -->
@@ -9,8 +9,7 @@
           [type]="'button'"
           [option]="'text'"
           [text]="'Edit Matter'"
-          (onClick)="movePage()"
-        />
+          (onClick)="movePage()" />
       </div>
       <div>
         <fui-button-icon
@@ -18,36 +17,31 @@
           [option]="'text'"
           [text]="'Matter Information'"
           [style]="'empty'"
-          (onClick)="scrollToSection('matterInformation')"
-        />
+          (onClick)="scrollToSection('matterInformation')" />
         <fui-button-icon
           [type]="'button'"
           [option]="'text'"
           [text]="'Client Information'"
           [style]="'empty'"
-          (onClick)="scrollToSection('clientInformation')"
-        />
+          (onClick)="scrollToSection('clientInformation')" />
         <fui-button-icon
           [type]="'button'"
           [option]="'text'"
           [text]="'Billing Information'"
           [style]="'empty'"
-          (onClick)="scrollToSection('billingInformation')"
-        />
+          (onClick)="scrollToSection('billingInformation')" />
         <fui-button-icon
           [type]="'button'"
           [option]="'text'"
           [text]="'Transaction/Case Information'"
           [style]="'empty'"
-          (onClick)="scrollToSection('transactionInformation')"
-        />
+          (onClick)="scrollToSection('transactionInformation')" />
         <fui-button-icon
           [type]="'button'"
           [option]="'text'"
           [text]="'Other Information'"
           [style]="'empty'"
-          (onClick)="scrollToSection('otherInformation')"
-        />
+          (onClick)="scrollToSection('otherInformation')" />
       </div>
     </div>
     <!-- OUTLINE -->
@@ -63,8 +57,7 @@
           [color]="'hollow'"
           [size]="'s'"
           *ngIf="type.pricingType"
-          [text]="type.pricingType"
-        />
+          [text]="type.pricingType" />
         <fui-badge
           [color]="'default'"
           [size]="'s'"
@@ -75,16 +68,14 @@
               : type.status === 'Complete'
               ? 'warning'
               : 'default'
-          "
-        />
+          " />
         <fui-badge
           [color]="'hollow'"
           [iconShow]="true"
           [icon]="'timeRefresh'"
           [iconSize]="'sizes'"
           [size]="'s'"
-          [text]="'3 Jan 24'"
-        />
+          [text]="'3 Jan 24'" />
       </div>
 
       <div class="line-135 mt-10">
@@ -101,26 +92,22 @@
         <p
           class="reopen-action"
           *ngIf="type.status === 'Active'"
-          (click)="toggleModalReOpen('completion', true)"
-        >
+          (click)="toggleModalReOpen('completion', true)">
           Set Date
         </p>
       </div>
       <div class="flex-label mt-5" *ngIf="type.status !== 'Closed'">
-        <fui-text [size]="'s'" [color]="'text'"
-          >Completed with Insufficient Information</fui-text
-        >
+        <fui-text [size]="'s'" [color]="'text'">Completed with Insufficient
+          Information</fui-text>
         <fui-icons
           [size]="'sizes'"
           [color]="'disabled'"
           [icon]="'questionInCircle'"
-          (click)="toggleModalReOpen('fyiComplete', true)"
-        />
+          (click)="toggleModalReOpen('fyiComplete', true)" />
       </div>
       <div
         class="flex-label justify-between mt-10"
-        *ngIf="type.status !== 'Active'"
-      >
+        *ngIf="type.status !== 'Active'">
         <p class="reopen-action" (click)="toggleModalReOpen('reopen', true)">
           Reopen
         </p>
@@ -132,15 +119,13 @@
         <fui-text *ngIf="type.status === 'Active'">-</fui-text>
       </div>
       <div class="flex-label mt-5" *ngIf="type.status !== 'Closed'">
-        <fui-text [size]="'s'" [color]="'text'"
-          >Steps to close this matter</fui-text
-        >
+        <fui-text [size]="'s'" [color]="'text'">Steps to close this
+          matter</fui-text>
         <fui-icons
           [size]="'sizes'"
           [color]="'disabled'"
           [icon]="'questionInCircle'"
-          (click)="toggleModalReOpen('infoStepClose', true)"
-        />
+          (click)="toggleModalReOpen('infoStepClose', true)" />
       </div>
     </div>
     <!-- OVERVIEW -->
@@ -148,14 +133,12 @@
     <!-- COMPLETED WITH INSUFFICIENT  -->
     <div class="card-content flex-wrap">
       <div class="flex-label justify-between mb-20">
-        <fui-text [weight]="'semibold'"
-          >Completed with Insufficient Information</fui-text
-        >
+        <fui-text [weight]="'semibold'">Completed with Insufficient
+          Information</fui-text>
       </div>
-      <fui-text
-        >Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
-        fugit, sed quia consequuntur ma</fui-text
-      >
+      <fui-text>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
+        aut
+        fugit, sed quia consequuntur ma</fui-text>
     </div>
     <!-- COMPLETED WITH INSUFFICIENT  -->
 
@@ -185,8 +168,7 @@
           <fui-icons
             [icon]="'calendar'"
             [color]="'disabled'"
-            [size]="'sizes'"
-          />
+            [size]="'sizes'" />
           <fui-text [size]="'s'" [color]="'text'">24 Jan 2024</fui-text>
         </div>
         <div class="flex-label">
@@ -210,8 +192,7 @@
           <fui-icons
             [icon]="'calendar'"
             [color]="'disabled'"
-            [size]="'sizes'"
-          />
+            [size]="'sizes'" />
           <fui-text [size]="'s'" [color]="'text'">24 Jan 2024</fui-text>
         </div>
         <div class="flex-label">
@@ -231,8 +212,7 @@
       <fui-text>Associated to 7930-1 and 1 other submatters.</fui-text>
       <p
         class="reopen-action"
-        (click)="toggleModalReOpen('flyoutAssociateMatter', true)"
-      >
+        (click)="toggleModalReOpen('flyoutAssociateMatter', true)">
         See All
       </p>
     </div>
@@ -241,44 +221,40 @@
   <!-- GRID LEFT  -->
 
   <!-- GRID RIGHT  -->
-  <div class="col-span-2 h-100-relative">
-    <div class="flex-col-20 scroll-container absolute-x-auto-y-hidden">
+  <div class="col-span-2-cs h-100-relative">
+    <div class="flex-col-20 scroll-container right-grid">
       <!-- MATTER INFORMATION  -->
       <div #matterInformatSecion class="card-content">
         <fui-text [weight]="'semibold'">Matter Information</fui-text>
         <div class="mt-5">
-          <fui-text [color]="'text'"
-            >General Information of the matter</fui-text
-          >
-          <div class="grid-3 gap-30 mt-20">
-            <div class="">
+          <fui-text [color]="'text'">General Information of the
+            matter</fui-text>
+          <div class="grid-3-cs gap-30 mt-20">
+            <div class>
               <fui-text>Matter Number</fui-text>
               <div class="mt-10">
                 <fui-text>5889</fui-text>
               </div>
             </div>
-            <div class="">
+            <div class>
               <fui-text>Parent Matter Number</fui-text>
               <div class="mt-10">
-                <fui-text [color]="'text'" [fwStyle]="'italic'"
-                  >Not Applicable</fui-text
-                >
+                <fui-text [color]="'text'" [fwStyle]="'italic'">Not
+                  Applicable</fui-text>
               </div>
             </div>
-            <div class="">
+            <div class>
               <fui-text>Conflict Search ID</fui-text>
               <div class="mt-10">
-                <fui-text [color]="'text'" [fwStyle]="'italic'"
-                  >Not Applicable</fui-text
-                >
+                <fui-text [color]="'text'" [fwStyle]="'italic'">Not
+                  Applicable</fui-text>
               </div>
             </div>
-            <div class="">
+            <div class>
               <fui-text>Matter Short Description</fui-text>
               <div class="mt-10">
-                <fui-text [color]="'text'" [fwStyle]="'italic'"
-                  >Not Applicable</fui-text
-                >
+                <fui-text [color]="'text'" [fwStyle]="'italic'">Not
+                  Applicable</fui-text>
               </div>
             </div>
           </div>
@@ -290,33 +266,30 @@
         </div>
         <!-- HR  -->
 
-        <div class="grid-3 gap-20 mt-20">
-          <div class="">
+        <div class="grid-3-cs gap-20 mt-20">
+          <div class>
             <fui-text>Practice Matter</fui-text>
             <div class="mt-10">
               <fui-text>Banking & Finance</fui-text>
             </div>
           </div>
-          <div class="">
+          <div class>
             <fui-text>Matter Type</fui-text>
             <div class="mt-10">
-              <fui-text [color]="'text'" [fwStyle]="'italic'"
-                >Not Applicable</fui-text
-              >
+              <fui-text [color]="'text'" [fwStyle]="'italic'">Not
+                Applicable</fui-text>
             </div>
           </div>
-          <div class="">
+          <div class>
             <div class="flex-label">
               <fui-text>Partner in Charge (PIC)</fui-text>
               <fui-tooltip
                 [position]="'top'"
-                [content]="'Hey there, I m using whatsapp!'"
-              >
+                [content]="'Hey there, I m using whatsapp!'">
                 <fui-icons
                   [size]="'sizes'"
                   [color]="'disabled'"
-                  [icon]="'questionInCircle'"
-                />
+                  [icon]="'questionInCircle'" />
               </fui-tooltip>
             </div>
             <div class="mt-10">
@@ -326,18 +299,15 @@
         </div>
         <div class="mt-30">
           <div class="flex-label">
-            <fui-text [textWrap]="'nowrap'"
-              >Partner Referral Marketing (PRM)</fui-text
-            >
+            <fui-text [textWrap]="'nowrap'">Partner Referral Marketing
+              (PRM)</fui-text>
             <fui-tooltip
               [position]="'top'"
-              [content]="'Hey there, I m using whatsapp!'"
-            >
+              [content]="'Hey there, I m using whatsapp!'">
               <fui-icons
                 [size]="'sizes'"
                 [color]="'disabled'"
-                [icon]="'questionInCircle'"
-              />
+                [icon]="'questionInCircle'" />
             </fui-tooltip>
           </div>
           <div class="mt-10">
@@ -351,60 +321,53 @@
       <div #clientInformationSec class="card-content">
         <fui-text [weight]="'semibold'">Client Information</fui-text>
         <div class="mt-5">
-          <fui-text [color]="'text'"
-            >Clients information, contact person and instructing
-            party.</fui-text
-          >
+          <fui-text [color]="'text'">Clients information, contact person and
+            instructing
+            party.</fui-text>
         </div>
         <!-- CLIENT  -->
         <div>
           <!-- LABEL  -->
-          <div class="grid-2 gap-10 mt-30">
-            <div class="">
+          <div class="grid-2-cs gap-30 mt-30">
+            <div class>
               <div class="flex-label">
                 <fui-text [textWrap]="'nowrap'">Clients</fui-text>
                 <fui-tooltip
                   [position]="'top'"
-                  [content]="'Hey there, I m using whatsapp!'"
-                >
+                  [content]="'Hey there, I m using whatsapp!'">
                   <fui-icons
                     [size]="'sizes'"
                     [color]="'disabled'"
-                    [icon]="'questionInCircle'"
-                  />
+                    [icon]="'questionInCircle'" />
                 </fui-tooltip>
               </div>
               <div class="mt-10">
-                <fui-text
-                  >Big Kahuna Burger Ltd., Miniso Lifestyle Trading Indonesia
-                  and 2 others</fui-text
-                >
+                <fui-text>Big Kahuna Burger Ltd., Miniso Lifestyle Trading
+                  Indonesia
+                  and 2 others</fui-text>
               </div>
             </div>
-            <div class="">
+            <div class>
               <fui-text>Client Contact Person</fui-text>
               <div class="mt-10">
                 <fui-text>Jacob Jones - Big Kahuna Burger Ltd.</fui-text>
-                <div class="flex-label-gap-10 mt-5">
+                <div class="flex-label-gap-10-text mt-5">
                   <div class="flex-label">
                     <fui-icons
                       [icon]="'email'"
                       [color]="'disabled'"
-                      [size]="'sizes'"
-                    />
+                      [size]="'sizes'" />
                     <fui-text [size]="'s'" [color]="'text'">{{
                       "cody.fisher@example.com"
-                    }}</fui-text>
+                      }}</fui-text>
                   </div>
                   <div class="flex-label">
                     <fui-icons
                       [icon]="'node'"
                       [color]="'disabled'"
-                      [size]="'sizes'"
-                    />
-                    <fui-text [size]="'s'" [color]="'text'"
-                      >(307) 555-0133</fui-text
-                    >
+                      [size]="'sizes'" />
+                    <fui-text [size]="'s'" [color]="'text'">(307)
+                      555-0133</fui-text>
                   </div>
                 </div>
               </div>
@@ -418,43 +381,48 @@
               *ngIf="clientNameSlider.length > 0"
               [dataSlider]="clientNameSlider"
               [currentSlideIndex]="currentSlideIndexClientName"
-              (slideOut)="slideOut($event, 'CN')"
-            >
+              (slideOut)="slideOut($event, 'CN')">
               <shared-slider-card-body
                 *ngFor="let item of clientNameSelected; let i = index"
                 [id]="i + 1"
-                [current]="currentSlideIndexClientName + 1"
-              >
+                [current]="currentSlideIndexClientName + 1">
                 <div class="card-blue">
-                  <div class="grid-2">
-                    <fui-text>Parent/Group Company</fui-text>
-                    <fui-text>Company's Origin Country</fui-text>
+
+                  <div class="grid-2-cs gap-20">
+                    <div>
+                      <fui-text>Parent/Group Company</fui-text>
+                      <fui-text [weight]="'semibold'">{{
+                        item.value.parent
+                        }}</fui-text>
+                    </div>
+
+                    <div>
+                      <fui-text>Company's Origin Country</fui-text>
+                      <fui-text [weight]="'semibold'">{{
+                        item.value.companyOrigin
+                        }}</fui-text>
+                    </div>
                   </div>
-                  <div class="mt-5 grid-2">
-                    <fui-text [weight]="'semibold'">{{
-                      item.value.parent
-                    }}</fui-text>
-                    <fui-text [weight]="'semibold'">{{
-                      item.value.companyOrigin
-                    }}</fui-text>
-                  </div>
+
                   <div class="grid">
                     <fui-text>Address</fui-text>
                     <fui-text [weight]="'semibold'" class="mt-5">{{
                       item.value.address
-                    }}</fui-text>
+                      }}</fui-text>
                   </div>
+
                   <div class="grid">
                     <fui-text>Entity Type</fui-text>
                     <fui-text [weight]="'semibold'" class="mt-5">{{
                       item.value.entityType
-                    }}</fui-text>
+                      }}</fui-text>
                   </div>
+
                   <div class="grid">
                     <fui-text>Industry/Business Sector</fui-text>
                     <fui-text [weight]="'semibold'" class="mt-5">{{
                       item.value.industry
-                    }}</fui-text>
+                      }}</fui-text>
                   </div>
                 </div>
               </shared-slider-card-body>
@@ -477,13 +445,11 @@
             <fui-text [textWrap]="'nowrap'">Instructing Party</fui-text>
             <fui-tooltip
               [position]="'top'"
-              [content]="'Hey there, I m using whatsapp!'"
-            >
+              [content]="'Hey there, I m using whatsapp!'">
               <fui-icons
                 [size]="'sizes'"
                 [color]="'disabled'"
-                [icon]="'questionInCircle'"
-              />
+                [icon]="'questionInCircle'" />
             </fui-tooltip>
           </div>
           <div class="mt-10">
@@ -497,43 +463,48 @@
               *ngIf="clientNameSlider.length > 0"
               [dataSlider]="clientNameSlider"
               [currentSlideIndex]="currentSlideIndexClientName"
-              (slideOut)="slideOut($event, 'CN')"
-            >
+              (slideOut)="slideOut($event, 'CN')">
               <shared-slider-card-body
                 *ngFor="let item of clientNameSelected; let i = index"
                 [id]="i + 1"
-                [current]="currentSlideIndexClientName + 1"
-              >
+                [current]="currentSlideIndexClientName + 1">
                 <div class="card-blue">
-                  <div class="grid-2">
-                    <fui-text>Parent/Group Company</fui-text>
-                    <fui-text>Company's Origin Country</fui-text>
+
+                  <div class="grid-2-cs gap-20">
+                    <div>
+                      <fui-text>Parent/Group Company</fui-text>
+                      <fui-text [weight]="'semibold'">{{
+                        item.value.parent
+                        }}</fui-text>
+                    </div>
+
+                    <div>
+                      <fui-text>Company's Origin Country</fui-text>
+                      <fui-text [weight]="'semibold'">{{
+                        item.value.companyOrigin
+                        }}</fui-text>
+                    </div>
                   </div>
-                  <div class="mt-5 grid-2">
-                    <fui-text [weight]="'semibold'">{{
-                      item.value.parent
-                    }}</fui-text>
-                    <fui-text [weight]="'semibold'">{{
-                      item.value.companyOrigin
-                    }}</fui-text>
-                  </div>
+
                   <div class="grid">
                     <fui-text>Address</fui-text>
                     <fui-text [weight]="'semibold'" class="mt-5">{{
                       item.value.address
-                    }}</fui-text>
+                      }}</fui-text>
                   </div>
+
                   <div class="grid">
                     <fui-text>Entity Type</fui-text>
                     <fui-text [weight]="'semibold'" class="mt-5">{{
                       item.value.entityType
-                    }}</fui-text>
+                      }}</fui-text>
                   </div>
+
                   <div class="grid">
                     <fui-text>Industry/Business Sector</fui-text>
                     <fui-text [weight]="'semibold'" class="mt-5">{{
                       item.value.industry
-                    }}</fui-text>
+                      }}</fui-text>
                   </div>
                 </div>
               </shared-slider-card-body>
@@ -549,60 +520,53 @@
       <div #billingInformationSec class="card-content">
         <fui-text [weight]="'semibold'">Billing Information</fui-text>
         <div class="mt-5">
-          <fui-text [color]="'text'"
-            >Paying entities and outline payment terms for this matter</fui-text
-          >
+          <fui-text [color]="'text'">Paying entities and outline payment terms
+            for this matter</fui-text>
         </div>
 
         <!-- CLIENT  -->
         <div>
           <!-- LABEL  -->
-          <div class="grid-2 gap-10 mt-30">
-            <div class="">
+          <div class="grid-2-cs gap-30 mt-30">
+            <div class>
               <div class="flex-label">
                 <fui-text [textWrap]="'nowrap'">Paying Entity</fui-text>
                 <fui-tooltip
                   [position]="'top'"
-                  [content]="'Hey there, I m using whatsapp!'"
-                >
+                  [content]="'Hey there, I m using whatsapp!'">
                   <fui-icons
                     [size]="'sizes'"
                     [color]="'disabled'"
-                    [icon]="'questionInCircle'"
-                  />
+                    [icon]="'questionInCircle'" />
                 </fui-tooltip>
               </div>
               <div class="mt-10">
-                <fui-text
-                  >Big Kahuna Burger Ltd., Miniso Lifestyle Trading Indonesia
-                  and 2 others</fui-text
-                >
+                <fui-text>Big Kahuna Burger Ltd., Miniso Lifestyle Trading
+                  Indonesia
+                  and 2 others</fui-text>
               </div>
             </div>
-            <div class="">
+            <div class>
               <fui-text>Paying Entity Contract Person</fui-text>
               <div class="mt-10">
                 <fui-text>Jacob Jones - Big Kahuna Burger Ltd.</fui-text>
-                <div class="flex-label-gap-10 mt-5">
+                <div class="flex-label-gap-10-text mt-5">
                   <div class="flex-label">
                     <fui-icons
                       [icon]="'email'"
                       [color]="'disabled'"
-                      [size]="'sizes'"
-                    />
+                      [size]="'sizes'" />
                     <fui-text [size]="'s'" [color]="'text'">{{
                       "cody.fisher@example.com"
-                    }}</fui-text>
+                      }}</fui-text>
                   </div>
                   <div class="flex-label">
                     <fui-icons
                       [icon]="'node'"
                       [color]="'disabled'"
-                      [size]="'sizes'"
-                    />
-                    <fui-text [size]="'s'" [color]="'text'"
-                      >(307) 555-0133</fui-text
-                    >
+                      [size]="'sizes'" />
+                    <fui-text [size]="'s'" [color]="'text'">(307)
+                      555-0133</fui-text>
                   </div>
                 </div>
               </div>
@@ -616,43 +580,48 @@
               *ngIf="clientNameSlider.length > 0"
               [dataSlider]="clientNameSlider"
               [currentSlideIndex]="currentSlideIndexClientName"
-              (slideOut)="slideOut($event, 'CN')"
-            >
+              (slideOut)="slideOut($event, 'CN')">
               <shared-slider-card-body
                 *ngFor="let item of clientNameSelected; let i = index"
                 [id]="i + 1"
-                [current]="currentSlideIndexClientName + 1"
-              >
+                [current]="currentSlideIndexClientName + 1">
                 <div class="card-blue">
-                  <div class="grid-2">
-                    <fui-text>Parent/Group Company</fui-text>
-                    <fui-text>Company's Origin Country</fui-text>
+
+                  <div class="grid-2-cs gap-20">
+                    <div>
+                      <fui-text>Parent/Group Company</fui-text>
+                      <fui-text [weight]="'semibold'">{{
+                        item.value.parent
+                        }}</fui-text>
+                    </div>
+
+                    <div>
+                      <fui-text>Company's Origin Country</fui-text>
+                      <fui-text [weight]="'semibold'">{{
+                        item.value.companyOrigin
+                        }}</fui-text>
+                    </div>
                   </div>
-                  <div class="mt-5 grid-2">
-                    <fui-text [weight]="'semibold'">{{
-                      item.value.parent
-                    }}</fui-text>
-                    <fui-text [weight]="'semibold'">{{
-                      item.value.companyOrigin
-                    }}</fui-text>
-                  </div>
+
                   <div class="grid">
                     <fui-text>Address</fui-text>
                     <fui-text [weight]="'semibold'" class="mt-5">{{
                       item.value.address
-                    }}</fui-text>
+                      }}</fui-text>
                   </div>
+
                   <div class="grid">
                     <fui-text>Entity Type</fui-text>
                     <fui-text [weight]="'semibold'" class="mt-5">{{
                       item.value.entityType
-                    }}</fui-text>
+                      }}</fui-text>
                   </div>
+
                   <div class="grid">
                     <fui-text>Industry/Business Sector</fui-text>
                     <fui-text [weight]="'semibold'" class="mt-5">{{
                       item.value.industry
-                    }}</fui-text>
+                      }}</fui-text>
                   </div>
                 </div>
               </shared-slider-card-body>
@@ -674,13 +643,11 @@
               <fui-text [textWrap]="'nowrap'">Pricing Type</fui-text>
               <fui-tooltip
                 [position]="'top'"
-                [content]="'Hey there, I m using whatsapp!'"
-              >
+                [content]="'Hey there, I m using whatsapp!'">
                 <fui-icons
                   [size]="'sizes'"
                   [color]="'disabled'"
-                  [icon]="'questionInCircle'"
-                />
+                  [icon]="'questionInCircle'" />
               </fui-tooltip>
             </div>
             <div class="mt-10">
@@ -702,24 +669,20 @@
         </div>
         <div class="mt-30">
           <div class="flex-label">
-            <fui-text [textWrap]="'nowrap'"
-              >Default Billing Bank Account</fui-text
-            >
+            <fui-text [textWrap]="'nowrap'">Default Billing Bank
+              Account</fui-text>
             <fui-tooltip
               [position]="'top'"
-              [content]="'Hey there, I m using whatsapp!'"
-            >
+              [content]="'Hey there, I m using whatsapp!'">
               <fui-icons
                 [size]="'sizes'"
                 [color]="'disabled'"
-                [icon]="'questionInCircle'"
-              />
+                [icon]="'questionInCircle'" />
             </fui-tooltip>
           </div>
           <div class="mt-10">
-            <fui-text [color]="'text'" [fwStyle]="'italic'"
-              >Not Applicable</fui-text
-            >
+            <fui-text [color]="'text'" [fwStyle]="'italic'">Not
+              Applicable</fui-text>
           </div>
         </div>
       </div>
@@ -729,31 +692,26 @@
       <div #transactionInformationSec class="card-content">
         <fui-text [weight]="'semibold'">Transaction/Case Information</fui-text>
         <div class="mt-5">
-          <fui-text [color]="'text'"
-            >Detail on the matter including scope of work, counterparties,
-            entities involved, and team members for this matter.</fui-text
-          >
+          <fui-text [color]="'text'">Detail on the matter including scope of
+            work, counterparties,
+            entities involved, and team members for this matter.</fui-text>
         </div>
         <div class="mt-30">
           <fui-text>Matter Description</fui-text>
           <div class="mt-5">
-            <fui-text
-              >Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+            <fui-text>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
               Consequuntur atque sint et, dolore dicta accusamus laborum
               laboriosam a labore enim. Quas harum ipsam pariatur incidunt
-              accusantium beatae aperiam praesentium ut!</fui-text
-            >
+              accusantium beatae aperiam praesentium ut!</fui-text>
           </div>
         </div>
         <div class="mt-20">
           <fui-text>Scope of Work</fui-text>
           <div class="mt-5">
-            <fui-text
-              >Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+            <fui-text>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
               Consequuntur atque sint et, dolore dicta accusamus laborum
               laboriosam a labore enim. Quas harum ipsam pariatur incidunt
-              accusantium beatae aperiam praesentium ut!</fui-text
-            >
+              accusantium beatae aperiam praesentium ut!</fui-text>
           </div>
         </div>
         <div class="mt-30">
@@ -761,13 +719,11 @@
             <fui-text [textWrap]="'nowrap'">Counterparty</fui-text>
             <fui-tooltip
               [position]="'top'"
-              [content]="'Hey there, I m using whatsapp!'"
-            >
+              [content]="'Hey there, I m using whatsapp!'">
               <fui-icons
                 [size]="'sizes'"
                 [color]="'disabled'"
-                [icon]="'questionInCircle'"
-              />
+                [icon]="'questionInCircle'" />
             </fui-tooltip>
           </div>
           <div class="mt-10">
@@ -781,43 +737,48 @@
             *ngIf="clientNameSlider.length > 0"
             [dataSlider]="clientNameSlider"
             [currentSlideIndex]="currentSlideIndexClientName"
-            (slideOut)="slideOut($event, 'CN')"
-          >
+            (slideOut)="slideOut($event, 'CN')">
             <shared-slider-card-body
               *ngFor="let item of clientNameSelected; let i = index"
               [id]="i + 1"
-              [current]="currentSlideIndexClientName + 1"
-            >
+              [current]="currentSlideIndexClientName + 1">
               <div class="card-blue">
-                <div class="grid-2">
-                  <fui-text>Parent/Group Company</fui-text>
-                  <fui-text>Company's Origin Country</fui-text>
+
+                <div class="grid-2-cs gap-20">
+                  <div>
+                    <fui-text>Parent/Group Company</fui-text>
+                    <fui-text [weight]="'semibold'">{{
+                      item.value.parent
+                      }}</fui-text>
+                  </div>
+
+                  <div>
+                    <fui-text>Company's Origin Country</fui-text>
+                    <fui-text [weight]="'semibold'">{{
+                      item.value.companyOrigin
+                      }}</fui-text>
+                  </div>
                 </div>
-                <div class="mt-5 grid-2">
-                  <fui-text [weight]="'semibold'">{{
-                    item.value.parent
-                  }}</fui-text>
-                  <fui-text [weight]="'semibold'">{{
-                    item.value.companyOrigin
-                  }}</fui-text>
-                </div>
+
                 <div class="grid">
                   <fui-text>Address</fui-text>
                   <fui-text [weight]="'semibold'" class="mt-5">{{
                     item.value.address
-                  }}</fui-text>
+                    }}</fui-text>
                 </div>
+
                 <div class="grid">
                   <fui-text>Entity Type</fui-text>
                   <fui-text [weight]="'semibold'" class="mt-5">{{
                     item.value.entityType
-                  }}</fui-text>
+                    }}</fui-text>
                 </div>
+
                 <div class="grid">
                   <fui-text>Industry/Business Sector</fui-text>
                   <fui-text [weight]="'semibold'" class="mt-5">{{
                     item.value.industry
-                  }}</fui-text>
+                    }}</fui-text>
                 </div>
               </div>
             </shared-slider-card-body>
@@ -831,13 +792,11 @@
             <fui-text [textWrap]="'nowrap'">Other Stakeholder</fui-text>
             <fui-tooltip
               [position]="'top'"
-              [content]="'Hey there, I m using whatsapp!'"
-            >
+              [content]="'Hey there, I m using whatsapp!'">
               <fui-icons
                 [size]="'sizes'"
                 [color]="'disabled'"
-                [icon]="'questionInCircle'"
-              />
+                [icon]="'questionInCircle'" />
             </fui-tooltip>
           </div>
 
@@ -851,8 +810,7 @@
                   overflow: hidden;
                   text-wrap: nowrap;
                   text-overflow: ellipsis;
-                "
-              >
+                ">
                 <b>Barone LLC.</b> as Indonesian Legal Counselor for Tripatra
                 Engineers & Constructor, PT
               </p>
@@ -870,8 +828,7 @@
                   overflow: hidden;
                   text-wrap: nowrap;
                   text-overflow: ellipsis;
-                "
-              >
+                ">
                 <b>Barone LLC.</b> as Indonesian Legal Counselor for Tripatra
                 Engineers & Constructor, PT
               </p>
@@ -890,43 +847,48 @@
             *ngIf="clientNameSlider.length > 0"
             [dataSlider]="clientNameSlider"
             [currentSlideIndex]="currentSlideIndexClientName"
-            (slideOut)="slideOut($event, 'CN')"
-          >
+            (slideOut)="slideOut($event, 'CN')">
             <shared-slider-card-body
               *ngFor="let item of clientNameSelected; let i = index"
               [id]="i + 1"
-              [current]="currentSlideIndexClientName + 1"
-            >
+              [current]="currentSlideIndexClientName + 1">
               <div class="card-blue">
-                <div class="grid-2">
-                  <fui-text>Parent/Group Company</fui-text>
-                  <fui-text>Company's Origin Country</fui-text>
+
+                <div class="grid-2-cs gap-20">
+                  <div>
+                    <fui-text>Parent/Group Company</fui-text>
+                    <fui-text [weight]="'semibold'">{{
+                      item.value.parent
+                      }}</fui-text>
+                  </div>
+
+                  <div>
+                    <fui-text>Company's Origin Country</fui-text>
+                    <fui-text [weight]="'semibold'">{{
+                      item.value.companyOrigin
+                      }}</fui-text>
+                  </div>
                 </div>
-                <div class="mt-5 grid-2">
-                  <fui-text [weight]="'semibold'">{{
-                    item.value.parent
-                  }}</fui-text>
-                  <fui-text [weight]="'semibold'">{{
-                    item.value.companyOrigin
-                  }}</fui-text>
-                </div>
+
                 <div class="grid">
                   <fui-text>Address</fui-text>
                   <fui-text [weight]="'semibold'" class="mt-5">{{
                     item.value.address
-                  }}</fui-text>
+                    }}</fui-text>
                 </div>
+
                 <div class="grid">
                   <fui-text>Entity Type</fui-text>
                   <fui-text [weight]="'semibold'" class="mt-5">{{
                     item.value.entityType
-                  }}</fui-text>
+                    }}</fui-text>
                 </div>
+
                 <div class="grid">
                   <fui-text>Industry/Business Sector</fui-text>
                   <fui-text [weight]="'semibold'" class="mt-5">{{
                     item.value.industry
-                  }}</fui-text>
+                    }}</fui-text>
                 </div>
               </div>
             </shared-slider-card-body>
@@ -938,12 +900,10 @@
         <div class="mt-20">
           <fui-text>Additional Transaction Information</fui-text>
           <div class="mt-5">
-            <fui-text
-              >Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+            <fui-text>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
               Consequuntur atque sint et, dolore dicta accusamus laborum
               laboriosam a labore enim. Quas harum ipsam pariatur incidunt
-              accusantium beatae aperiam praesentium ut!</fui-text
-            >
+              accusantium beatae aperiam praesentium ut!</fui-text>
           </div>
         </div>
         <!-- ADDITIONAL TRANSACTION INFORMATION  -->
@@ -961,11 +921,10 @@
             <fui-badge [text]="'5'" [color]="'hollow'" [size]="'s'" />
           </div>
           <div class="mt-5">
-            <fui-text [color]="'text'"
-              >Members who will have direct access to the matter</fui-text
-            >
+            <fui-text [color]="'text'">Members who will have direct access to
+              the matter</fui-text>
           </div>
-          <div class="grid-3 gap-10 mt-10">
+          <div class="grid-3-cs gap-10 mt-10">
             <div class="badge-block">
               <fui-text>Jane Cooper (JC)</fui-text>
               <fui-text>Senior Associate</fui-text>
@@ -994,15 +953,14 @@
 
       <!-- OTHER INFORMATION  -->
       <div #otherInformationSec class="card-content">
-        <fui-text [textWrap]="'nowrap'" [weight]="'semibold'"
-          >Other Information</fui-text
-        >
+        <fui-text [textWrap]="'nowrap'" [weight]="'semibold'">Other
+          Information</fui-text>
         <div class="mt-20">
           <div class="flex-label align-center">
             <fui-text>Matter Controllers</fui-text>
             <fui-badge [text]="'5'" [color]="'hollow'" [size]="'s'" />
           </div>
-          <div class="grid-3 gap-10 mt-10">
+          <div class="grid-3-cs gap-10 mt-10">
             <div class="badge-block">
               <fui-text>Jane Cooper (JC)</fui-text>
               <fui-text>Senior Associate</fui-text>
@@ -1028,9 +986,8 @@
         <div class="mt-20">
           <fui-text [weight]="'semibold'">BD Matter Description</fui-text>
           <div class="mt-5">
-            <fui-text [color]="'text'" [fwStyle]="'italic'"
-              >Not Applicable</fui-text
-            >
+            <fui-text [color]="'text'" [fwStyle]="'italic'">Not
+              Applicable</fui-text>
           </div>
         </div>
       </div>
@@ -1043,18 +1000,16 @@
 <!-- MODAL REOPEN  -->
 <fui-modal
   [open]="isModalReOpen"
-  (onClickOverlayModal)="toggleModalReOpen('reopen', false)"
->
+  (onClickOverlayModal)="toggleModalReOpen('reopen', false)">
   <fui-modal-header (onCloseModal)="toggleModalReOpen('reopen', false)">
     <fui-text [weight]="'bold'" [size]="'xl'">Reopen Matter</fui-text>
   </fui-modal-header>
   <fui-modal-body>
     <div class="mt-20 body-c-modal">
-      <fui-text
-        >Removing completion date will reopen this matter and allow other users
+      <fui-text>Removing completion date will reopen this matter and allow other
+        users
         to add new timesheet or OPE to this matter. Remove completion date and
-        reopen this matter?</fui-text
-      >
+        reopen this matter?</fui-text>
     </div>
   </fui-modal-body>
   <fui-modal-footer>
@@ -1064,13 +1019,11 @@
         [option]="'text'"
         [text]="'Cancel'"
         [style]="'empty'"
-        (onClick)="toggleModalReOpen('reopen', false)"
-      />
+        (onClick)="toggleModalReOpen('reopen', false)" />
       <fui-button-icon
         [type]="'button'"
         [option]="'text'"
-        [text]="'Reopen Matter'"
-      />
+        [text]="'Reopen Matter'" />
     </div>
   </fui-modal-footer>
 </fui-modal>
@@ -1079,22 +1032,20 @@
 <!-- MODAL SET DATE  -->
 <fui-modal
   [open]="isModalCompletionDate"
-  (onClickOverlayModal)="toggleModalReOpen('completion', false)"
->
+  (onClickOverlayModal)="toggleModalReOpen('completion', false)">
   <fui-modal-header (onCloseModal)="toggleModalReOpen('completion', false)">
     <fui-text [weight]="'bold'" [size]="'xl'">Set Completion Date</fui-text>
   </fui-modal-header>
   <fui-modal-body>
     <div class="body-c-modal">
       <div class="mt-20">
-        <fui-text
-          >Setting completion date will automatically change the status of this
+        <fui-text>Setting completion date will automatically change the status
+          of this
           matter to Completed and prevent any timesheet or OPE to be added to
-          this matter.</fui-text
-        >
+          this matter.</fui-text>
       </div>
       <div class="mt-20">
-        <div class="mb-5">
+        <div class="mb-10">
           <fui-text>Completion Date</fui-text>
         </div>
         <fui-date-picker [dateFormat]="'DD-MM-YYYY'" />
@@ -1102,19 +1053,17 @@
     </div>
   </fui-modal-body>
   <fui-modal-footer>
-    <div class="flex-end-gap-10">
+    <div class="flex-end-gap-10 mt-20">
       <fui-button-icon
         [type]="'button'"
         [option]="'text'"
         [text]="'Cancel'"
         [style]="'empty'"
-        (onClick)="toggleModalReOpen('completion', false)"
-      />
+        (onClick)="toggleModalReOpen('completion', false)" />
       <fui-button-icon
         [type]="'button'"
         [option]="'text'"
-        [text]="'Complete Matter'"
-      />
+        [text]="'Complete Matter'" />
     </div>
   </fui-modal-footer>
 </fui-modal>
@@ -1123,20 +1072,17 @@
 <!-- MODAL Completed with Insufficient Information  -->
 <fui-modal
   [open]="isModalFYICompleted"
-  (onClickOverlayModal)="toggleModalReOpen('fyiComplete', false)"
->
+  (onClickOverlayModal)="toggleModalReOpen('fyiComplete', false)">
   <fui-modal-header (onCloseModal)="toggleModalReOpen('fyiComplete', false)">
-    <fui-text [weight]="'bold'" [size]="'xl'"
-      >Completed with Insufficient Information</fui-text
-    >
+    <fui-text [weight]="'bold'" [size]="'xl'">Completed with Insufficient
+      Information</fui-text>
   </fui-modal-header>
   <fui-modal-body>
     <div class="body-c-modal">
       <div class="mt-20">
-        <fui-text
-          >This matter was completed with insufficient matter information as
-          part of Call to Action Live Matter Initiative.</fui-text
-        >
+        <fui-text>This matter was completed with insufficient matter information
+          as
+          part of Call to Action Live Matter Initiative.</fui-text>
       </div>
       <div class="mt-20">
         <fui-text>Approved By Jacob Jones (JJ)</fui-text>
@@ -1150,8 +1096,7 @@
         [option]="'text'"
         [text]="'Close'"
         [style]="'empty'"
-        (onClick)="toggleModalReOpen('fyiComplete', false)"
-      />
+        (onClick)="toggleModalReOpen('fyiComplete', false)" />
     </div>
   </fui-modal-footer>
 </fui-modal>
@@ -1160,38 +1105,33 @@
 <!-- MODAL Steps to Close Matter  -->
 <fui-modal
   [open]="isModalStepClose"
-  (onClickOverlayModal)="toggleModalReOpen('infoStepClose', false)"
->
+  (onClickOverlayModal)="toggleModalReOpen('infoStepClose', false)">
   <fui-modal-header (onCloseModal)="toggleModalReOpen('infoStepClose', false)">
     <fui-text [weight]="'bold'" [size]="'xl'">Steps to Close Matter</fui-text>
   </fui-modal-header>
   <fui-modal-body>
     <div class="body-c-modal">
       <div class="mt-20">
-        <fui-text
-          >Closed status is determined automatically by the system. To close
-          this matter, follow these remaining steps:</fui-text
-        >
+        <fui-text>Closed status is determined automatically by the system. To
+          close
+          this matter, follow these remaining steps:</fui-text>
       </div>
       <div class="mt-20">
         <div class="flex-step">
-          <fui-text [color]="'primary'"
-            >1. Fill in the required information to complete the
-            matter</fui-text
-          >
+          <fui-text [color]="'primary'">1. Fill in the required information to
+            complete the
+            matter</fui-text>
           <fui-icons
             [size]="'sizes'"
             [color]="'primary'"
-            [icon]="'checkInCircleFilled'"
-          />
+            [icon]="'checkInCircleFilled'" />
         </div>
         <div class="flex-step">
           <fui-text [color]="'primary'">2. Set the Completion Date</fui-text>
           <fui-icons
             [size]="'sizes'"
             [color]="'primary'"
-            [icon]="'checkInCircleFilled'"
-          />
+            [icon]="'checkInCircleFilled'" />
         </div>
         <div class="flex-step">
           <fui-text>3. Bill or Write-off 3 remaining timesheets</fui-text>
@@ -1212,8 +1152,7 @@
         [option]="'text'"
         [text]="'Close'"
         [style]="'empty'"
-        (onClick)="toggleModalReOpen('infoStepClose', false)"
-      />
+        (onClick)="toggleModalReOpen('infoStepClose', false)" />
     </div>
   </fui-modal-footer>
 </fui-modal>
@@ -1223,8 +1162,7 @@
 <shared-flyout-simple
   [isOpenFlyout]="isFlyoutAssociateMatter"
   (overlayOut)="toggleModalReOpen('flyoutAssociateMatter', false)"
-  [titleFlyout]="'Associated Matters'"
->
+  [titleFlyout]="'Associated Matters'">
   <div body>
     <div class="mb-5">
       <fui-text>Parent Matter</fui-text>
@@ -1234,17 +1172,15 @@
         <fui-text [weight]="'semibold'">6030 Startup Legal Support</fui-text>
         <fui-icons [icon]="'popout'" />
       </div>
-      <fui-text [color]="'text'"
-        >Due Diligence on the Indonesian Entity</fui-text
-      >
+      <fui-text [color]="'text'">Due Diligence on the Indonesian
+        Entity</fui-text>
       <div class="flex-badge-general mt-10">
         <fui-badge [color]="'hollow'" [size]="'s'" [text]="type.billability" />
         <fui-badge
           [color]="'hollow'"
           [size]="'s'"
           *ngIf="type.pricingType"
-          [text]="type.pricingType"
-        />
+          [text]="type.pricingType" />
         <fui-badge
           [color]="'default'"
           [size]="'s'"
@@ -1255,16 +1191,14 @@
               : type.status === 'Complete'
               ? 'warning'
               : 'default'
-          "
-        />
+          " />
         <fui-badge
           [color]="'hollow'"
           [iconShow]="true"
           [icon]="'timeRefresh'"
           [iconSize]="'sizes'"
           [size]="'s'"
-          [text]="'3 Jan 24'"
-        />
+          [text]="'3 Jan 24'" />
       </div>
     </div>
     <div style="margin: 20px 0px">
@@ -1284,8 +1218,7 @@
           [color]="'hollow'"
           [size]="'s'"
           *ngIf="type.pricingType"
-          [text]="type.pricingType"
-        />
+          [text]="type.pricingType" />
         <fui-badge
           [color]="'default'"
           [size]="'s'"
@@ -1296,16 +1229,14 @@
               : type.status === 'Complete'
               ? 'warning'
               : 'default'
-          "
-        />
+          " />
         <fui-badge
           [color]="'hollow'"
           [iconShow]="true"
           [icon]="'timeRefresh'"
           [iconSize]="'sizes'"
           [size]="'s'"
-          [text]="'3 Jan 24'"
-        />
+          [text]="'3 Jan 24'" />
       </div>
     </div>
     <div class="card-matter">
@@ -1319,8 +1250,7 @@
           [color]="'hollow'"
           [size]="'s'"
           *ngIf="type.pricingType"
-          [text]="type.pricingType"
-        />
+          [text]="type.pricingType" />
         <fui-badge
           [color]="'default'"
           [size]="'s'"
@@ -1331,16 +1261,14 @@
               : type.status === 'Complete'
               ? 'warning'
               : 'default'
-          "
-        />
+          " />
         <fui-badge
           [color]="'hollow'"
           [iconShow]="true"
           [icon]="'timeRefresh'"
           [iconSize]="'sizes'"
           [size]="'s'"
-          [text]="'3 Jan 24'"
-        />
+          [text]="'3 Jan 24'" />
       </div>
     </div>
   </div>
@@ -1350,8 +1278,7 @@
       [option]="'text'"
       [text]="'Close'"
       [style]="'empty'"
-      (onClick)="toggleModalReOpen('flyoutAssociateMatter', false)"
-    />
+      (onClick)="toggleModalReOpen('flyoutAssociateMatter', false)" />
   </div>
 </shared-flyout-simple>
 <!-- FLYOUT ASSOCIATED MATTER  -->

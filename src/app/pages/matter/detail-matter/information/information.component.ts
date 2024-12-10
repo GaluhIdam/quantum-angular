@@ -65,7 +65,7 @@ export class InformationComponent {
   } = {
     billability: 'Billable',
     pricingType: 'Hourly',
-    status: 'Complete',
+    status: 'Closed',
   };
 
   clientNameSelected: {
