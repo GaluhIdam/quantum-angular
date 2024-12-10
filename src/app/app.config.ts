@@ -16,15 +16,15 @@ export const appConfig: ApplicationConfig = {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
     }),
-    provideAuth({
-      config: {
-        authority: keycloak.authorization_endpoint,
-        redirectUrl: keycloak.redirect_uri,
-        postLogoutRedirectUri: keycloak.redirect_uri,
-        clientId: keycloak.client_id,
-        scope: keycloak.scope,
-        responseType: keycloak.response_type,
-      },
-    }),
+    // provideAuth({
+    //   config: {
+    //     authority: keycloak.authorization_endpoint,
+    //     redirectUrl: keycloak.redirect_uri,
+    //     postLogoutRedirectUri: keycloak.redirect_uri,
+    //     clientId: keycloak.client_id,
+    //     scope: keycloak.scope,
+    //     responseType: keycloak.response_type,
+    //   },
+    // }),
   ],
 };
