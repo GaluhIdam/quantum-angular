@@ -1,0 +1,194 @@
+<shared-flyout-simple
+  [isOpenFlyout]="isOpenFlyoutContactPerson"
+  [titleFlyout]="'Add Contact'"
+  (closeOut)="openFlyoutContactPerson()"
+>
+  <div body>
+    <!-- STACKHOLDER  -->
+    <div class="form-control">
+      <fui-text class="label"> Stackholder </fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [placeholder]="'Please select stackholder'"
+          [invalid]="false"
+          [selectOptions]="[]"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- STACKHOLDER  -->
+
+    <!-- NAME  -->
+    <div class="form-control">
+      <fui-text class="label"> Name </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Contact Name'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- NAME  -->
+
+    <!-- EMAIL  -->
+    <div class="form-control">
+      <fui-text class="label"> Email </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'e.g example@mail.com'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- EMAIL  -->
+
+    <!-- PHONE NUMBER  -->
+    <div class="form-control">
+      <fui-text class="label"> Phone Number </fui-text>
+      <fui-form-control-layout>
+        <fui-prepend>
+          <fui-popover
+            [displayPopover]="displayPopover"
+            [position]="'bottom'"
+            [align]="'start'"
+            (isPopoverDisplay)="isPopoverDisplay($event)"
+          >
+            <div class="flex">
+              <img
+                width="20"
+                class="pointer"
+                [src]="selectedCountry.flags.png"
+                [alt]="selectedCountry.flags.alt"
+              />
+              <fui-icons
+                [icon]="'arrowDown'"
+                [size]="'sizexs'"
+                [color]="'text'"
+              />
+            </div>
+            <div popover-body>
+              <fui-form-control-layout>
+                <fui-input-field
+                  [type]="'text'"
+                  [formControlField]="countryForm"
+                  [invalid]="false"
+                  [placeholder]="'Search for country'"
+                  [size]="'m'"
+                >
+                  <fui-icons left-icon [icon]="'search'" [size]="'sizem'" />
+                  <fui-loading
+                    *ngIf="loading"
+                    right-icon
+                    [isLoading]="true"
+                    [type]="'spinner'"
+                    [size]="'sizem'"
+                  />
+                </fui-input-field>
+              </fui-form-control-layout>
+              <div class="container">
+                <div class="country-flag" *ngFor="let item of listCountryCode">
+                  <img
+                    class="img pointer"
+                    width="20"
+                    height="15"
+                    [src]="item.flags.png"
+                    [alt]="item.flags.alt"
+                  />
+                  <p class="text-country" (click)="selection(item)">
+                    ({{ item.idd.root + item.idd.suffixes[0] }})
+                    {{ item.name.common }}
+                  </p>
+                </div>
+                <shared-empty-data
+                  [dataLength]="listCountryCode.length"
+                  [subTitle]="'Country not found!'"
+                />
+              </div>
+            </div>
+          </fui-popover>
+        </fui-prepend>
+        <fui-input-field
+          [formControlField]="phoneNumber"
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Phone Number'"
+          [size]="'m'"
+        >
+          <fui-text left-icon class="mt-3">{{
+            selectedCountry.idd.root + +selectedCountry.idd.suffixes[0]
+          }}</fui-text>
+        </fui-input-field>
+      </fui-form-control-layout>
+    </div>
+
+    <!-- PHONE NUMBER  -->
+
+    <hr />
+
+    <!-- POSITION TYPE  -->
+    <div class="form-control mt-20">
+      <fui-text class="label"> Position Type </fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [placeholder]="'Please position type'"
+          [invalid]="false"
+          [selectOptions]="[]"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- POSITION TYPE  -->
+
+    <!-- POSITION TITLE  -->
+    <div class="form-control">
+      <fui-text class="label"> Position Title </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Person position title'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- POSITION TITLE  -->
+
+    <!-- DEPARTMENT  -->
+    <div class="form-control">
+      <fui-text class="label"> Departement </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Person departement'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- DEPARTMENT  -->
+  </div>
+  <div footer class="flex-between footer-fly">
+    <fui-button-icon [fullWidth]="'fit'"
+      (onClick)="openFlyoutContactPerson()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'secondary'"
+      [option]="'text'"
+      [text]="'Cancel'"
+    />
+    <fui-button-icon [fullWidth]="'fit'"
+      (onClick)="openFlyoutContactPerson()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'filled'"
+      [option]="'text'"
+      [text]="'Add Contact'"
+    />
+  </div>
+</shared-flyout-simple>

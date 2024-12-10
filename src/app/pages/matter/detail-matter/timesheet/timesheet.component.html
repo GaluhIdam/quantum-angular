@@ -7,10 +7,6 @@
 <!-- FILTER STATUS  -->
 <div class="container-w flex">
   <shared-button-group [btnList]="btnFilterList" />
-  <shared-filter-applied
-    [filterApplied]="filterApplied"
-    (actionOut)="clearAllFilterOut($event)"
-  />
 </div>
 <!-- FILTER STATUS  -->
 
@@ -19,7 +15,7 @@
   <shared-move-matter
     [writeOff]="true"
     [listMatters]="[]"
-    [totalItemSelected]="0"
+    [totalItemSelected]="timesheetSelected.length"
   />
 </div>
 <!-- MOVE MATTER  -->
@@ -51,147 +47,100 @@
 />
 <!-- CREATE FLYOUT  -->
 
-<!-- FILTER FLYOUT  -->
-<shared-flyout-simple
-  [isOpenFlyout]="isOpenFlyoutFilter"
-  (closeOut)="closeOut($event, 'filter')"
-  [titleFlyout]="'Filter'"
+<!-- FILTER  -->
+<fui-advance-filter
+  [openFilter]="isOpenFlyoutFilter"
+  (actionOut)="closeOut(false, 'filter', $event)"
 >
-  <!-- BODY FLYOUT  -->
-  <div body>
-    <!-- DATE FORM  -->
-    <div class="form">
-      <fui-text [size]="'s'">Date</fui-text>
-      <div class="time-description">
-        <fui-date-range
-          [dateFormat]="'DD-MM-YYYY'"
-          [startDateControl]="startDateForm"
-          [endDateControl]="endDateForm"
-          (onChangeStartDate)="changeDateForm($event, 'start')"
-          (onChangeEndDate)="changeDateForm($event, 'end')"
-        />
-      </div>
-      <span
-        class="filter-valid"
-        *ngIf="startDateForm.value === '' || endDateForm.value === ''"
-      >
-        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
-        Date range is required!
-      </span>
-      <span class="filter-valid" *ngIf="invalidStartEndDate()">
-        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
-        the start date cannot exceed the end date!
-      </span>
-    </div>
-    <!-- DATE FORM  -->
+  <fui-advance-filter-section [title]="''">
+    <!-- DATE  -->
+    <fui-advance-filter-item
+      [label]="'Date'"
+      [value]="
+        startDateForm.value !== '' && endDateForm.value !== ''
+          ? startDateForm.value + ' to ' + endDateForm.value
+          : ''
+      "
+    >
+      <fui-date-range
+        [dateFormat]="'DD-MM-YYYY'"
+        [startDateControl]="startDateForm"
+        [endDateControl]="endDateForm"
+        (onChangeStartDate)="watchDateChange('start', $event)"
+        (onChangeEndDate)="watchDateChange('end', $event)"
+      />
+    </fui-advance-filter-item>
+    <!-- DATE  -->
 
-    <!-- NAME FORM  -->
-    <div class="form">
-      <fui-text [size]="'s'">Name</fui-text>
-      <div class="time-description">
-        <fui-combo-box
-          (selection)="selectionCombox($event, 'name')"
-          [comboxForm]="nameForm"
+    <!-- MATTER  -->
+    <fui-advance-filter-item
+      [label]="'Name'"
+      [value]="getFormattedNames(nameSelected)"
+    >
+      <fui-combo-box
+        (selection)="selectionCombox($event, 'name')"
+        [comboxForm]="nameForm"
+        [size]="'m'"
+        [placeholder]="'Select name'"
+        [optionValue]="nameOption"
+        [selectedValue]="nameSelected"
+      />
+    </fui-advance-filter-item>
+    <!-- MATTER  -->
+
+    <!-- DESCRIPTION  -->
+    <fui-advance-filter-item
+      [label]="'Time Description'"
+      [value]="descriptionForm.value"
+    >
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="descriptionForm"
+          [placeholder]="'e.g Meeting with client'"
+          [type]="'text'"
           [size]="'m'"
-          [placeholder]="'Select name'"
-          [optionValue]="nameOption"
-          [selectedValue]="nameSelected"
+          [invalid]="false"
         />
-      </div>
-    </div>
-    <!-- NAME FORM  -->
-
-    <!-- DESC FORM  -->
-    <div class="form">
-      <fui-text [size]="'s'">Time Description</fui-text>
-      <div class="time-description">
-        <fui-form-control-layout>
-          <fui-input-field
-            [formControlField]="descriptionForm"
-            [placeholder]="'e.g Meeting with client'"
-            [type]="'text'"
-            [size]="'m'"
-            [invalid]="false"
-          />
-        </fui-form-control-layout>
-      </div>
-    </div>
-    <!-- DESC FORM  -->
-
-    <hr />
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+    <!-- DESCRIPTION  -->
 
     <!-- WRITE OFF FORM  -->
-    <div class="form">
-      <fui-text [size]="'s'">Write-off Status</fui-text>
-      <div class="time-description">
-        <fui-combo-box
-          (selection)="selectionCombox($event, 'writeoff')"
-          [comboxForm]="writeOffStatusForm"
-          [size]="'m'"
-          [singleSelection]="true"
-          [placeholder]="'Select Write-off Status'"
-          [optionValue]="writeOffStatusOption"
-          [selectedValue]="writeOffStatusSelected"
-        />
-      </div>
-    </div>
+    <fui-advance-filter-item
+      [label]="'Write-off Status'"
+      [value]="getFormattedNames(writeOffStatusSelected)"
+    >
+      <fui-combo-box
+        (selection)="selectionCombox($event, 'writeoff')"
+        [comboxForm]="writeOffStatusForm"
+        [size]="'m'"
+        [singleSelection]="true"
+        [placeholder]="'Select Write-off Status'"
+        [optionValue]="writeOffStatusOption"
+        [selectedValue]="writeOffStatusSelected"
+      />
+    </fui-advance-filter-item>
     <!-- WRITE OFF FORM  -->
 
-    <!-- BILLING NUMBER FORM  -->
-    <div class="form">
-      <fui-text [size]="'s'">Billing Number</fui-text>
-      <div class="time-description">
-        <fui-combo-box
-          (selection)="selectionCombox($event, 'billing')"
-          [comboxForm]="billingNumberForm"
-          [size]="'m'"
-          [singleSelection]="true"
-          [placeholder]="'Select Write-off Status'"
-          [optionValue]="billingNumberOption"
-          [selectedValue]="billingNumberSelected"
-        />
-      </div>
-    </div>
-    <!-- BILLING NUMBER FORM  -->
-  </div>
-  <!-- BODY FLYOUT  -->
-
-  <!-- FOOTER FLYOUT FILTER  -->
-  <div class="footer-flyout" footer>
-    <fui-button-icon [fullWidth]="'fit'"
-      [type]="'button'"
-      [option]="'text'"
-      [style]="'secondary'"
-      [text]="'Cancel'"
-      [size]="'m'"
-      [color]="'text'"
-      (onClick)="closeOut(false, 'filter')"
-    />
-    <div class="group-flex">
-      <fui-button-icon [fullWidth]="'fit'"
-        [type]="'button'"
-        [option]="'text'"
-        [style]="'secondary'"
-        [text]="'Clear Filter'"
+    <!-- BILLING NUMBER  -->
+    <fui-advance-filter-item
+      [label]="'Billing Number'"
+      [value]="getFormattedNames(billingNumberSelected)"
+    >
+      <fui-combo-box
+        (selection)="selectionCombox($event, 'billing')"
+        [comboxForm]="billingNumberForm"
         [size]="'m'"
-        [color]="'text'"
-        (onClick)="closeOut(false, 'filter')"
+        [singleSelection]="true"
+        [placeholder]="'Select Write-off Status'"
+        [optionValue]="billingNumberOption"
+        [selectedValue]="billingNumberSelected"
       />
-      <fui-button-icon [fullWidth]="'fit'"
-        [type]="'button'"
-        [option]="'iconText'"
-        [style]="'filled'"
-        [text]="'Apply Filter'"
-        [size]="'m'"
-        [color]="'primary'"
-        [icon]="'filter'"
-        (onClick)="closeOut(false, 'filter')"
-      />
-    </div>
-  </div>
-  <!-- FOOTER FLYOUT FILTER  -->
-</shared-flyout-simple>
-<!-- FILTER FLYOUT  -->
+    </fui-advance-filter-item>
+    <!-- BILLING NUMBER  -->
+  </fui-advance-filter-section>
+</fui-advance-filter>
+<!-- FILTER  -->
 
 <!-- EDIT FLYOUT  -->
 <shared-flyout-timesheet

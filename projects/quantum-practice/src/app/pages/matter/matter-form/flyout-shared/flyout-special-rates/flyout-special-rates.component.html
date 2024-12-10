@@ -1,0 +1,85 @@
+<shared-flyout-simple
+  [isOpenFlyout]="isFlyoutSpecialRates"
+  [titleFlyout]="title"
+  (closeOut)="openCloseFlyout()"
+>
+  <div body>
+    <!-- MEMBER NAME  -->
+    <div class="form-control">
+      <fui-text class="label"> Member Name </fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [disabled]="!isMatterMemberForm"
+          [size]="'m'"
+          [placeholder]="'Please select member name'"
+          [invalid]="false"
+          [formControlField]="matterNumberForm"
+          [selectOptions]="matterNumberOption"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- MEMBER NAME  -->
+
+    <!-- RATE  -->
+    <div class="form-control">
+      <fui-text class="label"> Rate </fui-text>
+      <fui-form-control-layout>
+        <fui-prepend>
+          <fui-text [size]="'xs'" [weight]="'semibold'">{{
+            currencyForm.value
+          }}</fui-text>
+        </fui-prepend>
+        <fui-input-field
+          [formControlField]="rateForm"
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Type rate'"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- RATE  -->
+
+    <div class="grid-2">
+      <!--  PERIOD START  -->
+      <div class="form-control">
+        <fui-text class="label"> Period Start</fui-text>
+        <fui-date-picker
+          [dateFormControl]="startPeriodRateForm"
+          [dateFormat]="'DD-MM-YYYY'"
+        />
+      </div>
+      <!--  PERIOD START  -->
+
+      <!--  PERIOD END  -->
+      <div class="form-control">
+        <fui-text class="label"> Period End</fui-text>
+        <fui-date-picker
+          [align]="'end'"
+          [dateFormControl]="endPeriodRateForm"
+          [dateFormat]="'DD-MM-YYYY'"
+        />
+      </div>
+      <!--  PERIOD END  -->
+    </div>
+  </div>
+  <div footer class="flex-between footer-fly">
+    <fui-button-icon [fullWidth]="'fit'"
+      (onClick)="openCloseFlyout()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'secondary'"
+      [option]="'text'"
+      [text]="'Cancel'"
+    />
+    <fui-button-icon [fullWidth]="'fit'"
+      (onClick)="openCloseFlyout()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'filled'"
+      [option]="'text'"
+      [text]="title"
+    />
+  </div>
+</shared-flyout-simple>

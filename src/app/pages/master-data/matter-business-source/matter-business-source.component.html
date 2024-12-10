@@ -1,0 +1,234 @@
+<shared-page-generic-default
+  [title]="'Matter Business Source'"
+  [description]="'Available matter business source'"
+  [breadcrums]="link">
+  <fui-form-control-layout formsearch>
+    <fui-input-field
+      [type]="'text'"
+      [placeholder]="'Search...'"
+      [size]="'m'"
+      [invalid]="false">
+      <fui-icons
+        left-icon
+        [label]="'left'"
+        [icon]="'search'"
+        [size]="'sizem'"
+        [color]="'text'" />
+    </fui-input-field>
+  </fui-form-control-layout>
+
+  <fui-button-icon
+    cta
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'plus'"
+    [text]="'Add Business Source'"
+    [size]="'m'"
+    (onClick)="toggleOpenFlyout('create', true)" />
+
+  <!-- DATA AVAILABLE  -->
+  <fui-table-tree
+    *ngIf="dataUnit.length > 0"
+    content
+    [limit]="limit"
+    [totalItems]="totalItems"
+    [showInfo]="true"
+    [info]="'Business Source'"
+    [pagination]="true"
+    (onPageChanges)="onPageChanges($event)">
+    <!-- HEADER  -->
+    <fui-table-head-tree
+      *ngFor="let item of title; let i = index"
+      [fieldName]="item"
+      [sortFeature]="false">
+      <fui-text [textWrap]="'nowrap'" [weight]="'semibold'">{{ item
+        }}</fui-text>
+    </fui-table-head-tree>
+    <!-- HEADER  -->
+
+    <!-- LEVEL 1  -->
+    <ng-container *ngFor="let item of dataUnit">
+      <fui-table-row-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <div class="flex">
+            <fui-text> {{ item.name }} </fui-text>
+          </div>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false" style="width: auto;">
+          <div class="flex">
+            <fui-text> {{ item.code }} </fui-text>
+          </div>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false" style="min-width: 200px;">
+          <div class="flex">
+            <fui-text> {{ item.desc }} </fui-text>
+          </div>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <div class="flex">
+            <fui-text> {{ item.basedInfo }} </fui-text>
+          </div>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <div class="flex">
+            <input type="checkbox"  disabled="true" [(ngModel)]="item.showMatter" />
+          </div>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <div class="flex">
+            <input type="checkbox"  disabled="true" [(ngModel)]="item.showConflict" />
+          </div>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [icon]="'pencil'"
+            [size]="'s'"
+            (onClick)="toggleOpenFlyout('update', true)"></fui-button-icon>
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [color]="'danger'"
+            [icon]="'trash'"
+            [size]="'s'"
+            (onClick)="toggleModalDelete({ name: item.name, status: true })"></fui-button-icon>
+        </fui-table-data-tree>
+      </fui-table-row-tree>
+    </ng-container>
+    <!-- LEVEL 1  -->
+  </fui-table-tree>
+  <!-- DATA AVAILABLE  -->
+
+  <!-- EMPTY MESSAGE  -->
+  <shared-empty-data content [dataLength]="dataUnit.length" />
+  <!-- EMPTY MESSAGE  -->
+</shared-page-generic-default>
+
+<!-- FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="openFlyout"
+  [titleFlyout]="createUpdate === 'create' ? 'Add Business Source' : 'Update Business Source'"
+  (closeOut)="toggleOpenFlyout('create', false)">
+  <div body>
+    <!-- NAME  -->
+    <div class="mb-20">
+      <div class="mb-5">
+        <fui-text>Name</fui-text>
+      </div>
+      <fui-form-control-layout>
+        <fui-input-field
+          [placeholder]="'Business source name'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="nameForm"></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- NAME  -->
+
+    <!-- Code  -->
+    <div class="mb-20">
+      <div class="mb-5">
+        <fui-text>Code</fui-text>
+      </div>
+      <fui-form-control-layout>
+        <fui-input-field
+          [placeholder]="'Business source code'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="codeForm"></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- Code  -->
+
+    <!-- Description  -->
+    <div class="mb-20">
+      <div class="mb-5">
+        <fui-text>Description</fui-text>
+      </div>
+      <fui-form-control-layout>
+        <fui-textarea
+          [size]="'m'"
+          [formControlField]="descForm"
+          [rows]="5"
+          [placeholder]="'Business source description'"
+          [invalid]="false">
+        </fui-textarea>
+      </fui-form-control-layout>
+    </div>
+    <!-- Description  -->
+
+    <!-- Based Information  -->
+    <div class="mb-20">
+      <div class="mb-5">
+        <fui-text>Based Information</fui-text>
+      </div>
+      <fui-form-control-layout>
+        <fui-select-field
+          [placeholder]="'Select option'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="basedInfoForm"
+          [selectOptions]="basedInfoOption"></fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- Based Information  -->
+
+    <div class="my-30">
+      <hr>
+    </div>
+
+    <!-- Show in Conflict Check  -->
+    <div class="flex flex-items-center gap-5 hover w-fit mb-20">
+      <input type="checkbox" [(ngModel)]="statusConflict" />
+      <fui-text
+        (click)="statusConflict = !statusConflict">Show in Conflict
+        Check</fui-text>
+    </div>
+    <!-- Show in Conflict Check  -->
+
+    <!-- Show in Matter  -->
+    <div class="flex flex-items-center gap-5 hover w-fit">
+      <input type="checkbox" [(ngModel)]="statusMatter" />
+      <fui-text
+        (click)="statusMatter = !statusMatter">Show in Matter</fui-text>
+    </div>
+    <!-- Show in Matter  -->
+  </div>
+
+  <div footer class="flex flex-between">
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Cancel'"
+      [style]="'empty'"
+      (onClick)="toggleOpenFlyout('create', false)" />
+    <fui-button-icon
+      *ngIf="createUpdate === 'create'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [text]="'Save'"
+      [icon]="'save'"
+      (onClick)="toggleUpdateCreateData('create', false)" />
+    <fui-button-icon
+      *ngIf="createUpdate === 'update'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [text]="'Update'"
+      [icon]="'pencil'"
+      (onClick)="toggleUpdateCreateData('update', false)" />
+  </div>
+</shared-flyout-simple>
+<!-- FLYOUT  -->
+
+<!-- MODAL DELETE  -->
+<shared-modal-delete
+  [openModalDelete]="openModalDelete"
+  (actionOut)="toggleModalDelete($event)" />
+<!-- MODAL DELETE  -->

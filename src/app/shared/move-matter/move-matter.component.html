@@ -1,4 +1,4 @@
-<div class="flex">
+<div class="flex flex-items-center gap-10">
   <fui-badge
     [color]="'default'"
     [size]="'s'"
@@ -6,36 +6,38 @@
     [icon]="'cross'"
     [iconPosition]="'end'"
     (iconOnClick)="toggleReset()"
-    [text]="totalItemSelected + ' item on page selected'"
-  >
+    [text]="totalItemSelected + ' item on page selected'">
   </fui-badge>
   <div class="vertical-line"></div>
-  <div class="toggle" (click)="toggleOpenCloseModal(true)">
-    <fui-icons [icon]="'push'" [size]="'sizem'" [color]="'primary'" />
-    <p class="toggle-clear">Move</p>
-  </div>
-  <div
-    class="toggle danger"
-    *ngIf="writeOff"
-    (click)="toggleOpenCloseModal(true)"
-  >
-    <p class="toggle-clear danger">Write-off</p>
-  </div>
+  <fui-button-icon [fullWidth]="'fit'" [type]="'button'" [option]="'iconText'"
+    [icon]="'push'"
+    [style]="'empty'" [text]="'Move'" (onClick)="toggleOpenCloseModal(true)" />
+  <fui-button-icon *ngIf="writeOff" [fullWidth]="'fit'" [type]="'button'"
+    [option]="'text'"
+    [color]="'danger'"
+    [style]="'empty'" [text]="'Write-off'"
+    (onClick)="toggleOpenCloseModal(true)" />
 </div>
 
 <!-- MODAL MOVE  -->
 <fui-modal [open]="isModalOpen">
   <fui-modal-header (onCloseModal)="toggleOpenCloseModal(false)">
-    <div class="header-modal"><h1>Move Time</h1></div>
+    <div class="p-10">
+      <fui-text [weight]="'bold'" [size]="'xl'">Move Time</fui-text>
+    </div>
   </fui-modal-header>
   <fui-modal-body>
-    <div class="body-modal">
-      <p>Move timesheet from this matter to other matter</p>
-      <div class="selector">
-        <div class="checkbox">
-          <input type="checkbox" [(ngModel)]="showDesc" />
-          <span class="title">Do not show sub-matter</span>
+    <div class="body-modal p-10">
+      <fui-text [size]="'m'">Move timesheet from this matter to other
+        matter</fui-text>
+      <div class="mt-30 mb-20">
+
+        <div class="cursor flex flex-items-center gap-5 mb-10 w-fit"
+          (click)="toggleCheckbox()">
+          <input class="cursor" type="checkbox" [(ngModel)]="showDesc" />
+          <fui-text [size]="'s'">Do not show sub-matter</fui-text>
         </div>
+
         <fui-popover [position]="'bottom'">
           <fui-form-control-layout>
             <fui-input-field
@@ -43,8 +45,7 @@
               [formControlField]="searchForm"
               [type]="'text'"
               [size]="'m'"
-              [invalid]="false"
-            >
+              [invalid]="false">
               <fui-icons left-icon [icon]="'search'" [size]="'sizem'" />
               <fui-loading
                 *ngIf="loading"
@@ -52,8 +53,7 @@
                 right-icon
                 [type]="'spinner'"
                 [isLoading]="true"
-                [size]="'sizel'"
-              ></fui-loading>
+                [size]="'sizel'"></fui-loading>
               <fui-icons
                 *ngIf="
                   searchForm.value !== '' &&
@@ -65,21 +65,27 @@
                 [label]="'right'"
                 [icon]="'cross'"
                 [size]="'sizem'"
-                [color]="'text'"
-              />
+                [color]="'text'" />
             </fui-input-field>
           </fui-form-control-layout>
-          <div popover-body>
-            <div class="container-option">
+          <div popover-body class="p-5">
+            <div
+              class="container-option flex flex-column flex-center border-radius-10 w-full h-fit overflow-y-auto">
               <div
-                class="option-matter"
+                class="option-matter py-5"
                 (click)="toggleSelectMatter(item)"
-                *ngFor="let item of listMatters"
-              >
-                <p class="{{ +showDesc ? 'title mb-0' : 'title' }}">
-                  {{ item.matter }} - {{ item.description }}
-                </p>
-                <p *ngIf="!showDesc">Binford Ltd. Acme Co. and 3 other</p>
+                *ngFor="let item of listMatters">
+                <div class="mb-5">
+                  <fui-text [weight]="'semibold'">{{ item.matter }} - {{
+                    item.description }}</fui-text>
+                </div>
+                <fui-text *ngIf="!showDesc">Binford Ltd.
+                  Acme Co. and 3 other</fui-text>
+
+              </div>
+              <div class="p-5" *ngIf="listMatters.length === 0">
+                <fui-text [size]="'s'">No
+                  Option!</fui-text>
               </div>
             </div>
           </div>
@@ -87,26 +93,26 @@
       </div>
     </div>
   </fui-modal-body>
+
   <fui-modal-footer>
-    <div class="footer-modal">
+    <div class="flex px-10 flex-end mt-10 gap-10">
       <fui-button-icon
         [fullWidth]="'fit'"
         [type]="'button'"
         [option]="'text'"
         [text]="'Cancel'"
-        [color]="'primary'"
-        [style]="'secondary'"
-        (onClick)="toggleOpenCloseModal(false)"
-      />
+        [color]="'text'"
+        [style]="'empty'"
+        (onClick)="toggleOpenCloseModal(false)" />
       <fui-button-icon
         [fullWidth]="'fit'"
         (onClick)="toggleMoveTimesheet()"
         [type]="'button'"
-        [option]="'text'"
+        [option]="'iconText'"
+        [icon]="'push'"
         [text]="'Move Timesheet'"
         [color]="'primary'"
-        [style]="'filled'"
-      />
+        [style]="'filled'" />
     </div>
   </fui-modal-footer>
 </fui-modal>

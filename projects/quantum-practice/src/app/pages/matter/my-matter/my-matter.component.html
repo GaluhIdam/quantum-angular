@@ -1,0 +1,108 @@
+<shared-page-empty [titlePage]="'My Matter'">
+  <!-- FORM SEARCH & FILTER BUTTON  -->
+  <div class="container">
+    <!-- FORM SEARCH -->
+    <fui-form-control-layout>
+      <fui-input-field
+        [type]="'text'"
+        [invalid]="false"
+        [size]="'m'"
+        [placeholder]="'Search by Number or Project Name'"
+      >
+        <fui-icons
+          left-icon
+          [color]="'text'"
+          [icon]="'search'"
+          [size]="'sizem'"
+        />
+      </fui-input-field>
+    </fui-form-control-layout>
+    <!-- FORM SEARCH  -->
+
+    <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+    <fui-button-icon
+      [fullWidth]="'fit'"
+      [color]="'text'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'filter'"
+      [style]="'secondary'"
+      [size]="'m'"
+      [text]="'Filter'"
+      (onClick)="actionFilter(true)"
+    />
+    <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+  </div>
+  <!-- FORM SEARCH & FILTER BUTTON  -->
+
+  <!-- FILTER ADV  -->
+  <shared-adv-my-matter-filter
+    [openFilter]="isOpenAdvFilter"
+    (action)="actionFilter($event)"
+  />
+  <!-- FILTER ADV  -->
+
+  <!-- FILTER SECTION  -->
+  <div class="filter-applied">
+    <!-- FILTER TAB SECTION  -->
+    <div class="overflow">
+      <shared-button-group
+        [btnList]="btnFilterList"
+        (action)="actionFilterBtn($event)"
+      />
+    </div>
+    <!-- FILTER TAB SECTION  -->
+
+    <!-- FILTER APPLIED SECTION  -->
+    <div class="overflow filter">
+      <shared-filter-applied
+        [filterApplied]="filterApplied"
+        (actionOut)="actionFilterApplied($event)"
+      />
+    </div>
+    <!-- FILTER APPLIED SECTION  -->
+  </div>
+
+  <!-- CONTENT CARD LOOP  -->
+  <div class="card-container">
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="1" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="2" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="3" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="4" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="1" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="2" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="3" />
+    </shared-skeleton>
+    <shared-skeleton [active]="loading">
+      <app-content-card [type]="4" />
+    </shared-skeleton>
+  </div>
+  <!-- CONTENT CARD LOOP  -->
+
+  <!-- LOAD BUTTON  -->
+  <div class="loader">
+    <fui-button-icon
+      [fullWidth]="'fit'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'refresh'"
+      [color]="'text'"
+      [style]="'secondary'"
+      [text]="'Load more results'"
+    />
+  </div>
+  <!-- LOAD BUTTON  -->
+</shared-page-empty>

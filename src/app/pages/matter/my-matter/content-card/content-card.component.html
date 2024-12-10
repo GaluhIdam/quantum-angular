@@ -1,31 +1,33 @@
-<div class="card">
-  <div class="row-head">
-    <h1 class="title">5889-1 Matter Project Name</h1>
+<div class="border-radius-10 bg-LightestShade p-30">
+  <div class="flex flex-items-center flex-between">
+    <div class="mb-10">
+      <fui-text [size]="'m'" [weight]="'bold'">5889-1 Matter Project
+        Name</fui-text>
+    </div>
     <fui-button-icon
       [fullWidth]="'fit'"
       (onClick)="gotoPage()"
       [type]="'button'"
       [option]="'icon'"
       [color]="'primary'"
+      [size]="'s'"
       [style]="'secondary'"
-      [icon]="'boxesHorizontal'"
-    />
+      [icon]="'boxesHorizontal'" />
   </div>
-  <div class="row-sub">
-    <div class="badge-group">
+  <div class="my-10">
+    <div class="flex flex-wrap gap-5">
       <fui-badge
         [color]="'hollow'"
         [iconShow]="true"
         [icon]="'node'"
-        [iconSize]="'sizes'"
-        [size]="'s'"
-        [text]="'Ministry of Republic Indonesia'"
-      />
-      <fui-badge [color]="'hollow'" [size]="'s'" [text]="'+2 others'" />
+        [iconSize]="'sizexs'"
+        [size]="'xs'"
+        [text]="'Ministry of Republic Indonesia'" />
+      <fui-badge [color]="'hollow'" [size]="'xs'" [text]="'+2 others'" />
     </div>
   </div>
-  <div class="row-desc">
-    <p class="desc">
+  <div class="my-10 ">
+    <p class="small-txt desc">
       Phasellus accumsan imperdiet tempor. Cras tincidunt, arcu nec eleifend
       porttitor, orci est vehicula Phasellus accumsan imperdiet tempor. Cras
       tincidunt, arcu nec eleifend porttitor, orci est vehicula Phasellus
@@ -38,49 +40,44 @@
   </div>
 
   <div
-    class="row-sub"
+    class="my-10"
     [ngStyle]="{
       visibility: type === 1 || type === 2 || type === 3 ? 'visible' : 'hidden'
-    }"
-  >
+    }">
     <div
-      class="billble"
+      class="flex flex-between w-full my-10"
       [ngStyle]="{
         visibility:
           type === 1 || type === 2 || type === 3 ? 'visible' : 'hidden'
-      }"
-    >
-      <p class="detail left">Partner in Charge</p>
-      <p class="detail right">(BS) Brooklyn Simmons</p>
+      }">
+      <p class="small-txt text-align-left text-nowrap">Partner in Charge</p>
+      <p class="small-txt text-align-right">(BS) Brooklyn Simmons</p>
     </div>
     <div
-      class="billble"
+      class="flex flex-between w-full my-10"
       [ngStyle]="{
         visibility: type === 1 || type === 2 ? 'visible' : 'hidden'
-      }"
-    >
-      <p class="detail left">Unbilled</p>
-      <p class="detail right">USD 25,500.00</p>
+      }">
+      <p class="small-txt text-align-left text-nowrap">Unbilled</p>
+      <p class="small-txt text-align-right">USD 25,500.00</p>
     </div>
     <div
-      class="billble"
+      class="flex flex-between w-full my-10"
       [ngStyle]="{
         visibility: type === 1 || type === 2 ? 'visible' : 'hidden'
-      }"
-    >
-      <p class="detail left">Uncollected</p>
-      <p class="detail right">USD 3,500.00</p>
+      }">
+      <p class="small-txt text-align-left text-nowrap">Uncollected</p>
+      <p class="small-txt text-align-right">USD 3,500.00</p>
     </div>
     <div
-      class="billble"
-      [ngStyle]="{ visibility: type === 1 ? 'visible' : 'hidden' }"
-    ></div>
+      class="flex flex-between w-full my-10"
+      [ngStyle]="{ visibility: type === 1 ? 'visible' : 'hidden' }"></div>
   </div>
 
   <hr />
-  <div class="row-foot">
-    <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Billable'" />
-    <fui-badge [color]="'hollow'" [size]="'s'" [text]="'Hourly'" />
+  <div class="flex flex-wrap gap-10 mt-15">
+    <fui-badge [color]="'hollow'" [size]="'xs'" [text]="'Billable'" />
+    <fui-badge [color]="'hollow'" [size]="'xs'" [text]="'Hourly'" />
     <fui-badge
       [color]="
         type === 1
@@ -91,7 +88,7 @@
           ? 'danger'
           : 'default'
       "
-      [size]="'s'"
+      [size]="'xs'"
       [text]="
         type === 1
           ? 'Active'
@@ -100,16 +97,14 @@
           : type === 3
           ? 'Pending'
           : 'Closed'
-      "
-    />
+      " />
     <fui-badge
       [iconShow]="true"
       [color]="'hollow'"
       [iconPosition]="'start'"
       [icon]="'timeRefresh'"
-      [size]="'s'"
-      [iconSize]="'sizes'"
-      [text]="'3 Jan 24'"
-    />
+      [size]="'xs'"
+      [iconSize]="'sizexs'"
+      [text]="'3 Jan 24'" />
   </div>
 </div>

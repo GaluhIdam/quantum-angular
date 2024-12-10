@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   ButtonIconComponent,
+  CalloutComponent,
   FilterGroupButtonComponent,
   FilterGroupComponent,
   TableBodyComponent,
@@ -37,11 +38,22 @@ import {
     TableBodyComponent,
     TableBodyDataComponent,
     TableBodyRowComponent,
+    CalloutComponent,
   ],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss',
 })
 export class OverviewComponent {
+  type: {
+    billability: 'Billable' | 'Potential Matter' | 'Probono' | 'Non Billable';
+    pricingType?: 'Lumpsum' | 'Retainer' | 'Hourly' | 'Cap';
+    status: 'On Hold' | 'Active';
+  } = {
+    billability: 'Billable',
+    pricingType: 'Hourly',
+    status: 'Active',
+  };
+
   /** Estimated Fee Variable */
   estimatedFee: {
     percentage: number;
@@ -95,6 +107,21 @@ export class OverviewComponent {
     },
   ];
 
+  /** Free  Limit Variable */
+  freeLimit: {
+    percentage: number;
+    color: Color | string;
+  }[] = [
+    {
+      percentage: 70,
+      color: '#E7664C',
+    },
+    {
+      percentage: 30,
+      color: 'disabled',
+    },
+  ];
+
   /** Total Expenses Variable */
   totalExpenses: {
     percentage: number;
@@ -143,9 +170,9 @@ export class OverviewComponent {
     },
   ];
 
-  onlyNonMemberBtn: boolean = true;
+  memberFilterBtn: 'all' | 'matter-members' | 'non-members' = 'all';
 
-  titleTable: string[] = ['Name', 'Duration'];
+  titleTable: string[] = ['Name', 'Total Time Spent'];
   dataTable: { name: string; duration: string }[] = [
     {
       name: 'Jacob Jones (JJ)',
@@ -168,4 +195,9 @@ export class OverviewComponent {
       duration: '2h 30m',
     },
   ];
+
+  /** Toggle filter member */
+  toggleFilterMember(param: 'all' | 'matter-members' | 'non-members'): void {
+    this.memberFilterBtn = param;
+  }
 }

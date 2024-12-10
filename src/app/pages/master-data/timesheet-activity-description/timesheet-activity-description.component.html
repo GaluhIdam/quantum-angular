@@ -1,0 +1,164 @@
+<shared-page-generic-default
+  [title]="'Timesheet Activity Description'"
+  [description]="'Collection of activity words to assist in filling out member timesheet.'"
+  [breadcrums]="link"
+  [filterGroup]="filterGroup">
+  <fui-form-control-layout formsearch>
+    <fui-input-field
+      [type]="'text'"
+      [placeholder]="'Search...'"
+      [size]="'m'"
+      [invalid]="false">
+      <fui-icons
+        left-icon
+        [label]="'left'"
+        [icon]="'search'"
+        [size]="'sizem'"
+        [color]="'text'" />
+    </fui-input-field>
+  </fui-form-control-layout>
+
+  <fui-button-icon
+    cta
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'plus'"
+    [text]="'Add Activity Description'"
+    [size]="'m'"
+    (onClick)="toggleOpenFlyout('create', true)" />
+
+  <!-- DATA AVAILABLE  -->
+  <fui-table-tree
+    *ngIf="dataUnit.length > 0"
+    content
+    [limit]="limit"
+    [totalItems]="totalItems"
+    [showInfo]="true"
+    [pagination]="true"
+    [info]="'Activity Description'"
+    (onPageChanges)="onPageChanges($event)">
+    <!-- HEADER  -->
+    <fui-table-head-tree
+      *ngFor="let item of title; let i = index"
+      [fieldName]="item"
+      [sortFeature]="false">
+      <fui-text [textWrap]="'nowrap'" [weight]="'semibold'">{{ item
+        }}</fui-text>
+    </fui-table-head-tree>
+    <!-- HEADER  -->
+
+    <!-- LEVEL 1  -->
+    <ng-container *ngFor="let item of dataUnit">
+      <fui-table-row-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <div class="flex">
+            <fui-text [textWrap]="'nowrap'"> {{ item.desc }} </fui-text>
+          </div>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <div class="flex">
+            <fui-badge [size]="'s'" [color]="item.status ? 'primary' : 'default'"
+              [text]="item.status ? 'Active' : 'Inactive'" />
+          </div>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [icon]="'pencil'"
+            [size]="'s'"
+            (onClick)="toggleOpenFlyout('update', true)"></fui-button-icon>
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [color]="'danger'"
+            [icon]="'trash'"
+            [size]="'s'"
+            (onClick)="toggleModalDelete({ name: item.desc, status: true })"></fui-button-icon>
+        </fui-table-data-tree>
+      </fui-table-row-tree>
+    </ng-container>
+    <!-- LEVEL 1  -->
+  </fui-table-tree>
+  <!-- DATA AVAILABLE  -->
+
+  <!-- EMPTY MESSAGE  -->
+  <shared-empty-data content [dataLength]="dataUnit.length" />
+  <!-- EMPTY MESSAGE  -->
+</shared-page-generic-default>
+
+<!-- FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="openFlyout"
+  [titleFlyout]="createUpdate === 'create' ? 'Add Activity Description' : 'Update Activity Description'"
+  (closeOut)="toggleOpenFlyout('create', false)">
+  <div body>
+    <!-- NAME  -->
+    <div class="mb-20">
+      <div class="mb-5">
+        <fui-text>Name</fui-text>
+      </div>
+      <fui-form-control-layout>
+        <fui-input-field
+          [placeholder]="'Activity words or description'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="nameForm"></fui-input-field>
+      </fui-form-control-layout>
+      <div class="mt-5" *ngIf="createUpdate === 'update'">
+        <fui-text [size]="'s'" [color]="'text'">This data cannot be modified as
+          it
+          is currently in use.</fui-text>
+      </div>
+    </div>
+    <!-- NAME  -->
+
+    <div class="my-30" *ngIf="createUpdate === 'update'">
+      <hr>
+    </div>
+
+    <!-- ACTIVE  -->
+    <div class="flex flex-items-center gap-5 hover w-fit"
+      *ngIf="createUpdate === 'update'">
+      <input type="checkbox" [(ngModel)]="statusDefault" />
+      <fui-text
+        (click)="statusDefault = !statusDefault">Active</fui-text>
+    </div>
+    <!-- ACTIVE  -->
+  </div>
+
+  <div footer class="flex flex-between">
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Cancel'"
+      [style]="'empty'"
+      (onClick)="toggleOpenFlyout('create', false)" />
+    <fui-button-icon
+      *ngIf="createUpdate === 'create'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [text]="'Save'"
+      [icon]="'save'"
+      (onClick)="toggleUpdateCreateData('create', false)" />
+    <fui-button-icon
+      *ngIf="createUpdate === 'update'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [text]="'Update'"
+      [icon]="'pencil'"
+      (onClick)="toggleUpdateCreateData('update', false)" />
+  </div>
+</shared-flyout-simple>
+<!-- FLYOUT  -->
+
+<!-- MODAL DELETE  -->
+<shared-modal-delete
+  [openModalDelete]="openModalDelete"
+  (actionOut)="toggleModalDelete($event)" />
+<!-- MODAL DELETE  -->

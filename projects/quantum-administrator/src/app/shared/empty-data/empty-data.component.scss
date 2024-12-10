@@ -1,0 +1,21 @@
+@import "../../../styles.scss";
+
+/** Not Found Style */
+.not-found-wrap {
+  padding: 50px 0px;
+  background-color: var(--fuiColorEmptyShade, $fuiColorEmptyShade);
+  border-radius: 8px;
+  .title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-style: italic;
+    color: var(--fuiColorMediumShade, $fuiColorMediumShade);
+  }
+  .sub-title {
+    font-size: small;
+    text-align: center;
+    font-style: italic;
+    color: var(--fuiColorDarkShade, $fuiColorDarkShade);
+  }
+}

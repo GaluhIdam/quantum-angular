@@ -1,7 +1,6 @@
 <div class="card">
-  <fui-text class="head-label" [weight]="'semibold'"
-    >General Information</fui-text
-  >
+  <fui-text class="head-label" [weight]="'semibold'">General
+    Information</fui-text>
 
   <div class="grid-3">
     <!-- MATTER NUMBER  -->
@@ -12,8 +11,7 @@
           [type]="'text'"
           [invalid]="false"
           [placeholder]="'Type matter number'"
-          [size]="'m'"
-        ></fui-input-field>
+          [size]="'m'"></fui-input-field>
         <fui-append>
           <fui-icons [color]="'primary'" [icon]="'refresh'" />
         </fui-append>
@@ -29,11 +27,9 @@
           <input
             type="checkbox"
             [checked]="isParentMatter"
-            [(ngModel)]="isParentMatter"
-          />
-          <fui-text [size]="'s'" (click)="isParentMatter = !isParentMatter"
-            >N/A</fui-text
-          >
+            [(ngModel)]="isParentMatter" />
+          <fui-text [size]="'s'"
+            (click)="isParentMatter = !isParentMatter">N/A</fui-text>
         </div>
       </div>
       <fui-combo-box
@@ -45,14 +41,11 @@
         [message]="''"
         [leftIcon]="'search'"
         [optionValue]="[]"
-        [selectedValue]="[]"
-      />
+        [selectedValue]="[]" />
       <fui-text
         class="fs-italic mt-10"
         [color]="'disabled'"
-        *ngIf="isParentMatter"
-        >Not Applicable</fui-text
-      >
+        *ngIf="isParentMatter">Not Applicable</fui-text>
     </div>
     <!-- PARENT MATTER  -->
 
@@ -64,13 +57,10 @@
           <input
             type="checkbox"
             [checked]="isConflictSearchId"
-            [(ngModel)]="isConflictSearchId"
-          />
+            [(ngModel)]="isConflictSearchId" />
           <fui-text
             [size]="'s'"
-            (click)="isConflictSearchId = !isConflictSearchId"
-            >N/A</fui-text
-          >
+            (click)="isConflictSearchId = !isConflictSearchId">N/A</fui-text>
         </div>
       </div>
       <fui-form-control-layout *ngIf="!isConflictSearchId">
@@ -79,15 +69,12 @@
           [placeholder]="'Intra conflict search ID'"
           [type]="'text'"
           [invalid]="false"
-          [size]="'m'"
-        ></fui-input-field>
+          [size]="'m'"></fui-input-field>
       </fui-form-control-layout>
       <fui-text
         class="fs-italic mt-10"
         [color]="'disabled'"
-        *ngIf="isConflictSearchId"
-        >Not Applicable</fui-text
-      >
+        *ngIf="isConflictSearchId">Not Applicable</fui-text>
     </div>
     <!-- CONFLICT ID  -->
   </div>
@@ -105,11 +92,9 @@
         <input
           type="checkbox"
           [checked]="isProjectName"
-          [(ngModel)]="isProjectName"
-        />
-        <fui-text [size]="'s'" (click)="isProjectName = !isProjectName"
-          >N/A</fui-text
-        >
+          [(ngModel)]="isProjectName" />
+        <fui-text [size]="'s'"
+          (click)="isProjectName = !isProjectName">N/A</fui-text>
       </div>
     </div>
     <fui-form-control-layout *ngIf="!isProjectName">
@@ -118,12 +103,10 @@
         [placeholder]="'Type project name'"
         [type]="'text'"
         [invalid]="false"
-        [size]="'m'"
-      ></fui-input-field>
+        [size]="'m'"></fui-input-field>
     </fui-form-control-layout>
-    <fui-text class="fs-italic mt-10" [color]="'disabled'" *ngIf="isProjectName"
-      >Not Applicable</fui-text
-    >
+    <fui-text class="fs-italic mt-10" [color]="'disabled'"
+      *ngIf="isProjectName">Not Applicable</fui-text>
   </div>
   <!-- PROJECT NAME  -->
 
@@ -140,8 +123,7 @@
         <input
           type="checkbox"
           [checked]="isMatterShortDesc"
-          [(ngModel)]="isMatterShortDesc"
-        />
+          [(ngModel)]="isMatterShortDesc" />
         <fui-text [size]="'s'">N/A</fui-text>
       </div>
     </div>
@@ -150,16 +132,13 @@
         [formControlField]="matterShortDescForm"
         [placeholder]="'Add matter short description'"
         [size]="'m'"
-        [invalid]="false"
-      >
+        [invalid]="false">
       </fui-textarea>
     </fui-form-control-layout>
     <fui-text
       class="fs-italic mt-10"
       [color]="'disabled'"
-      *ngIf="isMatterShortDesc"
-      >Not Applicable</fui-text
-    >
+      *ngIf="isMatterShortDesc">Not Applicable</fui-text>
   </div>
   <!-- MATTER SHORT DESC  -->
 
@@ -169,8 +148,7 @@
     [ngClass]="{
       'grid-2 mt-20': billabilityForm.value !== 'Nonbillable',
       'mt-20': billabilityForm.value === 'Nonbillable'
-    }"
-  >
+    }">
     <!-- BILLABILITY  -->
     <div class="form-control">
       <fui-text class="label"> Billability </fui-text>
@@ -181,7 +159,7 @@
           [placeholder]="'Please select billability'"
           [invalid]="false"
           [selectOptions]="billableOption"
-        >
+          (change)="changeBillability($event)">
         </fui-select-field>
       </fui-form-control-layout>
     </div>
@@ -199,17 +177,16 @@
               [invalid]="false"
               [disabled]="true"
               [size]="'m'"
-              [placeholder]="'Upload matter form'"
-            ></fui-input-field>
+              [placeholder]="'Upload matter form'"></fui-input-field>
           </fui-form-control-layout>
         </div>
-        <fui-button-icon [fullWidth]="'fit'"
+        <fui-button-icon
+          [fullWidth]="'fit'"
           (onClick)="openFlyoutUploadMatter()"
           [style]="'secondary'"
           [type]="'button'"
           [option]="'icon'"
-          [icon]="'export'"
-        />
+          [icon]="'export'" />
       </div>
     </div>
     <!-- MATTER FORM  -->
@@ -225,8 +202,7 @@
           [formControlField]="practiceMatterForm"
           [placeholder]="'Please select practice matter'"
           [invalid]="false"
-          [selectOptions]="practiceMatterOption"
-        >
+          [selectOptions]="practiceMatterOption">
         </fui-select-field>
       </fui-form-control-layout>
     </div>
@@ -241,8 +217,7 @@
           [formControlField]="matterTypeForm"
           [placeholder]="'Please select matter type'"
           [invalid]="false"
-          [selectOptions]="matterTypeOption"
-        >
+          [selectOptions]="matterTypeOption">
         </fui-select-field>
       </fui-form-control-layout>
     </div>
@@ -262,8 +237,7 @@
         [formControlField]="personInChargeForm"
         [type]="'text'"
         [invalid]="false"
-        [size]="'m'"
-      ></fui-input-field>
+        [size]="'m'"></fui-input-field>
       <fui-append>
         <fui-icons [icon]="'search'" />
       </fui-append>
@@ -286,8 +260,7 @@
           [readonly]="true"
           [type]="'text'"
           [invalid]="false"
-          [size]="'m'"
-        ></fui-input-field>
+          [size]="'m'"></fui-input-field>
         <fui-append>
           <fui-icons [icon]="'search'" [color]="'primary'" />
         </fui-append>
@@ -309,8 +282,7 @@
           [readonly]="true"
           [type]="'text'"
           [invalid]="false"
-          [size]="'m'"
-        ></fui-input-field>
+          [size]="'m'"></fui-input-field>
         <fui-append>
           <fui-icons [icon]="'search'" [color]="'primary'" />
         </fui-append>
@@ -334,8 +306,7 @@
           [size]="'m'"
           [placeholder]="'Select business source'"
           [invalid]="false"
-          [selectOptions]="businessSourceOption"
-        >
+          [selectOptions]="businessSourceOption">
         </fui-select-field>
       </fui-form-control-layout>
     </div>
@@ -356,8 +327,7 @@
           [size]="'m'"
           [placeholder]="'Select business source first'"
           [invalid]="false"
-          [selectOptions]="secondBusinessSourceOption"
-        >
+          [selectOptions]="secondBusinessSourceOption">
         </fui-select-field>
       </fui-form-control-layout>
     </div>
@@ -370,18 +340,16 @@
       <fui-text>Matter Members</fui-text>
       <fui-text [size]="'s'" class="border-badge">{{
         selectedEmployeMatterMember.length
-      }}</fui-text>
+        }}</fui-text>
     </div>
-    <fui-text [color]="'disabled'"
-      >Manage members who will have direct access to the matter</fui-text
-    >
+    <fui-text [color]="'disabled'">Manage members who will have direct access to
+      the matter</fui-text>
 
     <!-- BADGE MEMBER  -->
     <div class="grid-3 mt-10">
       <div
         class="border-badge"
-        *ngFor="let item of selectedEmployeMatterMember"
-      >
+        *ngFor="let item of selectedEmployeMatterMember">
         <div class="p-8">
           <fui-text>{{ item.name }}</fui-text>
           <fui-text class="flex mt-5">{{ item.position }}</fui-text>
@@ -391,12 +359,11 @@
     <fui-text
       class="fs-italic"
       [color]="'disabled'"
-      *ngIf="selectedEmployeMatterMember.length === 0"
-      >No Available</fui-text
-    >
+      *ngIf="selectedEmployeMatterMember.length === 0">No Available</fui-text>
     <!-- BADGE MEMBER  -->
 
-    <fui-button-icon [fullWidth]="'fit'"
+    <fui-button-icon
+      [fullWidth]="'fit'"
       (onClick)="openFlyoutManageMember()"
       class="mt-15"
       [style]="'secondary'"
@@ -404,8 +371,7 @@
       [type]="'button'"
       [option]="'iconText'"
       [icon]="'users'"
-      [text]="'Manage Member'"
-    />
+      [text]="'Manage Member'" />
   </div>
   <!-- MATTER MEMBERS  -->
 </div>
@@ -413,8 +379,7 @@
 <!-- UPLOAD MATTER FORM FLYOUT  -->
 <app-flyout-upload-matter
   [isOpenFlyoutUploadMatter]="isOpenFlyoutUploadMatter"
-  (closeOut)="openFlyoutUploadMatter()"
-/>
+  (closeOut)="openFlyoutUploadMatter()" />
 <!-- UPLOAD MATTER FORM FLYOUT  -->
 
 <!-- Matter Member Flyout  -->
@@ -423,6 +388,38 @@
   [allEmployeList]="allEmployeList"
   [selectedEmployeMatterMember]="selectedEmployeMatterMember"
   (closeOut)="openFlyoutManageMember()"
-  (selectionOut)="selectionOut($event)"
-/>
+  (selectionOut)="selectionOut($event)" />
 <!-- Matter Member Flyout  -->
+
+<fui-modal
+  [open]="isModalConfirmBillability"
+  (onClickOverlayModal)="toggleModalChanger(false)">
+  <fui-modal-header (onCloseModal)="toggleModalChanger(false)">
+    <fui-text [weight]="'bold'" [size]="'xl'">Change to {{ billabilityForm.value
+      }}</fui-text>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div style="margin: 20px 0px; max-width: 500px;">
+      <fui-text>Changing this billability will cause all productivity to be
+        counted as
+        {{ billabilityForm.value }}. Are you sure you want to change this
+        value?</fui-text>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer>
+    <div style="display: flex; justify-content: end; gap: 10px">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [style]="'empty'"
+        (onClick)="toggleModalChanger(false, 'cancel')" />
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Change to ' + billabilityForm.value"
+        [color]="'danger'"
+        (onClick)="toggleModalChanger(false, 'change')" />
+    </div>
+  </fui-modal-footer>
+</fui-modal>

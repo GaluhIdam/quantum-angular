@@ -1,0 +1,477 @@
+<shared-page-generic-default
+  [title]="'Matter Types'"
+  [description]="
+    'Available type of works for each practice group and practice area'
+  "
+  [breadcrums]="link"
+  [filterGroup]="filterGroup"
+>
+  <fui-form-control-layout formsearch>
+    <fui-input-field
+      [type]="'text'"
+      [placeholder]="'Search...'"
+      [size]="'m'"
+      [invalid]="false"
+    >
+      <fui-icons
+        left-icon
+        [label]="'left'"
+        [icon]="'search'"
+        [size]="'sizem'"
+        [color]="'text'"
+      />
+    </fui-input-field>
+  </fui-form-control-layout>
+  <fui-button-icon
+    filterbtn
+    [fullWidth]="'fit'"
+    [type]="'button'"
+    [option]="totalFilter > 0 ? 'iconText' : 'icon'"
+    [icon]="'filter'"
+    [text]="'/ ' + totalFilter"
+    [style]="'secondary'"
+    [color]="'text'"
+    (onClick)="openFilter = true"
+  />
+  <fui-button-icon
+    cta
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'plus'"
+    [text]="'Add Matter Type'"
+    [size]="'m'"
+    (onClick)="toggleOpenFlyout('create', true)"
+  />
+
+  <!-- DATA AVAILABLE  -->
+  <fui-table-tree
+    content
+    [limit]="limit"
+    [totalItems]="totalItems"
+    [showInfo]="true"
+    [info]="'Matter Types'"
+    [pagination]="true"
+    (onPageChanges)="onPageChanges($event)"
+  >
+    <!-- HEADER  -->
+    <fui-table-head-tree
+      *ngFor="let item of title; let i = index"
+      [fieldName]="item"
+      [sortFeature]="item === 'Name'"
+      [utils]="{
+        index: i,
+        dataLength: title.length,
+        action: true,
+        activeField: sortData ? sortData.fieldName : ''
+      }"
+      (sortOut)="toggleSort($event)"
+    >
+      <fui-text [textWrap]="'nowrap'">{{ item }}</fui-text>
+    </fui-table-head-tree>
+    <!-- HEADER  -->
+
+    <ng-container *ngFor="let practiceGroup of dataMatterTypes; let x = index">
+      <!-- LEVEL 1  -->
+      <fui-table-row-tree>
+        <fui-table-data-tree
+          [showDropIcon]="practiceGroup.practiceArea.length > 0 ? true : false"
+          (clickOut)="dataShowHide[x].status = !dataShowHide[x].status"
+        >
+          <fui-text [textWrap]="'nowrap'">
+            {{ practiceGroup.practiceGroup }}
+          </fui-text>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false"> </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-badge [text]="'Practice Group'" [color]="'hollow'" />
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false"> </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [icon]="'pencil'"
+            [size]="'s'"
+            (onClick)="toggleOpenFlyout('update', true)"
+          ></fui-button-icon>
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [color]="'danger'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [icon]="'trash'"
+            [size]="'s'"
+            (onClick)="
+              toggleModalDelete({
+                name: practiceGroup.practiceGroup,
+                status: true
+              })
+            "
+          ></fui-button-icon>
+        </fui-table-data-tree>
+      </fui-table-row-tree>
+      <!-- LEVEL 1  -->
+
+      <ng-container
+        *ngFor="let practiceArea of practiceGroup.practiceArea; let y = index"
+      >
+        <!-- LEVEL 2  -->
+        <fui-table-row-tree *ngIf="dataShowHide[x].status">
+          <fui-table-data-tree
+            [showDropIcon]="practiceArea.matter.length > 0 ? true : false"
+            [level]="1"
+            (clickOut)="
+              dataShowHide[x].child[y].status = !dataShowHide[x].child[y].status
+            "
+          >
+            <fui-text [textWrap]="'nowrap'"> {{ practiceArea.name }} </fui-text>
+          </fui-table-data-tree>
+          <fui-table-data-tree [showDropIcon]="false"> </fui-table-data-tree>
+          <fui-table-data-tree [showDropIcon]="false">
+            <fui-badge [text]="'Practice Area'" [color]="'hollow'" />
+          </fui-table-data-tree>
+          <fui-table-data-tree [showDropIcon]="false"> </fui-table-data-tree>
+          <fui-table-data-tree [showDropIcon]="false">
+            <fui-button-icon
+              [fullWidth]="'fit'"
+              [type]="'button'"
+              [style]="'secondary'"
+              [option]="'icon'"
+              [icon]="'pencil'"
+              [size]="'s'"
+              (onClick)="toggleOpenFlyout('update', true)"
+            ></fui-button-icon>
+            <fui-button-icon
+              [fullWidth]="'fit'"
+              [color]="'danger'"
+              [type]="'button'"
+              [style]="'secondary'"
+              [option]="'icon'"
+              [icon]="'trash'"
+              [size]="'s'"
+              (onClick)="
+                toggleModalDelete({ name: practiceArea.name, status: true })
+              "
+            ></fui-button-icon>
+          </fui-table-data-tree>
+        </fui-table-row-tree>
+        <!-- LEVEL 2  -->
+
+        <ng-container *ngFor="let matter of practiceArea.matter">
+          <!-- LEVEL 3  -->
+          <fui-table-row-tree *ngIf="dataShowHide[x].child[y].status">
+            <fui-table-data-tree
+              [showDropIcon]="false"
+              [level]="2"
+              (clickOut)="
+                dataShowHide[x].child[y].status =
+                  !dataShowHide[x].child[y].status
+              "
+            >
+              <div class="block-data">
+                <fui-text [textWrap]="'nowrap'">
+                  {{ matter.matterTypeName }}
+                </fui-text>
+                <div class="flex-link" *ngIf="matter.skills.length > 0">
+                  <fui-icons
+                    [icon]="'unlink'"
+                    [size]="'sizes'"
+                    [color]="'disabled'"
+                  />
+                  <fui-text [textWrap]="'nowrap'" [size]="'s'" [color]="'text'">
+                    Linked to
+                    {{ matter.skills.length }} skills
+                  </fui-text>
+                </div>
+              </div>
+            </fui-table-data-tree>
+            <fui-table-data-tree [showDropIcon]="false"
+              ><fui-badge [text]="matter.matterTypeCode" [color]="'hollow'"
+            /></fui-table-data-tree>
+            <fui-table-data-tree [showDropIcon]="false">
+              <fui-badge [text]="'Matter Types'" [color]="'hollow'" />
+            </fui-table-data-tree>
+            <fui-table-data-tree [showDropIcon]="false"
+              ><fui-badge
+                [text]="matter.status ? 'Active' : 'Inactive'"
+                [color]="matter.status ? 'success' : 'default'"
+            /></fui-table-data-tree>
+            <fui-table-data-tree [showDropIcon]="false">
+              <fui-button-icon
+                [fullWidth]="'fit'"
+                [type]="'button'"
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'pencil'"
+                [size]="'s'"
+                (onClick)="toggleOpenFlyout('update', true)"
+              ></fui-button-icon>
+              <fui-button-icon
+                [fullWidth]="'fit'"
+                [color]="'danger'"
+                [type]="'button'"
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'trash'"
+                [size]="'s'"
+                (onClick)="
+                  toggleModalDelete({
+                    name: matter.matterTypeName,
+                    status: true
+                  })
+                "
+              ></fui-button-icon>
+            </fui-table-data-tree>
+          </fui-table-row-tree>
+          <!-- LEVEL 3  -->
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </fui-table-tree>
+  <!-- DATA AVAILABLE  -->
+
+  <!-- EMPTY MESSAGE  -->
+  <shared-empty-data content [dataLength]="dataMatterTypes.length" />
+  <!-- EMPTY MESSAGE  -->
+</shared-page-generic-default>
+
+<!-- FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="openFlyout"
+  [titleFlyout]="
+    createUpdate === 'create' ? 'Add Matter Type' : 'Update Matter Type'
+  "
+  (closeOut)="toggleOpenFlyout('create', false)"
+>
+  <div body>
+    <!-- PG FORM  -->
+    <div class="mb-15">
+      <fui-text class="label">Practice Group</fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [placeholder]="'Select practice group'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="pgForm"
+          [selectOptions]="selectOptionPG"
+        ></fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- PG FORM  -->
+
+    <!-- PA FORM  -->
+    <div class="mb-15">
+      <fui-text class="label">Practice Area</fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [placeholder]="'Select practice area'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="paForm"
+          [selectOptions]="selectOptionPA"
+        ></fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- PA FORM  -->
+
+    <div class="my-25">
+      <hr />
+    </div>
+
+    <!-- MATTER TYPE NAME -->
+    <div class="mb-15">
+      <fui-text class="label">Matter Type Name</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [placeholder]="'Input matter type'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- MATTER TYPE NAME -->
+
+    <!-- MATTER CODE NAME -->
+    <div class="mb-15">
+      <fui-text class="label">Matter Type Code</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [placeholder]="'Input code'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- MATTER CODE NAME -->
+
+    <!-- STATUS  -->
+    <div class="mb-15">
+      <fui-text class="label">Status</fui-text>
+      <div class="flex-10-start hover">
+        <input class="clicked" type="checkbox" [(ngModel)]="statusMatter" />
+        <fui-text class="clicked" (click)="statusMatter = !statusMatter"
+          >Active</fui-text
+        >
+      </div>
+    </div>
+    <!-- STATUS  -->
+
+    <div class="my-25">
+      <hr />
+    </div>
+
+    <!-- CHECKBOX  -->
+    <div class="mb-15">
+      <div class="flex-10-start hover" (click)="toggleCheckHaveSkill()">
+        <input class="clicked" type="checkbox" [(ngModel)]="haveAssocited" />
+        <fui-text class="clicked"
+          >Have Associated Skills ({{ selectedSkills.length }})</fui-text
+        >
+      </div>
+    </div>
+    <!-- CHECKBOX  -->
+
+    <!-- SKILLS -->
+    <div class="mb-15" *ngIf="haveAssocited">
+      <fui-text class="label">Search Skills</fui-text>
+      <fui-combo-box
+        [placeholder]="'Select'"
+        [selectedValue]="selectedSkills"
+        [optionValue]="selectOptionSkills"
+        [maxShow]="5"
+        (selection)="selectionSkill($event)"
+      />
+    </div>
+    <!-- SKILLS -->
+
+    <!-- SKILL SELECTED  -->
+    <div
+      class="flex-between mb-15 border-label-selected"
+      *ngFor="let item of selectedSkills"
+    >
+      <p class="hide-text">{{ item.name }}</p>
+      <fui-button-icon
+        [size]="'s'"
+        [fullWidth]="'fit'"
+        [type]="'button'"
+        [option]="'icon'"
+        [icon]="'cross'"
+        [style]="'secondary'"
+        [color]="'text'"
+        (onClick)="toggleRemoveSkill(item)"
+      />
+    </div>
+    <!-- SKILL SELECTED  -->
+
+    <div class="my-25">
+      <hr />
+    </div>
+
+    <!-- CHECKBOX  -->
+    <div class="mb-15">
+      <div class="flex-10-start hover">
+        <input class="clicked" type="checkbox" [(ngModel)]="showAppraisal" />
+        <fui-text class="clicked" (click)="showAppraisal = !showAppraisal"
+          >Show In Appraisals
+        </fui-text>
+        <fui-tooltip
+          [position]="'top'"
+          [title]="'Hey there, I m using whatsapp!'"
+        >
+          <fui-icons [icon]="'questionInCircle'" />
+        </fui-tooltip>
+      </div>
+    </div>
+    <!-- CHECKBOX  -->
+  </div>
+
+  <div footer class="flex-between">
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Cancel'"
+      [style]="'empty'"
+      (onClick)="toggleOpenFlyout('create', false)"
+    />
+    <fui-button-icon
+      *ngIf="createUpdate === 'create'"
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Save'"
+      [style]="'secondary'"
+      (onClick)="toggleUpdateCreateData('create', false)"
+    />
+    <fui-button-icon
+      *ngIf="createUpdate === 'update'"
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Update Matter Type'"
+      [style]="'secondary'"
+      (onClick)="toggleUpdateCreateData('update', false)"
+    />
+  </div>
+</shared-flyout-simple>
+<!-- FLYOUT  -->
+
+<!-- FILTER  -->
+<fui-advance-filter [openFilter]="openFilter" (actionOut)="actionOut($event)">
+  <fui-advance-filter-section [title]="'General'">
+    <!-- PG  -->
+    <fui-advance-filter-item
+      [label]="'Practice Group'"
+      [value]="getFormattedNames(selectedValuePg)"
+    >
+      <fui-combo-box
+        [optionValue]="optionValuePg"
+        [selectedValue]="selectedValuePg"
+        (selection)="catchChange($event, 'pg')"
+        [placeholder]="'Select practice group'"
+      />
+    </fui-advance-filter-item>
+    <!-- PG  -->
+
+    <!-- PA  -->
+    <fui-advance-filter-item
+      [label]="'Practice Area'"
+      [value]="getFormattedNames(selectedValuePa)"
+    >
+      <fui-combo-box
+        [optionValue]="optionValuePa"
+        [selectedValue]="selectedValuePa"
+        (selection)="catchChange($event, 'pa')"
+        [placeholder]="'Select practice area'"
+      />
+    </fui-advance-filter-item>
+    <!-- PA  -->
+
+    <!-- AIA  -->
+    <fui-advance-filter-item
+      [label]="'Available in Appraisals'"
+      [value]="aiaForm.value"
+    >
+      <fui-form-control-layout>
+        <fui-select-field
+          [placeholder]="'Select practice area'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="aiaForm"
+          [selectOptions]="optionValueAIA"
+        ></fui-select-field>
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+    <!-- AIA  -->
+  </fui-advance-filter-section>
+</fui-advance-filter>
+<!-- FILTER  -->
+
+<!-- MODAL DELETE  -->
+<shared-modal-delete
+  [openModalDelete]="openModalDelete"
+  (actionOut)="toggleModalDelete($event)"
+/>
+<!-- MODAL DELETE  -->

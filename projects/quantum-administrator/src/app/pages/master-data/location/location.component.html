@@ -1,0 +1,297 @@
+<shared-page-generic-default
+  [title]="'Location'"
+  [description]="'Setup available countries, provinces and cities'"
+  [breadcrums]="link"
+>
+  <fui-form-control-layout formsearch>
+    <fui-input-field
+      [type]="'text'"
+      [placeholder]="'Search...'"
+      [size]="'m'"
+      [invalid]="false"
+    >
+      <fui-icons
+        left-icon
+        [label]="'left'"
+        [icon]="'search'"
+        [size]="'sizem'"
+        [color]="'text'"
+      />
+    </fui-input-field>
+  </fui-form-control-layout>
+
+  <fui-button-icon
+    cta
+    [type]="'button'"
+    [option]="'iconText'"
+    [icon]="'plus'"
+    [text]="'Add Location'"
+    [size]="'m'"
+    (onClick)="toggleOpenFlyout('create', true)"
+  />
+
+  <!-- DATA AVAILABLE  -->
+  <fui-table-tree
+    content
+    [limit]="limit"
+    [totalItems]="totalItems"
+    [showInfo]="false"
+    [pagination]="false"
+    (onPageChanges)="onPageChanges($event)"
+  >
+    <!-- HEADER  -->
+    <fui-table-head-tree
+      *ngFor="let item of title; let i = index"
+      [fieldName]="item"
+      [sortFeature]="item === 'Name'"
+      [utils]="{
+        index: i,
+        dataLength: title.length,
+        action: true,
+        activeField: sortData ? sortData.fieldName : ''
+      }"
+      (sortOut)="toggleSort($event)"
+    >
+      <fui-text [textWrap]="'nowrap'">{{ item }}</fui-text>
+    </fui-table-head-tree>
+    <!-- HEADER  -->
+
+    <ng-container *ngFor="let country of dataLocation; let x = index">
+      <!-- LEVEL 1  -->
+      <fui-table-row-tree>
+        <fui-table-data-tree
+          [showDropIcon]="country.child.length > 0 ? true : false"
+          (clickOut)="dataShowHide[x].status = !dataShowHide[x].status"
+        >
+          <fui-text [textWrap]="'nowrap'"> {{ country.location }} </fui-text>
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-badge [text]="country.type" [color]="'hollow'" />
+        </fui-table-data-tree>
+        <fui-table-data-tree [showDropIcon]="false">
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [icon]="'pencil'"
+            [size]="'s'"
+            (onClick)="toggleOpenFlyout('update', true)"
+          ></fui-button-icon>
+          <fui-button-icon
+            [fullWidth]="'fit'"
+            [color]="'danger'"
+            [type]="'button'"
+            [style]="'secondary'"
+            [option]="'icon'"
+            [icon]="'trash'"
+            [size]="'s'"
+            (onClick)="
+              toggleModalDelete({ name: country.location, status: true })
+            "
+          ></fui-button-icon>
+        </fui-table-data-tree>
+      </fui-table-row-tree>
+      <!-- LEVEL 1  -->
+
+      <ng-container *ngFor="let province of country.child; let y = index">
+        <!-- LEVEL 2  -->
+        <fui-table-row-tree *ngIf="dataShowHide[x].status">
+          <fui-table-data-tree
+            [showDropIcon]="province.child.length > 0 ? true : false"
+            [level]="1"
+            (clickOut)="
+              dataShowHide[x].child[y].status = !dataShowHide[x].child[y].status
+            "
+          >
+            <fui-text [textWrap]="'nowrap'"> {{ province.location }} </fui-text>
+          </fui-table-data-tree>
+          <fui-table-data-tree [showDropIcon]="false">
+            <fui-badge [text]="province.type" [color]="'hollow'" />
+          </fui-table-data-tree>
+          <fui-table-data-tree [showDropIcon]="false">
+            <fui-button-icon
+              [fullWidth]="'fit'"
+              [type]="'button'"
+              [style]="'secondary'"
+              [option]="'icon'"
+              [icon]="'pencil'"
+              [size]="'s'"
+              (onClick)="toggleOpenFlyout('update', true)"
+            ></fui-button-icon>
+            <fui-button-icon
+              [fullWidth]="'fit'"
+              [color]="'danger'"
+              [type]="'button'"
+              [style]="'secondary'"
+              [option]="'icon'"
+              [icon]="'trash'"
+              [size]="'s'"
+              (onClick)="
+                toggleModalDelete({ name: country.location, status: true })
+              "
+            ></fui-button-icon>
+          </fui-table-data-tree>
+        </fui-table-row-tree>
+        <!-- LEVEL 2  -->
+
+        <!-- LEVEL 3  -->
+        <ng-container *ngFor="let city of province.child">
+          <fui-table-row-tree *ngIf="dataShowHide[x].child[y].status">
+            <fui-table-data-tree [showDropIcon]="false" [level]="1">
+              <fui-text [textWrap]="'nowrap'">
+                {{ city.location }}
+              </fui-text>
+            </fui-table-data-tree>
+            <fui-table-data-tree [showDropIcon]="false">
+              <fui-badge [text]="city.type" [color]="'hollow'" />
+            </fui-table-data-tree>
+            <fui-table-data-tree [showDropIcon]="false">
+              <fui-button-icon
+                [fullWidth]="'fit'"
+                [type]="'button'"
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'pencil'"
+                [size]="'s'"
+                (onClick)="toggleOpenFlyout('update', true)"
+              ></fui-button-icon>
+              <fui-button-icon
+                [fullWidth]="'fit'"
+                [color]="'danger'"
+                [type]="'button'"
+                [style]="'secondary'"
+                [option]="'icon'"
+                [icon]="'trash'"
+                [size]="'s'"
+                (onClick)="
+                  toggleModalDelete({ name: city.location, status: true })
+                "
+              ></fui-button-icon>
+            </fui-table-data-tree>
+          </fui-table-row-tree>
+        </ng-container>
+        <!-- LEVEL 3  -->
+      </ng-container>
+    </ng-container>
+  </fui-table-tree>
+  <!-- DATA AVAILABLE  -->
+
+  <!-- EMPTY MESSAGE  -->
+  <shared-empty-data content [dataLength]="dataLocation.length" />
+  <!-- EMPTY MESSAGE  -->
+</shared-page-generic-default>
+
+<!-- FLYOUT  -->
+<shared-flyout-simple
+  [isOpenFlyout]="openFlyout"
+  [titleFlyout]="createUpdate === 'create' ? 'Add Location' : 'Update Location'"
+  (closeOut)="toggleOpenFlyout('create', false)"
+>
+  <div body>
+    <div class="mb-15">
+      <fui-text class="label">Select location type to be add</fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [placeholder]="'Country, Province or City'"
+          [invalid]="false"
+          [formControlField]="locationForm"
+          [selectOptions]="selectOption"
+        ></fui-select-field>
+      </fui-form-control-layout>
+    </div>
+
+    <div
+      class="my-25"
+      *ngIf="locationForm.value === 'Province' || locationForm.value === 'City'"
+    >
+      <hr />
+    </div>
+
+    <!-- COUNTRY  -->
+    <div
+      class="mb-15"
+      *ngIf="locationForm.value === 'Province' || locationForm.value === 'City'"
+    >
+      <fui-text class="label">Country</fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [placeholder]="'Select country'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="countryForm"
+          [selectOptions]="countryOption"
+        ></fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- COUNTRY  -->
+
+    <!-- PROVINCE  -->
+    <div class="mb-15" *ngIf="locationForm.value === 'City'">
+      <fui-text class="label">Province</fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [placeholder]="'Select province'"
+          [size]="'m'"
+          [invalid]="false"
+          [formControlField]="provinceForm"
+          [selectOptions]="provinceOption"
+        ></fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- PROVINCE  -->
+
+    <!-- FORM INPUT LOCATION NAME -->
+    <div
+      class="mb-15"
+      *ngIf="locationForm.value !== '' && locationForm.value !== null"
+    >
+      <fui-text class="label">{{ locationForm.value }} Name</fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [placeholder]="'Input location name'"
+          [type]="'text'"
+          [size]="'m'"
+          [invalid]="false"
+        ></fui-input-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- FORM INPUT LOCATION NAME -->
+  </div>
+
+  <div footer class="flex-between">
+    <fui-button-icon
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Cancel'"
+      [style]="'empty'"
+      (onClick)="toggleOpenFlyout('create', false)"
+    />
+    <fui-button-icon
+      *ngIf="createUpdate === 'create'"
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Save'"
+      [style]="'secondary'"
+      (onClick)="toggleUpdateCreateData('create', false)"
+    />
+    <fui-button-icon
+      *ngIf="createUpdate === 'update'"
+      [type]="'button'"
+      [option]="'text'"
+      [text]="'Update Location'"
+      [style]="'secondary'"
+      (onClick)="toggleUpdateCreateData('update', false)"
+    />
+  </div>
+</shared-flyout-simple>
+<!-- FLYOUT  -->
+
+<!-- MODAL DELETE  -->
+<shared-modal-delete
+  [openModalDelete]="openModalDelete"
+  (actionOut)="toggleModalDelete($event)"
+/>
+<!-- MODAL DELETE  -->
+

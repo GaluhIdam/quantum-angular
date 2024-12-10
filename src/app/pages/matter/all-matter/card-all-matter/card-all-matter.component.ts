@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   BadgeComponent,
+  ButtonIconComponent,
   IconsComponent,
   LinkComponent,
   TextComponent,
@@ -16,6 +17,7 @@ import {
     BadgeComponent,
     IconsComponent,
     TextComponent,
+    ButtonIconComponent,
   ],
   templateUrl: './card-all-matter.component.html',
   styleUrl: './card-all-matter.component.scss',

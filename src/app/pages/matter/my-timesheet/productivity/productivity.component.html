@@ -1,74 +1,76 @@
-<div class="header productivity">
-  <div class="grid-1">
-    <fui-text [weight]="'semibold'" [size]="'m'">Productivity</fui-text>
-    <fui-text [color]="'text'" [fwStyle]="'italic'" [size]="'s'"
-      >Refreshed daily</fui-text
-    >
+<div class="flex flex-between flex-items-baseline mb-30">
+  <div>
+    <div class="mb-5">
+      <fui-text [weight]="'semibold'" [size]="'m'">Productivity</fui-text>
+    </div>
+    <fui-text [color]="'text'" [fwStyle]="'italic'" [size]="'s'">Refreshed
+      daily</fui-text>
   </div>
-  <fui-popover [position]="'bottom'">
-    <div class="select">
-      <span class="title-select">{{
+  <fui-popover [position]="'bottom'" [align]="'end'">
+    <div class="flex flex-items-center link-click gap-5">
+      <span class="link-click primary">{{
         period === "month"
-          ? "This Month"
-          : period === "year"
-          ? "This Year"
-          : "Appraisal Year"
-      }}</span>
+        ? "This Month"
+        : period === "year"
+        ? "This Year"
+        : "Appraisal Year"
+        }}</span>
       <fui-icons
-        class="icon-title"
         [icon]="'arrowDown'"
         [size]="'sizes'"
-        [color]="'primary'"
-      />
+        [color]="'primary'" />
     </div>
-    <div popover-body>
-      <div class="container-option">
-        <div class="wrap-icon">
+    <div popover-body class="p-5">
+      <div class="mb-15">
+        <fui-text
+          [size]="'s'"
+          [color]="'text'"
+          [textWrap]="'nowrap'">Select Period</fui-text>
+      </div>
+      <div class="grid grid-col-2 gap-10">
+        <div class="grid grid-col-1 flex-items-baseline">
           <fui-icons
             [ngStyle]="{
               visibility: period === 'month' ? 'visible' : 'hidden'
             }"
-            class="icon-prod"
             [icon]="'check'"
             [size]="'sizes'"
-            [color]="'primary'"
-          />
+            [color]="'primary'" />
           <fui-icons
+            style="margin-top: 10px; display: flex;"
             [ngStyle]="{
-              visibility: period === 'year' ? 'visible' : 'hidden'
+              visibility: period === 'year' ? 'visible' : 'hidden',
             }"
-            class="icon-prod"
             [icon]="'check'"
             [size]="'sizes'"
-            [color]="'primary'"
-          />
+            [color]="'primary'" />
           <fui-icons
+            style="margin-top: 15px; display: flex;"
             [ngStyle]="{
               visibility: period === 'appraisalYear' ? 'visible' : 'hidden'
             }"
-            class="icon-prod"
             [icon]="'check'"
             [size]="'sizes'"
-            [color]="'primary'"
-          />
+            [color]="'primary'" />
         </div>
-        <div class="wrap-option">
-          <span class="option-pop" (click)="toggleSelectRange('month')"
-            >This Month</span
-          >
-          <span class="option-pop" (click)="toggleSelectRange('year')"
-            >This Year</span
-          >
-          <span class="option-pop" (click)="toggleSelectRange('appraisalYear')"
-            >Appraisal year</span
-          >
+        <div class="grid grid-col-1">
+          <span class="link-click mb-10"
+            (click)="toggleSelectRange('month')">This
+            Month</span>
+          <span class="link-click mb-10"
+            (click)="toggleSelectRange('year')">This
+            Year</span>
+          <span class="link-click"
+            (click)="toggleSelectRange('appraisalYear')">Appraisal
+            year</span>
         </div>
       </div>
     </div>
   </fui-popover>
 </div>
-<div class="body" *ngIf="percentageBillabel > 0 || percentageNonBillabel > 0">
-  <div class="progress">
+
+<div *ngIf="percentageBillabel > 0 || percentageNonBillabel > 0">
+  <div class="mb-20">
     <shared-skeleton [active]="loading">
       <fui-progress
         [value]="percentageBillabel"
@@ -80,14 +82,12 @@
           ' of ' +
           dataProductivity.billableTargetHour +
           ' Billable Hours'
-        "
-      />
+        " />
     </shared-skeleton>
   </div>
-  <div class="progress">
+  <div class="mb-20">
     <shared-skeleton [active]="loading">
       <fui-progress
-        class="progress"
         [value]="percentageNonBillabel"
         [max]="dataProductivity.nonbillableTargetHour"
         [color]="'text'"
@@ -97,32 +97,29 @@
           ' of ' +
           dataProductivity.nonbillableTargetHour +
           ' Non-Billable Hours'
-        "
-      />
+        " />
     </shared-skeleton>
   </div>
-  <div class="legend">
-    <span class="legend-title">
+  <div class="flex flex-items-center gap-10 mt-30">
+    <span class="flex flex-items-center gap-5">
       <div class="color-square primary"></div>
       <fui-text [textWrap]="'nowrap'" [size]="'s'">Billable</fui-text>
     </span>
-    <span class="legend-title"
-      ><div class="color-square text"></div>
+    <span class="flex flex-items-center gap-5"><div
+        class="color-square text"></div>
       <fui-text [textWrap]="'nowrap'" [size]="'s'">Non-Billable</fui-text>
     </span>
-    <span class="legend-title"
-      ><div class="color-square disabled"></div>
+    <span class="flex flex-items-center gap-5"><div
+        class="color-square disabled"></div>
       <fui-text [textWrap]="'nowrap'" [size]="'s'">Untracked</fui-text>
     </span>
   </div>
 </div>
 <shared-skeleton
   [active]="loading"
-  *ngIf="percentageBillabel === 0 || percentageNonBillabel === 0"
->
+  *ngIf="percentageBillabel === 0 || percentageNonBillabel === 0">
   <shared-empty-data
     [title]="'N/A'"
     [subTitle]="'You don’t have any target data for productivity'"
-    [dataLength]="0"
-  />
+    [dataLength]="0" />
 </shared-skeleton>

@@ -74,6 +74,18 @@
   height: fit-content;
 }
 
+.card-cs {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 20px;
+  background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
+  position: relative;
+  border-radius: 5px;
+  height: fit-content;
+}
+
 .head-label {
   margin-bottom: 20px;
   display: flex;
@@ -84,7 +96,6 @@
 .flex {
   display: flex;
   gap: 10px;
-  width: 100%;
   &-start {
     display: flex;
     justify-content: start;
@@ -92,6 +103,7 @@
   }
   &-between {
     display: flex;
+    flex-grow: 1;
     justify-content: space-between;
   }
   fui-form-control-layout {
@@ -223,7 +235,6 @@
   text-align: right;
 }
 
-
 @media (max-width: 1000px) {
   .grid {
     display: grid;
@@ -253,8 +264,7 @@
       grid-template-columns: repeat(1, 1fr);
     }
   }
-
   .flex-between {
-    display: block;
+    margin-bottom: 5px;
   }
 }

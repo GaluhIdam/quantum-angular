@@ -1,0 +1,467 @@
+<div class="card">
+  <fui-text class="head-label" [weight]="'semibold'"
+    >General Information</fui-text
+  >
+
+  <div class="grid-3">
+    <!-- MATTER NUMBER  -->
+    <div class="form-control">
+      <fui-text class="label"> Matter Number </fui-text>
+      <fui-form-control-layout>
+        <fui-input-field
+          [type]="'text'"
+          [invalid]="false"
+          [placeholder]="'Type matter number'"
+          [size]="'m'"
+        ></fui-input-field>
+        <fui-append>
+          <fui-icons [color]="'primary'" [icon]="'refresh'" />
+        </fui-append>
+      </fui-form-control-layout>
+    </div>
+    <!-- MATTER NUMBER  -->
+
+    <!-- PARENT MATTER  -->
+    <div class="form-control">
+      <div class="flex-between">
+        <fui-text class="label"> Parent Matter </fui-text>
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            [checked]="isParentMatter"
+            [(ngModel)]="isParentMatter"
+          />
+          <fui-text [size]="'s'" (click)="isParentMatter = !isParentMatter"
+            >N/A</fui-text
+          >
+        </div>
+      </div>
+      <fui-combo-box
+        *ngIf="!isParentMatter"
+        [singleSelection]="true"
+        [comboxForm]="parentMatterForm"
+        [placeholder]="'Type parent matter'"
+        [invalid]="false"
+        [message]="''"
+        [leftIcon]="'search'"
+        [optionValue]="[]"
+        [selectedValue]="[]"
+      />
+      <fui-text
+        class="fs-italic mt-10"
+        [color]="'disabled'"
+        *ngIf="isParentMatter"
+        >Not Applicable</fui-text
+      >
+    </div>
+    <!-- PARENT MATTER  -->
+
+    <!-- CONFLICT ID  -->
+    <div class="form-control">
+      <div class="flex-between">
+        <fui-text class="label"> Conflict Search ID </fui-text>
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            [checked]="isConflictSearchId"
+            [(ngModel)]="isConflictSearchId"
+          />
+          <fui-text
+            [size]="'s'"
+            (click)="isConflictSearchId = !isConflictSearchId"
+            >N/A</fui-text
+          >
+        </div>
+      </div>
+      <fui-form-control-layout *ngIf="!isConflictSearchId">
+        <fui-input-field
+          [formControlField]="conflictSearchIdForm"
+          [placeholder]="'Intra conflict search ID'"
+          [type]="'text'"
+          [invalid]="false"
+          [size]="'m'"
+        ></fui-input-field>
+      </fui-form-control-layout>
+      <fui-text
+        class="fs-italic mt-10"
+        [color]="'disabled'"
+        *ngIf="isConflictSearchId"
+        >Not Applicable</fui-text
+      >
+    </div>
+    <!-- CONFLICT ID  -->
+  </div>
+
+  <!-- PROJECT NAME  -->
+  <div class="form-control">
+    <div class="flex-between">
+      <div class="flex-start">
+        <fui-text class="label"> Project Name </fui-text>
+        <fui-tooltip [position]="'top'" [content]="'Label tooltip'">
+          <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+        </fui-tooltip>
+      </div>
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          [checked]="isProjectName"
+          [(ngModel)]="isProjectName"
+        />
+        <fui-text [size]="'s'" (click)="isProjectName = !isProjectName"
+          >N/A</fui-text
+        >
+      </div>
+    </div>
+    <fui-form-control-layout *ngIf="!isProjectName">
+      <fui-input-field
+        [formControlField]="projectNameForm"
+        [placeholder]="'Type project name'"
+        [type]="'text'"
+        [invalid]="false"
+        [size]="'m'"
+      ></fui-input-field>
+    </fui-form-control-layout>
+    <fui-text class="fs-italic mt-10" [color]="'disabled'" *ngIf="isProjectName"
+      >Not Applicable</fui-text
+    >
+  </div>
+  <!-- PROJECT NAME  -->
+
+  <!-- MATTER SHORT DESC  -->
+  <div class="form-control">
+    <div class="flex-between">
+      <div class="flex-start">
+        <fui-text class="label"> Matter Short Description </fui-text>
+        <fui-tooltip [position]="'top'" [content]="'Label tooltip'">
+          <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+        </fui-tooltip>
+      </div>
+      <div class="checkbox" (click)="isMatterShortDesc = !isMatterShortDesc">
+        <input
+          type="checkbox"
+          [checked]="isMatterShortDesc"
+          [(ngModel)]="isMatterShortDesc"
+        />
+        <fui-text [size]="'s'">N/A</fui-text>
+      </div>
+    </div>
+    <fui-form-control-layout *ngIf="!isMatterShortDesc">
+      <fui-textarea
+        [formControlField]="matterShortDescForm"
+        [placeholder]="'Add matter short description'"
+        [size]="'m'"
+        [invalid]="false"
+      >
+      </fui-textarea>
+    </fui-form-control-layout>
+    <fui-text
+      class="fs-italic mt-10"
+      [color]="'disabled'"
+      *ngIf="isMatterShortDesc"
+      >Not Applicable</fui-text
+    >
+  </div>
+  <!-- MATTER SHORT DESC  -->
+
+  <hr width="300" class="mb-30" />
+
+  <div
+    [ngClass]="{
+      'grid-2 mt-20': billabilityForm.value !== 'Nonbillable',
+      'mt-20': billabilityForm.value === 'Nonbillable'
+    }"
+  >
+    <!-- BILLABILITY  -->
+    <div class="form-control">
+      <fui-text class="label"> Billability </fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [formControlField]="billabilityForm"
+          [placeholder]="'Please select billability'"
+          [invalid]="false"
+          [selectOptions]="billableOption"
+          (change)="changeBillability($event)"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- BILLABILITY  -->
+
+    <!-- MATTER FORM  -->
+    <div class="form-control" *ngIf="billabilityForm.value !== 'Nonbillable'">
+      <div class="flex-between align-end gap-10">
+        <div class="block">
+          <fui-text class="label"> Matter Form </fui-text>
+          <fui-form-control-layout>
+            <fui-input-field
+              [formControlField]="matterForm"
+              [type]="'text'"
+              [invalid]="false"
+              [disabled]="true"
+              [size]="'m'"
+              [placeholder]="'Upload matter form'"
+            ></fui-input-field>
+          </fui-form-control-layout>
+        </div>
+        <fui-button-icon
+          [fullWidth]="'fit'"
+          (onClick)="openFlyoutUploadMatter()"
+          [style]="'secondary'"
+          [type]="'button'"
+          [option]="'icon'"
+          [icon]="'export'"
+        />
+      </div>
+    </div>
+    <!-- MATTER FORM  -->
+  </div>
+
+  <div class="grid-2" *ngIf="billabilityForm.value !== 'Nonbillable'">
+    <!-- PRACTICE MATTER  -->
+    <div class="form-control">
+      <fui-text class="label"> Practice Matter </fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [formControlField]="practiceMatterForm"
+          [placeholder]="'Please select practice matter'"
+          [invalid]="false"
+          [selectOptions]="practiceMatterOption"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- PRACTICE MATTER  -->
+
+    <!-- MATTER TYPE  -->
+    <div class="form-control">
+      <fui-text class="label"> Matter Type </fui-text>
+      <fui-form-control-layout>
+        <fui-select-field
+          [size]="'m'"
+          [formControlField]="matterTypeForm"
+          [placeholder]="'Please select matter type'"
+          [invalid]="false"
+          [selectOptions]="matterTypeOption"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- MATTER TYPE  -->
+  </div>
+
+  <!-- PERSON IN CHARGE  -->
+  <div class="form-control" *ngIf="billabilityForm.value === 'Nonbillable'">
+    <div class="flex-start">
+      <fui-text class="label"> Person in Charge (PIC) </fui-text>
+      <fui-tooltip [position]="'top'" [content]="'Label tooltip'">
+        <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+      </fui-tooltip>
+    </div>
+    <fui-form-control-layout>
+      <fui-input-field
+        [formControlField]="personInChargeForm"
+        [type]="'text'"
+        [invalid]="false"
+        [size]="'m'"
+      ></fui-input-field>
+      <fui-append>
+        <fui-icons [icon]="'search'" />
+      </fui-append>
+    </fui-form-control-layout>
+  </div>
+  <!-- PERSON IN CHARGE  -->
+
+  <div class="grid-2" *ngIf="billabilityForm.value !== 'Nonbillable'">
+    <!-- PARTNER IN CHARGE  -->
+    <div class="form-control">
+      <div class="flex-start">
+        <fui-text class="label"> Partner in Charge (PIC) </fui-text>
+        <fui-tooltip [position]="'top'" [content]="'Label tooltip'">
+          <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+        </fui-tooltip>
+      </div>
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="partnerInChargeForm"
+          [readonly]="true"
+          [type]="'text'"
+          [invalid]="false"
+          [size]="'m'"
+        ></fui-input-field>
+        <fui-append>
+          <fui-icons [icon]="'search'" [color]="'primary'" />
+        </fui-append>
+      </fui-form-control-layout>
+    </div>
+    <!-- PARTNER IN CHARGE  -->
+
+    <!-- PRM  -->
+    <div class="form-control">
+      <div class="flex-start">
+        <fui-text class="label"> Partner Referal Marketing (PRM) </fui-text>
+        <fui-tooltip [position]="'top'" [content]="'Label tooltip'">
+          <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+        </fui-tooltip>
+      </div>
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="partnerReferalMarketingForm"
+          [readonly]="true"
+          [type]="'text'"
+          [invalid]="false"
+          [size]="'m'"
+        ></fui-input-field>
+        <fui-append>
+          <fui-icons [icon]="'search'" [color]="'primary'" />
+        </fui-append>
+      </fui-form-control-layout>
+    </div>
+    <!-- PRM  -->
+  </div>
+
+  <div class="grid-2 align-end" *ngIf="billabilityForm.value !== 'Nonbillable'">
+    <!-- BUSINESS SOURCE  -->
+    <div class="form-control">
+      <div class="flex-start">
+        <fui-text class="label"> Business Source </fui-text>
+        <fui-tooltip [position]="'top'" [content]="'Label tooltip'">
+          <fui-icons [icon]="'questionInCircle'" [size]="'sizes'" />
+        </fui-tooltip>
+      </div>
+      <fui-form-control-layout>
+        <fui-select-field
+          [formControlField]="businessSourceForm"
+          [size]="'m'"
+          [placeholder]="'Select business source'"
+          [invalid]="false"
+          [selectOptions]="businessSourceOption"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- BUSINESS SOURCE  -->
+
+    <!-- SECOND BUSINESS SOURCE  -->
+    <div class="form-control">
+      <fui-form-control-layout>
+        <fui-select-field
+          [formControlField]="secondBusinessSourceForm"
+          [disabled]="
+            businessSourceForm.value === '' ||
+            businessSourceForm.value === null ||
+            businessSourceForm.value === undefined
+              ? true
+              : false
+          "
+          [size]="'m'"
+          [placeholder]="'Select business source first'"
+          [invalid]="false"
+          [selectOptions]="secondBusinessSourceOption"
+        >
+        </fui-select-field>
+      </fui-form-control-layout>
+    </div>
+    <!-- SECOND BUSINESS SOURCE  -->
+  </div>
+
+  <!-- MATTER MEMBERS  -->
+  <div class="grid-1 gap-5">
+    <div class="flex align-center">
+      <fui-text>Matter Members</fui-text>
+      <fui-text [size]="'s'" class="border-badge">{{
+        selectedEmployeMatterMember.length
+      }}</fui-text>
+    </div>
+    <fui-text [color]="'disabled'"
+      >Manage members who will have direct access to the matter</fui-text
+    >
+
+    <!-- BADGE MEMBER  -->
+    <div class="grid-3 mt-10">
+      <div
+        class="border-badge"
+        *ngFor="let item of selectedEmployeMatterMember"
+      >
+        <div class="p-8">
+          <fui-text>{{ item.name }}</fui-text>
+          <fui-text class="flex mt-5">{{ item.position }}</fui-text>
+        </div>
+      </div>
+    </div>
+    <fui-text
+      class="fs-italic"
+      [color]="'disabled'"
+      *ngIf="selectedEmployeMatterMember.length === 0"
+      >No Available</fui-text
+    >
+    <!-- BADGE MEMBER  -->
+
+    <fui-button-icon
+      [fullWidth]="'fit'"
+      (onClick)="openFlyoutManageMember()"
+      class="mt-15"
+      [style]="'secondary'"
+      [color]="'primary'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'users'"
+      [text]="'Manage Member'"
+    />
+  </div>
+  <!-- MATTER MEMBERS  -->
+</div>
+
+<!-- UPLOAD MATTER FORM FLYOUT  -->
+<app-flyout-upload-matter
+  [isOpenFlyoutUploadMatter]="isOpenFlyoutUploadMatter"
+  (closeOut)="openFlyoutUploadMatter()"
+/>
+<!-- UPLOAD MATTER FORM FLYOUT  -->
+
+<!-- Matter Member Flyout  -->
+<app-flyout-matter-members
+  [isOpenFlyoutManageMember]="isOpenFlyoutManageMember"
+  [allEmployeList]="allEmployeList"
+  [selectedEmployeMatterMember]="selectedEmployeMatterMember"
+  (closeOut)="openFlyoutManageMember()"
+  (selectionOut)="selectionOut($event)"
+/>
+<!-- Matter Member Flyout  -->
+
+<fui-modal
+  [open]="isModalConfirmBillability"
+  (onClickOverlayModal)="toggleModalChanger(false)"
+>
+  <fui-modal-header (onCloseModal)="toggleModalChanger(false)">
+    <fui-text>Change to {{ billabilityForm.value }}</fui-text>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div style="margin: 20px 0px">
+      <fui-text
+        >Changing this billability will cause all productivity to be counted as
+        {{ billabilityForm.value }}. Are you sure you want to change this
+        value?</fui-text
+      >
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer>
+    <div style="display: flex; justify-content: end; gap: 10px">
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [style]="'empty'"
+        (onClick)="toggleModalChanger(false, 'cancel')"
+      />
+      <fui-button-icon
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Change to ' + billabilityForm.value"
+        [color]="'danger'"
+        (onClick)="toggleModalChanger(false, 'change')"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>

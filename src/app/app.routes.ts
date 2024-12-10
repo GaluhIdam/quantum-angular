@@ -15,6 +15,9 @@ import { CompanyEntityComponent } from './pages/master-data/company-entity/compa
 import { OfficeLocationComponent } from './pages/master-data/office-location/office-location.component';
 import { PracticeAreaComponent } from './pages/master-data/practice-area/practice-area.component';
 import { IndustryTypeComponent } from './pages/master-data/industry-type/industry-type.component';
+import { UnitComponent } from './pages/master-data/unit/unit.component';
+import { MatterBusinessSourceComponent } from './pages/master-data/matter-business-source/matter-business-source.component';
+import { TimesheetActivityDescriptionComponent } from './pages/master-data/timesheet-activity-description/timesheet-activity-description.component';
 
 export const routes: Routes = [
   /** Home Modules */
@@ -35,7 +38,7 @@ export const routes: Routes = [
     title: 'Access Forbidden',
     path: 'forbidden',
     component: ForbiddenComponent,
-    canActivate: mapToCanActivate([AuthGuard]),
+    // canActivate: mapToCanActivate([AuthGuard]),
   },
 
   /** Matter Modules */
@@ -125,6 +128,24 @@ export const routes: Routes = [
         component: IndustryTypeComponent,
         // canActivate: mapToCanActivate([AuthGuard]),
       },
+      {
+        title: 'Units',
+        path: 'units',
+        component: UnitComponent,
+        // canActivate: mapToCanActivate([AuthGuard]),
+      },
+      {
+        title: 'Matter Business Source',
+        path: 'matter-business-source',
+        component: MatterBusinessSourceComponent,
+        // canActivate: mapToCanActivate([AuthGuard]),
+      },
+      {
+        title: 'Timesheet Activity Description',
+        path: 'timesheet-activity-description',
+        component: TimesheetActivityDescriptionComponent,
+        // canActivate: mapToCanActivate([AuthGuard]),
+      },
     ],
   },
 
@@ -133,6 +154,6 @@ export const routes: Routes = [
     title: 'Page Not Found',
     path: '**',
     component: NotFoundComponent,
-    canActivate: mapToCanActivate([AuthGuard]),
+    // canActivate: mapToCanActivate([AuthGuard]),
   },
 ];

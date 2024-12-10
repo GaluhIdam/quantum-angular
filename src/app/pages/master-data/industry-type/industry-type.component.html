@@ -2,22 +2,19 @@
   [title]="'Industry Types'"
   [description]="'Available industry type for stakeholders'"
   [breadcrums]="link"
-  [filterGroup]="filterGroup"
->
+  [filterGroup]="filterGroup">
   <fui-form-control-layout formsearch>
     <fui-input-field
       [type]="'text'"
       [placeholder]="'Search...'"
       [size]="'m'"
-      [invalid]="false"
-    >
+      [invalid]="false">
       <fui-icons
         left-icon
         [label]="'left'"
         [icon]="'search'"
         [size]="'sizem'"
-        [color]="'text'"
-      />
+        [color]="'text'" />
     </fui-input-field>
   </fui-form-control-layout>
   <fui-button-icon
@@ -29,8 +26,7 @@
     [text]="'/ ' + totalFilter"
     [style]="'secondary'"
     [color]="'text'"
-    (onClick)="openFilter = true"
-  />
+    (onClick)="openFilter = true" />
   <fui-button-icon
     cta
     [type]="'button'"
@@ -38,8 +34,7 @@
     [icon]="'plus'"
     [text]="'Add Industry Type'"
     [size]="'m'"
-    (onClick)="toggleOpenFlyout('create', true)"
-  />
+    (onClick)="toggleOpenFlyout('create', true)" />
 
   <!-- DATA AVAILABLE  -->
   <fui-table-tree
@@ -49,8 +44,7 @@
     [showInfo]="true"
     [info]="'Industry Types'"
     [pagination]="false"
-    (onPageChanges)="onPageChanges($event)"
-  >
+    (onPageChanges)="onPageChanges($event)">
     <!-- HEADER  -->
     <fui-table-head-tree
       *ngFor="let item of title; let i = index"
@@ -62,8 +56,7 @@
         action: true,
         activeField: sortData ? sortData.fieldName : ''
       }"
-      (sortOut)="toggleSort($event)"
-    >
+      (sortOut)="toggleSort($event)">
       <fui-text [textWrap]="'nowrap'">{{ item }}</fui-text>
     </fui-table-head-tree>
     <!-- HEADER  -->
@@ -73,8 +66,7 @@
       <fui-table-row-tree>
         <fui-table-data-tree
           [showDropIcon]="sector.category.length > 0 ? true : false"
-          (clickOut)="dataShowHide[x].status = !dataShowHide[x].status"
-        >
+          (clickOut)="dataShowHide[x].status = !dataShowHide[x].status">
           <fui-text [textWrap]="'nowrap'">
             {{ sector.name }}
           </fui-text>
@@ -89,8 +81,7 @@
             [option]="'icon'"
             [icon]="'pencil'"
             [size]="'s'"
-            (onClick)="toggleOpenFlyout('update', true)"
-          ></fui-button-icon>
+            (onClick)="toggleOpenFlyout('update', true)"></fui-button-icon>
           <fui-button-icon
             [fullWidth]="'fit'"
             [color]="'danger'"
@@ -104,8 +95,7 @@
                 name: sector.name,
                 status: true
               })
-            "
-          ></fui-button-icon>
+            "></fui-button-icon>
         </fui-table-data-tree>
       </fui-table-row-tree>
       <!-- LEVEL 1  -->
@@ -118,8 +108,7 @@
             [level]="1"
             (clickOut)="
               dataShowHide[x].child[y].status = !dataShowHide[x].child[y].status
-            "
-          >
+            ">
             <fui-text [textWrap]="'nowrap'"> {{ category.name }} </fui-text>
           </fui-table-data-tree>
           <fui-table-data-tree [showDropIcon]="false"> </fui-table-data-tree>
@@ -133,8 +122,7 @@
               [option]="'icon'"
               [icon]="'pencil'"
               [size]="'s'"
-              (onClick)="toggleOpenFlyout('update', true)"
-            ></fui-button-icon>
+              (onClick)="toggleOpenFlyout('update', true)"></fui-button-icon>
             <fui-button-icon
               [fullWidth]="'fit'"
               [color]="'danger'"
@@ -145,8 +133,7 @@
               [size]="'s'"
               (onClick)="
                 toggleModalDelete({ name: category.name, status: true })
-              "
-            ></fui-button-icon>
+              "></fui-button-icon>
           </fui-table-data-tree>
         </fui-table-row-tree>
         <!-- LEVEL 2  -->
@@ -160,22 +147,19 @@
               (clickOut)="
                 dataShowHide[x].child[y].status =
                   !dataShowHide[x].child[y].status
-              "
-            >
+              ">
               <div class="block-data">
-                <fui-text [textWrap]="'nowrap'">
+                <fui-text [textWrap]="'nowrap'" [weight]="'semibold'">
                   {{ industry.name }}
                 </fui-text>
               </div>
             </fui-table-data-tree>
-            <fui-table-data-tree [showDropIcon]="false"
-              ><fui-badge [text]="industry.code" [color]="'hollow'"
-            /></fui-table-data-tree>
-            <fui-table-data-tree [showDropIcon]="false"
-              ><fui-badge
+            <fui-table-data-tree [showDropIcon]="false"><fui-badge
+                [text]="industry.code"
+                [color]="'hollow'" /></fui-table-data-tree>
+            <fui-table-data-tree [showDropIcon]="false"><fui-badge
                 [text]="industry.status ? 'Active' : 'Inactive'"
-                [color]="industry.status ? 'success' : 'default'"
-            /></fui-table-data-tree>
+                [color]="industry.status ? 'success' : 'default'" /></fui-table-data-tree>
             <fui-table-data-tree [showDropIcon]="false">
               <fui-button-icon
                 [fullWidth]="'fit'"
@@ -184,8 +168,7 @@
                 [option]="'icon'"
                 [icon]="'pencil'"
                 [size]="'s'"
-                (onClick)="toggleOpenFlyout('update', true)"
-              ></fui-button-icon>
+                (onClick)="toggleOpenFlyout('update', true)"></fui-button-icon>
               <fui-button-icon
                 [fullWidth]="'fit'"
                 [color]="'danger'"
@@ -199,8 +182,7 @@
                     name: industry.name,
                     status: true
                   })
-                "
-              ></fui-button-icon>
+                "></fui-button-icon>
             </fui-table-data-tree>
           </fui-table-row-tree>
           <!-- LEVEL 3  -->
@@ -221,8 +203,7 @@
   [titleFlyout]="
     createUpdate === 'create' ? 'Add Industry Type' : 'Update Industry Type'
   "
-  (closeOut)="toggleOpenFlyout('create', false)"
->
+  (closeOut)="toggleOpenFlyout('create', false)">
   <div body>
     <!-- LOCATION  -->
     <div class="mb-15">
@@ -230,8 +211,7 @@
         [preventClose]="true"
         [displayPopover]="true"
         [position]="'bottom'"
-        [align]="'start'"
-      >
+        [align]="'start'">
         <fui-text class="label">Parent Type</fui-text>
         <fui-form-control-layout>
           <fui-input-field
@@ -239,8 +219,7 @@
             [size]="'m'"
             [placeholder]="'Select parent type'"
             [formControlField]="parentTypeForm"
-            [invalid]="false"
-          ></fui-input-field>
+            [invalid]="false"></fui-input-field>
         </fui-form-control-layout>
         <div popover-body>
           <div class="flex-start">
@@ -251,11 +230,10 @@
               [style]="'empty'"
               [color]="'text'"
               [fullWidth]="'fit'"
-              [icon]="'sortLeft'"
-            />
+              [icon]="'sortLeft'" />
             <fui-text [weight]="'semibold'">{{
               level === 1 ? "Select Industry Type" : industryType
-            }}</fui-text>
+              }}</fui-text>
           </div>
 
           <hr />
@@ -266,8 +244,7 @@
               [placeholder]="'Search'"
               [type]="'text'"
               [size]="'s'"
-              [invalid]="false"
-            >
+              [invalid]="false">
               <fui-icons left-icon [size]="'sizes'" [icon]="'search'" />
             </fui-input-field>
           </fui-form-control-layout>
@@ -278,8 +255,7 @@
           <shared-empty-data
             content
             [dataLength]="dataLocationSub.length"
-            [subTitle]="''"
-          />
+            [subTitle]="''" />
         </div>
       </fui-popover>
     </div>
@@ -298,8 +274,7 @@
           [size]="'m'"
           [placeholder]="'Name of industry type'"
           [invalid]="false"
-          [formControlField]="nameForm"
-        ></fui-input-field>
+          [formControlField]="nameForm"></fui-input-field>
       </fui-form-control-layout>
     </div>
     <!-- NAME  -->
@@ -313,8 +288,7 @@
           [size]="'m'"
           [placeholder]="'Industry type shortcode'"
           [formControlField]="codeForm"
-          [invalid]="false"
-        ></fui-input-field>
+          [invalid]="false"></fui-input-field>
       </fui-form-control-layout>
     </div>
     <!-- CODE  -->
@@ -326,24 +300,21 @@
       [option]="'text'"
       [text]="'Cancel'"
       [style]="'empty'"
-      (onClick)="toggleOpenFlyout('create', false)"
-    />
+      (onClick)="toggleOpenFlyout('create', false)" />
     <fui-button-icon
       *ngIf="createUpdate === 'create'"
       [type]="'button'"
-      [option]="'text'"
+      [option]="'iconText'"
       [text]="'Save'"
-      [style]="'secondary'"
-      (onClick)="toggleUpdateCreateData('create', false)"
-    />
+      [icon]="'save'"
+      (onClick)="toggleUpdateCreateData('create', false)" />
     <fui-button-icon
       *ngIf="createUpdate === 'update'"
       [type]="'button'"
-      [option]="'text'"
-      [text]="'Update Industry Type'"
-      [style]="'secondary'"
-      (onClick)="toggleUpdateCreateData('update', false)"
-    />
+      [option]="'iconText'"
+      [text]="'Update'"
+      [icon]="'pencil'"
+      (onClick)="toggleUpdateCreateData('update', false)" />
   </div>
 </shared-flyout-simple>
 <!-- FLYOUT  -->
@@ -354,44 +325,38 @@
     <!-- PG  -->
     <fui-advance-filter-item
       [label]="'Practice Group'"
-      [value]="getFormattedNames(selectedValuePg)"
-    >
+      [value]="getFormattedNames(selectedValuePg)">
       <fui-combo-box
         [optionValue]="optionValuePg"
         [selectedValue]="selectedValuePg"
         (selection)="catchChange($event, 'pg')"
-        [placeholder]="'Select practice group'"
-      />
+        [placeholder]="'Select practice group'" />
     </fui-advance-filter-item>
     <!-- PG  -->
 
     <!-- PA  -->
     <fui-advance-filter-item
       [label]="'Practice Area'"
-      [value]="getFormattedNames(selectedValuePa)"
-    >
+      [value]="getFormattedNames(selectedValuePa)">
       <fui-combo-box
         [optionValue]="optionValuePa"
         [selectedValue]="selectedValuePa"
         (selection)="catchChange($event, 'pa')"
-        [placeholder]="'Select practice area'"
-      />
+        [placeholder]="'Select practice area'" />
     </fui-advance-filter-item>
     <!-- PA  -->
 
     <!-- AIA  -->
     <fui-advance-filter-item
       [label]="'Available in Appraisals'"
-      [value]="aiaForm.value"
-    >
+      [value]="aiaForm.value">
       <fui-form-control-layout>
         <fui-select-field
           [placeholder]="'Select practice area'"
           [size]="'m'"
           [invalid]="false"
           [formControlField]="aiaForm"
-          [selectOptions]="optionValueAIA"
-        ></fui-select-field>
+          [selectOptions]="optionValueAIA"></fui-select-field>
       </fui-form-control-layout>
     </fui-advance-filter-item>
     <!-- AIA  -->
@@ -402,6 +367,5 @@
 <!-- MODAL DELETE  -->
 <shared-modal-delete
   [openModalDelete]="openModalDelete"
-  (actionOut)="toggleModalDelete($event)"
-/>
+  (actionOut)="toggleModalDelete($event)" />
 <!-- MODAL DELETE  -->

@@ -1,0 +1,22 @@
+@import "../timesheet.component.scss";
+
+.utility {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 0px;
+  justify-content: space-between;
+  align-items: center;
+  .container {
+    display: flex;
+    &:first-child {
+      align-items: center;
+      justify-content: start;
+      gap: 0px 10px;
+    }
+    &:last-child {
+      justify-content: end;
+      gap: 0px 10px;
+    }
+  }
+}

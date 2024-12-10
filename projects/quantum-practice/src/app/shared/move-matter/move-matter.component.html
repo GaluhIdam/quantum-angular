@@ -1,0 +1,113 @@
+<div class="flex">
+  <fui-badge
+    [color]="'default'"
+    [size]="'s'"
+    [iconShow]="true"
+    [icon]="'cross'"
+    [iconPosition]="'end'"
+    (iconOnClick)="toggleReset()"
+    [text]="totalItemSelected + ' item on page selected'"
+  >
+  </fui-badge>
+  <div class="vertical-line"></div>
+  <div class="toggle" (click)="toggleOpenCloseModal(true)">
+    <fui-icons [icon]="'push'" [size]="'sizem'" [color]="'primary'" />
+    <p class="toggle-clear">Move</p>
+  </div>
+  <div
+    class="toggle danger"
+    *ngIf="writeOff"
+    (click)="toggleOpenCloseModal(true)"
+  >
+    <p class="toggle-clear danger">Write-off</p>
+  </div>
+</div>
+
+<!-- MODAL MOVE  -->
+<fui-modal [open]="isModalOpen">
+  <fui-modal-header (onCloseModal)="toggleOpenCloseModal(false)">
+    <div class="header-modal"><h1>Move Time</h1></div>
+  </fui-modal-header>
+  <fui-modal-body>
+    <div class="body-modal">
+      <p>Move timesheet from this matter to other matter</p>
+      <div class="selector">
+        <div class="checkbox">
+          <input type="checkbox" [(ngModel)]="showDesc" />
+          <span class="title">Do not show sub-matter</span>
+        </div>
+        <fui-popover [position]="'bottom'">
+          <fui-form-control-layout>
+            <fui-input-field
+              [placeholder]="'Search by number, project or client'"
+              [formControlField]="searchForm"
+              [type]="'text'"
+              [size]="'m'"
+              [invalid]="false"
+            >
+              <fui-icons left-icon [icon]="'search'" [size]="'sizem'" />
+              <fui-loading
+                *ngIf="loading"
+                class="mx-5"
+                right-icon
+                [type]="'spinner'"
+                [isLoading]="true"
+                [size]="'sizel'"
+              ></fui-loading>
+              <fui-icons
+                *ngIf="
+                  searchForm.value !== '' &&
+                  searchForm.value !== null &&
+                  loading === false
+                "
+                right-icon
+                (click)="this.searchForm.setValue('')"
+                [label]="'right'"
+                [icon]="'cross'"
+                [size]="'sizem'"
+                [color]="'text'"
+              />
+            </fui-input-field>
+          </fui-form-control-layout>
+          <div popover-body>
+            <div class="container-option">
+              <div
+                class="option-matter"
+                (click)="toggleSelectMatter(item)"
+                *ngFor="let item of listMatters"
+              >
+                <p class="{{ +showDesc ? 'title mb-0' : 'title' }}">
+                  {{ item.matter }} - {{ item.description }}
+                </p>
+                <p *ngIf="!showDesc">Binford Ltd. Acme Co. and 3 other</p>
+              </div>
+            </div>
+          </div>
+        </fui-popover>
+      </div>
+    </div>
+  </fui-modal-body>
+  <fui-modal-footer>
+    <div class="footer-modal">
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Cancel'"
+        [color]="'primary'"
+        [style]="'secondary'"
+        (onClick)="toggleOpenCloseModal(false)"
+      />
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        (onClick)="toggleMoveTimesheet()"
+        [type]="'button'"
+        [option]="'text'"
+        [text]="'Move Timesheet'"
+        [color]="'primary'"
+        [style]="'filled'"
+      />
+    </div>
+  </fui-modal-footer>
+</fui-modal>
+<!-- MODAL MOVE  -->

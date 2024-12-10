@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { NavigationEnd, Router, RouterOutlet, Routes } from '@angular/router';
+import { NavigationEnd, Router, Routes } from '@angular/router';
 import {
   ButtonIconComponent,
   DataSideDTO,
   HeaderComponent,
-  HeaderPanelComponent,
   IconsComponent,
   PageSidebarComponent,
   SidenavComponent,
@@ -14,7 +13,6 @@ import {
   PopoverComponent,
   TextComponent,
   AvatarComponent,
-  OidcAuthenticatorService,
   SitewideSearchComponent,
   SitewideDTO,
 } from '@quantum/fui';
@@ -28,13 +26,12 @@ import {
   tap,
 } from 'rxjs';
 import { DataSideBar } from './data-sidebar';
-import { keycloak } from '../../environment/env';
 import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
 import { UserKeycloak } from '../../core/guard/keycloak/keycloak.dto';
 
 import { FlyoutTimesheetComponent } from '../flyout-timesheet/flyout-timesheet.component';
-import { MiniSidebarComponent } from '../mini-sidebar/mini-sidebar.component';
 import { routes } from '../../app.routes';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-layouts',
@@ -43,7 +40,6 @@ import { routes } from '../../app.routes';
     CommonModule,
     ButtonIconComponent,
     HeaderComponent,
-    HeaderPanelComponent,
     PageSidebarComponent,
     IconsComponent,
     SidenavComponent,
@@ -52,7 +48,6 @@ import { routes } from '../../app.routes';
     AvatarComponent,
     ModalDeleteComponent,
     FlyoutTimesheetComponent,
-    MiniSidebarComponent,
     SitewideSearchComponent,
   ],
   templateUrl: './layouts.component.html',
@@ -91,13 +86,14 @@ export class LayoutsComponent {
   constructor(
     private navigate: Router,
     private cdr: ChangeDetectorRef,
-    private readonly authService: OidcAuthenticatorService
+    private readonly oidcSecurityService: OidcSecurityService
   ) {
     this.dataSide = DataSideBar.dataSideBar;
     // this.getUser();
   }
 
   ngOnInit(): void {
+    this.getUser();
     this.themeService.currentTheme$.subscribe((data) => {
       if (data === 'light') {
         this.theme = 'ahp-light';
@@ -228,21 +224,20 @@ export class LayoutsComponent {
   logout(): void {
     this.logoutModal = !this.logoutModal;
   }
-
   /** Logout and direct to login keycloak */
-  logoutAction(): void {
-    this.authService.logoutAuth(keycloak).subscribe();
+  logoutAction(event: { name: string; status: boolean }): void {
+    this.logoutModal = event.status;
+
+    if (event.name === 'delete') {
+      this.oidcSecurityService.logoffAndRevokeTokens().subscribe();
+    }
   }
 
   /** Getting data user from keycloak */
   getUser(): void {
-    this.authService.getUserInfo(keycloak).subscribe((res) => {
-      if (res) {
-        this.nameUser = res.name;
-      } else {
-        this.nameUser = 'Username';
-      }
-    });
+    // this.oidcSecurityService.getUserData().subscribe((res: UserKeycloak) => {
+    //   this.nameUser = res.given_name;
+    // });
   }
 
   filterData(): void {

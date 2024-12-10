@@ -1,0 +1,13 @@
+@import "../step-4.component.scss";
+
+.badge-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--fuiColorMediumShade, $fuiColorMediumShade);
+  border-radius: 5px;
+  padding: 10px;
+  align-items: center;
+}

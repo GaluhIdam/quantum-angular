@@ -2,10 +2,12 @@
   <fui-icons [icon]="'arrowLeft'" [size]="'sizes'" [color]="'primary'" />
   <span>Return</span>
 </a>
-<fui-text [size]="'xl'" [weight]="'bold'">{{
-  titlePage
-}}</fui-text>
-<fui-text *ngIf="descriptionPage" [color]="'text'">{{
-  descriptionPage
-}}</fui-text>
+<div class="mb-30">
+  <fui-text class="flex mb-20" [size]="'xl'" [weight]="'bold'">{{
+    titlePage
+    }}</fui-text>
+  <fui-text *ngIf="descriptionPage" [color]="'text'">{{
+    descriptionPage
+    }}</fui-text>
+</div>
 <ng-content />

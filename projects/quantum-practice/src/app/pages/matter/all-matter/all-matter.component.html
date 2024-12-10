@@ -1,0 +1,80 @@
+<shared-page-empty [titlePage]="'All Matters'">
+  <!-- FORM SEARCH & FILTER BUTTON  -->
+  <div class="container">
+    <!-- FORM SEARCH -->
+    <fui-form-control-layout>
+      <fui-input-field
+        [type]="'text'"
+        [invalid]="false"
+        [size]="'m'"
+        [placeholder]="'Search by Number or Project Name'"
+      >
+        <fui-icons
+          left-icon
+          [color]="'text'"
+          [icon]="'search'"
+          [size]="'sizem'"
+        />
+      </fui-input-field>
+    </fui-form-control-layout>
+    <!-- FORM SEARCH  -->
+
+    <div class="group-btn">
+      <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        [color]="'text'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'filter'"
+        [style]="'secondary'"
+        [size]="'m'"
+        [text]="'Filter'"
+        (onClick)="actionBtnUtil('filter')"
+      />
+      <!-- BUTTON FILTER FOR OPEN FLYOUT -->
+
+      <!-- ADD EXPENSE MATTER -->
+      <fui-button-icon
+        [fullWidth]="'fit'"
+        [color]="'primary'"
+        [type]="'button'"
+        [option]="'iconText'"
+        [icon]="'plusInCircle'"
+        [style]="'filled'"
+        [size]="'m'"
+        [text]="'Add Mater'"
+        (onClick)="actionBtnUtil('create')"
+      />
+      <!-- ADD EXPENSE MATTER -->
+    </div>
+  </div>
+  <!-- FORM SEARCH & FILTER BUTTON  -->
+
+  <!-- CARD MATTER -->
+  <div class="content-wrapper">
+    <app-card-all-matter />
+    <app-card-all-matter />
+  </div>
+  <!-- CARD MATTER -->
+
+  <div class="loader">
+    <fui-button-icon
+      [fullWidth]="'fit'"
+      [type]="'button'"
+      [option]="'iconText'"
+      [icon]="'refresh'"
+      [color]="'text'"
+      [style]="'secondary'"
+      [text]="'Load more results'"
+    />
+  </div>
+  <!-- LOAD BUTTON  -->
+
+  <!-- FILTER FLYOUT  -->
+  <shared-flyout-filter-matter
+    [isOpenFlyout]="isOpenFlyoutFilter"
+    (action)="actionBtnUtil('filter')"
+  />
+  <!-- FILTER FLYOUT  -->
+</shared-page-empty>

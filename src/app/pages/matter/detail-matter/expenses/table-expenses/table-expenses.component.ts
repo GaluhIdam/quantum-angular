@@ -17,10 +17,11 @@ export class TableExpensesComponent {
   headerTable: string[] = [
     'Requested For',
     'Expense Date',
-    'Reference Number',
+    'Payment Request No',
     'Description',
     'Qty',
     'Total Amount',
-    'Vendor',
+    'Vendor Invoice No',
+    'AHP Invoice No',
   ];
 }

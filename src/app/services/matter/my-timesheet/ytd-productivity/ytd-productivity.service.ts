@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ProductivityMonthlyDTO } from '../../../../interfaces/productivity-monthly.dto';
 
 @Injectable({
@@ -31,13 +31,107 @@ export class YtdProductivityService {
    *  },
    * ]
    */
+  // getYtdProductivities(
+  //   year: number,
+  //   type: string
+  // ): Observable<ProductivityMonthlyDTO[]> {
+  //   return this.http.get<ProductivityMonthlyDTO[]>(
+  //     `${this.httpUrl}/ytd-productivity`,
+  //     { params: new HttpParams().set('year', year).set('type', type) }
+  //   );
+  // }
+
   getYtdProductivities(
     year: number,
     type: string
   ): Observable<ProductivityMonthlyDTO[]> {
-    return this.http.get<ProductivityMonthlyDTO[]>(
-      `${this.httpUrl}/ytd-productivity`,
-      { params: new HttpParams().set('year', year).set('type', type) }
-    );
+    const data: ProductivityMonthlyDTO[] = [
+      {
+        month: 'January',
+        billableActualHour: 20,
+        billableTargetHour: 150,
+        nonbillableActualHour: 10,
+        nonbillableTargetHour: 100,
+      },
+      {
+        month: 'February',
+        billableActualHour: 20,
+        billableTargetHour: 150,
+        nonbillableActualHour: 10,
+        nonbillableTargetHour: 100,
+      },
+      {
+        month: 'March',
+        billableActualHour: 20,
+        billableTargetHour: 150,
+        nonbillableActualHour: 10,
+        nonbillableTargetHour: 100,
+      },
+      {
+        month: 'April',
+        billableActualHour: 20,
+        billableTargetHour: 150,
+        nonbillableActualHour: 10,
+        nonbillableTargetHour: 100,
+      },
+      {
+        month: 'May',
+        billableActualHour: 20,
+        billableTargetHour: 150,
+        nonbillableActualHour: 10,
+        nonbillableTargetHour: 100,
+      },
+      {
+        month: 'June',
+        billableActualHour: 20,
+        billableTargetHour: 150,
+        nonbillableActualHour: 10,
+        nonbillableTargetHour: 100,
+      },
+      {
+        month: 'July',
+        billableActualHour: 20,
+        billableTargetHour: 150,
+        nonbillableActualHour: 10,
+        nonbillableTargetHour: 100,
+      },
+      {
+        month: 'August',
+        billableActualHour: 20,
+        billableTargetHour: 150,
+        nonbillableActualHour: 10,
+        nonbillableTargetHour: 100,
+      },
+      {
+        month: 'September',
+        billableActualHour: 20,
+        billableTargetHour: 150,
+        nonbillableActualHour: 10,
+        nonbillableTargetHour: 100,
+      },
+      {
+        month: 'October',
+        billableActualHour: 20,
+        billableTargetHour: 150,
+        nonbillableActualHour: 10,
+        nonbillableTargetHour: 100,
+      },
+      {
+        month: 'November',
+        billableActualHour: 20,
+        billableTargetHour: 150,
+        nonbillableActualHour: 10,
+        nonbillableTargetHour: 100,
+      },
+      {
+        month: 'December',
+        billableActualHour: 20,
+        billableTargetHour: 150,
+        nonbillableActualHour: 10,
+        nonbillableTargetHour: 100,
+      },
+    ];
+
+    return of(data);
   }
 }

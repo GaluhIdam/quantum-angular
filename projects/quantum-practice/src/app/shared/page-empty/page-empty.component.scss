@@ -1,0 +1,22 @@
+@import "../../app.component.scss";
+
+fui-text {
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.back-link {
+  display: flex;
+  align-items: baseline;
+  text-decoration: none;
+  margin-bottom: 30px;
+  color: var(--fuiColorPrimary, $fuiColorPrimary);
+  &:hover {
+    span {
+      text-decoration: underline;
+    }
+  }
+  fui-icons {
+    margin-right: 5px;
+  }
+}

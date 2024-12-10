@@ -18,10 +18,9 @@
   }
 }
 .card-content {
-  padding: 20px 15px;
+  padding: 20px;
   background-color: var(--fuiColorLightestShade, $fuiColorLightestShade);
-  border-radius: 5px;
-  height: fit-content;
+  border-radius: 10px;
 }
 
 .grid {
@@ -143,6 +142,10 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
   }
+  &-5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 .gap {
   &-10 {
@@ -166,12 +169,18 @@
 .flex-label-gap-10 {
   display: flex;
   width: inherit;
-  gap: 10px;
+  gap: 5px;
+}
+.flex-label-gap-10-text {
+  display: flex;
+  width: inherit;
+  gap: 5px;
 }
 
 .flex-badge-general {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
 .grid-1-custom {

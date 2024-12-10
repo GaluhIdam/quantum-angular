@@ -31,6 +31,7 @@ export class TableUtilitySimpleComponent {
   @Input() duration: string = '0h 0m';
   @Input() nextBtn: boolean = true;
   @Input() prevBtn: boolean = true;
+  @Input() totalFilter: number = 0;
 
   /** Tell consumer about Identity Button for next action */
   @Output() actionOut: EventEmitter<'next' | 'prev' | 'filter' | 'add'> =

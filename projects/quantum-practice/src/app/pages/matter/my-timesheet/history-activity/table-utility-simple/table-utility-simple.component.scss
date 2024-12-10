@@ -1,0 +1,48 @@
+.container {
+  .flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mobile {
+  display: none;
+}
+
+.badge {
+  margin-left: 10px;
+}
+.filter {
+  margin-right: 10px;
+}
+
+.group {
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 1000px) {
+  .container {
+    .flex-between {
+      display: block;
+    }
+  }
+  .flex {
+    margin-bottom: 15px;
+    justify-content: space-between;
+  }
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: block;
+  }
+  .badge {
+    margin-left: 0px;
+  }
+}

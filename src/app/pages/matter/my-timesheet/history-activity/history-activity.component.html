@@ -1,57 +1,50 @@
 <shared-skeleton [active]="loading">
-  <!-- SIMPLE UTILITY TABLE  -->
-  <shared-table-utility-simple
-    [nextBtn]="currentDate > endDate ? true : false"
-    [prevBtn]="filterApplied.length === 0"
-    [startDate]="startDate"
-    [endDate]="endDate"
-    [duration]="calculateTotalDuration(dataTimesheet)"
-    (actionOut)="toggleUtility($event)"
-  />
-  <!-- SIMPLE UTILITY TABLE  -->
+  <div class="mb-20">
+    <!-- SIMPLE UTILITY TABLE  -->
+    <shared-table-utility-simple
+      [nextBtn]="currentDate > endDate ? true : false"
+      [prevBtn]="totalFilter === 0"
+      [totalFilter]="totalFilter"
+      [startDate]="startDate"
+      [endDate]="endDate"
+      [duration]="calculateTotalDuration(dataTimesheet)"
+      (actionOut)="toggleUtility($event)" />
+    <!-- SIMPLE UTILITY TABLE  -->
 
-  <!-- FILTER APPLIED -->
-  <shared-filter-applied
-    class="mb-15"
-    [filterApplied]="filterApplied"
-    (actionOut)="toggleClearFilter($event)"
-  />
-  <!-- FILTER APPLIED -->
+    <div class="my-20">
+      <!-- MATTER MOVE -->
+      <shared-move-matter
+        *ngIf="timesheetSelected.length > 0"
+        [listMatters]="dataMatters"
+        [totalItemSelected]="timesheetSelected.length"
+        (actionOut)="moveTimesheet($event)" />
+      <!-- MATTER MOVE -->
+    </div>
+  </div>
 
-  <!-- MATTER MOVE -->
-  <shared-move-matter
-    *ngIf="timesheetSelected.length > 0"
-    [listMatters]="[]"
-    [totalItemSelected]="timesheetSelected.length"
-    (actionOut)="moveTimesheet($event)"
-  />
-  <!-- MATTER MOVE -->
-
-  <div class="wrap">
+  <div class="w-full overflow-x-auto overflow-y-hidden">
     <!-- TABLE WITHOUT FILTER -->
-    <app-table-without-filter
-      *ngIf="filterApplied.length === 0"
+    <app-table-without-filter class="grid w-full"
+      *ngIf="totalFilter === 0"
       [startDate]="startDate"
       [endDate]="endDate"
       [dataTimesheet]="dataTimesheet"
       [timesheetSelected]="timesheetSelected"
       (actionOut)="toggleEditDeleteTimesheet($event.action, $event.data)"
-      (selectionOut)="toggleSelection($event)"
-    />
+      (selectionOut)="toggleSelection($event)" />
     <!-- TABLE WITHOUT FILTER -->
 
     <!-- TABLE WITH FILTER-->
     <app-table-filter
-      class="container-table"
-      *ngIf="filterApplied.length > 0"
+      class="mt-30"
+      *ngIf="totalFilter > 0"
       [page]="page"
       [limit]="limit"
       [totalItems]="totalItems"
       [dataTimesheet]="dataTimesheet"
       [timesheetSelected]="timesheetSelected"
       (actionOut)="toggleEditDeleteTimesheet($event.action, $event.data)"
-      (selectionOut)="toggleSelection($event)"
-    />
+      (selectionOut)="toggleSelection($event)" />
     <!-- TABLE WITH FILTER-->
   </div>
 </shared-skeleton>
@@ -60,8 +53,7 @@
 <shared-flyout-timesheet
   [showFeeEarnerForm]="false"
   [title]="'Add Timesheet'"
-  [isOpenFlyout]="isOpenCreateFlyout"
-/>
+  [isOpenFlyout]="isOpenCreateFlyout" />
 <!-- FLYOUT CREATE TIMESHEET -->
 
 <!-- EDIT TIMESHEET FLYOUT -->
@@ -77,8 +69,7 @@
   [note]="'* Conduct desk research & prepare summary on licensing regulation.'"
   [listActivities]="converterActivityOpt()"
   [listMatters]="converterMatterOpt()"
-  (closeOut)="toggleUtility('edit')"
-/>
+  (closeOut)="toggleUtility('edit')" />
 <!-- EDIT TIMESHEET FLYOUT -->
 
 <!-- EDIT TAG FLYOUT -->
@@ -94,126 +85,62 @@
   [note]="'* Conduct desk research on licensing agreement with JJ.'"
   [listActivities]="converterActivityOpt()"
   [listMatters]="converterMatterOpt()"
-  (closeOut)="toggleUtility('editTag')"
-/>
+  (closeOut)="toggleUtility('editTag')" />
 <!-- EDIT TAG FLYOUT -->
 
-<!-- FILTER TIMESHEET  -->
-<shared-flyout-simple
-  [isOpenFlyout]="isOpenFilterFlyout"
-  [titleFlyout]="'Filter'"
-  (closeOut)="toggleUtility('filter')"
-  [size]="'m'"
->
-  <div body>
-    <!-- DATE FORM  -->
-    <div class="form">
-      <fui-text>Date</fui-text>
-      <div class="time-description">
-        <fui-date-range
-          [dateFormat]="'DD-MM-YYYY'"
-          [startDateControl]="startDateForm"
-          [endDateControl]="endDateForm"
-          (onChangeStartDate)="watchDateChange('start', $event)"
-          (onChangeEndDate)="watchDateChange('end', $event)"
-        />
-      </div>
-      <span
-        class="filter-valid"
-        *ngIf="startDateForm.value === '' || endDateForm.value === ''"
-      >
-        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
-        Date range is required!
-      </span>
-      <span
-        class="filter-valid"
-        *ngIf="validatorStartEndFilter(startDateForm.value, endDateForm.value)"
-      >
-        <fui-icons [icon]="'iInCircle'" [color]="'danger'" [size]="'sizes'" />
-        the start date can't exceed the end date!
-      </span>
-    </div>
-    <!-- DATE FORM  -->
+<!-- FILTER  -->
+<fui-advance-filter
+  [openFilter]="isOpenFilterFlyout"
+  [overflow]="'none'"
+  (actionOut)="actionOut($event)">
+  <fui-advance-filter-section [title]="''">
+    <!-- DATE  -->
+    <fui-advance-filter-item
+      [label]="'Date'"
+      [value]="startDateForm.value + ' to ' + endDateForm.value">
+      <fui-date-range
+        [dateFormat]="'DD-MM-YYYY'"
+        [startDateControl]="startDateForm"
+        [endDateControl]="endDateForm"
+        (onChangeStartDate)="watchDateChange('start', $event)"
+        (onChangeEndDate)="watchDateChange('end', $event)" />
+    </fui-advance-filter-item>
+    <!-- DATE  -->
 
-    <!-- MATTER FORM  -->
-    <div class="form">
-      <fui-text>Matter</fui-text>
-      <div class="time-description">
-        <fui-combo-box
-          [comboxForm]="searchMatterForm"
+    <!-- MATTER  -->
+    <fui-advance-filter-item
+      [label]="'Matter'"
+      [value]="getFormattedNames(selectedMatter)">
+      <fui-combo-box
+        [comboxForm]="searchMatterForm"
+        [size]="'m'"
+        [placeholder]="'Matter'"
+        [optionValue]="converterMatterOpt()"
+        [selectedValue]="selectedMatter" />
+    </fui-advance-filter-item>
+    <!-- MATTER  -->
+
+    <!-- DESCRIPTION  -->
+    <fui-advance-filter-item
+      [label]="'Time Description'"
+      [value]="descriptionForm.value">
+      <fui-form-control-layout>
+        <fui-input-field
+          [formControlField]="descriptionForm"
+          [placeholder]="'e.g Meeting with client'"
+          [type]="'text'"
           [size]="'m'"
-          [placeholder]="'Matter'"
-          [optionValue]="converterMatterOpt()"
-          [selectedValue]="selectedMatter"
-        />
-      </div>
-    </div>
-    <!-- MATTER FORM  -->
-
-    <hr class="line-hr" />
-
-    <!-- DESC FORM  -->
-    <div class="form">
-      <fui-text>Time Description</fui-text>
-      <div class="time-description">
-        <fui-form-control-layout>
-          <fui-input-field
-            [formControlField]="descriptionForm"
-            [placeholder]="'e.g Meeting with client'"
-            [type]="'text'"
-            [size]="'m'"
-            [invalid]="false"
-          />
-        </fui-form-control-layout>
-      </div>
-    </div>
-    <!-- DESC FORM  -->
-  </div>
-
-  <!-- FOOTER FLYOUT FILTER  -->
-  <div class="footer-flyout" footer>
-    <fui-button-icon
-      [fullWidth]="'fit'"
-      [type]="'button'"
-      [option]="'text'"
-      [style]="'secondary'"
-      [text]="'Cancel'"
-      [size]="'m'"
-      [color]="'text'"
-      (onClick)="toggleUtility('filter')"
-    />
-    <div class="group-flex">
-      <fui-button-icon
-        [fullWidth]="'fit'"
-        [type]="'button'"
-        [option]="'text'"
-        [style]="'secondary'"
-        [text]="'Clear Filter'"
-        [size]="'m'"
-        [color]="'text'"
-        (onClick)="toggleClearFilter()"
-      />
-      <fui-button-icon
-        [fullWidth]="'fit'"
-        [type]="'button'"
-        [option]="'iconText'"
-        [style]="'filled'"
-        [text]="'Apply Filter'"
-        [size]="'m'"
-        [color]="'primary'"
-        [icon]="'filter'"
-        (onClick)="toggleFilter()"
-      />
-    </div>
-  </div>
-  <!-- FOOTER FLYOUT FILTER  -->
-</shared-flyout-simple>
-<!-- FILTER TIMESHEET  -->
+          [invalid]="false" />
+      </fui-form-control-layout>
+    </fui-advance-filter-item>
+    <!-- DESCRIPTION  -->
+  </fui-advance-filter-section>
+</fui-advance-filter>
+<!-- FILTER  -->
 
 <!-- MODAL DELETE  -->
 <shared-modal-delete
   [openModalDelete]="isModalDelete"
   [title]="'Delete Timesheet'"
-  (actionOut)="toggleCancelDeleteTimesheet($event)"
-/>
+  (actionOut)="toggleCancelDeleteTimesheet($event)" />
 <!-- MODAL DELETE  -->

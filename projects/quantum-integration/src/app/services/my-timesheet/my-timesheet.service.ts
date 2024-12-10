@@ -12,6 +12,7 @@ export class MyTimesheetService {
 
   /**
    * Get my timesheet with date range from REST API.
+   * @param idEmployee example: "unknown"
    * @param startDate - example: "2024-11-01"
    * @param endDate - example: "2024-11-30"
    * @returns
@@ -20,7 +21,8 @@ export class MyTimesheetService {
    *     "uuid": "789e1234-e89b-12d3-a456-426614174000",
    *     "matter": {
    *       "uuid": "456e1234-e89b-12d3-a456-426614174000",
-   *       "name": "Matter A",
+   *       "matter": "Matter A",
+   *       "description": "Description matter",
    *       "created_at": "2024-10-15T08:30:00Z",
    *       "updated_at": "2024-10-15T09:00:00Z"
    *     },
@@ -41,11 +43,13 @@ export class MyTimesheetService {
    * ]
    */
   getMyTimesheetByDate(
+    idEmployee: string,
     startDate: string,
     endDate: string
   ): Observable<MyTimesheetDTO[]> {
     return this.http.get<MyTimesheetDTO[]>(`${this.httpUrl}/my-timesheet`, {
       params: new HttpParams()
+        .set('idEmployee', idEmployee)
         .set('startDate', startDate)
         .set('endDate', endDate),
     });
@@ -53,6 +57,7 @@ export class MyTimesheetService {
 
   /**
    * Get my timesheet with filter
+   * @param idEmployee example: "unknown"
    * @param startDate - example: "2024-11-01"
    * @param endDate - example: "2024-11-30"
    * @param matters - example: "12345, 54321, 7879" (Multiple Selection)
@@ -63,7 +68,8 @@ export class MyTimesheetService {
    *     "uuid": "789e1234-e89b-12d3-a456-426614174000",
    *     "matter": {
    *       "uuid": "456e1234-e89b-12d3-a456-426614174000",
-   *       "name": "Matter A",
+   *       "matter": "Matter A",
+   *       "description": "Description matter",
    *       "created_at": "2024-10-15T08:30:00Z",
    *       "updated_at": "2024-10-15T09:00:00Z"
    *     },
@@ -84,12 +90,14 @@ export class MyTimesheetService {
    * ]
    */
   filterTimesheet(
+    idEmployee: string,
     startDate: string,
     endDate: string,
     matters?: string,
     timeDescription?: string
   ): Observable<MyTimesheetDTO[]> {
     let params = new HttpParams()
+      .set('idEmployee', idEmployee)
       .set('startDate', startDate)
       .set('endDate', endDate);
     if (matters) {

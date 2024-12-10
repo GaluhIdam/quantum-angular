@@ -1,0 +1,19 @@
+<fui-flyout [openFlyout]="isOpenFlyout" (overlayOut)="toggleCloseFlyout()">
+  <fui-flyout-header>
+    <div class="header-flyout">
+      <h2>{{ titleFlyout }}</h2>
+    </div>
+  </fui-flyout-header>
+  <fui-flyout-body>
+    <div class="flyout-body">
+      <!-- BODY -->
+      <ng-content select="[body]"></ng-content>
+      <!-- BODY -->
+    </div>
+  </fui-flyout-body>
+  <fui-flyout-footer>
+    <!-- FOOTER -->
+    <ng-content select="[footer]"></ng-content>
+    <!-- FOOTER -->
+  </fui-flyout-footer>
+</fui-flyout>

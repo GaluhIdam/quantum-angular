@@ -1,0 +1,91 @@
+@import "../my-timesheet.component.scss";
+
+.header.productivity {
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-weight: normal;
+  display: flex;
+}
+.grid-1 {
+  display: grid;
+  gap: 5px;
+}
+.select {
+  display: flex;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
+  .icon-title {
+    margin-left: 5px;
+  }
+}
+
+.title-select {
+  user-select: none;
+  display: flex;
+  color: var(--fuiColorPrimary, $fuiColorPrimary);
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.container-option {
+  display: flex;
+  .wrap-option {
+    display: grid;
+  }
+  .wrap-icon {
+    display: grid;
+    margin-right: 5px;
+  }
+}
+.option-pop {
+  user-select: none;
+  margin-bottom: 5px;
+  color: var(--fuiColorPrimary, $fuiColorPrimary);
+  text-wrap: nowrap;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.progress {
+  margin: 0px 0px 25px 0px;
+}
+.legend {
+  display: flex;
+  margin-top: 20px;
+  gap: 10px;
+  .legend-title {
+    display: flex;
+    gap: 5px;
+    flex-wrap: nowrap;
+  }
+}
+@media (max-width: 400px) {
+  .legend {
+    align-items: baseline;
+    .legend-title {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+  }
+}
+
+.color-square {
+  width: 15px;
+  height: 15px;
+  border-radius: 5px;
+}
+.color-square.primary {
+  background-color: var(--fuiColorPrimary, $fuiColorPrimary);
+}
+.color-square.text {
+  background-color: var(--fuiColorDarkShade, $fuiColorDarkShade);
+}
+.color-square.disabled {
+  background-color: #d3dae6;
+}

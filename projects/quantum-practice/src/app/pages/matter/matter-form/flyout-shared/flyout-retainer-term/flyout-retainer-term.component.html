@@ -1,0 +1,104 @@
+<shared-flyout-simple
+  [isOpenFlyout]="isFlyoutRetainerTerm"
+  [titleFlyout]="title"
+  (closeOut)="openFlyouRetainerTerm()"
+>
+  <div body class="overflow-hidden">
+    <div class="grid-2">
+      <!-- PAYMENT ORDER  -->
+      <div class="form-control">
+        <fui-text class="label"> Payment Order </fui-text>
+        <fui-form-control-layout>
+          <fui-input-field
+            [formControlField]="retainerPaymentOrderForm"
+            [type]="'number'"
+            [invalid]="false"
+            [placeholder]="'Type payment order'"
+            [size]="'m'"
+          ></fui-input-field>
+        </fui-form-control-layout>
+      </div>
+      <!-- PAYMENT ORDER  -->
+
+      <!-- PERIOD  -->
+      <div class="form-control">
+        <fui-text class="label"> Period </fui-text>
+        <fui-date-picker
+          [dateFormControl]="retainerPeriodForm"
+          [dateFormat]="'DD-MM-YYYY'"
+        />
+      </div>
+      <!-- PERIOD  -->
+    </div>
+
+    <div class="grid-2">
+      <!-- AMOUNT  -->
+      <div class="form-control">
+        <fui-text class="label"> Amount </fui-text>
+        <fui-form-control-layout>
+          <fui-prepend>
+            <fui-text [size]="'xs'" [weight]="'semibold'">{{
+              currencyForm.value
+            }}</fui-text>
+          </fui-prepend>
+          <fui-input-field
+            [formControlField]="retainerAmountForm"
+            [type]="'text'"
+            [invalid]="false"
+            [placeholder]="'Type amount'"
+            [size]="'m'"
+          ></fui-input-field>
+        </fui-form-control-layout>
+      </div>
+      <!-- AMOUNT  -->
+
+      <!-- DURATION  -->
+      <div class="form-control">
+        <fui-text class="label"> Duration </fui-text>
+        <fui-form-control-layout>
+          <fui-input-field
+            [formControlField]="retainerDurationForm"
+            [type]="'number'"
+            [invalid]="false"
+            [placeholder]="'Type duration'"
+            [size]="'m'"
+          ></fui-input-field>
+        </fui-form-control-layout>
+      </div>
+      <!-- DURATION  -->
+    </div>
+
+    <!-- DESC  -->
+    <div class="form-control">
+      <fui-text class="label"> Description </fui-text>
+      <fui-form-control-layout>
+        <fui-textarea
+          [formControlField]="retainerDescForm"
+          [placeholder]="'Type retianer description'"
+          [size]="'m'"
+          [invalid]="false"
+        >
+        </fui-textarea>
+      </fui-form-control-layout>
+    </div>
+    <!-- DESC  -->
+  </div>
+  <div footer class="flex-between footer-fly">
+    <fui-button-icon [fullWidth]="'fit'"
+      (onClick)="openFlyouRetainerTerm()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'secondary'"
+      [option]="'text'"
+      [text]="'Cancel'"
+    />
+    <fui-button-icon [fullWidth]="'fit'"
+      (onClick)="openFlyouRetainerTerm()"
+      [type]="'button'"
+      [color]="'primary'"
+      [style]="'filled'"
+      [option]="'text'"
+      [text]="title"
+    />
+  </div>
+</shared-flyout-simple>

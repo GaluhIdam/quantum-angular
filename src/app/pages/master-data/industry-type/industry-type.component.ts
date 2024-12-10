@@ -21,7 +21,6 @@ import {
   TableTreeComponent,
   TableTreeDTO,
   TextComponent,
-  ToastComponent,
 } from '@quantum/fui';
 import { EmptyDataComponent } from '../../../shared/empty-data/empty-data.component';
 import { FlyoutSimpleComponent } from '../../../shared/flyout-simple/flyout-simple.component';
@@ -50,7 +49,6 @@ import { IndustrySectorDTO } from '../../../interfaces/industry-type.dto';
     EmptyDataComponent,
     FlyoutSimpleComponent,
     ModalDeleteComponent,
-    ToastComponent,
     AdvanceFilterComponent,
     AdvanceFilterSectionComponent,
     AdvanceFilterItemComponent,
@@ -129,7 +127,7 @@ export class IndustryTypeComponent extends BaseController {
   page: number = 1;
   limit: number = 10;
   totalItems: number = 100;
-  title: string[] = ['Name', 'Code', 'Type', 'Status', ''];
+  title: string[] = ['Name', 'Code', 'Status', ''];
   totalFilter: number = 0;
 
   /** Parent Type Form */

@@ -1,0 +1,26 @@
+.flex {
+  display: flex;
+  justify-content: end;
+  fui-button-icon {
+    margin: 0px 3px;
+  }
+}
+
+.text {
+  &-left {
+    text-align: left;
+  }
+  &-center {
+    text-align: center;
+  }
+  &-right {
+    text-align: right;
+  }
+}
+
+.na-message {
+  position: absolute;
+  right: 0;
+  left: 0;
+  padding-top: 10px;
+}

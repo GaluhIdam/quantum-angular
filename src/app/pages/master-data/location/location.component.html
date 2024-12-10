@@ -1,22 +1,19 @@
 <shared-page-generic-default
   [title]="'Location'"
   [description]="'Setup available countries, provinces and cities'"
-  [breadcrums]="link"
->
+  [breadcrums]="link">
   <fui-form-control-layout formsearch>
     <fui-input-field
       [type]="'text'"
       [placeholder]="'Search...'"
       [size]="'m'"
-      [invalid]="false"
-    >
+      [invalid]="false">
       <fui-icons
         left-icon
         [label]="'left'"
         [icon]="'search'"
         [size]="'sizem'"
-        [color]="'text'"
-      />
+        [color]="'text'" />
     </fui-input-field>
   </fui-form-control-layout>
 
@@ -27,8 +24,7 @@
     [icon]="'plus'"
     [text]="'Add Location'"
     [size]="'m'"
-    (onClick)="toggleOpenFlyout('create', true)"
-  />
+    (onClick)="toggleOpenFlyout('create', true)" />
 
   <!-- DATA AVAILABLE  -->
   <fui-table-tree
@@ -37,8 +33,7 @@
     [totalItems]="totalItems"
     [showInfo]="false"
     [pagination]="false"
-    (onPageChanges)="onPageChanges($event)"
-  >
+    (onPageChanges)="onPageChanges($event)">
     <!-- HEADER  -->
     <fui-table-head-tree
       *ngFor="let item of title; let i = index"
@@ -50,9 +45,9 @@
         action: true,
         activeField: sortData ? sortData.fieldName : ''
       }"
-      (sortOut)="toggleSort($event)"
-    >
-      <fui-text [textWrap]="'nowrap'">{{ item }}</fui-text>
+      (sortOut)="toggleSort($event)">
+      <fui-text [textWrap]="'nowrap'" [weight]="'semibold'">{{ item
+        }}</fui-text>
     </fui-table-head-tree>
     <!-- HEADER  -->
 
@@ -61,8 +56,7 @@
       <fui-table-row-tree>
         <fui-table-data-tree
           [showDropIcon]="country.child.length > 0 ? true : false"
-          (clickOut)="dataShowHide[x].status = !dataShowHide[x].status"
-        >
+          (clickOut)="dataShowHide[x].status = !dataShowHide[x].status">
           <fui-text [textWrap]="'nowrap'"> {{ country.location }} </fui-text>
         </fui-table-data-tree>
         <fui-table-data-tree [showDropIcon]="false">
@@ -76,8 +70,7 @@
             [option]="'icon'"
             [icon]="'pencil'"
             [size]="'s'"
-            (onClick)="toggleOpenFlyout('update', true)"
-          ></fui-button-icon>
+            (onClick)="toggleOpenFlyout('update', true)"></fui-button-icon>
           <fui-button-icon
             [fullWidth]="'fit'"
             [color]="'danger'"
@@ -88,8 +81,7 @@
             [size]="'s'"
             (onClick)="
               toggleModalDelete({ name: country.location, status: true })
-            "
-          ></fui-button-icon>
+            "></fui-button-icon>
         </fui-table-data-tree>
       </fui-table-row-tree>
       <!-- LEVEL 1  -->
@@ -102,8 +94,7 @@
             [level]="1"
             (clickOut)="
               dataShowHide[x].child[y].status = !dataShowHide[x].child[y].status
-            "
-          >
+            ">
             <fui-text [textWrap]="'nowrap'"> {{ province.location }} </fui-text>
           </fui-table-data-tree>
           <fui-table-data-tree [showDropIcon]="false">
@@ -117,8 +108,7 @@
               [option]="'icon'"
               [icon]="'pencil'"
               [size]="'s'"
-              (onClick)="toggleOpenFlyout('update', true)"
-            ></fui-button-icon>
+              (onClick)="toggleOpenFlyout('update', true)"></fui-button-icon>
             <fui-button-icon
               [fullWidth]="'fit'"
               [color]="'danger'"
@@ -129,8 +119,7 @@
               [size]="'s'"
               (onClick)="
                 toggleModalDelete({ name: country.location, status: true })
-              "
-            ></fui-button-icon>
+              "></fui-button-icon>
           </fui-table-data-tree>
         </fui-table-row-tree>
         <!-- LEVEL 2  -->
@@ -154,8 +143,7 @@
                 [option]="'icon'"
                 [icon]="'pencil'"
                 [size]="'s'"
-                (onClick)="toggleOpenFlyout('update', true)"
-              ></fui-button-icon>
+                (onClick)="toggleOpenFlyout('update', true)"></fui-button-icon>
               <fui-button-icon
                 [fullWidth]="'fit'"
                 [color]="'danger'"
@@ -166,8 +154,7 @@
                 [size]="'s'"
                 (onClick)="
                   toggleModalDelete({ name: city.location, status: true })
-                "
-              ></fui-button-icon>
+                "></fui-button-icon>
             </fui-table-data-tree>
           </fui-table-row-tree>
         </ng-container>
@@ -186,8 +173,7 @@
 <shared-flyout-simple
   [isOpenFlyout]="openFlyout"
   [titleFlyout]="createUpdate === 'create' ? 'Add Location' : 'Update Location'"
-  (closeOut)="toggleOpenFlyout('create', false)"
->
+  (closeOut)="toggleOpenFlyout('create', false)">
   <div body>
     <div class="mb-15">
       <fui-text class="label">Select location type to be add</fui-text>
@@ -197,23 +183,20 @@
           [placeholder]="'Country, Province or City'"
           [invalid]="false"
           [formControlField]="locationForm"
-          [selectOptions]="selectOption"
-        ></fui-select-field>
+          [selectOptions]="selectOption"></fui-select-field>
       </fui-form-control-layout>
     </div>
 
     <div
       class="my-25"
-      *ngIf="locationForm.value === 'Province' || locationForm.value === 'City'"
-    >
+      *ngIf="locationForm.value === 'Province' || locationForm.value === 'City'">
       <hr />
     </div>
 
     <!-- COUNTRY  -->
     <div
       class="mb-15"
-      *ngIf="locationForm.value === 'Province' || locationForm.value === 'City'"
-    >
+      *ngIf="locationForm.value === 'Province' || locationForm.value === 'City'">
       <fui-text class="label">Country</fui-text>
       <fui-form-control-layout>
         <fui-select-field
@@ -221,8 +204,7 @@
           [size]="'m'"
           [invalid]="false"
           [formControlField]="countryForm"
-          [selectOptions]="countryOption"
-        ></fui-select-field>
+          [selectOptions]="countryOption"></fui-select-field>
       </fui-form-control-layout>
     </div>
     <!-- COUNTRY  -->
@@ -236,8 +218,7 @@
           [size]="'m'"
           [invalid]="false"
           [formControlField]="provinceForm"
-          [selectOptions]="provinceOption"
-        ></fui-select-field>
+          [selectOptions]="provinceOption"></fui-select-field>
       </fui-form-control-layout>
     </div>
     <!-- PROVINCE  -->
@@ -245,16 +226,14 @@
     <!-- FORM INPUT LOCATION NAME -->
     <div
       class="mb-15"
-      *ngIf="locationForm.value !== '' && locationForm.value !== null"
-    >
+      *ngIf="locationForm.value !== '' && locationForm.value !== null">
       <fui-text class="label">{{ locationForm.value }} Name</fui-text>
       <fui-form-control-layout>
         <fui-input-field
           [placeholder]="'Input location name'"
           [type]="'text'"
           [size]="'m'"
-          [invalid]="false"
-        ></fui-input-field>
+          [invalid]="false"></fui-input-field>
       </fui-form-control-layout>
     </div>
     <!-- FORM INPUT LOCATION NAME -->
@@ -266,24 +245,21 @@
       [option]="'text'"
       [text]="'Cancel'"
       [style]="'empty'"
-      (onClick)="toggleOpenFlyout('create', false)"
-    />
+      (onClick)="toggleOpenFlyout('create', false)" />
     <fui-button-icon
       *ngIf="createUpdate === 'create'"
       [type]="'button'"
-      [option]="'text'"
+      [option]="'iconText'"
       [text]="'Save'"
-      [style]="'secondary'"
-      (onClick)="toggleUpdateCreateData('create', false)"
-    />
+      [icon]="'save'"
+      (onClick)="toggleUpdateCreateData('create', false)" />
     <fui-button-icon
       *ngIf="createUpdate === 'update'"
       [type]="'button'"
-      [option]="'text'"
-      [text]="'Update Location'"
-      [style]="'secondary'"
-      (onClick)="toggleUpdateCreateData('update', false)"
-    />
+      [option]="'iconText'"
+      [text]="'Update'"
+      [icon]="'pencil'"
+      (onClick)="toggleUpdateCreateData('update', false)" />
   </div>
 </shared-flyout-simple>
 <!-- FLYOUT  -->
@@ -291,7 +267,5 @@
 <!-- MODAL DELETE  -->
 <shared-modal-delete
   [openModalDelete]="openModalDelete"
-  (actionOut)="toggleModalDelete($event)"
-/>
+  (actionOut)="toggleModalDelete($event)" />
 <!-- MODAL DELETE  -->
-

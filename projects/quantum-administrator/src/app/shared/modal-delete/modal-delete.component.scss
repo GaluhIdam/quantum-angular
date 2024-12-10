@@ -1,0 +1,48 @@
+@import "../layouts/layouts.component.scss";
+
+/** Modal Config */
+.title-modal {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  h3 {
+    color: var(--fuiDangerSecondary, $fuiColorDanger);
+  }
+}
+.foot {
+  display: flex;
+  padding: 10px;
+  margin-top: 10px;
+  justify-content: center;
+  gap: 10px;
+  fui-button-icon {
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
+}
+.modal {
+  padding: 0px 10px;
+  width: 350px;
+  text-align: center;
+}
+
+.container-title {
+  justify-content: center;
+  display: grid;
+  justify-items: center;
+}
+
+.bg-icon {
+  margin-top: 10px;
+  background-color: var(--fuiDangerSecondary, $fuiDangerSecondary);
+  border-radius: 100%;
+  padding: 10px;
+}
+
+@media (max-width: 1000px) {
+  .modal {
+    width: 280px;
+  }
+}

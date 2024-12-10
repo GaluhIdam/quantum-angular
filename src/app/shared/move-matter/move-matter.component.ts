@@ -11,6 +11,7 @@ import {
   ModalFooterComponent,
   ModalHeaderComponent,
   PopoverComponent,
+  TextComponent,
 } from '@quantum/fui';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -35,6 +36,7 @@ import { MatterDTO } from '../../interfaces/matter.dto';
     InputFieldComponent,
     PopoverComponent,
     LoadingComponent,
+    TextComponent,
   ],
   templateUrl: './move-matter.component.html',
   styleUrl: './move-matter.component.scss',
@@ -101,5 +103,10 @@ export class MoveMatterComponent {
     if (this.searchForm.value !== null || this.searchForm.value !== '') {
       this.actionOut.emit(this.matterSelected);
     }
+  }
+
+  /** Toggle Check */
+  toggleCheckbox(): void {
+    this.showDesc = !this.showDesc;
   }
 }
